@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>실시간 CCTV 라이브 모음</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header class="site-header">
+  <h1>유튜브 실시간 CCTV 모음</h1>
+  <p class="subtitle">유튜브 라이브 중인 CCTV 영상을 매일 자동으로 모아 보여줍니다.</p>
+  <div class="controls">
+    <input type="text" id="searchInput" placeholder="제목 또는 채널명 검색...">
+    <span id="lastUpdated" class="last-updated"></span>
+  </div>
+</header>
+
+<main id="grid" class="grid"></main>
+
+<p id="emptyState" class="empty-state" hidden>표시할 CCTV 스트림이 없습니다.</p>
+
+<div id="modal" class="modal" hidden>
+  <div class="modal-backdrop"></div>
+  <div class="modal-content">
+    <button id="modalClose" class="modal-close" aria-label="닫기">&times;</button>
+    <div class="modal-player"></div>
+  </div>
+</div>
+
+<script src="js/app.js"></script>
+</body>
+</html>
