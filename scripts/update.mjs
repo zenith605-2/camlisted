@@ -106,6 +106,26 @@ async function searchLiveByKeyword(keyword, maxResults = 25) {
     }));
 }
 
+// 이 채널이 지금 라이브 중인 다른 영상들도 찾는다 (다중 카메라 채널 대응)
+async function searchChannelLive(channelId, maxResults = 25) {
+  const url = `${BASE}/search?part=snippet&type=video&eventType=live&channelId=${channelId}&maxResults=${maxResults}&key=${API_KEY}`;
+  const data = await fetchJson(url);
+  return (data.items || [])
+    .filter(item => item.id?.videoId)
+    .map(item => ({
+      videoId: item.id.videoId,
+      title: decodeHtmlEntities(item.snippet.title),
+      channelTitle: decodeHtmlEntities(item.snippet.channelTitle),
+      channelId: item.snippet.channelId,
+      thumbnail: snippetThumbnail(item.snippet),
+      matchedKeyword: 'channel scan',
+    }));
+}
+
+// search.list는 프로젝트 기본 할당량이 하루 100회뿐이라(키워드 검색 15회를 빼면 여유가 크지 않음),
+// 채널 스캔은 하루에 이만큼만 처리하고 나머지는 다음날 이어서 처리한다.
+const MAX_CHANNEL_SCANS_PER_RUN = 30;
+
 async function main() {
   const [keywordsRaw, excludeRaw, categoriesRaw] = await Promise.all([
     readFile(KEYWORDS_PATH, 'utf-8'),
@@ -172,6 +192,10 @@ async function main() {
       patch.thumbnail = row.thumbnail || snippetThumbnail(snippet);
       needsUpdate = true;
     }
+    if (!row.channel_id && snippet.channelId) {
+      patch.channel_id = snippet.channelId;
+      needsUpdate = true;
+    }
     if (!row.category) {
       patch.category = classifyCategory(title, channelTitle);
       needsUpdate = true;
@@ -226,6 +250,39 @@ async function main() {
     }
   }
 
+  // 채널 단위 전체 스캔: 이미 아는 채널(생존 행 + 이번에 새로 찾은 후보)의 다른 라이브도 함께 수집.
+  // 채널당 1회만 수행하도록 scanned_channels에 기록해 매일 반복 조회하지 않음(쿼터 절약).
+  const { data: scannedRows } = await supabase.from('scanned_channels').select('channel_id');
+  const scannedSet = new Set((scannedRows || []).map(r => r.channel_id));
+
+  const observedChannelIds = new Set();
+  for (const detail of liveMap.values()) if (detail.snippet.channelId) observedChannelIds.add(detail.snippet.channelId);
+  for (const c of candidateMap.values()) if (c.channelId) observedChannelIds.add(c.channelId);
+
+  const unscannedChannelIds = [...observedChannelIds].filter(id => !scannedSet.has(id));
+  const channelIdsToScan = unscannedChannelIds.slice(0, MAX_CHANNEL_SCANS_PER_RUN);
+  console.log(`채널 전체 스캔: 대상 ${unscannedChannelIds.length}개 중 ${channelIdsToScan.length}개 처리 (나머지는 다음 실행에 이어서)`);
+
+  for (const channelId of channelIdsToScan) {
+    try {
+      const results = await searchChannelLive(channelId);
+      for (const r of results) {
+        if (knownIds.has(r.videoId) || candidateMap.has(r.videoId)) continue;
+        if (isExcluded(r.title, r.channelTitle)) continue;
+        candidateMap.set(r.videoId, r);
+      }
+    } catch (err) {
+      console.error(`  채널 스캔 실패 ${channelId}:`, err.message);
+    }
+  }
+
+  if (channelIdsToScan.length) {
+    const { error } = await supabase
+      .from('scanned_channels')
+      .upsert(channelIdsToScan.map(channel_id => ({ channel_id })), { onConflict: 'channel_id' });
+    if (error) console.error('scanned_channels 기록 실패:', error.message);
+  }
+
   console.log(`신규 후보 ${candidateMap.size}건 검증 중...`);
   const candidateIds = [...candidateMap.keys()];
   const verifiedLive = await getLiveDetails(candidateIds);
@@ -239,6 +296,7 @@ async function main() {
       video_id: c.videoId,
       title: c.title,
       channel_title: c.channelTitle,
+      channel_id: c.channelId || null,
       thumbnail: c.thumbnail,
       matched_keyword: c.matchedKeyword,
       source: 'keyword',

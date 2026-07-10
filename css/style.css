@@ -187,6 +187,20 @@ body {
   margin: 0 auto;
 }
 
+.channel-header {
+  grid-column: 1 / -1;
+  margin-top: 8px;
+  padding: 8px 4px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--text);
+  border-bottom: 1px solid var(--border);
+}
+
+.channel-header:first-child {
+  margin-top: 0;
+}
+
 .card {
   background: var(--card-bg);
   border: 1px solid var(--border);

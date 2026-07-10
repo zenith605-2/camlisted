@@ -69,6 +69,7 @@ function mapRow(row) {
     videoId: row.video_id,
     title: row.title || t('info_pending'),
     channelTitle: row.channel_title || '',
+    channelId: row.channel_id || null,
     thumbnail: row.thumbnail,
     matchedKeyword: row.source === 'user' ? t('source_user') : (row.matched_keyword || ''),
     addedAt: row.added_at,
@@ -91,7 +92,7 @@ function currentFiltered() {
   const status = statusFilter.value;
   const favoritesOnly = favoritesOnlyCheckbox.checked;
 
-  return streams.filter(s => {
+  const filtered = streams.filter(s => {
     if (q && !s.title.toLowerCase().includes(q) && !s.channelTitle.toLowerCase().includes(q)) return false;
     if (category && s.category !== category) return false;
     if (country && s.country !== country) return false;
@@ -100,13 +101,27 @@ function currentFiltered() {
     if (favoritesOnly && !favorites.has(s.videoId)) return false;
     return true;
   });
+
+  // 같은 채널의 영상들을 붙여서 보여주기 위해 채널명 기준으로 정렬
+  return filtered.sort((a, b) =>
+    a.channelTitle.localeCompare(b.channelTitle) || a.title.localeCompare(b.title)
+  );
 }
 
 function render(list) {
   grid.innerHTML = '';
   emptyState.hidden = list.length > 0;
+  let lastChannel = undefined;
 
   for (const s of list) {
+    if (s.channelTitle !== lastChannel) {
+      const header = document.createElement('div');
+      header.className = 'channel-header';
+      header.textContent = s.channelTitle || t('anonymous');
+      grid.appendChild(header);
+      lastChannel = s.channelTitle;
+    }
+
     const card = document.createElement('div');
     card.className = 'card';
     card.dataset.videoId = s.videoId;
