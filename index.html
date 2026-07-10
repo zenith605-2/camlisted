@@ -25,6 +25,45 @@
     <input type="text" id="searchInput" data-i18n-placeholder="search_placeholder" placeholder="Search by title or channel...">
     <span id="lastUpdated" class="last-updated"></span>
   </div>
+  <div class="filter-bar">
+    <select id="categoryFilter">
+      <option value="" data-i18n="filter_all">All</option>
+      <option value="beach" data-i18n="category_beach">Beach</option>
+      <option value="parking" data-i18n="category_parking">Parking</option>
+      <option value="traffic" data-i18n="category_traffic">Traffic</option>
+      <option value="harbor" data-i18n="category_harbor">Harbor</option>
+      <option value="mountain" data-i18n="category_mountain">Mountain</option>
+      <option value="downtown" data-i18n="category_downtown">Downtown</option>
+      <option value="other" data-i18n="category_other">Other</option>
+    </select>
+    <select id="countryFilter">
+      <option value="" data-i18n="filter_all">All</option>
+    </select>
+    <select id="qualityFilter">
+      <option value="" data-i18n="filter_all">All</option>
+      <option value="hd2160">4K</option>
+      <option value="hd1440">1440p</option>
+      <option value="hd1080">1080p</option>
+      <option value="hd720">720p</option>
+      <option value="large">480p</option>
+      <option value="medium">360p</option>
+      <option value="small">240p</option>
+      <option value="tiny">144p</option>
+    </select>
+    <select id="statusFilter">
+      <option value="live" data-i18n="status_live">Live</option>
+      <option value="" data-i18n="filter_all">All</option>
+      <option value="offline" data-i18n="status_offline">Offline</option>
+    </select>
+    <label class="favorites-only-label">
+      <input type="checkbox" id="favoritesOnlyCheckbox">
+      <span data-i18n="favorites_only">⭐ My favorites</span>
+    </label>
+    <div class="view-toggle">
+      <button type="button" id="gridViewBtn" class="view-btn" data-i18n="view_grid">▦ Grid</button>
+      <button type="button" id="listViewBtn" class="view-btn" data-i18n="view_list">☰ List</button>
+    </div>
+  </div>
   <form id="submitForm" class="submit-form" hidden>
     <input type="text" id="submitUrl" data-i18n-placeholder="submit_placeholder" placeholder="Paste a YouTube live URL (e.g. https://www.youtube.com/watch?v=...)">
     <button type="submit" data-i18n="submit_button">Submit</button>
@@ -43,6 +82,10 @@
       <span id="modalTitle" class="modal-title"></span>
       <a id="modalOpenNewTab" class="modal-open-new-tab" target="_blank" rel="noopener" data-i18n="watch_on_youtube">Watch on YouTube</a>
       <button id="modalClose" class="modal-close" aria-label="Close">&times;</button>
+    </div>
+    <div class="modal-url-row">
+      <input type="text" id="modalUrlInput" class="modal-url-input" readonly>
+      <button type="button" id="modalCopyBtn" class="modal-copy-btn" data-i18n="copy_url">Copy</button>
     </div>
     <div class="modal-player"></div>
   </div>

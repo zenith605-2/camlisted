@@ -1,0 +1,8 @@
+{
+  "beach": ["beach", "해수욕장", "해변", "바다", "playa", "海滩", "ビーチ"],
+  "parking": ["parking", "주차장", "estacionamiento", "停车场", "駐車場"],
+  "traffic": ["traffic", "도로", "교통", "고속도로", "carretera", "tráfico", "交通", "道路", "高速"],
+  "harbor": ["harbor", "port", "항구", "puerto", "港", "港口"],
+  "mountain": ["mountain", "산", "ski", "스키장", "montaña", "山", "スキー"],
+  "downtown": ["downtown", "도심", "street", "거리", "city", "시내", "centro", "街", "都市"]
+}

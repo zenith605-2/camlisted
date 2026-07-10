@@ -4,6 +4,9 @@ const SUPABASE_ANON_KEY = 'sb_publishable_IPRYfUNkhfTLWohT6gjXYw_APGRcPuP';
 
 const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
+const CATEGORY_KEYS = ['beach', 'parking', 'traffic', 'harbor', 'mountain', 'downtown', 'other'];
+const VIEW_MODE_KEY = 'viewMode';
+
 const grid = document.getElementById('grid');
 const emptyState = document.getElementById('emptyState');
 const searchInput = document.getElementById('searchInput');
@@ -13,6 +16,8 @@ const modalPlayer = modal.querySelector('.modal-player');
 const modalClose = document.getElementById('modalClose');
 const modalOpenNewTab = document.getElementById('modalOpenNewTab');
 const modalTitle = document.getElementById('modalTitle');
+const modalUrlInput = document.getElementById('modalUrlInput');
+const modalCopyBtn = document.getElementById('modalCopyBtn');
 const authArea = document.getElementById('authArea');
 const submitForm = document.getElementById('submitForm');
 const submitUrl = document.getElementById('submitUrl');
@@ -22,15 +27,41 @@ const leaderboardModal = document.getElementById('leaderboardModal');
 const leaderboardClose = document.getElementById('leaderboardClose');
 const leaderboardList = document.getElementById('leaderboardList');
 const langSelect = document.getElementById('langSelect');
+const categoryFilter = document.getElementById('categoryFilter');
+const countryFilter = document.getElementById('countryFilter');
+const qualityFilter = document.getElementById('qualityFilter');
+const statusFilter = document.getElementById('statusFilter');
+const favoritesOnlyCheckbox = document.getElementById('favoritesOnlyCheckbox');
+const gridViewBtn = document.getElementById('gridViewBtn');
+const listViewBtn = document.getElementById('listViewBtn');
 
 let streams = [];
 let currentUser = null;
+let favorites = new Map(); // videoId -> note
 const pageLoadTime = Date.now();
 
 function escapeHtml(str) {
   const div = document.createElement('div');
   div.textContent = str ?? '';
   return div.innerHTML;
+}
+
+function countryDisplayName(code) {
+  try {
+    return new Intl.DisplayNames([currentLang], { type: 'region' }).of(code) || code;
+  } catch {
+    return code;
+  }
+}
+
+function formatRelativeTime(iso) {
+  if (!iso) return '';
+  const rtf = new Intl.RelativeTimeFormat(currentLang, { numeric: 'auto' });
+  const diffMin = Math.round((new Date(iso).getTime() - Date.now()) / 60000);
+  if (Math.abs(diffMin) < 60) return rtf.format(diffMin, 'minute');
+  const diffHr = Math.round(diffMin / 60);
+  if (Math.abs(diffHr) < 24) return rtf.format(diffHr, 'hour');
+  return rtf.format(Math.round(diffHr / 24), 'day');
 }
 
 function mapRow(row) {
@@ -44,16 +75,31 @@ function mapRow(row) {
     source: row.source,
     addedBy: row.added_by,
     upvoteCount: row.upvote_count || 0,
+    status: row.status || 'live',
+    country: row.country || null,
+    category: row.category || null,
+    maxQuality: row.max_quality || null,
+    startedAt: row.started_at || null,
   };
 }
 
 function currentFiltered() {
   const q = searchInput.value.trim().toLowerCase();
-  if (!q) return streams;
-  return streams.filter(s =>
-    s.title.toLowerCase().includes(q) ||
-    s.channelTitle.toLowerCase().includes(q)
-  );
+  const category = categoryFilter.value;
+  const country = countryFilter.value;
+  const quality = qualityFilter.value;
+  const status = statusFilter.value;
+  const favoritesOnly = favoritesOnlyCheckbox.checked;
+
+  return streams.filter(s => {
+    if (q && !s.title.toLowerCase().includes(q) && !s.channelTitle.toLowerCase().includes(q)) return false;
+    if (category && s.category !== category) return false;
+    if (country && s.country !== country) return false;
+    if (quality && s.maxQuality !== quality) return false;
+    if (status && s.status !== status) return false;
+    if (favoritesOnly && !favorites.has(s.videoId)) return false;
+    return true;
+  });
 }
 
 function render(list) {
@@ -84,9 +130,30 @@ function render(list) {
           <img src="${liveSnapshot}" alt="${escapeHtml(s.title)}" loading="lazy" onerror="this.src='${s.thumbnail}'">
         </div>
       `;
+
+    const isLive = s.status === 'live';
+    const isFav = favorites.has(s.videoId);
+
+    const categoryHtml = currentUser
+      ? `<select class="card-category-select" data-video-id="${escapeHtml(s.videoId)}">
+          ${CATEGORY_KEYS.map(c => `<option value="${c}" ${(s.category || 'other') === c ? 'selected' : ''}>${escapeHtml(t('category_' + c))}</option>`).join('')}
+        </select>`
+      : (s.category ? `<span class="card-keyword">${escapeHtml(t('category_' + s.category))}</span>` : '');
+    const countryHtml = s.country ? `<span class="card-keyword">${escapeHtml(countryDisplayName(s.country))}</span>` : '';
+    const startedHtml = s.startedAt ? `<span class="card-started">🕐 ${escapeHtml(formatRelativeTime(s.startedAt))}</span>` : '';
+
+    const actionsHtml = currentUser ? `
+      <div class="card-actions">
+        ${s.source === 'user' && s.addedBy !== currentUser.id ? `<button type="button" class="upvote-btn" data-video-id="${escapeHtml(s.videoId)}">${t('upvote_button')}</button>` : ''}
+        <button type="button" class="favorite-btn ${isFav ? 'active' : ''}" data-video-id="${escapeHtml(s.videoId)}">${isFav ? t('favorite_remove') : t('favorite_add')}</button>
+        ${isFav ? `<button type="button" class="note-btn" data-video-id="${escapeHtml(s.videoId)}">📝</button>` : ''}
+        <button type="button" class="report-btn" data-video-id="${escapeHtml(s.videoId)}">${t('report_button')}</button>
+      </div>
+    ` : '';
+
     card.innerHTML = `
       <div class="thumb-wrap">
-        <span class="live-badge">LIVE</span>
+        <span class="live-badge ${isLive ? '' : 'offline-badge'}">${isLive ? 'LIVE' : t('status_offline')}</span>
         ${thumbHtml}
       </div>
       <div class="card-body">
@@ -94,12 +161,10 @@ function render(list) {
         <p class="card-channel">${escapeHtml(s.channelTitle)}</p>
         <span class="card-keyword">${escapeHtml(s.matchedKeyword || '')}</span>
         ${s.source === 'user' && s.upvoteCount > 0 ? `<span class="card-keyword">👍 ${s.upvoteCount}</span>` : ''}
-        ${currentUser ? `
-          <div class="card-actions">
-            ${s.source === 'user' && s.addedBy !== currentUser.id ? `<button type="button" class="upvote-btn" data-video-id="${escapeHtml(s.videoId)}">${t('upvote_button')}</button>` : ''}
-            <button type="button" class="report-btn" data-video-id="${escapeHtml(s.videoId)}">${t('report_button')}</button>
-          </div>
-        ` : ''}
+        ${countryHtml}
+        ${categoryHtml}
+        ${startedHtml}
+        ${actionsHtml}
       </div>
     `;
     grid.appendChild(card);
@@ -107,19 +172,35 @@ function render(list) {
 }
 
 grid.addEventListener('click', async (e) => {
+  if (e.target.closest('select')) return; // 카테고리 select 클릭은 모달을 열지 않음
+
   const reportBtn = e.target.closest('.report-btn');
-  if (reportBtn) {
-    await handleReport(reportBtn);
-    return;
-  }
+  if (reportBtn) return handleReport(reportBtn);
+
   const upvoteBtn = e.target.closest('.upvote-btn');
-  if (upvoteBtn) {
-    await handleUpvote(upvoteBtn);
-    return;
-  }
+  if (upvoteBtn) return handleUpvote(upvoteBtn);
+
+  const favoriteBtn = e.target.closest('.favorite-btn');
+  if (favoriteBtn) return handleFavorite(favoriteBtn);
+
+  const noteBtn = e.target.closest('.note-btn');
+  if (noteBtn) return handleNoteEdit(noteBtn);
+
   const card = e.target.closest('.card');
   if (card) {
     openModal(card.dataset.videoId, card.dataset.title);
+  }
+});
+
+grid.addEventListener('change', async (e) => {
+  const sel = e.target.closest('.card-category-select');
+  if (!sel || !currentUser) return;
+  const videoId = sel.dataset.videoId;
+  const category = sel.value;
+  const { error } = await sb.rpc('set_stream_category', { p_video_id: videoId, p_category: category });
+  if (!error) {
+    const s = streams.find(x => x.videoId === videoId);
+    if (s) s.category = category;
   }
 });
 
@@ -149,8 +230,45 @@ async function handleUpvote(btn) {
   }
 }
 
+async function handleFavorite(btn) {
+  if (!currentUser) return;
+  const videoId = btn.dataset.videoId;
+  btn.disabled = true;
+  if (favorites.has(videoId)) {
+    const { error } = await sb.from('favorites').delete().eq('user_id', currentUser.id).eq('video_id', videoId);
+    if (!error) favorites.delete(videoId);
+  } else {
+    const { error } = await sb.from('favorites').insert({ user_id: currentUser.id, video_id: videoId });
+    if (!error) favorites.set(videoId, null);
+  }
+  btn.disabled = false;
+  render(currentFiltered());
+}
+
+async function handleNoteEdit(btn) {
+  if (!currentUser) return;
+  const videoId = btn.dataset.videoId;
+  const existing = favorites.get(videoId) || '';
+  const note = prompt(t('favorite_note_prompt'), existing);
+  if (note === null) return;
+  const { error } = await sb.from('favorites').update({ note }).eq('user_id', currentUser.id).eq('video_id', videoId);
+  if (!error) favorites.set(videoId, note);
+}
+
+async function loadFavorites() {
+  if (!currentUser) {
+    favorites = new Map();
+    return;
+  }
+  const { data, error } = await sb.from('favorites').select('video_id, note').eq('user_id', currentUser.id);
+  if (!error && data) {
+    favorites = new Map(data.map(f => [f.video_id, f.note]));
+  }
+}
+
 let currentPlayer = null;
 let ytApiReady = false;
+let qualityReportedFor = null;
 const ytApiQueue = [];
 
 window.onYouTubeIframeAPIReady = () => {
@@ -172,11 +290,28 @@ function showPlayerError(code) {
   modalPlayer.innerHTML = `<div class="player-error">${escapeHtml(playerErrorMessage(code))}<br>${escapeHtml(t('player_error_watch_hint'))}</div>`;
 }
 
+async function reportQualityOnce(videoId, player) {
+  if (qualityReportedFor === videoId) return;
+  qualityReportedFor = videoId;
+  try {
+    const levels = player.getAvailableQualityLevels ? player.getAvailableQualityLevels() : [];
+    const best = levels && levels[0];
+    if (best && best !== 'auto') {
+      await sb.rpc('report_stream_quality', { p_video_id: videoId, p_quality: best });
+    }
+  } catch (err) {
+    console.error(err);
+  }
+}
+
 function openModal(videoId, title) {
   modalPlayer.innerHTML = `<div class="player-loading">${escapeHtml(t('loading'))}</div>`;
-  modalOpenNewTab.href = `https://www.youtube.com/watch?v=${encodeURIComponent(videoId)}`;
+  const url = `https://www.youtube.com/watch?v=${encodeURIComponent(videoId)}`;
+  modalOpenNewTab.href = url;
+  modalUrlInput.value = url;
   modalTitle.textContent = title || '';
   modal.hidden = false;
+  qualityReportedFor = null;
 
   withYtApi(() => {
     if (modal.hidden) return; // 로딩 중 닫혔으면 재생하지 않음
@@ -186,6 +321,9 @@ function openModal(videoId, title) {
       playerVars: { autoplay: 1, mute: 1, playsinline: 1 },
       events: {
         onReady: (e) => e.target.playVideo(),
+        onStateChange: (e) => {
+          if (e.data === YT.PlayerState.PLAYING) reportQualityOnce(videoId, e.target);
+        },
         onError: (e) => showPlayerError(e.data),
       },
     });
@@ -207,7 +345,32 @@ document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape' && !modal.hidden) closeModal();
 });
 
+modalCopyBtn.addEventListener('click', async () => {
+  try {
+    await navigator.clipboard.writeText(modalUrlInput.value);
+  } catch {
+    modalUrlInput.select();
+    document.execCommand('copy');
+  }
+  const original = t('copy_url');
+  modalCopyBtn.textContent = t('copy_done');
+  setTimeout(() => { modalCopyBtn.textContent = original; }, 1500);
+});
+
 searchInput.addEventListener('input', () => render(currentFiltered()));
+[categoryFilter, countryFilter, qualityFilter, statusFilter].forEach(el => {
+  el.addEventListener('change', () => render(currentFiltered()));
+});
+favoritesOnlyCheckbox.addEventListener('change', () => render(currentFiltered()));
+
+function applyViewMode() {
+  const mode = localStorage.getItem(VIEW_MODE_KEY) || 'grid';
+  grid.classList.toggle('list-view', mode === 'list');
+  gridViewBtn.classList.toggle('active', mode === 'grid');
+  listViewBtn.classList.toggle('active', mode === 'list');
+}
+gridViewBtn.addEventListener('click', () => { localStorage.setItem(VIEW_MODE_KEY, 'grid'); applyViewMode(); });
+listViewBtn.addEventListener('click', () => { localStorage.setItem(VIEW_MODE_KEY, 'list'); applyViewMode(); });
 
 async function openLeaderboard() {
   leaderboardModal.hidden = false;
@@ -310,6 +473,14 @@ submitForm.addEventListener('submit', async (e) => {
   await loadStreams();
 });
 
+function populateCountryFilter() {
+  const countries = [...new Set(streams.map(s => s.country).filter(Boolean))].sort();
+  const current = countryFilter.value;
+  countryFilter.innerHTML = `<option value="">${t('filter_all')}</option>` +
+    countries.map(c => `<option value="${c}">${escapeHtml(countryDisplayName(c))}</option>`).join('');
+  countryFilter.value = countries.includes(current) ? current : '';
+}
+
 async function loadStreams() {
   const { data, error } = await sb
     .from('streams')
@@ -325,11 +496,13 @@ async function loadStreams() {
 
   streams = (data || []).map(mapRow);
   lastUpdatedEl.textContent = t('total_count', { n: streams.length });
+  populateCountryFilter();
   render(currentFiltered());
 }
 
-sb.auth.onAuthStateChange((_event, session) => {
+sb.auth.onAuthStateChange(async (_event, session) => {
   currentUser = session?.user || null;
+  await loadFavorites();
   renderAuthArea();
   render(currentFiltered());
 });
@@ -344,9 +517,11 @@ langSelect.addEventListener('change', () => {
 async function init() {
   langSelect.value = currentLang;
   applyStaticTranslations();
+  applyViewMode();
 
   const { data: { session } } = await sb.auth.getSession();
   currentUser = session?.user || null;
+  await loadFavorites();
   renderAuthArea();
   await loadStreams();
 }
