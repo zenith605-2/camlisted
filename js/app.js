@@ -47,14 +47,58 @@ function escapeHtml(str) {
   return div.innerHTML;
 }
 
+let currentPlayer = null;
+let ytApiReady = false;
+const ytApiQueue = [];
+
+window.onYouTubeIframeAPIReady = () => {
+  ytApiReady = true;
+  ytApiQueue.splice(0).forEach(fn => fn());
+};
+
+function withYtApi(fn) {
+  if (ytApiReady && window.YT && window.YT.Player) fn();
+  else ytApiQueue.push(fn);
+}
+
+const PLAYER_ERROR_MESSAGES = {
+  2: '잘못된 영상 정보입니다.',
+  5: '이 브라우저에서 재생할 수 없습니다.',
+  100: '삭제되었거나 비공개로 전환된 영상입니다.',
+  101: '이 채널이 임베드 재생을 허용하지 않습니다.',
+  150: '이 채널이 임베드 재생을 허용하지 않습니다.',
+};
+
+function showPlayerError(code) {
+  const message = PLAYER_ERROR_MESSAGES[code] || '영상을 재생할 수 없습니다.';
+  modalPlayer.innerHTML = `<div class="player-error">${escapeHtml(message)}<br>아래 버튼으로 유튜브에서 시청해주세요.</div>`;
+}
+
 function openModal(videoId) {
-  modalPlayer.innerHTML = `<iframe src="https://www.youtube.com/embed/${encodeURIComponent(videoId)}?autoplay=1" allow="autoplay; encrypted-media" allowfullscreen></iframe>`;
+  modalPlayer.innerHTML = '<div class="player-loading">불러오는 중...</div>';
   modalOpenNewTab.href = `https://www.youtube.com/watch?v=${encodeURIComponent(videoId)}`;
   modal.hidden = false;
+
+  withYtApi(() => {
+    if (modal.hidden) return; // 로딩 중 닫혔으면 재생하지 않음
+    modalPlayer.innerHTML = '<div id="ytPlayerMount"></div>';
+    currentPlayer = new YT.Player('ytPlayerMount', {
+      videoId,
+      playerVars: { autoplay: 1, mute: 1, playsinline: 1 },
+      events: {
+        onReady: (e) => e.target.playVideo(),
+        onError: (e) => showPlayerError(e.data),
+      },
+    });
+  });
 }
 
 function closeModal() {
   modal.hidden = true;
+  if (currentPlayer && currentPlayer.destroy) {
+    currentPlayer.destroy();
+  }
+  currentPlayer = null;
   modalPlayer.innerHTML = '';
 }
 

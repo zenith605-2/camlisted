@@ -191,10 +191,26 @@ body {
   height: 100%;
 }
 
-.modal-player iframe {
+.modal-player iframe,
+.modal-player #ytPlayerMount,
+.modal-player #ytPlayerMount iframe {
   width: 100%;
   height: 100%;
   border: 0;
+}
+
+.player-loading,
+.player-error {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: var(--muted);
+  font-size: 0.9rem;
+  padding: 20px;
+  line-height: 1.6;
 }
 
 .modal-close {
