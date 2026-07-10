@@ -7,6 +7,7 @@
 - `index.html`, `css/`, `js/` — 정적 프론트엔드
 - `data/streams.json` — 현재 라이브 목록 (자동 갱신 대상, 현재는 샘플 더미 데이터)
 - `config/keywords.json` — 검색에 사용할 키워드 목록 (자유롭게 추가/수정 가능)
+- `config/exclude-keywords.json` — 제목/채널명에 포함되면 걸러내는 제외 키워드 (뉴스/방송 채널 오탐 방지)
 - `scripts/update.mjs` — YouTube Data API로 목록을 갱신하는 Node.js 스크립트
 - `.github/workflows/update.yml` — 매일 자동 실행 워크플로
 
@@ -40,3 +41,8 @@ $env:YOUTUBE_API_KEY="발급받은키"; node scripts/update.mjs
 ## 키워드 커스터마이즈
 `config/keywords.json`의 `keywords` 배열에 검색어를 추가하면 다음 실행부터 반영됩니다.
 너무 일반적인 키워드는 CCTV가 아닌 영상을 많이 잡아낼 수 있으니, 결과를 보고 조정하세요.
+
+## 오탐(false positive) 제외
+"CCTV"는 감시카메라 외에 중국 CCTV(중국중앙방송, China Central Television) 같은 방송사 이름과도 겹쳐서,
+뉴스/드라마 채널이 섞여 들어올 수 있습니다. `config/exclude-keywords.json`에 제목/채널명 키워드를 추가하면
+다음 실행부터 기존 목록에서도 자동으로 걸러집니다.

@@ -9,6 +9,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
 const STREAMS_PATH = path.join(ROOT, 'data', 'streams.json');
 const KEYWORDS_PATH = path.join(ROOT, 'config', 'keywords.json');
+const EXCLUDE_KEYWORDS_PATH = path.join(ROOT, 'config', 'exclude-keywords.json');
 
 const API_KEY = process.env.YOUTUBE_API_KEY;
 const BASE = 'https://www.googleapis.com/youtube/v3';
@@ -75,18 +76,26 @@ async function searchLiveByKeyword(keyword, maxResults = 25) {
 }
 
 async function main() {
-  const [streamsRaw, keywordsRaw] = await Promise.all([
+  const [streamsRaw, keywordsRaw, excludeRaw] = await Promise.all([
     readFile(STREAMS_PATH, 'utf-8').catch(() => '{"streams":[]}'),
     readFile(KEYWORDS_PATH, 'utf-8'),
+    readFile(EXCLUDE_KEYWORDS_PATH, 'utf-8').catch(() => '{"keywords":[]}'),
   ]);
   const existing = JSON.parse(streamsRaw).streams || [];
   const keywords = JSON.parse(keywordsRaw).keywords || [];
+  const excludeKeywords = (JSON.parse(excludeRaw).keywords || []).map(k => k.toLowerCase());
+
+  const isExcluded = (title, channelTitle) => {
+    const haystack = `${title} ${channelTitle}`.toLowerCase();
+    return excludeKeywords.some(k => haystack.includes(k));
+  };
 
   console.log(`기존 목록 ${existing.length}건 생존 확인 중...`);
   const existingIds = existing.map(s => s.videoId);
   const liveMap = await getLiveSnippets(existingIds);
-  const survivors = existing.filter(s => liveMap.has(s.videoId));
-  console.log(`  -> 생존 ${survivors.length}건, 제거 ${existing.length - survivors.length}건`);
+  const survivors = existing.filter(s => liveMap.has(s.videoId) && !isExcluded(s.title, s.channelTitle));
+  const excludedSurvivorCount = existing.filter(s => liveMap.has(s.videoId) && isExcluded(s.title, s.channelTitle)).length;
+  console.log(`  -> 생존 ${survivors.length}건, 제거 ${existing.length - survivors.length}건 (그 중 제외 키워드로 걸러짐: ${excludedSurvivorCount}건)`);
 
   const survivorIds = new Set(survivors.map(s => s.videoId));
   const candidateMap = new Map();
@@ -96,6 +105,7 @@ async function main() {
       const results = await searchLiveByKeyword(keyword);
       for (const r of results) {
         if (survivorIds.has(r.videoId) || candidateMap.has(r.videoId)) continue;
+        if (isExcluded(r.title, r.channelTitle)) continue;
         candidateMap.set(r.videoId, r);
       }
       console.log(`  검색 "${keyword}": ${results.length}건 조회`);
