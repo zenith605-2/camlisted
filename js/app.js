@@ -266,7 +266,10 @@ function renderAuthArea() {
   } else {
     authArea.innerHTML = `<button type="button" id="loginBtn" class="auth-btn">Google로 로그인</button>`;
     document.getElementById('loginBtn').addEventListener('click', () => {
-      sb.auth.signInWithOAuth({ provider: 'google' });
+      sb.auth.signInWithOAuth({
+        provider: 'google',
+        options: { redirectTo: window.location.href },
+      });
     });
     submitForm.hidden = true;
   }
