@@ -5,6 +5,7 @@ const lastUpdatedEl = document.getElementById('lastUpdated');
 const modal = document.getElementById('modal');
 const modalPlayer = modal.querySelector('.modal-player');
 const modalClose = document.getElementById('modalClose');
+const modalOpenNewTab = document.getElementById('modalOpenNewTab');
 
 let streams = [];
 const pageLoadTime = Date.now();
@@ -48,6 +49,7 @@ function escapeHtml(str) {
 
 function openModal(videoId) {
   modalPlayer.innerHTML = `<iframe src="https://www.youtube.com/embed/${encodeURIComponent(videoId)}?autoplay=1" allow="autoplay; encrypted-media" allowfullscreen></iframe>`;
+  modalOpenNewTab.href = `https://www.youtube.com/watch?v=${encodeURIComponent(videoId)}`;
   modal.hidden = false;
 }
 
@@ -58,6 +60,9 @@ function closeModal() {
 
 modalClose.addEventListener('click', closeModal);
 modal.querySelector('.modal-backdrop').addEventListener('click', closeModal);
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && !modal.hidden) closeModal();
+});
 
 searchInput.addEventListener('input', () => {
   const q = searchInput.value.trim().toLowerCase();
