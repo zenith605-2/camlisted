@@ -530,7 +530,7 @@ function renderAuthArea() {
     document.getElementById('loginBtn').addEventListener('click', () => {
       sb.auth.signInWithOAuth({
         provider: 'google',
-        options: { redirectTo: window.location.href },
+        options: { redirectTo: window.location.origin + window.location.pathname },
       });
     });
     submitForm.hidden = true;
