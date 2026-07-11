@@ -255,6 +255,11 @@ async function main() {
     if (!row.category) {
       patch.category = classifyCategory(title, channelTitle);
       needsUpdate = true;
+      // 유저 제보인데 어떤 카테고리 키워드에도 안 걸리면(=관련성 불명) 바로 공개하지 않고
+      // 숨김 처리해 관리자 승인(admin.html)을 거치게 한다. 자동 검색/채널스캔으로 찾은 항목은 대상 아님.
+      if (row.source === 'user' && patch.category === 'other') {
+        patch.visibility = 'hidden';
+      }
     }
     if (contentType === 'live' && !row.started_at && liveStreamingDetails?.actualStartTime) {
       patch.started_at = liveStreamingDetails.actualStartTime;

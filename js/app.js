@@ -45,6 +45,7 @@ const sidebar = document.getElementById('sidebar');
 let streams = [];
 let currentUser = null;
 let isAdmin = false;
+let submitterNames = new Map(); // userId -> display_name
 let favorites = new Map(); // videoId -> note
 let unlockedVideos = new Set();
 let categoriesList = []; // [{key, label_en, label_ko, ...}]
@@ -92,7 +93,7 @@ function mapRow(row) {
     channelTitle: row.channel_title || '',
     channelId: row.channel_id || null,
     thumbnail: row.thumbnail,
-    matchedKeyword: row.source === 'user' ? t('source_user') : (row.matched_keyword || ''),
+    matchedKeyword: row.source === 'user' ? '' : (row.matched_keyword || ''),
     addedAt: row.added_at,
     source: row.source,
     addedBy: row.added_by,
@@ -227,7 +228,9 @@ function render(list) {
       <div class="card-body">
         <p class="card-title">${escapeHtml(s.title)}</p>
         <p class="card-channel">${escapeHtml(s.channelTitle)}</p>
-        <span class="card-keyword">${escapeHtml(s.matchedKeyword || '')}</span>
+        ${s.source === 'user'
+          ? `<span class="card-keyword">👤 ${escapeHtml(submitterNames.get(s.addedBy) || t('anonymous'))}</span>`
+          : (s.matchedKeyword ? `<span class="card-keyword">${escapeHtml(s.matchedKeyword)}</span>` : '')}
         ${s.source === 'user' && s.upvoteCount > 0 ? `<span class="card-keyword">👍 ${s.upvoteCount}</span>` : ''}
         ${countryHtml}
         ${categoryHtml}
@@ -378,6 +381,15 @@ async function handleNoteEdit(btn) {
   if (note === null) return;
   const { error } = await sb.from('favorites').update({ note }).eq('user_id', currentUser.id).eq('video_id', videoId);
   if (!error) favorites.set(videoId, note);
+}
+
+async function loadSubmitterNames(list) {
+  const userIds = [...new Set(list.filter(s => s.source === 'user' && s.addedBy).map(s => s.addedBy))]
+    .filter(id => !submitterNames.has(id));
+  if (!userIds.length) return;
+  const { data, error } = await sb.from('profiles').select('id, display_name').in('id', userIds);
+  if (error) return;
+  for (const row of data || []) submitterNames.set(row.id, row.display_name);
 }
 
 async function checkAdmin() {
@@ -617,7 +629,13 @@ submitForm.addEventListener('submit', async (e) => {
     thumbnail: `https://i.ytimg.com/vi/${videoId}/hqdefault_live.jpg`,
   });
   if (error) {
-    submitStatus.textContent = error.code === '23505' ? t('submit_duplicate') : t('submit_failed', { message: error.message });
+    if (error.code === '23505') {
+      submitStatus.textContent = t('submit_duplicate');
+    } else if (error.message?.includes('submission_rate_limit_exceeded')) {
+      submitStatus.textContent = t('submit_rate_limited');
+    } else {
+      submitStatus.textContent = t('submit_failed', { message: error.message });
+    }
     return;
   }
   submitStatus.textContent = t('submit_success');
@@ -725,6 +743,7 @@ async function loadStreams() {
   }
 
   streams = (data || []).map(mapRow);
+  await loadSubmitterNames(streams);
   lastUpdatedEl.textContent = t('total_count', { n: streams.length });
   populateCountryFilter();
   render(currentFiltered());
