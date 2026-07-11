@@ -39,6 +39,7 @@ const favoritesOnlyCheckbox = document.getElementById('favoritesOnlyCheckbox');
 const gridViewBtn = document.getElementById('gridViewBtn');
 const listViewBtn = document.getElementById('listViewBtn');
 const quotaInfo = document.getElementById('quotaInfo');
+const sidebar = document.getElementById('sidebar');
 
 let streams = [];
 let currentUser = null;
@@ -463,7 +464,10 @@ modalCopyBtn.addEventListener('click', async () => {
 
 searchInput.addEventListener('input', () => render(currentFiltered()));
 [contentTypeFilter, categoryFilter, countryFilter, qualityFilter, statusFilter, visibilityFilter].forEach(el => {
-  el.addEventListener('change', () => render(currentFiltered()));
+  el.addEventListener('change', () => {
+    updateSidebarActiveState();
+    render(currentFiltered());
+  });
 });
 favoritesOnlyCheckbox.addEventListener('change', () => render(currentFiltered()));
 
@@ -587,7 +591,48 @@ function populateCategoryFilter() {
   categoryFilter.innerHTML = `<option value="">${t('filter_all')}</option>` +
     categoriesList.map(c => `<option value="${c.key}">${escapeHtml(categoryLabel(c.key))}</option>`).join('');
   categoryFilter.value = categoriesList.some(c => c.key === current) ? current : '';
+  renderSidebar();
 }
+
+const SIDEBAR_GROUPS = [
+  { type: 'live', labelKey: 'content_type_live', icon: '🔴' },
+  { type: 'video', labelKey: 'content_type_video', icon: '🎬' },
+];
+
+function renderSidebar() {
+  sidebar.innerHTML = SIDEBAR_GROUPS.map(g => `
+    <div class="sidebar-section">
+      <button type="button" class="sidebar-group-btn" data-content-type="${g.type}" data-category="">${g.icon} ${escapeHtml(t(g.labelKey))}</button>
+      <ul class="sidebar-sublist">
+        ${categoriesList.map(c => `
+          <li><button type="button" class="sidebar-cat-btn" data-content-type="${g.type}" data-category="${c.key}">${escapeHtml(categoryLabel(c.key))}</button></li>
+        `).join('')}
+      </ul>
+    </div>
+  `).join('');
+  updateSidebarActiveState();
+}
+
+function updateSidebarActiveState() {
+  const activeType = contentTypeFilter.value;
+  const activeCategory = categoryFilter.value;
+  sidebar.querySelectorAll('button[data-content-type]').forEach(btn => {
+    const isGroupBtn = btn.classList.contains('sidebar-group-btn');
+    const matches = isGroupBtn
+      ? btn.dataset.contentType === activeType && activeCategory === ''
+      : btn.dataset.contentType === activeType && btn.dataset.category === activeCategory;
+    btn.classList.toggle('active', matches);
+  });
+}
+
+sidebar.addEventListener('click', (e) => {
+  const btn = e.target.closest('button[data-content-type]');
+  if (!btn) return;
+  contentTypeFilter.value = btn.dataset.contentType;
+  categoryFilter.value = btn.dataset.category || '';
+  updateSidebarActiveState();
+  render(currentFiltered());
+});
 
 async function loadUnlockedVideos() {
   if (!currentUser) {
