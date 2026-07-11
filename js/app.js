@@ -44,6 +44,7 @@ const sidebar = document.getElementById('sidebar');
 
 let streams = [];
 let currentUser = null;
+let isAdmin = false;
 let favorites = new Map(); // videoId -> note
 let unlockedVideos = new Set();
 let categoriesList = []; // [{key, label_en, label_ko, ...}]
@@ -213,6 +214,7 @@ function render(list) {
         <button type="button" class="favorite-btn ${isFav ? 'active' : ''}" data-video-id="${escapeHtml(s.videoId)}">${isFav ? t('favorite_remove') : t('favorite_add')}</button>
         ${isFav ? `<button type="button" class="note-btn" data-video-id="${escapeHtml(s.videoId)}">📝</button>` : ''}
         <button type="button" class="report-btn" data-video-id="${escapeHtml(s.videoId)}">${t('report_button')}</button>
+        ${isAdmin ? `<button type="button" class="admin-delete-btn" data-video-id="${escapeHtml(s.videoId)}">${t('admin_delete_button')}</button>` : ''}
       </div>
     ` : '';
 
@@ -256,6 +258,9 @@ grid.addEventListener('click', async (e) => {
   const noteBtn = e.target.closest('.note-btn');
   if (noteBtn) return handleNoteEdit(noteBtn);
 
+  const adminDeleteBtn = e.target.closest('.admin-delete-btn');
+  if (adminDeleteBtn) return handleAdminDelete(adminDeleteBtn);
+
   const card = e.target.closest('.card');
   if (card) {
     await openCard(card.dataset.videoId, card.dataset.title);
@@ -294,6 +299,21 @@ grid.addEventListener('change', async (e) => {
     if (s) s.category = category;
   }
 });
+
+async function handleAdminDelete(btn) {
+  if (!isAdmin) return;
+  const videoId = btn.dataset.videoId;
+  if (!confirm(t('admin_delete_confirm'))) return;
+  btn.disabled = true;
+  const { error } = await sb.from('streams').delete().eq('video_id', videoId);
+  if (error) {
+    alert(t('admin_delete_failed', { message: error.message }));
+    btn.disabled = false;
+    return;
+  }
+  streams = streams.filter(s => s.videoId !== videoId);
+  render(currentFiltered());
+}
 
 async function handleReport(btn) {
   if (!currentUser) return;
@@ -358,6 +378,15 @@ async function handleNoteEdit(btn) {
   if (note === null) return;
   const { error } = await sb.from('favorites').update({ note }).eq('user_id', currentUser.id).eq('video_id', videoId);
   if (!error) favorites.set(videoId, note);
+}
+
+async function checkAdmin() {
+  if (!currentUser) {
+    isAdmin = false;
+    return;
+  }
+  const { data } = await sb.from('profiles').select('is_admin').eq('id', currentUser.id).maybeSingle();
+  isAdmin = !!data?.is_admin;
 }
 
 async function loadFavorites() {
@@ -696,7 +725,7 @@ async function loadStreams() {
 
 sb.auth.onAuthStateChange(async (_event, session) => {
   currentUser = session?.user || null;
-  await Promise.all([loadFavorites(), loadUnlockedVideos()]);
+  await Promise.all([loadFavorites(), loadUnlockedVideos(), checkAdmin()]);
   renderAuthArea();
   await refreshQuotaInfo();
   render(currentFiltered());
@@ -720,7 +749,7 @@ async function init() {
   currentUser = session?.user || null;
   await loadCategories();
   populateCategoryFilter();
-  await Promise.all([loadFavorites(), loadUnlockedVideos()]);
+  await Promise.all([loadFavorites(), loadUnlockedVideos(), checkAdmin()]);
   renderAuthArea();
   await refreshQuotaInfo();
   await loadStreams();

@@ -84,6 +84,9 @@ const translations = {
     visibility_hidden: 'Low-rated',
     added_week: 'Past week',
     added_month: 'Past month',
+    admin_delete_button: '🗑️ Delete',
+    admin_delete_confirm: 'Permanently delete this link? This cannot be undone.',
+    admin_delete_failed: 'Delete failed: {message}',
   },
   ko: {
     site_title: '실시간 CCTV 라이브 모음',
@@ -170,6 +173,9 @@ const translations = {
     visibility_hidden: '저품질',
     added_week: '일주일 이내',
     added_month: '한달 이내',
+    admin_delete_button: '🗑️ 삭제',
+    admin_delete_confirm: '이 링크를 영구 삭제하시겠습니까? 되돌릴 수 없습니다.',
+    admin_delete_failed: '삭제 실패: {message}',
   },
   ja: {
     site_title: 'ライブCCTVストリーム',
@@ -256,6 +262,9 @@ const translations = {
     visibility_hidden: '低評価',
     added_week: '過去1週間',
     added_month: '過去1ヶ月',
+    admin_delete_button: '🗑️ 削除',
+    admin_delete_confirm: 'このリンクを完全に削除しますか？元に戻せません。',
+    admin_delete_failed: '削除に失敗しました: {message}',
   },
   zh: {
     site_title: 'YouTube实时CCTV直播合集',
@@ -342,6 +351,9 @@ const translations = {
     visibility_hidden: '低质量',
     added_week: '最近一周',
     added_month: '最近一个月',
+    admin_delete_button: '🗑️ 删除',
+    admin_delete_confirm: '确定要永久删除这个链接吗？此操作无法撤销。',
+    admin_delete_failed: '删除失败: {message}',
   },
   es: {
     site_title: 'Cámaras CCTV en Vivo',
@@ -428,6 +440,9 @@ const translations = {
     visibility_hidden: 'Baja calidad',
     added_week: 'Última semana',
     added_month: 'Último mes',
+    admin_delete_button: '🗑️ Eliminar',
+    admin_delete_confirm: '¿Eliminar este enlace permanentemente? No se puede deshacer.',
+    admin_delete_failed: 'Error al eliminar: {message}',
   },
 };
 
