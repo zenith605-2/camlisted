@@ -199,6 +199,8 @@ function render(list) {
     const dateHtml = isLiveType
       ? (s.startedAt ? `<span class="card-started">🕐 ${escapeHtml(formatRelativeTime(s.startedAt))}</span>` : '')
       : (s.publishedAt ? `<span class="card-started">📅 ${escapeHtml(formatRelativeTime(s.publishedAt))}</span>` : '');
+    const addedHtml = s.addedAt ? `<span class="card-added">📌 ${escapeHtml(formatRelativeTime(s.addedAt))}</span>` : '';
+    const isRecentlyAdded = s.addedAt && (Date.now() - new Date(s.addedAt).getTime() < 3 * 24 * 3600 * 1000);
 
     const actionsHtml = currentUser ? `
       <div class="card-actions">
@@ -213,6 +215,7 @@ function render(list) {
     card.innerHTML = `
       <div class="thumb-wrap">
         <span class="live-badge ${badgeClass}">${badgeText}</span>
+        ${isRecentlyAdded ? '<span class="new-badge">NEW</span>' : ''}
         ${thumbHtml}
       </div>
       <div class="card-body">
@@ -223,6 +226,7 @@ function render(list) {
         ${countryHtml}
         ${categoryHtml}
         ${dateHtml}
+        ${addedHtml}
         ${actionsHtml}
       </div>
     `;

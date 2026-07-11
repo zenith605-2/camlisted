@@ -392,6 +392,20 @@ body {
   background: var(--muted);
 }
 
+.new-badge {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  z-index: 1;
+  background: #22c55e;
+  color: #fff;
+  font-size: 0.65rem;
+  font-weight: 700;
+  padding: 3px 7px;
+  border-radius: 4px;
+  letter-spacing: 0.03em;
+}
+
 .card-body {
   padding: 12px 14px 14px;
 }
@@ -424,9 +438,11 @@ body {
   padding: 2px 8px;
 }
 
-.card-started {
+.card-started,
+.card-added {
   display: inline-block;
   margin-top: 8px;
+  margin-right: 8px;
   font-size: 0.7rem;
   color: var(--muted);
 }
