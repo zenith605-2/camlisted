@@ -629,13 +629,7 @@ submitForm.addEventListener('submit', async (e) => {
     thumbnail: `https://i.ytimg.com/vi/${videoId}/hqdefault_live.jpg`,
   });
   if (error) {
-    if (error.code === '23505') {
-      submitStatus.textContent = t('submit_duplicate');
-    } else if (error.message?.includes('submission_rate_limit_exceeded')) {
-      submitStatus.textContent = t('submit_rate_limited');
-    } else {
-      submitStatus.textContent = t('submit_failed', { message: error.message });
-    }
+    submitStatus.textContent = error.code === '23505' ? t('submit_duplicate') : t('submit_failed', { message: error.message });
     return;
   }
   submitStatus.textContent = t('submit_success');
