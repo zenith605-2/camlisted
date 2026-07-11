@@ -152,9 +152,25 @@ async function searchVideoByKeyword(keyword, maxResults = 25) {
     }));
 }
 
-// search.list는 프로젝트 기본 할당량이 하루 100회뿐이라(키워드 검색 15회를 빼면 여유가 크지 않음),
-// 채널 스캔은 하루에 이만큼만 처리하고 나머지는 다음날 이어서 처리한다.
-const MAX_CHANNEL_SCANS_PER_RUN = 30;
+// search.list는 유튜브 프로젝트 기본 할당량이 하루 100회로 고정이라(단가가 아니라 "횟수" 자체가 한도),
+// 이 예산을 넘지 않게 안전 여유를 두고 최대한 활용한다. 실제 남는 만큼을 전부 채널 스캔에 몰아준다
+// (채널 스캔이 키워드 검색보다 신규 발견 효율이 훨씬 좋음 — 채널당 카메라가 여러 개인 경우가 많아서).
+const SEARCH_BUDGET_PER_RUN = 95;
+const MAX_LIVE_KEYWORDS_PER_RUN = 20;
+const MAX_VIDEO_KEYWORDS_PER_RUN = 15;
+
+// 키워드 목록이 위 한도보다 길어지면, 매일 같은 키워드만 반복하지 않도록 날짜 기준으로 창을 옮겨가며 선택한다.
+// (키워드가 한도 이하면 매일 전부 사용 — 지금은 두 목록 다 한도 이내라 항상 전체 사용됨)
+function selectRotatingSubset(list, maxPerRun) {
+  if (list.length <= maxPerRun) return list;
+  const dayIndex = Math.floor(Date.now() / 86400000);
+  const start = (dayIndex * maxPerRun) % list.length;
+  const subset = [];
+  for (let i = 0; i < maxPerRun; i++) {
+    subset.push(list[(start + i) % list.length]);
+  }
+  return subset;
+}
 
 async function main() {
   const [keywordsRaw, keywordsVideoRaw, excludeRaw, categoriesResult] = await Promise.all([
@@ -287,10 +303,14 @@ async function main() {
   // 신규 탐색: 이미 DB에 존재하는(라이브/오프라인 불문) videoId는 후보에서 제외
   const knownIds = new Set(existingRows.map(r => r.video_id).filter(id => !toDelete.includes(id)));
   const candidateMap = new Map();
+  let searchCallsUsed = 0;
 
-  for (const keyword of keywords) {
+  const liveKeywordsToday = selectRotatingSubset(keywords, MAX_LIVE_KEYWORDS_PER_RUN);
+  console.log(`라이브 키워드 검색: 전체 ${keywords.length}개 중 오늘 ${liveKeywordsToday.length}개 사용`);
+  for (const keyword of liveKeywordsToday) {
     try {
       const results = await searchLiveByKeyword(keyword);
+      searchCallsUsed += 1;
       for (const r of results) {
         if (knownIds.has(r.videoId) || candidateMap.has(r.videoId)) continue;
         if (isExcluded(r.title, r.channelTitle)) continue;
@@ -298,12 +318,33 @@ async function main() {
       }
       console.log(`  검색 "${keyword}": ${results.length}건 조회`);
     } catch (err) {
+      searchCallsUsed += 1;
       console.error(`  검색 실패 "${keyword}":`, err.message);
+    }
+  }
+
+  // 라이브 외 일반 영상(블랙박스/야생동물/군중 등) 탐색
+  const videoKeywordsToday = selectRotatingSubset(keywordsVideo, MAX_VIDEO_KEYWORDS_PER_RUN);
+  console.log(`영상 키워드 검색: 전체 ${keywordsVideo.length}개 중 오늘 ${videoKeywordsToday.length}개 사용`);
+  for (const keyword of videoKeywordsToday) {
+    try {
+      const results = await searchVideoByKeyword(keyword);
+      searchCallsUsed += 1;
+      for (const r of results) {
+        if (knownIds.has(r.videoId) || candidateMap.has(r.videoId)) continue;
+        if (isExcluded(r.title, r.channelTitle)) continue;
+        candidateMap.set(r.videoId, r);
+      }
+      console.log(`  영상 검색 "${keyword}": ${results.length}건 조회`);
+    } catch (err) {
+      searchCallsUsed += 1;
+      console.error(`  영상 검색 실패 "${keyword}":`, err.message);
     }
   }
 
   // 채널 단위 전체 스캔: 이미 아는 채널(생존 행 + 이번에 새로 찾은 후보)의 다른 라이브도 함께 수집.
   // 채널당 1회만 수행하도록 scanned_channels에 기록해 매일 반복 조회하지 않음(쿼터 절약).
+  // 키워드 검색에 쓰고 남은 예산을 전부 여기에 투입 (채널 스캔이 신규 발견 효율이 가장 좋음).
   const { data: scannedRows } = await supabase.from('scanned_channels').select('channel_id');
   const scannedSet = new Set((scannedRows || []).map(r => r.channel_id));
 
@@ -315,9 +356,10 @@ async function main() {
   }
   for (const c of candidateMap.values()) if (c.contentType === 'live' && c.channelId) observedChannelIds.add(c.channelId);
 
+  const channelScanBudget = Math.max(0, SEARCH_BUDGET_PER_RUN - searchCallsUsed);
   const unscannedChannelIds = [...observedChannelIds].filter(id => !scannedSet.has(id));
-  const channelIdsToScan = unscannedChannelIds.slice(0, MAX_CHANNEL_SCANS_PER_RUN);
-  console.log(`채널 전체 스캔: 대상 ${unscannedChannelIds.length}개 중 ${channelIdsToScan.length}개 처리 (나머지는 다음 실행에 이어서)`);
+  const channelIdsToScan = unscannedChannelIds.slice(0, channelScanBudget);
+  console.log(`채널 전체 스캔: 대상 ${unscannedChannelIds.length}개 중 ${channelIdsToScan.length}개 처리 (남은 검색 예산 ${channelScanBudget}회, 나머지는 다음 실행에 이어서)`);
 
   for (const channelId of channelIdsToScan) {
     try {
@@ -337,21 +379,6 @@ async function main() {
       .from('scanned_channels')
       .upsert(channelIdsToScan.map(channel_id => ({ channel_id })), { onConflict: 'channel_id' });
     if (error) console.error('scanned_channels 기록 실패:', error.message);
-  }
-
-  // 라이브 외 일반 영상(블랙박스/야생동물/군중 등) 탐색
-  for (const keyword of keywordsVideo) {
-    try {
-      const results = await searchVideoByKeyword(keyword);
-      for (const r of results) {
-        if (knownIds.has(r.videoId) || candidateMap.has(r.videoId)) continue;
-        if (isExcluded(r.title, r.channelTitle)) continue;
-        candidateMap.set(r.videoId, r);
-      }
-      console.log(`  영상 검색 "${keyword}": ${results.length}건 조회`);
-    } catch (err) {
-      console.error(`  영상 검색 실패 "${keyword}":`, err.message);
-    }
   }
 
   console.log(`신규 후보 ${candidateMap.size}건 검증 중...`);
