@@ -4,8 +4,8 @@ const SUPABASE_ANON_KEY = 'sb_publishable_IPRYfUNkhfTLWohT6gjXYw_APGRcPuP';
 
 const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-const CATEGORY_KEYS = ['beach', 'parking', 'traffic', 'harbor', 'mountain', 'downtown', 'dashcam', 'wildlife', 'crowd', 'other'];
 const VIEW_MODE_KEY = 'viewMode';
+const NEW_WINDOW_MS = 7 * 24 * 3600 * 1000; // 7일 이내는 "신규" 링크로 취급 (열람권 게이팅 대상)
 
 const grid = document.getElementById('grid');
 const emptyState = document.getElementById('emptyState');
@@ -32,14 +32,29 @@ const categoryFilter = document.getElementById('categoryFilter');
 const countryFilter = document.getElementById('countryFilter');
 const qualityFilter = document.getElementById('qualityFilter');
 const statusFilter = document.getElementById('statusFilter');
+const visibilityFilter = document.getElementById('visibilityFilter');
 const favoritesOnlyCheckbox = document.getElementById('favoritesOnlyCheckbox');
 const gridViewBtn = document.getElementById('gridViewBtn');
 const listViewBtn = document.getElementById('listViewBtn');
+const quotaInfo = document.getElementById('quotaInfo');
 
 let streams = [];
 let currentUser = null;
 let favorites = new Map(); // videoId -> note
+let unlockedVideos = new Set();
+let categoriesList = []; // [{key, label_en, label_ko, ...}]
 const pageLoadTime = Date.now();
+
+function categoryLabel(key) {
+  const row = categoriesList.find(c => c.key === key);
+  if (!row) return key;
+  return row[`label_${currentLang}`] || row.label_en || key;
+}
+
+function isNewStream(s) {
+  if (!s.addedAt) return false;
+  return Date.now() - new Date(s.addedAt).getTime() < NEW_WINDOW_MS;
+}
 
 function escapeHtml(str) {
   const div = document.createElement('div');
@@ -77,6 +92,8 @@ function mapRow(row) {
     source: row.source,
     addedBy: row.added_by,
     upvoteCount: row.upvote_count || 0,
+    downvoteCount: row.downvote_count || 0,
+    visibility: row.visibility || 'listed',
     status: row.status || 'live',
     country: row.country || null,
     category: row.category || null,
@@ -94,6 +111,7 @@ function currentFiltered() {
   const country = countryFilter.value;
   const quality = qualityFilter.value;
   const status = statusFilter.value;
+  const visibility = visibilityFilter.value;
   const favoritesOnly = favoritesOnlyCheckbox.checked;
 
   const filtered = streams.filter(s => {
@@ -103,6 +121,7 @@ function currentFiltered() {
     if (country && s.country !== country) return false;
     if (quality && s.maxQuality !== quality) return false;
     if (status && s.status !== status) return false;
+    if (visibility && s.visibility !== visibility) return false;
     if (favoritesOnly && !favorites.has(s.videoId)) return false;
     return true;
   });
@@ -127,8 +146,9 @@ function render(list) {
       lastChannel = s.channelTitle;
     }
 
+    const isLocked = isNewStream(s) && !unlockedVideos.has(s.videoId);
     const card = document.createElement('div');
-    card.className = 'card';
+    card.className = 'card' + (isLocked ? ' locked' : '');
     card.dataset.videoId = s.videoId;
     card.dataset.title = s.title;
     const isLiveType = s.contentType === 'live';
@@ -169,9 +189,9 @@ function render(list) {
 
     const categoryHtml = currentUser
       ? `<select class="card-category-select" data-video-id="${escapeHtml(s.videoId)}">
-          ${CATEGORY_KEYS.map(c => `<option value="${c}" ${(s.category || 'other') === c ? 'selected' : ''}>${escapeHtml(t('category_' + c))}</option>`).join('')}
+          ${categoriesList.map(c => `<option value="${c.key}" ${(s.category || 'other') === c.key ? 'selected' : ''}>${escapeHtml(categoryLabel(c.key))}</option>`).join('')}
         </select>`
-      : (s.category ? `<span class="card-keyword">${escapeHtml(t('category_' + s.category))}</span>` : '');
+      : (s.category ? `<span class="card-keyword">${escapeHtml(categoryLabel(s.category))}</span>` : '');
     const countryHtml = s.country ? `<span class="card-keyword">${escapeHtml(countryDisplayName(s.country))}</span>` : '';
     const dateHtml = isLiveType
       ? (s.startedAt ? `<span class="card-started">🕐 ${escapeHtml(formatRelativeTime(s.startedAt))}</span>` : '')
@@ -180,6 +200,7 @@ function render(list) {
     const actionsHtml = currentUser ? `
       <div class="card-actions">
         ${s.source === 'user' && s.addedBy !== currentUser.id ? `<button type="button" class="upvote-btn" data-video-id="${escapeHtml(s.videoId)}">${t('upvote_button')}</button>` : ''}
+        <button type="button" class="downvote-btn" data-video-id="${escapeHtml(s.videoId)}">${t('downvote_button')}</button>
         <button type="button" class="favorite-btn ${isFav ? 'active' : ''}" data-video-id="${escapeHtml(s.videoId)}">${isFav ? t('favorite_remove') : t('favorite_add')}</button>
         ${isFav ? `<button type="button" class="note-btn" data-video-id="${escapeHtml(s.videoId)}">📝</button>` : ''}
         <button type="button" class="report-btn" data-video-id="${escapeHtml(s.videoId)}">${t('report_button')}</button>
@@ -215,6 +236,9 @@ grid.addEventListener('click', async (e) => {
   const upvoteBtn = e.target.closest('.upvote-btn');
   if (upvoteBtn) return handleUpvote(upvoteBtn);
 
+  const downvoteBtn = e.target.closest('.downvote-btn');
+  if (downvoteBtn) return handleDownvote(downvoteBtn);
+
   const favoriteBtn = e.target.closest('.favorite-btn');
   if (favoriteBtn) return handleFavorite(favoriteBtn);
 
@@ -223,9 +247,30 @@ grid.addEventListener('click', async (e) => {
 
   const card = e.target.closest('.card');
   if (card) {
-    openModal(card.dataset.videoId, card.dataset.title);
+    await openCard(card.dataset.videoId, card.dataset.title);
   }
 });
+
+async function openCard(videoId, title) {
+  const s = streams.find(x => x.videoId === videoId);
+  if (s && isNewStream(s) && !unlockedVideos.has(videoId)) {
+    const result = await tryUnlock(videoId);
+    if (!result.ok) {
+      showUnlockBlocked(result.reason, title);
+      return;
+    }
+    unlockedVideos.add(videoId);
+    refreshQuotaInfo();
+    render(currentFiltered()); // 잠금 아이콘 해제 반영
+  }
+  openModal(videoId, title);
+}
+
+async function tryUnlock(videoId) {
+  const { data, error } = await sb.rpc('unlock_video', { p_video_id: videoId });
+  if (error) return { ok: false, reason: 'error' };
+  return data;
+}
 
 grid.addEventListener('change', async (e) => {
   const sel = e.target.closest('.card-category-select');
@@ -262,6 +307,20 @@ async function handleUpvote(btn) {
     btn.textContent = t('upvote_done');
     const s = streams.find(x => x.videoId === videoId);
     if (s) s.upvoteCount += 1;
+  }
+}
+
+async function handleDownvote(btn) {
+  if (!currentUser) return;
+  btn.disabled = true;
+  const videoId = btn.dataset.videoId;
+  const { error } = await sb.from('downvotes').insert({ video_id: videoId, user_id: currentUser.id });
+  if (error) {
+    btn.textContent = error.code === '23505' ? t('downvote_already') : t('downvote_failed');
+  } else {
+    btn.textContent = t('downvote_done');
+    const s = streams.find(x => x.videoId === videoId);
+    if (s) s.downvoteCount += 1;
   }
 }
 
@@ -339,7 +398,15 @@ async function reportQualityOnce(videoId, player) {
   }
 }
 
+function showUnlockBlocked(reason, title) {
+  modalTitle.textContent = title || '';
+  modal.querySelector('.modal-url-row').hidden = true;
+  modalPlayer.innerHTML = `<div class="unlock-message">${escapeHtml(t(reason === 'login_required' ? 'unlock_login_required' : 'unlock_no_quota'))}</div>`;
+  modal.hidden = false;
+}
+
 function openModal(videoId, title) {
+  modal.querySelector('.modal-url-row').hidden = false;
   modalPlayer.innerHTML = `<div class="player-loading">${escapeHtml(t('loading'))}</div>`;
   const url = `https://www.youtube.com/watch?v=${encodeURIComponent(videoId)}`;
   modalOpenNewTab.href = url;
@@ -393,7 +460,7 @@ modalCopyBtn.addEventListener('click', async () => {
 });
 
 searchInput.addEventListener('input', () => render(currentFiltered()));
-[contentTypeFilter, categoryFilter, countryFilter, qualityFilter, statusFilter].forEach(el => {
+[contentTypeFilter, categoryFilter, countryFilter, qualityFilter, statusFilter, visibilityFilter].forEach(el => {
   el.addEventListener('change', () => render(currentFiltered()));
 });
 favoritesOnlyCheckbox.addEventListener('change', () => render(currentFiltered()));
@@ -508,6 +575,43 @@ submitForm.addEventListener('submit', async (e) => {
   await loadStreams();
 });
 
+async function loadCategories() {
+  const { data, error } = await sb.from('categories').select('*').order('sort_order');
+  if (!error && data) categoriesList = data;
+}
+
+function populateCategoryFilter() {
+  const current = categoryFilter.value;
+  categoryFilter.innerHTML = `<option value="">${t('filter_all')}</option>` +
+    categoriesList.map(c => `<option value="${c.key}">${escapeHtml(categoryLabel(c.key))}</option>`).join('');
+  categoryFilter.value = categoriesList.some(c => c.key === current) ? current : '';
+}
+
+async function loadUnlockedVideos() {
+  if (!currentUser) {
+    unlockedVideos = new Set();
+    return;
+  }
+  const { data, error } = await sb.from('unlocked_videos').select('video_id').eq('user_id', currentUser.id);
+  if (!error && data) unlockedVideos = new Set(data.map(d => d.video_id));
+}
+
+async function refreshQuotaInfo() {
+  if (!currentUser) {
+    quotaInfo.hidden = true;
+    return;
+  }
+  const today = new Date().toISOString().slice(0, 10);
+  const [{ data: viewLogRow }, { data: profileRow }] = await Promise.all([
+    sb.from('view_log').select('view_count').eq('user_id', currentUser.id).eq('view_date', today).maybeSingle(),
+    sb.from('profiles').select('bonus_credits').eq('id', currentUser.id).maybeSingle(),
+  ]);
+  const remaining = Math.max(0, 5 - (viewLogRow?.view_count || 0));
+  const credits = profileRow?.bonus_credits || 0;
+  quotaInfo.textContent = t('quota_status', { remaining, credits });
+  quotaInfo.hidden = false;
+}
+
 function populateCountryFilter() {
   const countries = [...new Set(streams.map(s => s.country).filter(Boolean))].sort();
   const current = countryFilter.value;
@@ -537,8 +641,9 @@ async function loadStreams() {
 
 sb.auth.onAuthStateChange(async (_event, session) => {
   currentUser = session?.user || null;
-  await loadFavorites();
+  await Promise.all([loadFavorites(), loadUnlockedVideos()]);
   renderAuthArea();
+  await refreshQuotaInfo();
   render(currentFiltered());
 });
 
@@ -546,6 +651,8 @@ langSelect.addEventListener('change', () => {
   setLang(langSelect.value);
   applyStaticTranslations();
   renderAuthArea();
+  populateCategoryFilter();
+  refreshQuotaInfo();
   loadStreams();
 });
 
@@ -556,8 +663,11 @@ async function init() {
 
   const { data: { session } } = await sb.auth.getSession();
   currentUser = session?.user || null;
-  await loadFavorites();
+  await loadCategories();
+  populateCategoryFilter();
+  await Promise.all([loadFavorites(), loadUnlockedVideos()]);
   renderAuthArea();
+  await refreshQuotaInfo();
   await loadStreams();
 }
 

@@ -362,6 +362,7 @@ body {
 
 .report-btn,
 .upvote-btn,
+.downvote-btn,
 .favorite-btn {
   flex: 1;
   background: transparent;
@@ -393,8 +394,14 @@ body {
   color: #4caf50;
 }
 
+.downvote-btn:hover:not(:disabled) {
+  border-color: #ff9800;
+  color: #ff9800;
+}
+
 .report-btn:disabled,
-.upvote-btn:disabled {
+.upvote-btn:disabled,
+.downvote-btn:disabled {
   cursor: default;
   opacity: 0.7;
 }
@@ -619,4 +626,137 @@ body {
 .modal-open-new-tab:hover {
   background: var(--accent);
   border-color: var(--accent);
+}
+
+.quota-info {
+  text-align: center;
+  color: var(--muted);
+  font-size: 0.78rem;
+  margin-bottom: 10px;
+}
+
+.site-footer {
+  text-align: center;
+  padding: 24px;
+  color: var(--muted);
+  font-size: 0.8rem;
+}
+
+.site-footer a {
+  color: var(--muted);
+}
+
+.card.locked {
+  cursor: pointer;
+}
+
+.card.locked .thumb-wrap::after {
+  content: '🔒';
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  background: rgba(0, 0, 0, 0.55);
+}
+
+.unlock-message {
+  padding: 30px;
+  text-align: center;
+  color: var(--text);
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+.policy-page {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 40px 24px;
+  line-height: 1.7;
+}
+
+.policy-page h1 {
+  margin-top: 0;
+}
+
+.policy-page a {
+  color: var(--accent);
+}
+
+.admin-list {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 24px;
+  color: var(--muted);
+}
+
+.admin-row {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  margin-bottom: 10px;
+  background: var(--card-bg);
+}
+
+.admin-thumb {
+  width: 120px;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border-radius: 6px;
+  background: #000;
+  flex: 0 0 auto;
+}
+
+.admin-info {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.admin-title {
+  color: var(--text);
+  font-weight: 600;
+  font-size: 0.95rem;
+  margin-bottom: 4px;
+}
+
+.admin-meta {
+  font-size: 0.8rem;
+  margin-bottom: 6px;
+}
+
+.admin-info a {
+  color: var(--accent);
+  font-size: 0.8rem;
+}
+
+.admin-actions {
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.admin-actions button {
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  padding: 6px 10px;
+  font-size: 0.8rem;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.admin-actions .delete-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.admin-actions .toggle-visibility-btn:hover {
+  border-color: #4caf50;
+  color: #4caf50;
 }

@@ -19,6 +19,7 @@
     <button type="button" id="leaderboardBtn" class="auth-btn" data-i18n="leaderboard_button">🏆 Leaderboard</button>
     <div id="authArea" class="auth-area"></div>
   </div>
+  <div id="quotaInfo" class="quota-info" hidden></div>
   <h1 data-i18n="site_h1">YouTube Live CCTV Collection</h1>
   <p class="subtitle" data-i18n="site_subtitle">Automatically collecting live CCTV streams from YouTube every day.</p>
   <div class="controls">
@@ -32,17 +33,7 @@
       <option value="video" data-i18n="content_type_video">Video</option>
     </select>
     <select id="categoryFilter">
-      <option value="" data-i18n="filter_all">All</option>
-      <option value="beach" data-i18n="category_beach">Beach</option>
-      <option value="parking" data-i18n="category_parking">Parking</option>
-      <option value="traffic" data-i18n="category_traffic">Traffic</option>
-      <option value="harbor" data-i18n="category_harbor">Harbor</option>
-      <option value="mountain" data-i18n="category_mountain">Mountain</option>
-      <option value="downtown" data-i18n="category_downtown">Downtown</option>
-      <option value="dashcam" data-i18n="category_dashcam">Dashcam</option>
-      <option value="wildlife" data-i18n="category_wildlife">Wildlife</option>
-      <option value="crowd" data-i18n="category_crowd">Crowd</option>
-      <option value="other" data-i18n="category_other">Other</option>
+      <option value="">All</option>
     </select>
     <select id="countryFilter">
       <option value="" data-i18n="filter_all">All</option>
@@ -62,6 +53,11 @@
       <option value="live" data-i18n="status_live">Live</option>
       <option value="" data-i18n="filter_all">All</option>
       <option value="offline" data-i18n="status_offline">Offline</option>
+    </select>
+    <select id="visibilityFilter">
+      <option value="listed" data-i18n="visibility_listed">Normal</option>
+      <option value="" data-i18n="filter_all">All</option>
+      <option value="hidden" data-i18n="visibility_hidden">Low-rated</option>
     </select>
     <label class="favorites-only-label">
       <input type="checkbox" id="favoritesOnlyCheckbox">
@@ -109,6 +105,11 @@
     <ol id="leaderboardList" class="leaderboard-list"></ol>
   </div>
 </div>
+
+<footer class="site-footer">
+  <a href="privacy.html" data-i18n="privacy_policy">Privacy Policy</a>
+  · <a href="admin.html">Admin</a>
+</footer>
 
 <script src="https://www.youtube.com/iframe_api"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>

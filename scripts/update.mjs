@@ -13,7 +13,6 @@ const ROOT = path.resolve(__dirname, '..');
 const KEYWORDS_PATH = path.join(ROOT, 'config', 'keywords.json');
 const KEYWORDS_VIDEO_PATH = path.join(ROOT, 'config', 'keywords-video.json');
 const EXCLUDE_KEYWORDS_PATH = path.join(ROOT, 'config', 'exclude-keywords.json');
-const CATEGORIES_PATH = path.join(ROOT, 'config', 'categories.json');
 
 const API_KEY = process.env.YOUTUBE_API_KEY;
 const SUPABASE_URL = process.env.SUPABASE_URL;
@@ -158,16 +157,17 @@ async function searchVideoByKeyword(keyword, maxResults = 25) {
 const MAX_CHANNEL_SCANS_PER_RUN = 30;
 
 async function main() {
-  const [keywordsRaw, keywordsVideoRaw, excludeRaw, categoriesRaw] = await Promise.all([
+  const [keywordsRaw, keywordsVideoRaw, excludeRaw, categoriesResult] = await Promise.all([
     readFile(KEYWORDS_PATH, 'utf-8'),
     readFile(KEYWORDS_VIDEO_PATH, 'utf-8').catch(() => '{"keywords":[]}'),
     readFile(EXCLUDE_KEYWORDS_PATH, 'utf-8').catch(() => '{"keywords":[]}'),
-    readFile(CATEGORIES_PATH, 'utf-8').catch(() => '{}'),
+    supabase.from('categories').select('key, keywords'),
   ]);
   const keywords = JSON.parse(keywordsRaw).keywords || [];
   const keywordsVideo = JSON.parse(keywordsVideoRaw).keywords || [];
   const excludeKeywords = (JSON.parse(excludeRaw).keywords || []).map(k => k.toLowerCase());
-  const categories = JSON.parse(categoriesRaw);
+  if (categoriesResult.error) throw categoriesResult.error;
+  const categoryRows = (categoriesResult.data || []).filter(c => c.key !== 'other');
 
   const isExcluded = (title, channelTitle) => {
     const haystack = `${title} ${channelTitle}`.toLowerCase();
@@ -176,8 +176,8 @@ async function main() {
 
   const classifyCategory = (title, channelTitle) => {
     const haystack = `${title} ${channelTitle}`.toLowerCase();
-    for (const [cat, kws] of Object.entries(categories)) {
-      if (kws.some(k => haystack.includes(k.toLowerCase()))) return cat;
+    for (const row of categoryRows) {
+      if ((row.keywords || []).some(k => haystack.includes(k.toLowerCase()))) return row.key;
     }
     return 'other';
   };
@@ -191,6 +191,7 @@ async function main() {
 
   const toDelete = []; // 오탐(제외 키워드) 확정 삭제
   const toUpdate = []; // 상태전환/정보보강 업데이트
+  const creditRecipients = []; // 이번에 처음 검증 통과한 유저 제보의 제보자(added_by)
   let validCount = 0;
   let offlineCount = 0;
 
@@ -226,6 +227,10 @@ async function main() {
       patch.channel_title = channelTitle;
       patch.thumbnail = row.thumbnail || snippetThumbnail(snippet);
       needsUpdate = true;
+      // 유저 제보가 이번에 처음으로 "실제 유효함"이 검증됨 -> 제보자에게 열람권 크레딧 적립 대상
+      if (row.source === 'user' && row.added_by) {
+        creditRecipients.push(row.added_by);
+      }
     }
     if (!row.channel_id && snippet.channelId) {
       patch.channel_id = snippet.channelId;
@@ -256,6 +261,14 @@ async function main() {
     const { video_id, ...patch } = u;
     const { error } = await supabase.from('streams').update(patch).eq('video_id', video_id);
     if (error) console.error('업데이트 실패:', video_id, error.message);
+  }
+
+  for (const userId of new Set(creditRecipients)) {
+    const { error } = await supabase.rpc('grant_bonus_credit', { p_user_id: userId, p_amount: 1 });
+    if (error) console.error('크레딧 적립 실패:', userId, error.message);
+  }
+  if (creditRecipients.length) {
+    console.log(`  -> 열람권 크레딧 적립: ${new Set(creditRecipients).size}명`);
   }
 
   // 국가 정보가 비어있는 현재 유효한 행들에 한해 channels.list로 조회 후 채움
