@@ -410,6 +410,13 @@ window.onYouTubeIframeAPIReady = () => {
   ytApiQueue.splice(0).forEach(fn => fn());
 };
 
+// iframe_api 스크립트가 이 코드보다 먼저 로드를 끝내버리면 onYouTubeIframeAPIReady 콜백이
+// 우리가 정의하기 전에 이미 호출되고 지나가버려서(YT.Player는 있는데 ytApiReady는 영원히 false),
+// 모달이 "불러오는 중..."에서 멈추는 문제가 생긴다. 이미 로드가 끝나 있으면 즉시 ready 처리.
+if (window.YT && window.YT.Player) {
+  window.onYouTubeIframeAPIReady();
+}
+
 function withYtApi(fn) {
   if (ytApiReady && window.YT && window.YT.Player) fn();
   else ytApiQueue.push(fn);
