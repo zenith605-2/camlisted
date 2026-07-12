@@ -12,8 +12,150 @@ const accountDeleteBtn = document.getElementById('accountDeleteBtn');
 const accountFavoritesCount = document.getElementById('accountFavoritesCount');
 const exportCsvBtn = document.getElementById('exportCsvBtn');
 const exportTxtBtn = document.getElementById('exportTxtBtn');
+const adminSections = document.getElementById('adminSections');
+const adminFlaggedList = document.getElementById('adminFlaggedList');
+const adminUserList = document.getElementById('adminUserList');
 
 let currentUser = null;
+let isAdmin = false;
+
+function escapeHtml(str) {
+  const div = document.createElement('div');
+  div.textContent = str ?? '';
+  return div.innerHTML;
+}
+
+async function checkAdmin() {
+  if (!currentUser) {
+    isAdmin = false;
+    return;
+  }
+  const { data } = await sb.from('profiles').select('is_admin').eq('id', currentUser.id).maybeSingle();
+  isAdmin = !!data?.is_admin;
+}
+
+function flaggedRowHtml(r) {
+  return `
+    <div class="admin-row" data-video-id="${escapeHtml(r.video_id)}" data-visibility="${r.visibility}">
+      <img class="admin-thumb" src="${r.thumbnail || ''}" alt="">
+      <div class="admin-info">
+        <div class="admin-title">${escapeHtml(r.title || r.video_id)}</div>
+        <div class="admin-meta">
+          ${t('admin_channel_label')}: ${escapeHtml(r.channel_title || t('admin_no_info'))} ·
+          👎 ${r.downvote_count || 0} · 🚩 ${r.report_count || 0} ·
+          ${r.visibility === 'hidden' ? t('admin_status_hidden') : t('admin_status_listed')}
+        </div>
+        <a href="https://www.youtube.com/watch?v=${encodeURIComponent(r.video_id)}" target="_blank" rel="noopener">${t('watch_on_youtube')}</a>
+      </div>
+      <div class="admin-actions">
+        <button type="button" class="toggle-visibility-btn">${r.visibility === 'hidden' ? t('admin_show_button') : t('admin_hide_button')}</button>
+        <button type="button" class="delete-btn">${t('admin_delete_button')}</button>
+      </div>
+    </div>
+  `;
+}
+
+async function loadFlagged() {
+  adminFlaggedList.textContent = t('loading');
+  const { data, error } = await sb
+    .from('streams')
+    .select('*')
+    .or('visibility.eq.hidden,downvote_count.gt.0,report_count.gt.0')
+    .order('downvote_count', { ascending: false });
+
+  if (error) {
+    adminFlaggedList.textContent = t('admin_flagged_load_failed', { message: error.message });
+    return;
+  }
+  if (!data || data.length === 0) {
+    adminFlaggedList.textContent = t('admin_flagged_empty');
+    return;
+  }
+  adminFlaggedList.innerHTML = data.map(flaggedRowHtml).join('');
+}
+
+adminFlaggedList.addEventListener('click', async (e) => {
+  const row = e.target.closest('.admin-row');
+  if (!row) return;
+  const videoId = row.dataset.videoId;
+
+  if (e.target.closest('.toggle-visibility-btn')) {
+    const next = row.dataset.visibility === 'hidden' ? 'listed' : 'hidden';
+    const { error } = await sb.from('streams').update({ visibility: next }).eq('video_id', videoId);
+    if (error) {
+      alert(t('admin_action_failed', { message: error.message }));
+      return;
+    }
+    await loadFlagged();
+  }
+
+  if (e.target.closest('.delete-btn')) {
+    if (!confirm(t('admin_delete_confirm'))) return;
+    const { error } = await sb.from('streams').delete().eq('video_id', videoId);
+    if (error) {
+      alert(t('admin_delete_failed', { message: error.message }));
+      return;
+    }
+    await sb.from('blocklist').insert({ video_id: videoId, blocked_by: currentUser.id });
+    await loadFlagged();
+  }
+});
+
+function userRowHtml(u) {
+  return `
+    <div class="admin-row" data-user-id="${escapeHtml(u.id)}" data-is-admin="${u.is_admin}">
+      <img class="admin-thumb user-avatar" src="${u.avatar_url || ''}" alt="">
+      <div class="admin-info">
+        <div class="admin-title">${escapeHtml(u.display_name || t('admin_no_nickname'))}</div>
+        <div class="admin-meta">
+          ${t('admin_submissions_label')} ${u.submissionCount} · ${t('admin_joined_label')} ${new Date(u.created_at).toLocaleDateString()} ·
+          ${u.is_admin ? t('admin_role_admin') : t('admin_role_user')}
+        </div>
+      </div>
+      <div class="admin-actions">
+        <button type="button" class="toggle-admin-btn">${u.is_admin ? t('admin_revoke_button') : t('admin_promote_button')}</button>
+      </div>
+    </div>
+  `;
+}
+
+async function loadUsers() {
+  adminUserList.textContent = t('loading');
+  const [{ data: profiles, error: profileErr }, { data: submissions, error: subErr }] = await Promise.all([
+    sb.from('profiles').select('id, display_name, avatar_url, is_admin, created_at').order('created_at'),
+    sb.from('streams').select('added_by').not('added_by', 'is', null),
+  ]);
+  if (profileErr) {
+    adminUserList.textContent = t('admin_users_load_failed', { message: profileErr.message });
+    return;
+  }
+  const counts = new Map();
+  if (!subErr) {
+    for (const row of submissions || []) {
+      counts.set(row.added_by, (counts.get(row.added_by) || 0) + 1);
+    }
+  }
+  const rows = (profiles || []).map(u => ({ ...u, submissionCount: counts.get(u.id) || 0 }));
+  if (!rows.length) {
+    adminUserList.textContent = t('admin_users_empty');
+    return;
+  }
+  adminUserList.innerHTML = rows.map(userRowHtml).join('');
+}
+
+adminUserList.addEventListener('click', async (e) => {
+  const row = e.target.closest('.admin-row');
+  if (!row || !e.target.closest('.toggle-admin-btn')) return;
+  const userId = row.dataset.userId;
+  const nextIsAdmin = row.dataset.isAdmin !== 'true';
+  if (!confirm(nextIsAdmin ? t('admin_promote_confirm') : t('admin_revoke_confirm'))) return;
+  const { error } = await sb.rpc('set_user_admin', { p_user_id: userId, p_is_admin: nextIsAdmin });
+  if (error) {
+    alert(t('admin_action_failed', { message: error.message }));
+    return;
+  }
+  await loadUsers();
+});
 
 async function loadMyFavorites() {
   const { data: favRows, error: favErr } = await sb
@@ -104,6 +246,12 @@ async function refresh() {
   accountNickname.textContent = data?.display_name || t('anonymous');
   const { count } = await sb.from('favorites').select('*', { count: 'exact', head: true }).eq('user_id', currentUser.id);
   accountFavoritesCount.textContent = t('account_favorites_count', { n: count || 0 });
+
+  await checkAdmin();
+  adminSections.hidden = !isAdmin;
+  if (isAdmin) {
+    await Promise.all([loadFlagged(), loadUsers()]);
+  }
 }
 
 accountEditNicknameBtn.addEventListener('click', async () => {
