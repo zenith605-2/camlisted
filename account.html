@@ -29,8 +29,11 @@
     <section class="account-section">
       <h2 data-i18n="account_favorites_heading">My Favorites</h2>
       <p id="accountFavoritesCount"></p>
-      <button type="button" id="exportCsvBtn" class="auth-btn" data-i18n="account_export_csv">Export as Excel (CSV)</button>
-      <button type="button" id="exportTxtBtn" class="auth-btn" data-i18n="account_export_txt">Export as TXT</button>
+      <div id="favoritesList" class="favorites-list"></div>
+      <div class="account-export-buttons">
+        <button type="button" id="exportXlsxBtn" class="auth-btn" data-i18n="account_export_xlsx">Export as Excel (XLSX)</button>
+        <button type="button" id="exportTxtBtn" class="auth-btn" data-i18n="account_export_txt">Export as TXT</button>
+      </div>
     </section>
 
     <div id="adminSections" hidden>
@@ -54,6 +57,7 @@
 </main>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 <script src="js/i18n.js"></script>
 <script src="js/account.js"></script>
 </body>

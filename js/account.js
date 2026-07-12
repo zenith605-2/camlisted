@@ -10,7 +10,8 @@ const accountNickname = document.getElementById('accountNickname');
 const accountEditNicknameBtn = document.getElementById('accountEditNicknameBtn');
 const accountDeleteBtn = document.getElementById('accountDeleteBtn');
 const accountFavoritesCount = document.getElementById('accountFavoritesCount');
-const exportCsvBtn = document.getElementById('exportCsvBtn');
+const favoritesList = document.getElementById('favoritesList');
+const exportXlsxBtn = document.getElementById('exportXlsxBtn');
 const exportTxtBtn = document.getElementById('exportTxtBtn');
 const adminSections = document.getElementById('adminSections');
 const adminFlaggedList = document.getElementById('adminFlaggedList');
@@ -167,21 +168,65 @@ async function loadMyFavorites() {
   const videoIds = favRows.map(f => f.video_id);
   const { data: streamRows } = await sb
     .from('streams')
-    .select('video_id, title, channel_title, thumbnail')
+    .select('video_id, title, channel_title, thumbnail, content_type')
     .in('video_id', videoIds);
   const streamMap = new Map((streamRows || []).map(s => [s.video_id, s]));
 
   return favRows.map(f => {
     const s = streamMap.get(f.video_id) || {};
     return {
+      videoId: f.video_id,
       title: s.title || '',
       channel: s.channel_title || '',
+      contentType: s.content_type || 'live',
       url: `https://www.youtube.com/watch?v=${f.video_id}`,
       thumbnail: s.thumbnail || `https://i.ytimg.com/vi/${f.video_id}/hqdefault.jpg`,
       note: f.note || '',
     };
   });
 }
+
+function favoriteRowHtml(item, index) {
+  return `
+    <div class="favorite-row" data-video-id="${escapeHtml(item.videoId)}">
+      <span class="favorite-row-num">${index + 1}</span>
+      <img class="favorite-row-thumb" src="${escapeHtml(item.thumbnail)}" alt="">
+      <div class="favorite-row-body">
+        <div class="favorite-row-title">${escapeHtml(item.title || item.videoId)}</div>
+        <div class="favorite-row-meta">
+          ${escapeHtml(item.channel)} · ${item.contentType === 'live' ? t('content_type_live') : t('content_type_video')}
+          ${item.note ? ` · 📝 ${escapeHtml(item.note)}` : ''}
+        </div>
+      </div>
+      <button type="button" class="favorite-remove-btn" data-video-id="${escapeHtml(item.videoId)}">${t('account_favorite_remove_button')}</button>
+    </div>
+  `;
+}
+
+async function refreshFavoritesSection() {
+  const { count } = await sb.from('favorites').select('*', { count: 'exact', head: true }).eq('user_id', currentUser.id);
+  const items = await loadMyFavorites();
+  const liveCount = items.filter(i => i.contentType === 'live').length;
+  const videoCount = items.filter(i => i.contentType === 'video').length;
+  accountFavoritesCount.textContent = t('account_favorites_count_breakdown', { n: count || 0, live: liveCount, video: videoCount });
+  favoritesList.innerHTML = items.length
+    ? items.map(favoriteRowHtml).join('')
+    : `<p class="empty-state">${escapeHtml(t('account_export_empty'))}</p>`;
+}
+
+favoritesList.addEventListener('click', async (e) => {
+  const btn = e.target.closest('.favorite-remove-btn');
+  if (!btn) return;
+  const videoId = btn.dataset.videoId;
+  btn.disabled = true;
+  const { error } = await sb.from('favorites').delete().eq('user_id', currentUser.id).eq('video_id', videoId);
+  if (error) {
+    alert(t('admin_action_failed', { message: error.message }));
+    btn.disabled = false;
+    return;
+  }
+  await refreshFavoritesSection();
+});
 
 function downloadFile(filename, content, mimeType) {
   const blob = new Blob([content], { type: mimeType });
@@ -195,32 +240,37 @@ function downloadFile(filename, content, mimeType) {
   URL.revokeObjectURL(url);
 }
 
-function csvEscape(value) {
-  const str = String(value ?? '');
-  if (/[",\n]/.test(str)) return `"${str.replace(/"/g, '""')}"`;
-  return str;
-}
-
-function buildCsv(items) {
-  const BOM = '﻿'; // Excel이 UTF-8로 정확히 인식하도록 BOM을 앞에 붙인다
-  const header = ['Title', 'Channel', 'YouTube URL', 'Thumbnail URL', 'Note'];
-  const rows = items.map(i => [i.title, i.channel, i.url, i.thumbnail, i.note].map(csvEscape).join(','));
-  return BOM + [header.join(','), ...rows].join('\r\n');
-}
-
 function buildTxt(items) {
   return items
-    .map(i => `${i.title}\n${t('account_export_channel_label')}: ${i.channel}\n${t('account_export_url_label')}: ${i.url}\n${t('account_export_thumbnail_label')}: ${i.thumbnail}${i.note ? `\n${t('account_export_note_label')}: ${i.note}` : ''}`)
+    .map((i, idx) => `${idx + 1}. ${i.title}\n${t('account_export_channel_label')}: ${i.channel}\n${t('account_export_url_label')}: ${i.url}\n${t('account_export_thumbnail_label')}: ${i.thumbnail}${i.note ? `\n${t('account_export_note_label')}: ${i.note}` : ''}`)
     .join('\n\n---\n\n');
 }
 
-exportCsvBtn.addEventListener('click', async () => {
+function buildAndDownloadXlsx(items) {
+  const header = ['No.', 'Title', 'Channel', 'YouTube URL', 'Thumbnail URL', 'Note'];
+  const rows = items.map((i, idx) => [idx + 1, i.title, i.channel, i.url, i.thumbnail, i.note]);
+  const ws = XLSX.utils.aoa_to_sheet([header, ...rows]);
+  // 유튜브/썸네일 URL 칸을 실제 클릭 가능한 링크로 만든다 (이미지 자체는 CORS 때문에 못 넣음)
+  rows.forEach((_row, i) => {
+    const rowNum = i + 2;
+    const urlCell = `D${rowNum}`;
+    const thumbCell = `E${rowNum}`;
+    if (ws[urlCell]) ws[urlCell].l = { Target: items[i].url };
+    if (ws[thumbCell]) ws[thumbCell].l = { Target: items[i].thumbnail };
+  });
+  ws['!cols'] = [{ wch: 5 }, { wch: 50 }, { wch: 25 }, { wch: 45 }, { wch: 45 }, { wch: 30 }];
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, 'Favorites');
+  XLSX.writeFile(wb, 'favorites.xlsx');
+}
+
+exportXlsxBtn.addEventListener('click', async () => {
   const items = await loadMyFavorites();
   if (!items.length) {
     alert(t('account_export_empty'));
     return;
   }
-  downloadFile('favorites.csv', buildCsv(items), 'text/csv;charset=utf-8');
+  buildAndDownloadXlsx(items);
 });
 
 exportTxtBtn.addEventListener('click', async () => {
@@ -244,8 +294,7 @@ async function refresh() {
   accountEmail.textContent = currentUser.email || '';
   const { data } = await sb.from('profiles').select('display_name').eq('id', currentUser.id).maybeSingle();
   accountNickname.textContent = data?.display_name || t('anonymous');
-  const { count } = await sb.from('favorites').select('*', { count: 'exact', head: true }).eq('user_id', currentUser.id);
-  accountFavoritesCount.textContent = t('account_favorites_count', { n: count || 0 });
+  await refreshFavoritesSection();
 
   await checkAdmin();
   adminSections.hidden = !isAdmin;
