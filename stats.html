@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Daily Stats - Camlisted</title>
+<meta name="robots" content="noindex">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="header-actions">
+    <a href="index.html" class="auth-btn">← Back to site</a>
+  </div>
+  <h1>📊 Daily Stats</h1>
+</header>
+
+<main class="policy-page">
+  <p id="statsGate">Checking access...</p>
+
+  <div id="statsContent" hidden>
+    <div class="stats-summary" id="statsSummary"></div>
+    <div class="stats-table-wrap">
+      <table class="stats-table">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Existing</th>
+            <th>Valid</th>
+            <th>Offline</th>
+            <th>New</th>
+            <th>Deleted</th>
+            <th>Signups</th>
+            <th>Visitors</th>
+          </tr>
+        </thead>
+        <tbody id="statsTableBody"></tbody>
+      </table>
+    </div>
+    <p class="stats-note">"Existing/Valid/Offline/New/Deleted" are recorded by the daily 06:00 KST update job (from the day it first runs after this feature was added). Signups and Visitors are counted live from the database.</p>
+  </div>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="js/stats.js"></script>
+</body>
+</html>
