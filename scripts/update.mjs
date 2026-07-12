@@ -261,6 +261,7 @@ async function main() {
     }
     if (!row.category) {
       patch.category = classifyCategory(title, channelTitle);
+      patch.category_source = 'keyword';
       needsUpdate = true;
       // 유저 제보인데 어떤 카테고리 키워드에도 안 걸리면(=관련성 불명) 바로 공개하지 않고
       // 숨김 처리해 관리자 승인(admin.html)을 거치게 한다. 자동 검색/채널스캔으로 찾은 항목은 대상 아님.
@@ -420,6 +421,7 @@ async function main() {
       // 자동 수집분도 관리자 검수를 거치도록 승인 대기로 넣는다 (7일 내 미승인 시 기존 만료 로직으로 삭제됨)
       approval_status: 'pending',
       category: classifyCategory(c.title, c.channelTitle),
+      category_source: 'keyword',
       country: newCountryMap.get(c.channelId) || null,
       started_at: c.contentType === 'live' ? (info.liveStreamingDetails?.actualStartTime || null) : null,
       published_at: c.contentType === 'video' ? (info.snippet?.publishedAt || null) : null,
@@ -472,6 +474,18 @@ async function main() {
     if (staleOfflineErr) console.error('오프라인 만료 삭제 실패:', staleOfflineErr.message);
     else console.log(`7일 연속 오프라인으로 삭제: ${staleOfflineRows.length}건 (차단목록에는 미등록)`);
   }
+
+  // 오늘 실행 결과를 일일 집계 테이블에 기록 (관리자 대시보드용, 같은 날 재실행 시 덮어씀)
+  const deletedTotal = toDelete.length + (expiredRows?.length || 0) + (staleOfflineRows?.length || 0);
+  const { error: statsErr } = await supabase.from('daily_stats').upsert({
+    stat_date: new Date().toISOString().slice(0, 10),
+    existing_count: existingRows.length,
+    valid_count: validCount,
+    offline_count: offlineCount,
+    new_count: newRows.length,
+    deleted_count: deletedTotal,
+  }, { onConflict: 'stat_date' });
+  if (statsErr) console.error('일일 집계 기록 실패:', statsErr.message);
 
   console.log(`완료: 유효 ${validCount}, 오프라인 ${offlineCount}, 오탐삭제 ${toDelete.length}, 신규 ${newRows.length}`);
 }
