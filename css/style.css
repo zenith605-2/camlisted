@@ -367,9 +367,16 @@ body {
 }
 
 .subtitle {
-  margin: 0 0 24px;
+  margin: 0 0 10px;
   color: var(--muted);
   font-size: 0.95rem;
+}
+
+.category-hint {
+  margin: 0 0 24px;
+  color: var(--muted);
+  font-size: 0.8rem;
+  opacity: 0.85;
 }
 
 .controls {
