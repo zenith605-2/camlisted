@@ -64,6 +64,8 @@ let submitterNames = new Map(); // userId -> display_name
 let myDisplayName = null;
 let myTierHtml = '';
 let favorites = new Map(); // videoId -> note
+let myUpvotes = new Set();
+let myDownvotes = new Set();
 let unlockedVideos = new Set();
 let categoriesList = []; // [{key, label_en, label_ko, ...}]
 const pageLoadTime = Date.now();
@@ -273,8 +275,8 @@ function render(list) {
       <div class="card-actions">
         <button type="button" class="copy-link-btn" data-video-id="${escapeHtml(s.videoId)}">${t('copy_url')}</button>
         ${currentUser ? `
-          ${s.source === 'user' ? `<button type="button" class="upvote-btn" data-video-id="${escapeHtml(s.videoId)}" ${s.addedBy === currentUser.id ? 'disabled title="' + escapeHtml(t('upvote_own_disabled')) + '"' : ''}>${t('upvote_button')}</button>` : ''}
-          <button type="button" class="downvote-btn" data-video-id="${escapeHtml(s.videoId)}">${t('downvote_button')}</button>
+          ${s.source === 'user' ? `<button type="button" class="upvote-btn ${myUpvotes.has(s.videoId) ? 'active' : ''}" data-video-id="${escapeHtml(s.videoId)}" ${s.addedBy === currentUser.id ? 'disabled title="' + escapeHtml(t('upvote_own_disabled')) + '"' : ''}>${t('upvote_button')}</button>` : ''}
+          <button type="button" class="downvote-btn ${myDownvotes.has(s.videoId) ? 'active' : ''}" data-video-id="${escapeHtml(s.videoId)}">${t('downvote_button')}</button>
           <button type="button" class="favorite-btn ${isFav ? 'active' : ''}" data-video-id="${escapeHtml(s.videoId)}">${isFav ? t('favorite_remove') : t('favorite_add')}</button>
           ${isFav ? `<button type="button" class="note-btn" data-video-id="${escapeHtml(s.videoId)}">📝</button>` : ''}
           ${isAdmin && s.approvalStatus === 'pending' ? `<button type="button" class="admin-approve-btn" data-video-id="${escapeHtml(s.videoId)}">${t('approve_button')}</button>` : ''}
@@ -502,28 +504,48 @@ async function handleUpvote(btn) {
   if (!currentUser) return;
   btn.disabled = true;
   const videoId = btn.dataset.videoId;
-  const { error } = await sb.from('upvotes').insert({ video_id: videoId, user_id: currentUser.id });
-  if (error) {
-    btn.textContent = error.code === '23505' ? t('upvote_already') : t('upvote_failed');
+  const s = streams.find(x => x.videoId === videoId);
+  if (myUpvotes.has(videoId)) {
+    const { error } = await sb.from('upvotes').delete().eq('video_id', videoId).eq('user_id', currentUser.id);
+    if (!error) {
+      myUpvotes.delete(videoId);
+      if (s) s.upvoteCount = Math.max(0, s.upvoteCount - 1);
+    }
   } else {
-    btn.textContent = t('upvote_done');
-    const s = streams.find(x => x.videoId === videoId);
-    if (s) s.upvoteCount += 1;
+    const { error } = await sb.from('upvotes').insert({ video_id: videoId, user_id: currentUser.id });
+    if (!error) {
+      myUpvotes.add(videoId);
+      if (s) s.upvoteCount += 1;
+    } else if (error.code !== '23505') {
+      alert(t('upvote_failed'));
+    }
   }
+  btn.disabled = false;
+  render(currentFiltered());
 }
 
 async function handleDownvote(btn) {
   if (!currentUser) return;
   btn.disabled = true;
   const videoId = btn.dataset.videoId;
-  const { error } = await sb.from('downvotes').insert({ video_id: videoId, user_id: currentUser.id });
-  if (error) {
-    btn.textContent = error.code === '23505' ? t('downvote_already') : t('downvote_failed');
+  const s = streams.find(x => x.videoId === videoId);
+  if (myDownvotes.has(videoId)) {
+    const { error } = await sb.from('downvotes').delete().eq('video_id', videoId).eq('user_id', currentUser.id);
+    if (!error) {
+      myDownvotes.delete(videoId);
+      if (s) s.downvoteCount = Math.max(0, s.downvoteCount - 1);
+    }
   } else {
-    btn.textContent = t('downvote_done');
-    const s = streams.find(x => x.videoId === videoId);
-    if (s) s.downvoteCount += 1;
+    const { error } = await sb.from('downvotes').insert({ video_id: videoId, user_id: currentUser.id });
+    if (!error) {
+      myDownvotes.add(videoId);
+      if (s) s.downvoteCount += 1;
+    } else if (error.code !== '23505') {
+      alert(t('downvote_failed'));
+    }
   }
+  btn.disabled = false;
+  render(currentFiltered());
 }
 
 async function handleFavorite(btn) {
@@ -614,6 +636,20 @@ async function loadFavorites() {
   if (!error && data) {
     favorites = new Map(data.map(f => [f.video_id, f.note]));
   }
+}
+
+async function loadMyVotes() {
+  if (!currentUser) {
+    myUpvotes = new Set();
+    myDownvotes = new Set();
+    return;
+  }
+  const [{ data: upData, error: upErr }, { data: downData, error: downErr }] = await Promise.all([
+    sb.from('upvotes').select('video_id').eq('user_id', currentUser.id),
+    sb.from('downvotes').select('video_id').eq('user_id', currentUser.id),
+  ]);
+  if (!upErr && upData) myUpvotes = new Set(upData.map(r => r.video_id));
+  if (!downErr && downData) myDownvotes = new Set(downData.map(r => r.video_id));
 }
 
 let currentPlayer = null;
@@ -1129,7 +1165,7 @@ async function loadStreams() {
 
 sb.auth.onAuthStateChange(async (_event, session) => {
   currentUser = session?.user || null;
-  await Promise.all([loadFavorites(), loadUnlockedVideos(), checkAdmin(), loadMyProfile()]);
+  await Promise.all([loadFavorites(), loadUnlockedVideos(), checkAdmin(), loadMyProfile(), loadMyVotes()]);
   renderAuthArea();
   await refreshQuotaInfo();
   render(currentFiltered());
@@ -1170,7 +1206,7 @@ async function init() {
   currentUser = session?.user || null;
   await loadCategories();
   populateCategoryFilter();
-  await Promise.all([loadFavorites(), loadUnlockedVideos(), checkAdmin(), loadMyProfile()]);
+  await Promise.all([loadFavorites(), loadUnlockedVideos(), checkAdmin(), loadMyProfile(), loadMyVotes()]);
   renderAuthArea();
   await refreshQuotaInfo();
   await trackVisit();

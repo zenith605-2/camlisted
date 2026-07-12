@@ -625,6 +625,16 @@ body {
   color: #ffb400;
 }
 
+.upvote-btn.active {
+  border-color: #22c55e;
+  color: #22c55e;
+}
+
+.downvote-btn.active {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
 .favorite-btn:hover:not(:disabled) {
   border-color: #ffb400;
   color: #ffb400;
