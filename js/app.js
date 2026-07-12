@@ -23,6 +23,8 @@ const modalCopyBtn = document.getElementById('modalCopyBtn');
 const authArea = document.getElementById('authArea');
 const submitForm = document.getElementById('submitForm');
 const submitUrl = document.getElementById('submitUrl');
+const submitContentType = document.getElementById('submitContentType');
+const submitCategory = document.getElementById('submitCategory');
 const submitStatus = document.getElementById('submitStatus');
 const leaderboardBtn = document.getElementById('leaderboardBtn');
 const leaderboardModal = document.getElementById('leaderboardModal');
@@ -613,6 +615,13 @@ function extractVideoId(rawUrl) {
   return null;
 }
 
+async function fetchOEmbed(videoId) {
+  const url = `https://www.youtube.com/oembed?url=${encodeURIComponent(`https://www.youtube.com/watch?v=${videoId}`)}&format=json`;
+  const res = await fetch(url);
+  if (!res.ok) return null;
+  return res.json();
+}
+
 submitForm.addEventListener('submit', async (e) => {
   e.preventDefault();
   if (!currentUser) return;
@@ -622,11 +631,21 @@ submitForm.addEventListener('submit', async (e) => {
     return;
   }
   submitStatus.textContent = t('submitting');
+  const contentType = submitContentType.value;
+  const oembed = await fetchOEmbed(videoId).catch(() => null);
+  if (!oembed) {
+    submitStatus.textContent = t('submit_video_unavailable');
+    return;
+  }
   const { error } = await sb.from('streams').insert({
     video_id: videoId,
     source: 'user',
     added_by: currentUser.id,
-    thumbnail: `https://i.ytimg.com/vi/${videoId}/hqdefault_live.jpg`,
+    content_type: contentType,
+    category: submitCategory.value || null,
+    title: oembed.title || null,
+    channel_title: oembed.author_name || null,
+    thumbnail: `https://i.ytimg.com/vi/${videoId}/${contentType === 'live' ? 'hqdefault_live' : 'hqdefault'}.jpg`,
   });
   if (error) {
     submitStatus.textContent = error.code === '23505' ? t('submit_duplicate') : t('submit_failed', { message: error.message });
@@ -648,6 +667,14 @@ function populateCategoryFilter() {
     categoriesList.map(c => `<option value="${c.key}">${escapeHtml(categoryLabel(c.key))}</option>`).join('');
   categoryFilter.value = categoriesList.some(c => c.key === current) ? current : '';
   renderSidebar();
+  populateSubmitCategory();
+}
+
+function populateSubmitCategory() {
+  const current = submitCategory.value;
+  submitCategory.innerHTML = `<option value="">${t('submit_category_auto')}</option>` +
+    categoriesList.map(c => `<option value="${c.key}">${escapeHtml(categoryLabel(c.key))}</option>`).join('');
+  submitCategory.value = categoriesList.some(c => c.key === current) ? current : '';
 }
 
 const SIDEBAR_GROUPS = [

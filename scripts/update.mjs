@@ -243,14 +243,15 @@ async function main() {
       patch.channel_title = channelTitle;
       patch.thumbnail = row.thumbnail || snippetThumbnail(snippet);
       needsUpdate = true;
-      // 유저 제보가 이번에 처음으로 "실제 유효함"이 검증됨 -> 제보자에게 열람권 크레딧 적립 대상
-      if (row.source === 'user' && row.added_by) {
-        creditRecipients.push(row.added_by);
-      }
     }
     if (!row.channel_id && snippet.channelId) {
       patch.channel_id = snippet.channelId;
       needsUpdate = true;
+      // 유저 제보는 제출 시점엔 channel_id를 알 수 없어(oEmbed는 채널ID를 안 줌), 여기서 처음 채워지는
+      // 순간이 곧 "실제 유효함이 검증된 최초 시점" -> 제보자에게 열람권 크레딧 적립 대상
+      if (row.source === 'user' && row.added_by) {
+        creditRecipients.push(row.added_by);
+      }
     }
     if (!row.category) {
       patch.category = classifyCategory(title, channelTitle);

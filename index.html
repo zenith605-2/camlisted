@@ -78,6 +78,13 @@
   </div>
   <form id="submitForm" class="submit-form" hidden>
     <input type="text" id="submitUrl" data-i18n-placeholder="submit_placeholder" placeholder="Paste a YouTube live URL (e.g. https://www.youtube.com/watch?v=...)">
+    <select id="submitContentType">
+      <option value="live" data-i18n="content_type_live">Live</option>
+      <option value="video" data-i18n="content_type_video">Video</option>
+    </select>
+    <select id="submitCategory">
+      <option value="" data-i18n="submit_category_auto">Auto-detect category</option>
+    </select>
     <button type="submit" data-i18n="submit_button">Submit</button>
     <span id="submitStatus" class="submit-status"></span>
   </form>
