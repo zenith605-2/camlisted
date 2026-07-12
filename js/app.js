@@ -260,7 +260,7 @@ function render(list) {
       <div class="card-actions">
         <button type="button" class="copy-link-btn" data-video-id="${escapeHtml(s.videoId)}">${t('copy_url')}</button>
         ${currentUser ? `
-          ${s.source === 'user' && s.addedBy !== currentUser.id ? `<button type="button" class="upvote-btn" data-video-id="${escapeHtml(s.videoId)}">${t('upvote_button')}</button>` : ''}
+          ${s.source === 'user' ? `<button type="button" class="upvote-btn" data-video-id="${escapeHtml(s.videoId)}" ${s.addedBy === currentUser.id ? 'disabled title="' + escapeHtml(t('upvote_own_disabled')) + '"' : ''}>${t('upvote_button')}</button>` : ''}
           <button type="button" class="downvote-btn" data-video-id="${escapeHtml(s.videoId)}">${t('downvote_button')}</button>
           <button type="button" class="favorite-btn ${isFav ? 'active' : ''}" data-video-id="${escapeHtml(s.videoId)}">${isFav ? t('favorite_remove') : t('favorite_add')}</button>
           ${isFav ? `<button type="button" class="note-btn" data-video-id="${escapeHtml(s.videoId)}">📝</button>` : ''}
@@ -281,15 +281,15 @@ function render(list) {
       <div class="card-body">
         <p class="card-title">${escapeHtml(s.title)}</p>
         <p class="card-channel">${escapeHtml(s.channelTitle)}</p>
+        <span class="card-keyword">👍 ${s.upvoteCount} · 👎 ${s.downvoteCount}</span>
         ${s.source === 'user'
           ? `<span class="card-keyword">👤 ${escapeHtml(submitterNames.get(s.addedBy) || t('anonymous'))}</span>`
           : (s.matchedKeyword ? `<span class="card-keyword">${escapeHtml(s.matchedKeyword)}</span>` : '')}
-        <span class="card-keyword">👍 ${s.upvoteCount} · 👎 ${s.downvoteCount}</span>
+        ${dateHtml}
+        ${addedHtml}
         ${countryHtml}
         ${qualityHtml}
         ${categoryHtml}
-        ${dateHtml}
-        ${addedHtml}
         ${actionsHtml}
       </div>
     `;
@@ -883,6 +883,7 @@ function renderAuthArea() {
       <span class="auth-user">${escapeHtml(t('greeting', { name }))}</span>
       ${myTierHtml}
       <a href="account.html" class="auth-btn" title="${escapeHtml(t('account_title'))}">⚙️</a>
+      <a href="feedback.html" class="auth-btn" title="${escapeHtml(t('feedback_title'))}">💡</a>
       <button type="button" id="logoutBtn" class="auth-btn">${escapeHtml(t('logout_button'))}</button>
     `;
     document.getElementById('logoutBtn').addEventListener('click', () => sb.auth.signOut());
