@@ -7,7 +7,11 @@ const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 const authArea = document.getElementById('authArea');
 const accessDenied = document.getElementById('accessDenied');
+const adminTabs = document.getElementById('adminTabs');
 const adminList = document.getElementById('adminList');
+const userList = document.getElementById('userList');
+const tabFlagged = document.getElementById('tabFlagged');
+const tabUsers = document.getElementById('tabUsers');
 
 let currentUser = null;
 let isAdmin = false;
@@ -110,15 +114,89 @@ adminList.addEventListener('click', async (e) => {
   }
 });
 
+function userRowHtml(u) {
+  return `
+    <div class="admin-row" data-user-id="${escapeHtml(u.id)}" data-is-admin="${u.is_admin}">
+      <img class="admin-thumb user-avatar" src="${u.avatar_url || ''}" alt="">
+      <div class="admin-info">
+        <div class="admin-title">${escapeHtml(u.display_name || '(닉네임 없음)')}</div>
+        <div class="admin-meta">
+          제보 ${u.submissionCount}건 · 가입일 ${new Date(u.created_at).toLocaleDateString('ko-KR')} ·
+          ${u.is_admin ? '관리자' : '일반 유저'}
+        </div>
+      </div>
+      <div class="admin-actions">
+        <button type="button" class="toggle-admin-btn">${u.is_admin ? '관리자 해제' : '관리자로 지정'}</button>
+      </div>
+    </div>
+  `;
+}
+
+async function loadUsers() {
+  userList.textContent = '불러오는 중...';
+  const [{ data: profiles, error: profileErr }, { data: submissions, error: subErr }] = await Promise.all([
+    sb.from('profiles').select('id, display_name, avatar_url, is_admin, created_at').order('created_at'),
+    sb.from('streams').select('added_by').not('added_by', 'is', null),
+  ]);
+  if (profileErr) {
+    userList.textContent = '유저 목록을 불러오지 못했습니다: ' + profileErr.message;
+    return;
+  }
+  const counts = new Map();
+  if (!subErr) {
+    for (const row of submissions || []) {
+      counts.set(row.added_by, (counts.get(row.added_by) || 0) + 1);
+    }
+  }
+  const rows = (profiles || []).map(u => ({ ...u, submissionCount: counts.get(u.id) || 0 }));
+  if (!rows.length) {
+    userList.textContent = '가입한 유저가 없습니다.';
+    return;
+  }
+  userList.innerHTML = rows.map(userRowHtml).join('');
+}
+
+userList.addEventListener('click', async (e) => {
+  const row = e.target.closest('.admin-row');
+  if (!row || !e.target.closest('.toggle-admin-btn')) return;
+  const userId = row.dataset.userId;
+  const nextIsAdmin = row.dataset.isAdmin !== 'true';
+  if (!confirm(nextIsAdmin ? '이 유저를 관리자로 지정하시겠습니까?' : '이 유저의 관리자 권한을 해제하시겠습니까?')) return;
+  const { error } = await sb.rpc('set_user_admin', { p_user_id: userId, p_is_admin: nextIsAdmin });
+  if (error) {
+    alert('처리 실패: ' + error.message);
+    return;
+  }
+  await loadUsers();
+});
+
+tabFlagged.addEventListener('click', () => {
+  tabFlagged.classList.add('active');
+  tabUsers.classList.remove('active');
+  adminList.hidden = false;
+  userList.hidden = true;
+});
+
+tabUsers.addEventListener('click', () => {
+  tabUsers.classList.add('active');
+  tabFlagged.classList.remove('active');
+  adminList.hidden = true;
+  userList.hidden = false;
+  loadUsers();
+});
+
 async function refresh() {
   renderAuthArea();
   await checkAdmin();
   if (!isAdmin) {
     accessDenied.hidden = false;
+    adminTabs.hidden = true;
     adminList.hidden = true;
+    userList.hidden = true;
     return;
   }
   accessDenied.hidden = true;
+  adminTabs.hidden = false;
   adminList.hidden = false;
   await loadFlagged();
 }

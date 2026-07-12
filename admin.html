@@ -13,7 +13,12 @@
 </header>
 
 <p id="accessDenied" class="empty-state" hidden>관리자 계정으로 로그인해야 볼 수 있습니다.</p>
+<div id="adminTabs" class="admin-tabs" hidden>
+  <button type="button" id="tabFlagged" class="admin-tab-btn active">신고/비추천 관리</button>
+  <button type="button" id="tabUsers" class="admin-tab-btn">유저 관리</button>
+</div>
 <main id="adminList" class="admin-list"></main>
+<main id="userList" class="admin-list" hidden></main>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <script src="js/admin.js"></script>
