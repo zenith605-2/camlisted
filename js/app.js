@@ -939,8 +939,8 @@ function renderAuthArea() {
     authArea.innerHTML = `
       <span class="auth-user">${escapeHtml(t('greeting', { name }))}</span>
       ${myTierHtml}
-      <a href="account.html" class="auth-btn" title="${escapeHtml(t('account_title'))}">⚙️</a>
-      <a href="feedback.html" class="auth-btn" title="${escapeHtml(t('feedback_title'))}">💡</a>
+      <a href="account.html" class="icon-btn" title="${escapeHtml(t('account_title'))}">⚙️</a>
+      <a href="feedback.html" class="icon-btn" title="${escapeHtml(t('feedback_title'))}">💡</a>
       <button type="button" id="logoutBtn" class="auth-btn">${escapeHtml(t('logout_button'))}</button>
     `;
     document.getElementById('logoutBtn').addEventListener('click', () => sb.auth.signOut());

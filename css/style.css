@@ -140,16 +140,81 @@ body {
   justify-content: space-between;
   flex-wrap: wrap;
   gap: 10px;
-  margin-bottom: 24px;
   padding-bottom: 14px;
   border-bottom: 1px solid var(--border);
+}
+
+.header-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.toolbar-divider {
+  width: 1px;
+  height: 22px;
+  background: var(--border);
+  margin: 0 2px;
+}
+
+.pill-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  color: var(--text);
+  padding: 7px 14px;
+  font-size: 0.85rem;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.pill-btn:hover {
+  border-color: var(--accent);
+}
+
+.kofi-btn:hover {
+  border-color: #ff5e5b;
+  color: #ff5e5b;
+}
+
+.icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  color: var(--text);
+  font-size: 0.95rem;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.icon-btn:hover {
+  border-color: var(--accent);
+}
+
+.utility-bar {
+  text-align: center;
+  color: var(--muted);
+  font-size: 0.78rem;
+  padding: 8px 0 0;
+}
+
+.utility-bar a {
+  color: var(--muted);
 }
 
 .auth-area {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
+  gap: 8px;
 }
 
 .auth-user {
@@ -1006,16 +1071,6 @@ body {
   color: var(--muted);
   font-size: 0.78rem;
   margin-bottom: 10px;
-}
-
-.header-links {
-  color: var(--muted);
-  font-size: 0.8rem;
-  white-space: nowrap;
-}
-
-.header-links a {
-  color: var(--muted);
 }
 
 .visitor-stats {
