@@ -73,6 +73,14 @@ function categoryLabel(key) {
   return row[`label_${currentLang}`] || row.label_en || key;
 }
 
+const QUALITY_LABELS = {
+  hd2160: '4K', hd1440: '1440p', hd1080: '1080p', hd720: '720p',
+  large: '480p', medium: '360p', small: '240p', tiny: '144p',
+};
+function qualityLabel(quality) {
+  return QUALITY_LABELS[quality] || quality;
+}
+
 function isNewStream(s) {
   if (!s.addedAt) return false;
   return Date.now() - new Date(s.addedAt).getTime() < NEW_WINDOW_MS;
@@ -165,21 +173,24 @@ function render(list) {
   grid.innerHTML = '';
   emptyState.hidden = list.length > 0;
   resultCountEl.textContent = t('total_count', { n: list.length });
+  const isListView = grid.classList.contains('list-view');
   let lastChannel = undefined;
   let groupIndex = -1;
 
   for (const s of list) {
     if (s.channelTitle !== lastChannel) {
       groupIndex += 1;
-      const header = document.createElement('div');
-      header.className = 'channel-header';
-      header.dataset.channelGroup = String(groupIndex);
-      if (s.channelId) header.dataset.channelId = s.channelId;
-      header.innerHTML = `
-        ${isAdmin ? `<input type="checkbox" class="channel-select-all" data-channel-group="${groupIndex}">` : ''}
-        <span>${escapeHtml(s.channelTitle || t('anonymous'))}</span>
-      `;
-      grid.appendChild(header);
+      if (isListView) {
+        const header = document.createElement('div');
+        header.className = 'channel-header';
+        header.dataset.channelGroup = String(groupIndex);
+        if (s.channelId) header.dataset.channelId = s.channelId;
+        header.innerHTML = `
+          ${isAdmin ? `<input type="checkbox" class="channel-select-all" data-channel-group="${groupIndex}">` : ''}
+          <span>${escapeHtml(s.channelTitle || t('anonymous'))}</span>
+        `;
+        grid.appendChild(header);
+      }
       lastChannel = s.channelTitle;
     }
 
@@ -231,6 +242,7 @@ function render(list) {
         </select>`
       : (s.category ? `<span class="card-keyword">${escapeHtml(categoryLabel(s.category))}</span>` : '');
     const countryHtml = s.country ? `<span class="card-keyword">${escapeHtml(countryDisplayName(s.country))}</span>` : '';
+    const qualityHtml = s.maxQuality ? `<span class="card-keyword">${escapeHtml(qualityLabel(s.maxQuality))}</span>` : '';
     const dateHtml = isLiveType
       ? (s.startedAt ? `<span class="card-started">🕐 ${escapeHtml(formatRelativeTime(s.startedAt))}</span>` : '')
       : (s.publishedAt ? `<span class="card-started">📅 ${escapeHtml(formatRelativeTime(s.publishedAt))}</span>` : '');
@@ -266,6 +278,7 @@ function render(list) {
           : (s.matchedKeyword ? `<span class="card-keyword">${escapeHtml(s.matchedKeyword)}</span>` : '')}
         <span class="card-keyword">👍 ${s.upvoteCount} · 👎 ${s.downvoteCount}</span>
         ${countryHtml}
+        ${qualityHtml}
         ${categoryHtml}
         ${dateHtml}
         ${addedHtml}
@@ -339,6 +352,7 @@ grid.addEventListener('change', async (e) => {
     if (!error) {
       const s = streams.find(x => x.videoId === videoId);
       if (s) s.category = category;
+      renderSidebar();
     }
     return;
   }
@@ -809,8 +823,8 @@ function applyViewMode() {
   gridViewBtn.classList.toggle('active', mode === 'grid');
   listViewBtn.classList.toggle('active', mode === 'list');
 }
-gridViewBtn.addEventListener('click', () => { localStorage.setItem(VIEW_MODE_KEY, 'grid'); applyViewMode(); });
-listViewBtn.addEventListener('click', () => { localStorage.setItem(VIEW_MODE_KEY, 'list'); applyViewMode(); });
+gridViewBtn.addEventListener('click', () => { localStorage.setItem(VIEW_MODE_KEY, 'grid'); applyViewMode(); render(currentFiltered()); });
+listViewBtn.addEventListener('click', () => { localStorage.setItem(VIEW_MODE_KEY, 'list'); applyViewMode(); render(currentFiltered()); });
 
 async function openLeaderboard() {
   leaderboardModal.hidden = false;
