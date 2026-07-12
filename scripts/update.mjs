@@ -173,12 +173,13 @@ function selectRotatingSubset(list, maxPerRun) {
 }
 
 async function main() {
-  const [keywordsRaw, keywordsVideoRaw, excludeRaw, categoriesResult, blocklistResult] = await Promise.all([
+  const [keywordsRaw, keywordsVideoRaw, excludeRaw, categoriesResult, blocklistResult, blockedChannelsResult] = await Promise.all([
     readFile(KEYWORDS_PATH, 'utf-8'),
     readFile(KEYWORDS_VIDEO_PATH, 'utf-8').catch(() => '{"keywords":[]}'),
     readFile(EXCLUDE_KEYWORDS_PATH, 'utf-8').catch(() => '{"keywords":[]}'),
     supabase.from('categories').select('key, keywords'),
     supabase.from('blocklist').select('video_id'),
+    supabase.from('blocked_channels').select('channel_id'),
   ]);
   const keywords = JSON.parse(keywordsRaw).keywords || [];
   const keywordsVideo = JSON.parse(keywordsVideoRaw).keywords || [];
@@ -186,6 +187,7 @@ async function main() {
   if (categoriesResult.error) throw categoriesResult.error;
   const categoryRows = (categoriesResult.data || []).filter(c => c.key !== 'other');
   const blockedIds = new Set((blocklistResult.data || []).map(r => r.video_id));
+  const blockedChannelIds = new Set((blockedChannelsResult.data || []).map(r => r.channel_id));
 
   const isExcluded = (title, channelTitle) => {
     const haystack = `${title} ${channelTitle}`.toLowerCase();
@@ -324,6 +326,7 @@ async function main() {
       searchCallsUsed += 1;
       for (const r of results) {
         if (knownIds.has(r.videoId) || candidateMap.has(r.videoId)) continue;
+        if (r.channelId && blockedChannelIds.has(r.channelId)) continue;
         if (isExcluded(r.title, r.channelTitle)) continue;
         candidateMap.set(r.videoId, r);
       }
@@ -343,6 +346,7 @@ async function main() {
       searchCallsUsed += 1;
       for (const r of results) {
         if (knownIds.has(r.videoId) || candidateMap.has(r.videoId)) continue;
+        if (r.channelId && blockedChannelIds.has(r.channelId)) continue;
         if (isExcluded(r.title, r.channelTitle)) continue;
         candidateMap.set(r.videoId, r);
       }
@@ -368,7 +372,7 @@ async function main() {
   for (const c of candidateMap.values()) if (c.contentType === 'live' && c.channelId) observedChannelIds.add(c.channelId);
 
   const channelScanBudget = Math.max(0, SEARCH_BUDGET_PER_RUN - searchCallsUsed);
-  const unscannedChannelIds = [...observedChannelIds].filter(id => !scannedSet.has(id));
+  const unscannedChannelIds = [...observedChannelIds].filter(id => !scannedSet.has(id) && !blockedChannelIds.has(id));
   const channelIdsToScan = unscannedChannelIds.slice(0, channelScanBudget);
   console.log(`채널 전체 스캔: 대상 ${unscannedChannelIds.length}개 중 ${channelIdsToScan.length}개 처리 (남은 검색 예산 ${channelScanBudget}회, 나머지는 다음 실행에 이어서)`);
 

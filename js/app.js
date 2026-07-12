@@ -55,6 +55,7 @@ let streams = [];
 let currentUser = null;
 let isAdmin = false;
 let selectedForDelete = new Set(); // 관리자 일괄삭제용 선택된 videoId
+let channelGroupsFullySelected = new Map(); // groupIndex -> channelId ("채널 전체선택"으로 체크된 그룹만)
 let submitterNames = new Map(); // userId -> display_name
 let myDisplayName = null;
 let favorites = new Map(); // videoId -> note
@@ -165,6 +166,7 @@ function render(list) {
       const header = document.createElement('div');
       header.className = 'channel-header';
       header.dataset.channelGroup = String(groupIndex);
+      if (s.channelId) header.dataset.channelId = s.channelId;
       header.innerHTML = `
         ${isAdmin ? `<input type="checkbox" class="channel-select-all" data-channel-group="${groupIndex}">` : ''}
         <span>${escapeHtml(s.channelTitle || t('anonymous'))}</span>
@@ -322,8 +324,13 @@ grid.addEventListener('change', async (e) => {
 
   const checkbox = e.target.closest('.admin-select-checkbox');
   if (checkbox && isAdmin) {
-    if (checkbox.checked) selectedForDelete.add(checkbox.dataset.videoId);
-    else selectedForDelete.delete(checkbox.dataset.videoId);
+    if (checkbox.checked) {
+      selectedForDelete.add(checkbox.dataset.videoId);
+    } else {
+      selectedForDelete.delete(checkbox.dataset.videoId);
+      // 채널 전체선택 중이었는데 개별 항목을 해제했으면, 더 이상 "채널 전체 삭제"가 아니므로 채널 차단 후보에서 뺀다.
+      channelGroupsFullySelected.delete(checkbox.dataset.channelGroup);
+    }
     updateBulkActionBar();
     return;
   }
@@ -336,6 +343,12 @@ grid.addEventListener('change', async (e) => {
       if (selectAll.checked) selectedForDelete.add(cb.dataset.videoId);
       else selectedForDelete.delete(cb.dataset.videoId);
     });
+    if (selectAll.checked) {
+      const header = grid.querySelector(`.channel-header[data-channel-group="${group}"]`);
+      if (header?.dataset.channelId) channelGroupsFullySelected.set(group, header.dataset.channelId);
+    } else {
+      channelGroupsFullySelected.delete(group);
+    }
     updateBulkActionBar();
   }
 });
@@ -347,6 +360,7 @@ function updateBulkActionBar() {
 
 bulkClearBtn.addEventListener('click', () => {
   selectedForDelete.clear();
+  channelGroupsFullySelected.clear();
   updateBulkActionBar();
   render(currentFiltered());
 });
@@ -361,8 +375,13 @@ bulkDeleteBtn.addEventListener('click', async () => {
     return;
   }
   await sb.from('blocklist').insert(ids.map(video_id => ({ video_id, blocked_by: currentUser.id })));
+  const channelIds = [...channelGroupsFullySelected.values()];
+  if (channelIds.length) {
+    await sb.from('blocked_channels').insert(channelIds.map(channel_id => ({ channel_id, blocked_by: currentUser.id })));
+  }
   streams = streams.filter(s => !selectedForDelete.has(s.videoId));
   selectedForDelete.clear();
+  channelGroupsFullySelected.clear();
   updateBulkActionBar();
   render(currentFiltered());
 });
@@ -958,6 +977,7 @@ function populateCountryFilter() {
 
 async function loadStreams() {
   selectedForDelete.clear();
+  channelGroupsFullySelected.clear();
   updateBulkActionBar();
   const { data, error } = await sb
     .from('streams')
