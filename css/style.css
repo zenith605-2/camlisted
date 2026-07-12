@@ -117,7 +117,7 @@ body {
 }
 
 .site-header {
-  padding: 32px 24px 16px;
+  padding: 20px 24px 20px;
   text-align: center;
   position: relative;
 }
@@ -125,10 +125,12 @@ body {
 .header-actions {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   flex-wrap: wrap;
   gap: 10px;
-  margin-bottom: 12px;
+  margin-bottom: 24px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--border);
 }
 
 .auth-area {
@@ -223,8 +225,13 @@ body {
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
-  gap: 8px;
-  margin-top: 12px;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.view-toggle {
+  padding-left: 10px;
+  border-left: 1px solid var(--border);
 }
 
 .filter-bar select {
@@ -267,12 +274,13 @@ body {
 }
 
 .site-header h1 {
-  margin: 0 0 8px;
-  font-size: 1.8rem;
+  margin: 0 0 10px;
+  font-size: 1.9rem;
+  font-weight: 800;
 }
 
 .subtitle {
-  margin: 0 0 20px;
+  margin: 0 0 24px;
   color: var(--muted);
   font-size: 0.95rem;
 }
