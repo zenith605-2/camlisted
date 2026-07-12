@@ -963,9 +963,39 @@ modalCopyBtn.addEventListener('click', async () => {
   setTimeout(() => { modalCopyBtn.textContent = original; }, 1500);
 });
 
-searchInput.addEventListener('input', () => render(currentFiltered()));
+// 딥링크: 현재 필터 상태를 URL 쿼리에 반영해 공유/북마크가 가능하게 한다
+function syncUrlFromFilters() {
+  const p = new URLSearchParams();
+  if (contentTypeFilter.value) p.set('type', contentTypeFilter.value);
+  if (categoryFilter.value) p.set('category', categoryFilter.value);
+  if (qualityFilter.value) p.set('quality', qualityFilter.value);
+  if (addedFilter.value) p.set('added', addedFilter.value);
+  if (sortSelect.value !== 'default') p.set('sort', sortSelect.value);
+  if (searchInput.value.trim()) p.set('q', searchInput.value.trim());
+  const qs = p.toString();
+  history.replaceState(null, '', qs ? `?${qs}` : location.pathname);
+}
+
+function applyFiltersFromUrl() {
+  const p = new URLSearchParams(location.search);
+  const setIfValid = (el, value) => {
+    if (value && [...el.options].some(o => o.value === value)) el.value = value;
+  };
+  setIfValid(contentTypeFilter, p.get('type'));
+  setIfValid(categoryFilter, p.get('category'));
+  setIfValid(qualityFilter, p.get('quality'));
+  setIfValid(addedFilter, p.get('added'));
+  setIfValid(sortSelect, p.get('sort'));
+  if (p.get('q')) searchInput.value = p.get('q');
+}
+
+searchInput.addEventListener('input', () => {
+  syncUrlFromFilters();
+  render(currentFiltered());
+});
 [contentTypeFilter, categoryFilter, countryFilter, qualityFilter, statusFilter, visibilityFilter, addedFilter, sortSelect].forEach(el => {
   el.addEventListener('change', () => {
+    syncUrlFromFilters();
     updateSidebarActiveState();
     render(currentFiltered());
   });
@@ -984,6 +1014,7 @@ document.getElementById('clearFiltersBtn').addEventListener('click', () => {
   visibilityFilter.value = 'listed'; // 기본값: 정상 노출만
   favoritesOnlyCheckbox.checked = false;
   showPendingOnly = false;
+  syncUrlFromFilters();
   updateSidebarActiveState();
   render(currentFiltered());
 });
@@ -1173,8 +1204,11 @@ function renderSidebar() {
     <div class="sidebar-section">
       <button type="button" class="sidebar-group-btn" data-content-type="${g.type}" data-category="">${g.icon} ${escapeHtml(t(g.labelKey))} <span class="sidebar-count">${sidebarCount(g.type, null)}</span></button>
       <ul class="sidebar-sublist">
-        ${categoriesList.map(c => `
-          <li><button type="button" class="sidebar-cat-btn" data-content-type="${g.type}" data-category="${c.key}">${escapeHtml(categoryLabel(c.key))} <span class="sidebar-count">${sidebarCount(g.type, c.key)}</span></button></li>
+        ${categoriesList
+          .map(c => ({ c, count: sidebarCount(g.type, c.key) }))
+          .filter(({ c, count }) => count > 0 || c.key === categoryFilter.value) // 빈 카테고리는 숨김 (채워지면 자동 등장)
+          .map(({ c, count }) => `
+          <li><button type="button" class="sidebar-cat-btn" data-content-type="${g.type}" data-category="${c.key}">${escapeHtml(categoryLabel(c.key))} <span class="sidebar-count">${count}</span></button></li>
         `).join('')}
       </ul>
     </div>
@@ -1208,6 +1242,7 @@ sidebar.addEventListener('click', (e) => {
   showPendingOnly = false;
   contentTypeFilter.value = btn.dataset.contentType;
   categoryFilter.value = btn.dataset.category || '';
+  syncUrlFromFilters();
   updateSidebarActiveState();
   render(currentFiltered());
 });
@@ -1312,6 +1347,7 @@ async function init() {
   currentUser = session?.user || null;
   await loadCategories();
   populateCategoryFilter();
+  applyFiltersFromUrl(); // 딥링크(?category=... 등)로 들어온 경우 필터 상태 복원
   await Promise.all([loadFavorites(), loadUnlockedVideos(), checkAdmin(), loadMyProfile(), loadMyVotes()]);
   renderAuthArea();
   await refreshQuotaInfo();
