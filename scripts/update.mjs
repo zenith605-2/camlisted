@@ -222,7 +222,8 @@ async function main() {
     if (!isValidFor(contentType, info)) {
       offlineCount += 1;
       if (row.status !== 'offline') {
-        toUpdate.push({ video_id: row.video_id, status: 'offline' });
+        // 방금 오프라인으로 전환된 시점만 기록 (계속 오프라인이어도 최초 시점 유지 -> 7일 카운트 기준)
+        toUpdate.push({ video_id: row.video_id, status: 'offline', offline_since: new Date().toISOString() });
       }
       continue;
     }
@@ -240,6 +241,7 @@ async function main() {
     let needsUpdate = false;
     if (row.status !== 'live') {
       patch.status = 'live';
+      patch.offline_since = null; // 다시 살아났으니 오프라인 카운트 초기화
       needsUpdate = true;
     }
     if (!row.title || !row.channel_title) {
@@ -446,6 +448,24 @@ async function main() {
       .in('video_id', expiredRows.map(r => r.video_id));
     if (expireErr) console.error('임시등록 만료 삭제 실패:', expireErr.message);
     else console.log(`임시등록 만료로 삭제: ${expiredRows.length}건`);
+  }
+
+  // 7일 연속 오프라인(방송 중지/영상 삭제) 상태인 항목 정리. 나중에 다시 살아날 수도 있으니
+  // 차단목록에는 절대 올리지 않는다 — 그냥 삭제만 해서 재검색/재제보로 다시 들어올 수 있게 둔다.
+  const { data: staleOfflineRows, error: staleOfflineFetchErr } = await supabase
+    .from('streams')
+    .select('video_id')
+    .eq('status', 'offline')
+    .lt('offline_since', sevenDaysAgo);
+  if (staleOfflineFetchErr) {
+    console.error('오프라인 만료 대상 조회 실패:', staleOfflineFetchErr.message);
+  } else if (staleOfflineRows.length) {
+    const { error: staleOfflineErr } = await supabase
+      .from('streams')
+      .delete()
+      .in('video_id', staleOfflineRows.map(r => r.video_id));
+    if (staleOfflineErr) console.error('오프라인 만료 삭제 실패:', staleOfflineErr.message);
+    else console.log(`7일 연속 오프라인으로 삭제: ${staleOfflineRows.length}건 (차단목록에는 미등록)`);
   }
 
   console.log(`완료: 유효 ${validCount}, 오프라인 ${offlineCount}, 오탐삭제 ${toDelete.length}, 신규 ${newRows.length}`);

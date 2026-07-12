@@ -132,6 +132,7 @@ function mapRow(row) {
     contentType: row.content_type || 'live',
     publishedAt: row.published_at || null,
     approvalStatus: row.approval_status || null,
+    offlineSince: row.offline_since || null,
   };
 }
 
@@ -248,6 +249,12 @@ function render(list) {
       : (s.publishedAt ? `<span class="card-started">📅 ${escapeHtml(formatRelativeTime(s.publishedAt))}</span>` : '');
     const addedHtml = s.addedAt ? `<span class="card-added">📌 ${escapeHtml(formatRelativeTime(s.addedAt))}</span>` : '';
     const isRecentlyAdded = s.addedAt && (Date.now() - new Date(s.addedAt).getTime() < 3 * 24 * 3600 * 1000);
+    const offlineDaysLeft = s.offlineSince
+      ? Math.max(0, 7 - Math.floor((Date.now() - new Date(s.offlineSince).getTime()) / 86400000))
+      : null;
+    const offlineNoticeHtml = !isAvailable && s.offlineSince
+      ? `<div class="offline-notice">${escapeHtml(t('offline_notice', { days: offlineDaysLeft }))}</div>`
+      : '';
 
     const actionsHtml = `
       <div class="card-actions">
@@ -268,6 +275,7 @@ function render(list) {
         ${isAdmin ? `<input type="checkbox" class="admin-select-checkbox" data-video-id="${escapeHtml(s.videoId)}" data-channel-group="${groupIndex}" ${selectedForDelete.has(s.videoId) ? 'checked' : ''}>` : ''}
         <span class="live-badge ${badgeClass}">${badgeText}</span>
         ${s.approvalStatus === 'pending' ? `<span class="new-badge pending-badge">${t('pending_badge')}</span>` : (isRecentlyAdded ? '<span class="new-badge">NEW</span>' : '')}
+        ${offlineNoticeHtml}
         ${thumbHtml}
       </div>
       <div class="card-body">

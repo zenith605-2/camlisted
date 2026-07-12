@@ -514,6 +514,22 @@ body {
   background: #f59e0b;
 }
 
+.offline-notice {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 10px;
+  background: rgba(0, 0, 0, 0.72);
+  color: #fff;
+  font-size: 0.78rem;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
 .new-badge {
   position: absolute;
   top: 8px;
