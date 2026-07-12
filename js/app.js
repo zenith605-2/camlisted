@@ -20,6 +20,13 @@ const modalOpenNewTab = document.getElementById('modalOpenNewTab');
 const modalTitle = document.getElementById('modalTitle');
 const modalUrlInput = document.getElementById('modalUrlInput');
 const modalCopyBtn = document.getElementById('modalCopyBtn');
+const commentsList = document.getElementById('commentsList');
+const commentForm = document.getElementById('commentForm');
+const commentInput = document.getElementById('commentInput');
+const bulkActionBar = document.getElementById('bulkActionBar');
+const bulkActionCount = document.getElementById('bulkActionCount');
+const bulkDeleteBtn = document.getElementById('bulkDeleteBtn');
+const bulkClearBtn = document.getElementById('bulkClearBtn');
 const authArea = document.getElementById('authArea');
 const submitForm = document.getElementById('submitForm');
 const submitUrl = document.getElementById('submitUrl');
@@ -47,7 +54,9 @@ const sidebar = document.getElementById('sidebar');
 let streams = [];
 let currentUser = null;
 let isAdmin = false;
+let selectedForDelete = new Set(); // 관리자 일괄삭제용 선택된 videoId
 let submitterNames = new Map(); // userId -> display_name
+let myDisplayName = null;
 let favorites = new Map(); // videoId -> note
 let unlockedVideos = new Set();
 let categoriesList = []; // [{key, label_en, label_ko, ...}]
@@ -147,12 +156,18 @@ function render(list) {
   grid.innerHTML = '';
   emptyState.hidden = list.length > 0;
   let lastChannel = undefined;
+  let groupIndex = -1;
 
   for (const s of list) {
     if (s.channelTitle !== lastChannel) {
+      groupIndex += 1;
       const header = document.createElement('div');
       header.className = 'channel-header';
-      header.textContent = s.channelTitle || t('anonymous');
+      header.dataset.channelGroup = String(groupIndex);
+      header.innerHTML = `
+        ${isAdmin ? `<input type="checkbox" class="channel-select-all" data-channel-group="${groupIndex}">` : ''}
+        <span>${escapeHtml(s.channelTitle || t('anonymous'))}</span>
+      `;
       grid.appendChild(header);
       lastChannel = s.channelTitle;
     }
@@ -162,6 +177,7 @@ function render(list) {
     card.className = 'card' + (isLocked ? ' locked' : '');
     card.dataset.videoId = s.videoId;
     card.dataset.title = s.title;
+    card.dataset.channelGroup = String(groupIndex);
     const isLiveType = s.contentType === 'live';
     const isAvailable = s.status === 'live'; // 'live' 상태값은 두 타입 모두 "지금도 유효함"을 의미
 
@@ -223,6 +239,7 @@ function render(list) {
 
     card.innerHTML = `
       <div class="thumb-wrap">
+        ${isAdmin ? `<input type="checkbox" class="admin-select-checkbox" data-video-id="${escapeHtml(s.videoId)}" data-channel-group="${groupIndex}" ${selectedForDelete.has(s.videoId) ? 'checked' : ''}>` : ''}
         <span class="live-badge ${badgeClass}">${badgeText}</span>
         ${isRecentlyAdded ? '<span class="new-badge">NEW</span>' : ''}
         ${thumbHtml}
@@ -295,22 +312,78 @@ async function tryUnlock(videoId) {
 
 grid.addEventListener('change', async (e) => {
   const sel = e.target.closest('.card-category-select');
-  if (!sel || !currentUser) return;
-  const videoId = sel.dataset.videoId;
-  const category = sel.value;
-  const { error } = await sb.rpc('set_stream_category', { p_video_id: videoId, p_category: category });
-  if (!error) {
-    const s = streams.find(x => x.videoId === videoId);
-    if (s) s.category = category;
+  if (sel && currentUser) {
+    const videoId = sel.dataset.videoId;
+    const category = sel.value;
+    const { error } = await sb.rpc('set_stream_category', { p_video_id: videoId, p_category: category });
+    if (!error) {
+      const s = streams.find(x => x.videoId === videoId);
+      if (s) s.category = category;
+    }
+    return;
+  }
+
+  const checkbox = e.target.closest('.admin-select-checkbox');
+  if (checkbox && isAdmin) {
+    if (checkbox.checked) selectedForDelete.add(checkbox.dataset.videoId);
+    else selectedForDelete.delete(checkbox.dataset.videoId);
+    updateBulkActionBar();
+    return;
+  }
+
+  const selectAll = e.target.closest('.channel-select-all');
+  if (selectAll && isAdmin) {
+    const group = selectAll.dataset.channelGroup;
+    grid.querySelectorAll(`.admin-select-checkbox[data-channel-group="${group}"]`).forEach(cb => {
+      cb.checked = selectAll.checked;
+      if (selectAll.checked) selectedForDelete.add(cb.dataset.videoId);
+      else selectedForDelete.delete(cb.dataset.videoId);
+    });
+    updateBulkActionBar();
   }
 });
+
+function updateBulkActionBar() {
+  bulkActionBar.hidden = selectedForDelete.size === 0;
+  bulkActionCount.textContent = t('bulk_selected_count', { n: selectedForDelete.size });
+}
+
+bulkClearBtn.addEventListener('click', () => {
+  selectedForDelete.clear();
+  updateBulkActionBar();
+  render(currentFiltered());
+});
+
+bulkDeleteBtn.addEventListener('click', async () => {
+  if (!isAdmin || selectedForDelete.size === 0) return;
+  if (!confirm(t('bulk_delete_confirm', { n: selectedForDelete.size }))) return;
+  const ids = [...selectedForDelete];
+  const { error } = await sb.from('streams').delete().in('video_id', ids);
+  if (error) {
+    alert(t('admin_delete_failed', { message: error.message }));
+    return;
+  }
+  await sb.from('blocklist').insert(ids.map(video_id => ({ video_id, blocked_by: currentUser.id })));
+  streams = streams.filter(s => !selectedForDelete.has(s.videoId));
+  selectedForDelete.clear();
+  updateBulkActionBar();
+  render(currentFiltered());
+});
+
+async function blockAndDelete(videoId) {
+  const { error } = await sb.from('streams').delete().eq('video_id', videoId);
+  if (error) return error;
+  // 삭제한 videoId를 차단 목록에 기록해, 다음날 자동 검색/채널스캔이 다시 넣지 못하게 한다.
+  await sb.from('blocklist').insert({ video_id: videoId, blocked_by: currentUser.id });
+  return null;
+}
 
 async function handleAdminDelete(btn) {
   if (!isAdmin) return;
   const videoId = btn.dataset.videoId;
   if (!confirm(t('admin_delete_confirm'))) return;
   btn.disabled = true;
-  const { error } = await sb.from('streams').delete().eq('video_id', videoId);
+  const error = await blockAndDelete(videoId);
   if (error) {
     alert(t('admin_delete_failed', { message: error.message }));
     btn.disabled = false;
@@ -403,6 +476,33 @@ async function checkAdmin() {
   isAdmin = !!data?.is_admin;
 }
 
+async function loadMyProfile() {
+  if (!currentUser) {
+    myDisplayName = null;
+    return;
+  }
+  const { data } = await sb.from('profiles').select('display_name').eq('id', currentUser.id).maybeSingle();
+  myDisplayName = data?.display_name || null;
+  if (myDisplayName) submitterNames.set(currentUser.id, myDisplayName);
+}
+
+async function handleNicknameEdit() {
+  if (!currentUser) return;
+  const next = prompt(t('nickname_prompt'), myDisplayName || '');
+  if (next === null) return;
+  const trimmed = next.trim().slice(0, 20);
+  if (!trimmed) return;
+  const { error } = await sb.from('profiles').update({ display_name: trimmed }).eq('id', currentUser.id);
+  if (error) {
+    alert(t('nickname_failed', { message: error.message }));
+    return;
+  }
+  myDisplayName = trimmed;
+  submitterNames.set(currentUser.id, trimmed);
+  renderAuthArea();
+  render(currentFiltered());
+}
+
 async function loadFavorites() {
   if (!currentUser) {
     favorites = new Map();
@@ -415,6 +515,7 @@ async function loadFavorites() {
 }
 
 let currentPlayer = null;
+let currentModalVideoId = null;
 let ytApiReady = false;
 let qualityReportedFor = null;
 const ytApiQueue = [];
@@ -475,6 +576,9 @@ function openModal(videoId, title) {
   modalTitle.textContent = title || '';
   modal.hidden = false;
   qualityReportedFor = null;
+  currentModalVideoId = videoId;
+  commentForm.hidden = !currentUser;
+  loadComments(videoId);
 
   withYtApi(() => {
     if (modal.hidden) return; // 로딩 중 닫혔으면 재생하지 않음
@@ -500,7 +604,74 @@ function closeModal() {
   }
   currentPlayer = null;
   modalPlayer.innerHTML = '';
+  currentModalVideoId = null;
+  commentsList.innerHTML = '';
+  commentInput.value = '';
 }
+
+async function loadComments(videoId) {
+  commentsList.innerHTML = `<div class="comment-empty">${escapeHtml(t('loading'))}</div>`;
+  const { data, error } = await sb
+    .from('comments')
+    .select('*')
+    .eq('video_id', videoId)
+    .order('created_at', { ascending: true });
+  if (currentModalVideoId !== videoId) return; // 로딩 중 다른 영상으로 넘어갔으면 무시
+  if (error) {
+    commentsList.innerHTML = `<div class="comment-empty">${escapeHtml(t('comments_failed'))}</div>`;
+    return;
+  }
+  await loadSubmitterNames(data.map(c => ({ source: 'user', addedBy: c.user_id })));
+  renderComments(data || []);
+}
+
+function renderComments(list) {
+  if (!list.length) {
+    commentsList.innerHTML = `<div class="comment-empty">${escapeHtml(t('comments_empty'))}</div>`;
+    return;
+  }
+  commentsList.innerHTML = list.map(c => {
+    const canDelete = currentUser && (currentUser.id === c.user_id || isAdmin);
+    return `
+      <div class="comment-item" data-comment-id="${c.id}">
+        <span class="comment-author">${escapeHtml(submitterNames.get(c.user_id) || t('anonymous'))}</span>
+        <span class="comment-text">${escapeHtml(c.content)}</span>
+        <span class="comment-time">${escapeHtml(formatRelativeTime(c.created_at))}</span>
+        ${canDelete ? `<button type="button" class="comment-delete-btn" data-comment-id="${c.id}">✕</button>` : ''}
+      </div>
+    `;
+  }).join('');
+}
+
+commentForm.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  if (!currentUser || !currentModalVideoId) return;
+  const content = commentInput.value.trim();
+  if (!content) return;
+  const { error } = await sb.from('comments').insert({
+    video_id: currentModalVideoId,
+    user_id: currentUser.id,
+    content,
+  });
+  if (error) {
+    alert(t('comment_failed', { message: error.message }));
+    return;
+  }
+  commentInput.value = '';
+  loadComments(currentModalVideoId);
+});
+
+commentsList.addEventListener('click', async (e) => {
+  const btn = e.target.closest('.comment-delete-btn');
+  if (!btn || !currentModalVideoId) return;
+  if (!confirm(t('comment_delete_confirm'))) return;
+  const { error } = await sb.from('comments').delete().eq('id', btn.dataset.commentId);
+  if (error) {
+    alert(t('comment_failed', { message: error.message }));
+    return;
+  }
+  loadComments(currentModalVideoId);
+});
 
 modalClose.addEventListener('click', closeModal);
 modal.querySelector('.modal-backdrop').addEventListener('click', closeModal);
@@ -582,12 +753,14 @@ document.addEventListener('keydown', (e) => {
 
 function renderAuthArea() {
   if (currentUser) {
-    const name = currentUser.user_metadata?.full_name || currentUser.email || t('anonymous');
+    const name = myDisplayName || currentUser.user_metadata?.full_name || currentUser.email || t('anonymous');
     authArea.innerHTML = `
       <span class="auth-user">${escapeHtml(t('greeting', { name }))}</span>
+      <button type="button" id="nicknameEditBtn" class="auth-btn" title="${escapeHtml(t('nickname_edit_button'))}">✏️</button>
       <button type="button" id="logoutBtn" class="auth-btn">${escapeHtml(t('logout_button'))}</button>
     `;
     document.getElementById('logoutBtn').addEventListener('click', () => sb.auth.signOut());
+    document.getElementById('nicknameEditBtn').addEventListener('click', handleNicknameEdit);
     submitForm.hidden = false;
   } else {
     authArea.innerHTML = `<button type="button" id="loginBtn" class="auth-btn">${escapeHtml(t('login_button'))}</button>`;
@@ -631,6 +804,11 @@ submitForm.addEventListener('submit', async (e) => {
     return;
   }
   submitStatus.textContent = t('submitting');
+  const { data: blocked } = await sb.from('blocklist').select('video_id').eq('video_id', videoId).maybeSingle();
+  if (blocked) {
+    submitStatus.textContent = t('submit_blocked');
+    return;
+  }
   const contentType = submitContentType.value;
   const oembed = await fetchOEmbed(videoId).catch(() => null);
   if (!oembed) {
@@ -751,6 +929,8 @@ function populateCountryFilter() {
 }
 
 async function loadStreams() {
+  selectedForDelete.clear();
+  updateBulkActionBar();
   const { data, error } = await sb
     .from('streams')
     .select('*')
@@ -772,7 +952,7 @@ async function loadStreams() {
 
 sb.auth.onAuthStateChange(async (_event, session) => {
   currentUser = session?.user || null;
-  await Promise.all([loadFavorites(), loadUnlockedVideos(), checkAdmin()]);
+  await Promise.all([loadFavorites(), loadUnlockedVideos(), checkAdmin(), loadMyProfile()]);
   renderAuthArea();
   await refreshQuotaInfo();
   render(currentFiltered());
@@ -796,7 +976,7 @@ async function init() {
   currentUser = session?.user || null;
   await loadCategories();
   populateCategoryFilter();
-  await Promise.all([loadFavorites(), loadUnlockedVideos(), checkAdmin()]);
+  await Promise.all([loadFavorites(), loadUnlockedVideos(), checkAdmin(), loadMyProfile()]);
   renderAuthArea();
   await refreshQuotaInfo();
   await loadStreams();

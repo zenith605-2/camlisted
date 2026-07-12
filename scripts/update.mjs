@@ -173,17 +173,19 @@ function selectRotatingSubset(list, maxPerRun) {
 }
 
 async function main() {
-  const [keywordsRaw, keywordsVideoRaw, excludeRaw, categoriesResult] = await Promise.all([
+  const [keywordsRaw, keywordsVideoRaw, excludeRaw, categoriesResult, blocklistResult] = await Promise.all([
     readFile(KEYWORDS_PATH, 'utf-8'),
     readFile(KEYWORDS_VIDEO_PATH, 'utf-8').catch(() => '{"keywords":[]}'),
     readFile(EXCLUDE_KEYWORDS_PATH, 'utf-8').catch(() => '{"keywords":[]}'),
     supabase.from('categories').select('key, keywords'),
+    supabase.from('blocklist').select('video_id'),
   ]);
   const keywords = JSON.parse(keywordsRaw).keywords || [];
   const keywordsVideo = JSON.parse(keywordsVideoRaw).keywords || [];
   const excludeKeywords = (JSON.parse(excludeRaw).keywords || []).map(k => k.toLowerCase());
   if (categoriesResult.error) throw categoriesResult.error;
   const categoryRows = (categoriesResult.data || []).filter(c => c.key !== 'other');
+  const blockedIds = new Set((blocklistResult.data || []).map(r => r.video_id));
 
   const isExcluded = (title, channelTitle) => {
     const haystack = `${title} ${channelTitle}`.toLowerCase();
@@ -307,7 +309,10 @@ async function main() {
   }
 
   // 신규 탐색: 이미 DB에 존재하는(라이브/오프라인 불문) videoId는 후보에서 제외
-  const knownIds = new Set(existingRows.map(r => r.video_id).filter(id => !toDelete.includes(id)));
+  const knownIds = new Set([
+    ...existingRows.map(r => r.video_id).filter(id => !toDelete.includes(id)),
+    ...blockedIds,
+  ]);
   const candidateMap = new Map();
   let searchCallsUsed = 0;
 

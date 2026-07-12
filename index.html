@@ -92,6 +92,12 @@
 
 <main id="grid" class="grid"></main>
 
+<div id="bulkActionBar" class="bulk-action-bar" hidden>
+  <span id="bulkActionCount"></span>
+  <button type="button" id="bulkDeleteBtn" class="bulk-delete-btn" data-i18n="bulk_delete_button">Delete selected</button>
+  <button type="button" id="bulkClearBtn" class="bulk-clear-btn" data-i18n="bulk_clear_button">Clear</button>
+</div>
+
 <p id="emptyState" class="empty-state" data-i18n="empty_state" hidden>No results to display.</p>
 </div>
 </div>
@@ -109,6 +115,14 @@
       <button type="button" id="modalCopyBtn" class="modal-copy-btn" data-i18n="copy_url">Copy</button>
     </div>
     <div class="modal-player"></div>
+    <div class="modal-comments">
+      <h3 data-i18n="comments_title">Comments</h3>
+      <div id="commentsList" class="comments-list"></div>
+      <form id="commentForm" class="comment-form" hidden>
+        <input type="text" id="commentInput" maxlength="500" data-i18n-placeholder="comment_placeholder" placeholder="Add a comment...">
+        <button type="submit" data-i18n="comment_submit">Post</button>
+      </form>
+    </div>
   </div>
 </div>
 

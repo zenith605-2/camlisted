@@ -104,6 +104,8 @@ adminList.addEventListener('click', async (e) => {
       alert('삭제 실패: ' + error.message);
       return;
     }
+    // 삭제한 videoId를 차단 목록에 기록해, 다음날 자동 검색/채널스캔이 다시 넣지 못하게 한다.
+    await sb.from('blocklist').insert({ video_id: videoId, blocked_by: currentUser.id });
     await loadFlagged();
   }
 });
