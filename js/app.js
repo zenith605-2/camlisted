@@ -61,6 +61,7 @@ let selectedForDelete = new Set(); // 관리자 일괄삭제용 선택된 videoI
 let channelGroupsFullySelected = new Map(); // groupIndex -> channelId ("채널 전체선택"으로 체크된 그룹만)
 let submitterNames = new Map(); // userId -> display_name
 let myDisplayName = null;
+let myTierHtml = '';
 let favorites = new Map(); // videoId -> note
 let unlockedVideos = new Set();
 let categoriesList = []; // [{key, label_en, label_ko, ...}]
@@ -533,31 +534,32 @@ async function checkAdmin() {
   isAdmin = !!data?.is_admin;
 }
 
+const TIERS = [
+  { min: 50, emoji: '💎', key: 'tier_diamond' },
+  { min: 20, emoji: '🥇', key: 'tier_gold' },
+  { min: 5, emoji: '🥈', key: 'tier_silver' },
+  { min: 1, emoji: '🥉', key: 'tier_bronze' },
+  { min: 0, emoji: '🌱', key: 'tier_newcomer' },
+];
+function tierFor(submissions) {
+  return TIERS.find(tier => submissions >= tier.min);
+}
+function tierBadgeHtml(submissions) {
+  const tier = tierFor(submissions);
+  return `<span class="tier-badge" title="${escapeHtml(t('tier_title', { count: submissions }))}">${tier.emoji} ${escapeHtml(t(tier.key))}</span>`;
+}
+
 async function loadMyProfile() {
   if (!currentUser) {
     myDisplayName = null;
+    myTierHtml = '';
     return;
   }
   const { data } = await sb.from('profiles').select('display_name').eq('id', currentUser.id).maybeSingle();
   myDisplayName = data?.display_name || null;
   if (myDisplayName) submitterNames.set(currentUser.id, myDisplayName);
-}
-
-async function handleNicknameEdit() {
-  if (!currentUser) return;
-  const next = prompt(t('nickname_prompt'), myDisplayName || '');
-  if (next === null) return;
-  const trimmed = next.trim().slice(0, 20);
-  if (!trimmed) return;
-  const { error } = await sb.from('profiles').update({ display_name: trimmed }).eq('id', currentUser.id);
-  if (error) {
-    alert(error.code === '23505' ? t('nickname_taken') : t('nickname_failed', { message: error.message }));
-    return;
-  }
-  myDisplayName = trimmed;
-  submitterNames.set(currentUser.id, trimmed);
-  renderAuthArea();
-  render(currentFiltered());
+  const { count } = await sb.from('streams').select('*', { count: 'exact', head: true }).eq('added_by', currentUser.id);
+  myTierHtml = tierBadgeHtml(count || 0);
 }
 
 async function loadFavorites() {
@@ -835,7 +837,7 @@ async function openLeaderboard() {
     <li class="leaderboard-item">
       <span class="leaderboard-rank">${i + 1}</span>
       ${row.avatar_url ? `<img class="leaderboard-avatar" src="${row.avatar_url}" alt="">` : '<span class="leaderboard-avatar"></span>'}
-      <span class="leaderboard-name">${escapeHtml(row.display_name || t('anonymous'))}</span>
+      <span class="leaderboard-name">${escapeHtml(row.display_name || t('anonymous'))} ${tierBadgeHtml(row.submissions)}</span>
       <span class="leaderboard-score">${escapeHtml(t('leaderboard_score', { score: row.score, submissions: row.submissions }))}</span>
     </li>
   `).join('');
@@ -857,12 +859,11 @@ function renderAuthArea() {
     const name = myDisplayName || currentUser.user_metadata?.full_name || currentUser.email || t('anonymous');
     authArea.innerHTML = `
       <span class="auth-user">${escapeHtml(t('greeting', { name }))}</span>
-      <button type="button" id="nicknameEditBtn" class="auth-btn" title="${escapeHtml(t('nickname_edit_button'))}">✏️</button>
+      ${myTierHtml}
       <a href="account.html" class="auth-btn" title="${escapeHtml(t('account_title'))}">⚙️</a>
       <button type="button" id="logoutBtn" class="auth-btn">${escapeHtml(t('logout_button'))}</button>
     `;
     document.getElementById('logoutBtn').addEventListener('click', () => sb.auth.signOut());
-    document.getElementById('nicknameEditBtn').addEventListener('click', handleNicknameEdit);
     submitSection.hidden = false;
   } else {
     authArea.innerHTML = `<button type="button" id="loginBtn" class="auth-btn">${escapeHtml(t('login_button'))}</button>`;
