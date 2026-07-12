@@ -398,6 +398,28 @@ body {
   margin: 0 auto;
 }
 
+.approve-all-btn {
+  display: block;
+  margin: 10px 24px 0;
+  background: #16a34a;
+  border: none;
+  border-radius: 8px;
+  color: #fff;
+  padding: 9px 18px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.approve-all-btn:hover {
+  background: #15803d;
+}
+
+.approve-all-btn:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));

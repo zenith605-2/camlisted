@@ -417,6 +417,8 @@ async function main() {
       source: 'keyword',
       content_type: c.contentType,
       status: 'live',
+      // 자동 수집분도 관리자 검수를 거치도록 승인 대기로 넣는다 (7일 내 미승인 시 기존 만료 로직으로 삭제됨)
+      approval_status: 'pending',
       category: classifyCategory(c.title, c.channelTitle),
       country: newCountryMap.get(c.channelId) || null,
       started_at: c.contentType === 'live' ? (info.liveStreamingDetails?.actualStartTime || null) : null,
@@ -433,11 +435,14 @@ async function main() {
 
   // 7일 임시등록 만료 처리: 승인(3추천 또는 관리자 승인)도 못 받고 7일이 지난 유저 제보는 삭제한다.
   // (차단목록에는 올리지 않음 — 나중에 다시 제보하면 새로 기회를 준다)
+  // 자동 수집(keyword) 대기분은 만료 대상에서 제외 — 삭제하면 다음날 검색에서 또 발견돼
+  // 대기→삭제→재발견을 반복하며 쿼터만 낭비하므로, 관리자가 승인/삭제할 때까지 대기 상태로 둔다.
   const sevenDaysAgo = new Date(Date.now() - 7 * 24 * 3600 * 1000).toISOString();
   const { data: expiredRows, error: expiredFetchErr } = await supabase
     .from('streams')
     .select('video_id')
     .eq('approval_status', 'pending')
+    .eq('source', 'user')
     .lt('added_at', sevenDaysAgo);
   if (expiredFetchErr) {
     console.error('임시등록 만료 대상 조회 실패:', expiredFetchErr.message);

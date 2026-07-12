@@ -189,6 +189,18 @@ function render(list) {
   grid.innerHTML = '';
   emptyState.hidden = list.length > 0;
   resultCountEl.textContent = t('total_count', { n: list.length });
+
+  // 승인 대기 뷰에서 관리자에게 일괄 승인 버튼을 보여준다
+  document.getElementById('approveAllBtn')?.remove();
+  if (showPendingOnly && isAdmin && list.length) {
+    const approveAllBtn = document.createElement('button');
+    approveAllBtn.type = 'button';
+    approveAllBtn.id = 'approveAllBtn';
+    approveAllBtn.className = 'approve-all-btn';
+    approveAllBtn.textContent = t('approve_all_button', { n: list.length });
+    approveAllBtn.addEventListener('click', handleApproveAll);
+    resultCountEl.after(approveAllBtn);
+  }
   const isListView = grid.classList.contains('list-view') && sortSelect.value === 'default';
   let lastChannel = undefined;
   let groupIndex = -1;
@@ -479,6 +491,33 @@ async function handleAdminApprove(btn) {
   }
   const s = streams.find(x => x.videoId === videoId);
   if (s) s.approvalStatus = 'approved';
+  renderSidebar();
+  updateSidebarActiveState();
+  render(currentFiltered());
+}
+
+async function handleApproveAll() {
+  if (!isAdmin) return;
+  const pendingIds = currentFiltered().filter(s => s.approvalStatus === 'pending').map(s => s.videoId);
+  if (!pendingIds.length) return;
+  if (!confirm(t('approve_all_confirm', { n: pendingIds.length }))) return;
+  const btn = document.getElementById('approveAllBtn');
+  if (btn) btn.disabled = true;
+  // URL 길이 제한을 피하려고 200개씩 나눠서 업데이트
+  for (let i = 0; i < pendingIds.length; i += 200) {
+    const chunk = pendingIds.slice(i, i + 200);
+    const { error } = await sb.from('streams').update({ approval_status: 'approved' }).in('video_id', chunk);
+    if (error) {
+      alert(t('approve_failed', { message: error.message }));
+      if (btn) btn.disabled = false;
+      return;
+    }
+    for (const s of streams) {
+      if (chunk.includes(s.videoId)) s.approvalStatus = 'approved';
+    }
+  }
+  renderSidebar();
+  updateSidebarActiveState();
   render(currentFiltered());
 }
 
