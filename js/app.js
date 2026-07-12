@@ -275,7 +275,7 @@ function render(list) {
       <div class="card-actions">
         <button type="button" class="copy-link-btn" data-video-id="${escapeHtml(s.videoId)}">${t('copy_url')}</button>
         ${currentUser ? `
-          ${s.source === 'user' ? `<button type="button" class="upvote-btn ${myUpvotes.has(s.videoId) ? 'active' : ''}" data-video-id="${escapeHtml(s.videoId)}" ${s.addedBy === currentUser.id ? 'disabled title="' + escapeHtml(t('upvote_own_disabled')) + '"' : ''}>${t('upvote_button')}</button>` : ''}
+          <button type="button" class="upvote-btn ${myUpvotes.has(s.videoId) ? 'active' : ''}" data-video-id="${escapeHtml(s.videoId)}" ${s.source === 'user' && s.addedBy === currentUser.id ? 'disabled title="' + escapeHtml(t('upvote_own_disabled')) + '"' : ''}>${t('upvote_button')}</button>
           <button type="button" class="downvote-btn ${myDownvotes.has(s.videoId) ? 'active' : ''}" data-video-id="${escapeHtml(s.videoId)}">${t('downvote_button')}</button>
           <button type="button" class="favorite-btn ${isFav ? 'active' : ''}" data-video-id="${escapeHtml(s.videoId)}">${isFav ? t('favorite_remove') : t('favorite_add')}</button>
           ${isFav ? `<button type="button" class="note-btn" data-video-id="${escapeHtml(s.videoId)}">📝</button>` : ''}
