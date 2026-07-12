@@ -42,7 +42,9 @@ body {
 }
 
 .sidebar-group-btn {
-  display: block;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   width: 100%;
   text-align: left;
   background: transparent;
@@ -68,7 +70,9 @@ body {
 }
 
 .sidebar-cat-btn {
-  display: block;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   width: 100%;
   text-align: left;
   background: transparent;
@@ -78,6 +82,12 @@ body {
   padding: 6px 8px;
   cursor: pointer;
   border-radius: 6px;
+}
+
+.sidebar-count {
+  color: var(--muted);
+  font-size: 0.75rem;
+  font-weight: 400;
 }
 
 .sidebar-cat-btn:hover,
@@ -152,23 +162,43 @@ body {
   border-color: var(--accent);
 }
 
+.submit-section {
+  margin-top: 16px;
+  padding: 14px 16px;
+  border: 1px solid var(--accent);
+  border-radius: 10px;
+  background: rgba(255, 59, 59, 0.08);
+}
+
+.submit-heading {
+  margin: 0 0 10px;
+  text-align: center;
+  color: var(--text);
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
 .submit-form {
   display: flex;
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
   gap: 8px;
-  margin-top: 16px;
 }
 
 .submit-form input {
   width: min(420px, 90vw);
-  padding: 9px 12px;
+  padding: 11px 14px;
   border-radius: 8px;
-  border: 1px solid var(--border);
+  border: 2px solid var(--accent);
   background: var(--card-bg);
   color: var(--text);
-  font-size: 0.9rem;
+  font-size: 0.95rem;
+}
+
+.submit-form input:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(255, 59, 59, 0.3);
 }
 
 .submit-form button {
@@ -176,8 +206,9 @@ body {
   border: none;
   border-radius: 8px;
   color: #fff;
-  padding: 9px 16px;
-  font-size: 0.9rem;
+  padding: 11px 20px;
+  font-size: 0.95rem;
+  font-weight: 700;
   cursor: pointer;
 }
 
@@ -263,9 +294,13 @@ body {
   font-size: 1rem;
 }
 
-.last-updated {
+.result-count {
+  display: block;
   color: var(--muted);
-  font-size: 0.8rem;
+  font-size: 0.85rem;
+  padding: 12px 24px 0;
+  max-width: 1400px;
+  margin: 0 auto;
 }
 
 .grid {

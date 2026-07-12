@@ -27,7 +27,6 @@
   <p class="subtitle" data-i18n="site_subtitle">A curated collection of live cams and real-world footage — traffic, wildlife, dashcams, city streets, and more, gathered from YouTube every day.</p>
   <div class="controls">
     <input type="text" id="searchInput" data-i18n-placeholder="search_placeholder" placeholder="Search by title or channel...">
-    <span id="lastUpdated" class="last-updated"></span>
   </div>
   <div class="filter-bar">
     <select id="contentTypeFilter" hidden>
@@ -76,20 +75,24 @@
       <button type="button" id="listViewBtn" class="view-btn" data-i18n="view_list">☰ List</button>
     </div>
   </div>
-  <form id="submitForm" class="submit-form" hidden>
-    <input type="text" id="submitUrl" data-i18n-placeholder="submit_placeholder" placeholder="Paste a YouTube live URL (e.g. https://www.youtube.com/watch?v=...)">
-    <select id="submitContentType">
-      <option value="live" data-i18n="content_type_live">Live</option>
-      <option value="video" data-i18n="content_type_video">Video</option>
-    </select>
-    <select id="submitCategory">
-      <option value="" data-i18n="submit_category_auto">Auto-detect category</option>
-    </select>
-    <button type="submit" data-i18n="submit_button">Submit</button>
-    <span id="submitStatus" class="submit-status"></span>
-  </form>
+  <div id="submitSection" class="submit-section" hidden>
+    <p class="submit-heading" data-i18n="submit_heading">📮 Know a link we're missing? Submit it here!</p>
+    <form id="submitForm" class="submit-form">
+      <input type="text" id="submitUrl" data-i18n-placeholder="submit_placeholder" placeholder="Paste a YouTube live URL (e.g. https://www.youtube.com/watch?v=...)">
+      <select id="submitContentType">
+        <option value="live" data-i18n="content_type_live">Live</option>
+        <option value="video" data-i18n="content_type_video">Video</option>
+      </select>
+      <select id="submitCategory">
+        <option value="" data-i18n="submit_category_auto">Auto-detect category</option>
+      </select>
+      <button type="submit" data-i18n="submit_button">Submit</button>
+      <span id="submitStatus" class="submit-status"></span>
+    </form>
+  </div>
 </header>
 
+<span id="resultCount" class="result-count"></span>
 <main id="grid" class="grid"></main>
 
 <div id="bulkActionBar" class="bulk-action-bar" hidden>

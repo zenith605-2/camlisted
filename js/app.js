@@ -12,7 +12,7 @@ const VIEW_GATING_ENABLED = false;
 const grid = document.getElementById('grid');
 const emptyState = document.getElementById('emptyState');
 const searchInput = document.getElementById('searchInput');
-const lastUpdatedEl = document.getElementById('lastUpdated');
+const resultCountEl = document.getElementById('resultCount');
 const modal = document.getElementById('modal');
 const modalPlayer = modal.querySelector('.modal-player');
 const modalClose = document.getElementById('modalClose');
@@ -28,6 +28,7 @@ const bulkActionCount = document.getElementById('bulkActionCount');
 const bulkDeleteBtn = document.getElementById('bulkDeleteBtn');
 const bulkClearBtn = document.getElementById('bulkClearBtn');
 const authArea = document.getElementById('authArea');
+const submitSection = document.getElementById('submitSection');
 const submitForm = document.getElementById('submitForm');
 const submitUrl = document.getElementById('submitUrl');
 const submitContentType = document.getElementById('submitContentType');
@@ -157,6 +158,7 @@ function render(list) {
   clearHoverPreview();
   grid.innerHTML = '';
   emptyState.hidden = list.length > 0;
+  resultCountEl.textContent = t('total_count', { n: list.length });
   let lastChannel = undefined;
   let groupIndex = -1;
 
@@ -499,7 +501,7 @@ async function handleNicknameEdit() {
   if (!trimmed) return;
   const { error } = await sb.from('profiles').update({ display_name: trimmed }).eq('id', currentUser.id);
   if (error) {
-    alert(t('nickname_failed', { message: error.message }));
+    alert(error.code === '23505' ? t('nickname_taken') : t('nickname_failed', { message: error.message }));
     return;
   }
   myDisplayName = trimmed;
@@ -809,7 +811,7 @@ function renderAuthArea() {
     `;
     document.getElementById('logoutBtn').addEventListener('click', () => sb.auth.signOut());
     document.getElementById('nicknameEditBtn').addEventListener('click', handleNicknameEdit);
-    submitForm.hidden = false;
+    submitSection.hidden = false;
   } else {
     authArea.innerHTML = `<button type="button" id="loginBtn" class="auth-btn">${escapeHtml(t('login_button'))}</button>`;
     document.getElementById('loginBtn').addEventListener('click', () => {
@@ -818,7 +820,7 @@ function renderAuthArea() {
         options: { redirectTo: window.location.origin + window.location.pathname },
       });
     });
-    submitForm.hidden = true;
+    submitSection.hidden = true;
   }
 }
 
@@ -908,13 +910,22 @@ const SIDEBAR_GROUPS = [
   { type: 'video', labelKey: 'content_type_video', icon: '🎬' },
 ];
 
+function sidebarCount(type, category) {
+  return streams.filter(s =>
+    s.contentType === type &&
+    (!category || s.category === category) &&
+    s.status === 'live' &&
+    s.visibility === 'listed'
+  ).length;
+}
+
 function renderSidebar() {
   sidebar.innerHTML = SIDEBAR_GROUPS.map(g => `
     <div class="sidebar-section">
-      <button type="button" class="sidebar-group-btn" data-content-type="${g.type}" data-category="">${g.icon} ${escapeHtml(t(g.labelKey))}</button>
+      <button type="button" class="sidebar-group-btn" data-content-type="${g.type}" data-category="">${g.icon} ${escapeHtml(t(g.labelKey))} <span class="sidebar-count">${sidebarCount(g.type, null)}</span></button>
       <ul class="sidebar-sublist">
         ${categoriesList.map(c => `
-          <li><button type="button" class="sidebar-cat-btn" data-content-type="${g.type}" data-category="${c.key}">${escapeHtml(categoryLabel(c.key))}</button></li>
+          <li><button type="button" class="sidebar-cat-btn" data-content-type="${g.type}" data-category="${c.key}">${escapeHtml(categoryLabel(c.key))} <span class="sidebar-count">${sidebarCount(g.type, c.key)}</span></button></li>
         `).join('')}
       </ul>
     </div>
@@ -994,8 +1005,8 @@ async function loadStreams() {
 
   streams = (data || []).map(mapRow);
   await loadSubmitterNames(streams);
-  lastUpdatedEl.textContent = t('total_count', { n: streams.length });
   populateCountryFilter();
+  renderSidebar();
   render(currentFiltered());
 }
 
