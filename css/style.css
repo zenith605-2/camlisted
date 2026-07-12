@@ -1043,6 +1043,141 @@ body {
   margin-top: 8px;
 }
 
+.feedback-page {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 0 24px 24px;
+}
+
+.feedback-form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 20px 0;
+  padding: 16px;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+}
+
+.feedback-form input,
+.feedback-form textarea {
+  padding: 8px 10px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--text);
+  font-size: 0.9rem;
+  font-family: inherit;
+  resize: vertical;
+}
+
+.feedback-form button {
+  align-self: flex-end;
+  background: var(--accent);
+  border: none;
+  border-radius: 8px;
+  color: #fff;
+  padding: 8px 18px;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.feedback-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.feedback-item {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+}
+
+.feedback-item-main {
+  display: flex;
+  gap: 12px;
+  min-width: 0;
+}
+
+.feedback-upvote-btn {
+  flex: 0 0 auto;
+  width: 48px;
+  height: 48px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--muted);
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+
+.feedback-upvote-btn.active {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.feedback-item-body {
+  min-width: 0;
+}
+
+.feedback-item-title {
+  margin: 0 0 4px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.feedback-item-content {
+  margin: 0 0 6px;
+  color: var(--muted);
+  font-size: 0.9rem;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.feedback-status {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 4px;
+  margin-right: 8px;
+}
+
+.feedback-status-open { background: var(--border); color: var(--text); }
+.feedback-status-planned { background: #3b82f6; color: #fff; }
+.feedback-status-done { background: #22c55e; color: #fff; }
+.feedback-status-declined { background: var(--muted); color: #fff; }
+
+.feedback-author {
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+
+.feedback-item-actions {
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  align-items: flex-end;
+}
+
+.feedback-status-select,
+.feedback-delete-btn {
+  font-size: 0.75rem;
+  padding: 4px 8px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--text);
+  cursor: pointer;
+}
+
 .admin-list {
   max-width: 900px;
   margin: 0 auto;

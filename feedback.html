@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title data-i18n="feedback_title">Feedback &amp; Feature Requests</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="header-actions">
+    <a href="index.html" class="auth-btn" data-i18n="back_to_site">← Back to site</a>
+    <div id="authArea" class="auth-area"></div>
+  </div>
+  <h1 data-i18n="feedback_title">Feedback &amp; Feature Requests</h1>
+  <p class="subtitle" data-i18n="feedback_subtitle">Suggest improvements or new features, and upvote the ones you want most.</p>
+</header>
+
+<main class="feedback-page">
+  <form id="feedbackForm" class="feedback-form" hidden>
+    <input type="text" id="feedbackTitle" maxlength="100" data-i18n-placeholder="feedback_title_placeholder" placeholder="Short title">
+    <textarea id="feedbackContent" maxlength="1000" rows="3" data-i18n-placeholder="feedback_content_placeholder" placeholder="Describe your suggestion..."></textarea>
+    <button type="submit" data-i18n="feedback_submit_button">Post</button>
+  </form>
+  <p id="feedbackLoginHint" class="empty-state" data-i18n="feedback_login_required">Sign in to post a suggestion.</p>
+
+  <div id="feedbackList" class="feedback-list"></div>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="js/i18n.js"></script>
+<script src="js/feedback.js"></script>
+</body>
+</html>
