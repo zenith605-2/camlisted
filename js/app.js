@@ -153,6 +153,7 @@ function currentFiltered() {
 }
 
 function render(list) {
+  clearHoverPreview();
   grid.innerHTML = '';
   emptyState.hidden = list.length > 0;
   let lastChannel = undefined;
@@ -516,6 +517,49 @@ async function loadFavorites() {
 
 let currentPlayer = null;
 let currentModalVideoId = null;
+let hoverPreviewEl = null;
+let hoverPreviewVideoId = null;
+let hoverPreviewTimer = null;
+
+function clearHoverPreview() {
+  clearTimeout(hoverPreviewTimer);
+  hoverPreviewTimer = null;
+  if (hoverPreviewEl) hoverPreviewEl.remove();
+  hoverPreviewEl = null;
+  hoverPreviewVideoId = null;
+}
+
+grid.addEventListener('mouseover', (e) => {
+  const thumbWrap = e.target.closest('.thumb-wrap');
+  if (!thumbWrap) return;
+  const card = thumbWrap.closest('.card');
+  if (!card) return;
+  const videoId = card.dataset.videoId;
+  if (videoId === hoverPreviewVideoId) return;
+  clearHoverPreview();
+  hoverPreviewTimer = setTimeout(() => {
+    const iframe = document.createElement('iframe');
+    iframe.className = 'hover-preview-iframe';
+    iframe.src = `https://www.youtube.com/embed/${encodeURIComponent(videoId)}?autoplay=1&mute=1&controls=0&modestbranding=1&playsinline=1`;
+    iframe.setAttribute('allow', 'autoplay; encrypted-media');
+    iframe.setAttribute('frameborder', '0');
+    thumbWrap.appendChild(iframe);
+    hoverPreviewEl = iframe;
+    hoverPreviewVideoId = videoId;
+  }, 350); // 카드 위를 빠르게 지나칠 때마다 iframe을 만들지 않도록 짧은 지연
+});
+
+grid.addEventListener('mouseout', (e) => {
+  const thumbWrap = e.target.closest('.thumb-wrap');
+  if (!thumbWrap) return;
+  if (thumbWrap.contains(e.relatedTarget)) return; // 같은 thumb-wrap 내부 이동은 무시
+  const card = thumbWrap.closest('.card');
+  if (card && card.dataset.videoId === hoverPreviewVideoId) {
+    clearHoverPreview();
+  } else {
+    clearTimeout(hoverPreviewTimer);
+  }
+});
 let ytApiReady = false;
 let qualityReportedFor = null;
 const ytApiQueue = [];
