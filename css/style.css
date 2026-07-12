@@ -375,6 +375,21 @@ body {
   color: var(--accent);
 }
 
+.clear-filters-btn {
+  background: transparent;
+  border: 1px dashed var(--border);
+  border-radius: 6px;
+  color: var(--muted);
+  padding: 6px 10px;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+
+.clear-filters-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
 .site-header h1 {
   margin: 0 0 10px;
   font-size: 1.9rem;

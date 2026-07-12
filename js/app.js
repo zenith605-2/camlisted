@@ -972,6 +972,22 @@ searchInput.addEventListener('input', () => render(currentFiltered()));
 });
 favoritesOnlyCheckbox.addEventListener('change', () => render(currentFiltered()));
 
+document.getElementById('clearFiltersBtn').addEventListener('click', () => {
+  searchInput.value = '';
+  contentTypeFilter.value = '';
+  categoryFilter.value = '';
+  countryFilter.value = '';
+  qualityFilter.value = '';
+  addedFilter.value = '';
+  sortSelect.value = 'default';
+  statusFilter.value = 'live';       // 기본값: 라이브만
+  visibilityFilter.value = 'listed'; // 기본값: 정상 노출만
+  favoritesOnlyCheckbox.checked = false;
+  showPendingOnly = false;
+  updateSidebarActiveState();
+  render(currentFiltered());
+});
+
 function applyViewMode() {
   const mode = localStorage.getItem(VIEW_MODE_KEY) || 'grid';
   grid.classList.toggle('list-view', mode === 'list');
