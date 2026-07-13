@@ -775,8 +775,13 @@ let currentModalVideoId = null;
 let viewportPreviewObserver = null;
 const viewportPreviewTimers = new Map(); // videoId -> pending start timer
 
+// 동시에 재생되는 미리보기 iframe 수 제한 — 화면의 카드 전부를 재생하면 CPU/네트워크 부하가 커서,
+// 데스크톱 4개/모바일 2개까지만 재생하고 나머지는 썸네일을 유지한다
+const MAX_CONCURRENT_PREVIEWS = window.matchMedia('(max-width: 800px)').matches ? 2 : 4;
+
 function startViewportPreview(thumbWrap, videoId) {
   if (thumbWrap.querySelector('.hover-preview-iframe')) return;
+  if (grid.querySelectorAll('.hover-preview-iframe').length >= MAX_CONCURRENT_PREVIEWS) return;
   const iframe = document.createElement('iframe');
   iframe.className = 'hover-preview-iframe';
   iframe.src = `https://www.youtube.com/embed/${encodeURIComponent(videoId)}?autoplay=1&mute=1&controls=0&modestbranding=1&playsinline=1`;
