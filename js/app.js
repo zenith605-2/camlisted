@@ -249,6 +249,16 @@ function appendMoreCards() {
     card.dataset.videoId = s.videoId;
     card.dataset.title = s.title;
     card.dataset.channelGroup = String(groupIndex);
+    card.innerHTML = cardInnerHtml(s, groupIndex);
+    grid.appendChild(card);
+    const wrap = card.querySelector('.thumb-wrap');
+    if (wrap && viewportPreviewObserver) viewportPreviewObserver.observe(wrap);
+  }
+
+  renderedCount = end;
+}
+
+function cardInnerHtml(s, groupIndex) {
     const isLiveType = s.contentType === 'live';
     const isAvailable = s.status === 'live'; // 'live' 상태값은 두 타입 모두 "지금도 유효함"을 의미
 
@@ -318,7 +328,7 @@ function appendMoreCards() {
       </div>
     `;
 
-    card.innerHTML = `
+    return `
       <div class="thumb-wrap">
         ${isAdmin ? `<input type="checkbox" class="admin-select-checkbox" data-video-id="${escapeHtml(s.videoId)}" data-channel-group="${groupIndex}" ${selectedForDelete.has(s.videoId) ? 'checked' : ''}>` : ''}
         <span class="live-badge ${badgeClass}">${badgeText}</span>
@@ -341,12 +351,28 @@ function appendMoreCards() {
         ${actionsHtml}
       </div>
     `;
-    grid.appendChild(card);
-    const wrap = card.querySelector('.thumb-wrap');
-    if (wrap && viewportPreviewObserver) viewportPreviewObserver.observe(wrap);
+}
+
+// 그리드 전체를 다시 그리지 않고 카드 하나만 제자리에서 갱신한다.
+// 전체 재렌더는 재생 중인 모든 미리보기 iframe을 초기화해버리기 때문에,
+// 추천/승인 같은 단일 카드 액션에서는 이 함수를 써서 다른 카드의 재생을 유지한다.
+function refreshCard(videoId) {
+  const card = grid.querySelector(`.card[data-video-id="${CSS.escape(videoId)}"]`);
+  if (!card) return;
+  const s = streams.find(x => x.videoId === videoId);
+  const oldWrap = card.querySelector('.thumb-wrap');
+  if (oldWrap && viewportPreviewObserver) viewportPreviewObserver.unobserve(oldWrap);
+
+  // 삭제됐거나 현재 필터 조건에서 빠진 카드(예: 대기 뷰에서 승인됨)는 그 카드만 제거
+  if (!s || !currentFiltered().some(x => x.videoId === videoId)) {
+    card.remove();
+    resultCountEl.textContent = t('total_count', { n: currentFiltered().length });
+    return;
   }
 
-  renderedCount = end;
+  card.innerHTML = cardInnerHtml(s, card.dataset.channelGroup);
+  const wrap = card.querySelector('.thumb-wrap');
+  if (wrap && viewportPreviewObserver) viewportPreviewObserver.observe(wrap);
 }
 
 let loadMoreObserver = null;
@@ -527,7 +553,9 @@ async function handleAdminDelete(btn) {
     return;
   }
   streams = streams.filter(s => s.videoId !== videoId);
-  render(currentFiltered());
+  refreshCard(videoId);
+  renderSidebar();
+  updateSidebarActiveState();
 }
 
 async function handleAdminApprove(btn) {
@@ -542,9 +570,9 @@ async function handleAdminApprove(btn) {
   }
   const s = streams.find(x => x.videoId === videoId);
   if (s) s.approvalStatus = 'approved';
+  refreshCard(videoId);
   renderSidebar();
   updateSidebarActiveState();
-  render(currentFiltered());
 }
 
 async function handleApproveAll() {
@@ -611,7 +639,7 @@ async function handleUpvote(btn) {
     }
   }
   btn.disabled = false;
-  render(currentFiltered());
+  refreshCard(videoId);
 }
 
 async function handleDownvote(btn) {
@@ -635,7 +663,7 @@ async function handleDownvote(btn) {
     }
   }
   btn.disabled = false;
-  render(currentFiltered());
+  refreshCard(videoId);
 }
 
 async function handleFavorite(btn) {
@@ -650,7 +678,7 @@ async function handleFavorite(btn) {
     if (!error) favorites.set(videoId, null);
   }
   btn.disabled = false;
-  render(currentFiltered());
+  refreshCard(videoId);
 }
 
 async function handleNoteEdit(btn) {
