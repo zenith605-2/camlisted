@@ -45,44 +45,27 @@ async function fetchJson(url) {
   return res.json();
 }
 
-// oEmbed로 화면 비율 확인 — 세로 영상(쇼츠 등)은 사이트 성격에 안 맞아 걸러낸다.
-// API 쿼터를 안 쓰는 공개 엔드포인트. true=세로, false=가로, null=확인 불가(나중에 재시도)
-async function isVerticalVideo(videoId) {
-  try {
-    const res = await fetch(`https://www.youtube.com/oembed?url=${encodeURIComponent(`https://www.youtube.com/watch?v=${videoId}`)}&format=json`);
-    if (!res.ok) return null;
-    const data = await res.json();
-    if (!data.width || !data.height) return null;
-    return data.height > data.width;
-  } catch {
-    return null;
-  }
+// 세로 영상(쇼츠 등) 판별 — videos.list의 player 파트에 maxHeight를 지정하면
+// 실제 영상 비율대로 embedWidth/embedHeight가 내려온다 (oEmbed는 쇼츠에도 16:9를 돌려줘서 못 씀)
+function isVerticalInfo(info) {
+  const w = Number(info?.player?.embedWidth);
+  const h = Number(info?.player?.embedHeight);
+  return !!(w && h && h > w);
 }
 
-async function mapConcurrent(items, limit, fn) {
-  const results = new Array(items.length);
-  let next = 0;
-  await Promise.all(Array.from({ length: Math.min(limit, items.length) }, async () => {
-    while (next < items.length) {
-      const idx = next++;
-      results[idx] = await fn(items[idx]);
-    }
-  }));
-  return results;
-}
-
-// videoId -> {snippet, liveStreamingDetails, status} 맵으로 반환 (라이브/일반 영상 공통 조회)
+// videoId -> {snippet, liveStreamingDetails, status, player} 맵으로 반환 (라이브/일반 영상 공통 조회)
 async function getVideoInfo(videoIds) {
   const map = new Map();
   for (const batch of chunk(videoIds, 50)) {
     if (batch.length === 0) continue;
-    const url = `${BASE}/videos?part=snippet,liveStreamingDetails,status&id=${batch.join(',')}&key=${API_KEY}`;
+    const url = `${BASE}/videos?part=snippet,liveStreamingDetails,status,player&maxHeight=720&id=${batch.join(',')}&key=${API_KEY}`;
     const data = await fetchJson(url);
     for (const item of data.items || []) {
       map.set(item.id, {
         snippet: item.snippet,
         liveStreamingDetails: item.liveStreamingDetails || {},
         status: item.status || {},
+        player: item.player || {},
       });
     }
   }
@@ -238,12 +221,19 @@ async function main() {
   const toDelete = []; // 오탐(제외 키워드) 확정 삭제
   const toUpdate = []; // 상태전환/정보보강 업데이트
   const creditRecipients = []; // 이번에 처음 검증 통과한 유저 제보의 제보자(added_by)
+  const verticalIds = []; // 세로 영상(쇼츠 등) -> 삭제 + 차단목록
   let validCount = 0;
   let offlineCount = 0;
 
   for (const row of existingRows) {
     const contentType = row.content_type || 'live';
     const info = infoMap.get(row.video_id);
+
+    // 세로 영상(쇼츠 등)은 사이트 성격에 안 맞음 -> 삭제 + 차단목록 (비율은 안 변하니 재수집 방지)
+    if (info && isVerticalInfo(info)) {
+      verticalIds.push(row.video_id);
+      continue;
+    }
 
     if (!isValidFor(contentType, info)) {
       offlineCount += 1;
@@ -454,27 +444,20 @@ async function main() {
     };
   });
 
-  console.log(`  -> 검증 통과 신규 ${newRows.length}건`);
-
   // 세로 영상(쇼츠 등)은 삽입 전에 거르고 차단목록에 올린다 (비율은 안 변하니 재수집 방지)
-  let insertRows = newRows;
-  if (newRows.length) {
-    const flags = await mapConcurrent(newRows, 8, r => isVerticalVideo(r.video_id));
-    const nowIso = new Date().toISOString();
-    const verticalIds = [];
-    insertRows = [];
-    newRows.forEach((r, i) => {
-      if (flags[i] === true) verticalIds.push(r.video_id);
-      else insertRows.push(flags[i] === false ? { ...r, aspect_checked_at: nowIso } : r);
-    });
-    if (verticalIds.length) {
-      await supabase.from('blocklist').upsert(
-        verticalIds.map(video_id => ({ video_id })),
-        { onConflict: 'video_id', ignoreDuplicates: true }
-      );
-      console.log(`  -> 세로 영상 제외: ${verticalIds.length}건 (차단목록 등록)`);
-    }
+  const newVerticalIds = newCandidates
+    .filter(c => isVerticalInfo(candidateInfoMap.get(c.videoId)))
+    .map(c => c.videoId);
+  const insertRows = newRows.filter(r => !newVerticalIds.includes(r.video_id));
+  if (newVerticalIds.length) {
+    await supabase.from('blocklist').upsert(
+      newVerticalIds.map(video_id => ({ video_id })),
+      { onConflict: 'video_id', ignoreDuplicates: true }
+    );
+    console.log(`  -> 세로 영상 제외: ${newVerticalIds.length}건 (차단목록 등록)`);
   }
+
+  console.log(`  -> 검증 통과 신규 ${insertRows.length}건`);
 
   if (insertRows.length) {
     const { error } = await supabase.from('streams').insert(insertRows);
@@ -521,35 +504,21 @@ async function main() {
     else console.log(`7일 연속 오프라인으로 삭제: ${staleOfflineRows.length}건 (차단목록에는 미등록)`);
   }
 
-  // 기존 행 화면 비율 검사 (하루 200건씩 점진 처리): 세로 영상은 삭제 + 차단목록
-  let verticalDeleted = 0;
-  const { data: aspectRows, error: aspectFetchErr } = await supabase
-    .from('streams')
-    .select('video_id')
-    .is('aspect_checked_at', null)
-    .limit(200);
-  if (aspectFetchErr) {
-    console.error('비율 검사 대상 조회 실패:', aspectFetchErr.message);
-  } else if (aspectRows?.length) {
-    const flags = await mapConcurrent(aspectRows, 8, r => isVerticalVideo(r.video_id));
-    const verticalIds = aspectRows.filter((_, i) => flags[i] === true).map(r => r.video_id);
-    const landscapeIds = aspectRows.filter((_, i) => flags[i] === false).map(r => r.video_id);
-    if (verticalIds.length) {
-      await supabase.from('streams').delete().in('video_id', verticalIds);
+  // 생존확인 루프에서 발견한 기존 세로 영상 삭제 + 차단목록 등록
+  if (verticalIds.length) {
+    const { error: verticalErr } = await supabase.from('streams').delete().in('video_id', verticalIds);
+    if (verticalErr) console.error('세로 영상 삭제 실패:', verticalErr.message);
+    else {
       await supabase.from('blocklist').upsert(
         verticalIds.map(video_id => ({ video_id })),
         { onConflict: 'video_id', ignoreDuplicates: true }
       );
-      verticalDeleted = verticalIds.length;
       console.log(`세로 영상 삭제: ${verticalIds.length}건 (차단목록 등록)`);
-    }
-    if (landscapeIds.length) {
-      await supabase.from('streams').update({ aspect_checked_at: new Date().toISOString() }).in('video_id', landscapeIds);
     }
   }
 
   // 오늘 실행 결과를 일일 집계 테이블에 기록 (관리자 대시보드용, 같은 날 재실행 시 덮어씀)
-  const deletedTotal = toDelete.length + (expiredRows?.length || 0) + (staleOfflineRows?.length || 0) + verticalDeleted;
+  const deletedTotal = toDelete.length + (expiredRows?.length || 0) + (staleOfflineRows?.length || 0) + verticalIds.length;
   // 21:00 UTC(= KST 06:00)에 돌기 때문에 UTC 날짜를 쓰면 한국 기준으로 하루 밀린다 -> KST 날짜 사용
   const { error: statsErr } = await supabase.from('daily_stats').upsert({
     stat_date: new Date(Date.now() + 9 * 3600 * 1000).toISOString().slice(0, 10),
