@@ -63,6 +63,10 @@ CATEGORY_PROMPTS = {
         "a city street with buildings, shops and pedestrians",
         "a downtown plaza or crossing in a city",
     ],
+    "skyline": [
+        "a wide panoramic view of a city skyline with many buildings seen from far away",
+        "an aerial cityscape seen from a high observation point or tower",
+    ],
     "wildlife": [
         "wild animals in nature",
         "birds or animals at a feeder or waterhole",
@@ -77,6 +81,14 @@ CATEGORY_PROMPTS = {
 
 # 촬영 시점(장르) 기반이라 CLIP이 판별할 수 없는 카테고리 — 현재 카테고리가 이거면 건너뛴다
 PERSPECTIVE_CATEGORIES = {"dashcam", "walk"}
+
+
+def fetch_category_keys():
+    """DB에 실제로 존재하는 카테고리만 CLIP 후보로 쓴다 (아직 추가 안 된 카테고리 프롬프트는 무시)"""
+    url = f"{SUPABASE_URL}/rest/v1/categories?select=key"
+    r = requests.get(url, headers=HEADERS, timeout=30)
+    r.raise_for_status()
+    return {row["key"] for row in r.json()}
 
 
 def fetch_targets():
@@ -139,9 +151,12 @@ def main():
     processor = CLIPProcessor.from_pretrained(model_name)
     model.eval()
 
+    valid_keys = fetch_category_keys()
     prompts = []
     prompt_category = []
     for cat, plist in CATEGORY_PROMPTS.items():
+        if cat not in valid_keys:
+            continue
         for p in plist:
             prompts.append(p)
             prompt_category.append(cat)
