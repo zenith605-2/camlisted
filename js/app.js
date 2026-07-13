@@ -775,38 +775,8 @@ let currentModalVideoId = null;
 let viewportPreviewObserver = null;
 const viewportPreviewTimers = new Map(); // videoId -> pending start timer
 
-// 동시에 재생되는 미리보기 iframe 수 제한 — 화면의 카드 전부를 재생하면 CPU/네트워크 부하가 커서,
-// 데스크톱 4개/모바일 2개까지만 재생한다. 특정 카드가 슬롯을 독점하지 않도록
-// 10초마다 화면에 보이는 카드들끼리 돌아가며(로테이션) 재생한다.
-const MAX_CONCURRENT_PREVIEWS = window.matchMedia('(max-width: 800px)').matches ? 2 : 4;
-const PREVIEW_ROTATE_MS = 10000;
-const visibleWraps = new Set(); // 현재 화면(60% 이상)에 보이는 thumb-wrap들
-let previewRotationOffset = 0;
-
-function rotateViewportPreviews() {
-  const visible = [...visibleWraps].filter(w => w.isConnected && w.closest('.card'));
-  if (!visible.length) return;
-
-  if (visible.length <= MAX_CONCURRENT_PREVIEWS) {
-    // 보이는 카드가 슬롯보다 적으면 전부 재생 (회전 불필요)
-    visible.forEach(w => startViewportPreview(w, w.closest('.card').dataset.videoId));
-    return;
-  }
-
-  previewRotationOffset = (previewRotationOffset + MAX_CONCURRENT_PREVIEWS) % visible.length;
-  const chosen = new Set();
-  for (let i = 0; i < MAX_CONCURRENT_PREVIEWS; i++) {
-    chosen.add(visible[(previewRotationOffset + i) % visible.length]);
-  }
-  visible.forEach(w => { if (!chosen.has(w)) stopViewportPreview(w); });
-  chosen.forEach(w => startViewportPreview(w, w.closest('.card').dataset.videoId));
-}
-
-setInterval(rotateViewportPreviews, PREVIEW_ROTATE_MS);
-
 function startViewportPreview(thumbWrap, videoId) {
   if (thumbWrap.querySelector('.hover-preview-iframe')) return;
-  if (grid.querySelectorAll('.hover-preview-iframe').length >= MAX_CONCURRENT_PREVIEWS) return;
   const iframe = document.createElement('iframe');
   iframe.className = 'hover-preview-iframe';
   iframe.src = `https://www.youtube.com/embed/${encodeURIComponent(videoId)}?autoplay=1&mute=1&controls=0&modestbranding=1&playsinline=1`;
@@ -824,7 +794,6 @@ function clearHoverPreview() {
   if (viewportPreviewObserver) viewportPreviewObserver.disconnect();
   viewportPreviewTimers.forEach(timer => clearTimeout(timer));
   viewportPreviewTimers.clear();
-  visibleWraps.clear();
   grid.querySelectorAll('.hover-preview-iframe').forEach(el => el.remove());
 }
 
@@ -837,11 +806,9 @@ function setupViewportAutoplay() {
       const videoId = card.dataset.videoId;
       clearTimeout(viewportPreviewTimers.get(videoId));
       if (entry.isIntersecting) {
-        visibleWraps.add(thumbWrap);
         // 스크롤 중 잠깐 지나치는 카드마다 iframe을 만들지 않도록 짧은 지연
         viewportPreviewTimers.set(videoId, setTimeout(() => startViewportPreview(thumbWrap, videoId), 400));
       } else {
-        visibleWraps.delete(thumbWrap);
         viewportPreviewTimers.delete(videoId);
         stopViewportPreview(thumbWrap);
       }
