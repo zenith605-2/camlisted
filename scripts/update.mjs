@@ -152,6 +152,23 @@ async function searchChannelLive(channelId, maxResults = 25) {
     }));
 }
 
+// 시드 채널의 최근 일반 업로드 영상 수집 (구독 채널의 CCTV뷰 아카이브 영상 등)
+async function searchChannelVideos(channelId, maxResults = 25) {
+  const url = `${BASE}/search?part=snippet&type=video&order=date&channelId=${channelId}&maxResults=${maxResults}&key=${API_KEY}`;
+  const data = await fetchJson(url);
+  return (data.items || [])
+    .filter(item => item.id?.videoId)
+    .map(item => ({
+      videoId: item.id.videoId,
+      title: decodeHtmlEntities(item.snippet.title),
+      channelTitle: decodeHtmlEntities(item.snippet.channelTitle),
+      channelId: item.snippet.channelId,
+      thumbnail: snippetThumbnail(item.snippet),
+      matchedKeyword: 'channel scan',
+      contentType: item.snippet.liveBroadcastContent === 'live' ? 'live' : 'video',
+    }));
+}
+
 // 라이브가 아닌 일반 업로드 영상(블랙박스/야생동물/군중 등) 탐색 — eventType 지정 안 함
 async function searchVideoByKeyword(keyword, maxResults = 25) {
   const url = `${BASE}/search?part=snippet&type=video&maxResults=${maxResults}&q=${encodeURIComponent(keyword)}&key=${API_KEY}`;
@@ -395,6 +412,45 @@ async function main() {
     } catch (err) {
       searchCallsUsed += 1;
       console.error(`  영상 검색 실패 "${keyword}":`, err.message);
+    }
+  }
+
+  // 시드 채널(구독 목록 등)의 일반 업로드 영상 수집: 채널당 1회, 최근 영상 25개.
+  // 라이브만 찾는 일반 채널 스캔과 달리, 신뢰할 수 있는 시드 채널은 아카이브 영상도 가치가 있음.
+  // 결과는 승인 대기로 들어가고 CLIP이 썸네일 기반으로 카테고리를 분류한다.
+  const { data: seedVideoRows, error: seedVideoErr } = await supabase
+    .from('channel_seeds')
+    .select('channel_id')
+    .is('video_scanned_at', null);
+  if (seedVideoErr) {
+    if (!/does not exist/.test(seedVideoErr.message)) console.error('시드 영상스캔 대상 조회 실패:', seedVideoErr.message);
+  } else if (seedVideoRows?.length) {
+    const seedVideoBudget = Math.max(0, SEARCH_BUDGET_PER_RUN - searchCallsUsed);
+    const seedsToVideoScan = seedVideoRows
+      .map(r => r.channel_id)
+      .filter(id => !blockedChannelIds.has(id))
+      .slice(0, seedVideoBudget);
+    console.log(`시드 채널 일반영상 스캔: 대상 ${seedVideoRows.length}개 중 ${seedsToVideoScan.length}개 처리`);
+    for (const channelId of seedsToVideoScan) {
+      try {
+        const results = await searchChannelVideos(channelId);
+        searchCallsUsed += 1;
+        for (const r of results) {
+          if (knownIds.has(r.videoId) || candidateMap.has(r.videoId)) continue;
+          if (isExcluded(r.title, r.channelTitle)) continue;
+          candidateMap.set(r.videoId, r);
+        }
+      } catch (err) {
+        searchCallsUsed += 1;
+        console.error(`  시드 영상스캔 실패 ${channelId}:`, err.message);
+      }
+    }
+    if (seedsToVideoScan.length) {
+      const { error: markErr } = await supabase
+        .from('channel_seeds')
+        .update({ video_scanned_at: new Date().toISOString() })
+        .in('channel_id', seedsToVideoScan);
+      if (markErr) console.error('시드 영상스캔 기록 실패:', markErr.message);
     }
   }
 
