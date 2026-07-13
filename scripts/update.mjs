@@ -477,8 +477,9 @@ async function main() {
 
   // 오늘 실행 결과를 일일 집계 테이블에 기록 (관리자 대시보드용, 같은 날 재실행 시 덮어씀)
   const deletedTotal = toDelete.length + (expiredRows?.length || 0) + (staleOfflineRows?.length || 0);
+  // 21:00 UTC(= KST 06:00)에 돌기 때문에 UTC 날짜를 쓰면 한국 기준으로 하루 밀린다 -> KST 날짜 사용
   const { error: statsErr } = await supabase.from('daily_stats').upsert({
-    stat_date: new Date().toISOString().slice(0, 10),
+    stat_date: new Date(Date.now() + 9 * 3600 * 1000).toISOString().slice(0, 10),
     existing_count: existingRows.length,
     valid_count: validCount,
     offline_count: offlineCount,

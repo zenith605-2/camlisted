@@ -1356,8 +1356,9 @@ async function trackVisit() {
     visitorKey = crypto.randomUUID();
     localStorage.setItem('visitorKey', visitorKey);
   }
-  const today = new Date().toISOString().slice(0, 10);
-  await sb.from('visit_log').insert({ visit_date: today, visitor_key: visitorKey });
+  // "오늘"의 기준은 한국 자정 (UTC 기준이면 KST 09:00에 리셋되어 헷갈림)
+  const todayKst = new Date(Date.now() + 9 * 3600 * 1000).toISOString().slice(0, 10);
+  await sb.from('visit_log').insert({ visit_date: todayKst, visitor_key: visitorKey });
   // 같은 날 중복 방문 시 유니크 제약 위반 에러가 나는데, 의도된 동작이라 무시한다.
 }
 

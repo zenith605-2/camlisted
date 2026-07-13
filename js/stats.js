@@ -60,7 +60,7 @@ async function loadStats() {
 
   const totalStreams = streamCountRes.count ?? '?';
   const totalUsers = profileCountRes.count ?? '?';
-  const today = new Date().toISOString().slice(0, 10);
+  const today = new Date(Date.now() + 9 * 3600 * 1000).toISOString().slice(0, 10); // KST 기준 오늘
   statsSummary.innerHTML = `
     <div class="stats-card"><span class="stats-card-num">${totalStreams}</span><span class="stats-card-label">Total streams</span></div>
     <div class="stats-card"><span class="stats-card-num">${totalUsers}</span><span class="stats-card-label">Total users</span></div>
