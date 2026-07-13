@@ -53,12 +53,19 @@ function isVerticalInfo(info) {
   return !!(w && h && h > w);
 }
 
-// videoId -> {snippet, liveStreamingDetails, status, player} 맵으로 반환 (라이브/일반 영상 공통 조회)
+// ISO 8601 재생시간(PT1H2M3S)을 초 단위로 변환
+function parseDurationSeconds(iso) {
+  const m = /^PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?$/.exec(iso || '');
+  if (!m) return null;
+  return (Number(m[1]) || 0) * 3600 + (Number(m[2]) || 0) * 60 + (Number(m[3]) || 0);
+}
+
+// videoId -> {snippet, liveStreamingDetails, status, player, contentDetails} 맵으로 반환 (라이브/일반 영상 공통 조회)
 async function getVideoInfo(videoIds) {
   const map = new Map();
   for (const batch of chunk(videoIds, 50)) {
     if (batch.length === 0) continue;
-    const url = `${BASE}/videos?part=snippet,liveStreamingDetails,status,player&maxHeight=720&id=${batch.join(',')}&key=${API_KEY}`;
+    const url = `${BASE}/videos?part=snippet,liveStreamingDetails,status,player,contentDetails&maxHeight=720&id=${batch.join(',')}&key=${API_KEY}`;
     const data = await fetchJson(url);
     for (const item of data.items || []) {
       map.set(item.id, {
@@ -66,6 +73,7 @@ async function getVideoInfo(videoIds) {
         liveStreamingDetails: item.liveStreamingDetails || {},
         status: item.status || {},
         player: item.player || {},
+        contentDetails: item.contentDetails || {},
       });
     }
   }
@@ -300,6 +308,13 @@ async function main() {
       patch.published_at = snippet.publishedAt;
       needsUpdate = true;
     }
+    if (contentType === 'video' && row.duration_seconds == null) {
+      const dur = parseDurationSeconds(info.contentDetails?.duration);
+      if (dur) {
+        patch.duration_seconds = dur;
+        needsUpdate = true;
+      }
+    }
     if (needsUpdate) toUpdate.push(patch);
   }
 
@@ -452,6 +467,7 @@ async function main() {
       country: newCountryMap.get(c.channelId) || null,
       started_at: c.contentType === 'live' ? (info.liveStreamingDetails?.actualStartTime || null) : null,
       published_at: c.contentType === 'video' ? (info.snippet?.publishedAt || null) : null,
+      duration_seconds: c.contentType === 'video' ? parseDurationSeconds(info.contentDetails?.duration) : null,
     };
   });
 

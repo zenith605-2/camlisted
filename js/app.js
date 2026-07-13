@@ -136,6 +136,7 @@ function mapRow(row) {
     publishedAt: row.published_at || null,
     approvalStatus: row.approval_status || null,
     offlineSince: row.offline_since || null,
+    durationSeconds: row.duration_seconds || null,
     commentCount: 0,
   };
 }
@@ -258,6 +259,15 @@ function appendMoreCards() {
   renderedCount = end;
 }
 
+function formatDuration(totalSeconds) {
+  const h = Math.floor(totalSeconds / 3600);
+  const m = Math.floor((totalSeconds % 3600) / 60);
+  const s = totalSeconds % 60;
+  const mm = h ? String(m).padStart(2, '0') : String(m);
+  const ss = String(s).padStart(2, '0');
+  return h ? `${h}:${mm}:${ss}` : `${mm}:${ss}`;
+}
+
 function cardInnerHtml(s, groupIndex) {
     const isLiveType = s.contentType === 'live';
     const isAvailable = s.status === 'live'; // 'live' 상태값은 두 타입 모두 "지금도 유효함"을 의미
@@ -334,6 +344,7 @@ function cardInnerHtml(s, groupIndex) {
         ${isAdmin ? `<input type="checkbox" class="admin-select-checkbox" data-video-id="${escapeHtml(s.videoId)}" data-channel-group="${groupIndex}" ${selectedForDelete.has(s.videoId) ? 'checked' : ''}>` : ''}
         <span class="live-badge ${badgeClass}">${badgeText}</span>
         ${s.approvalStatus === 'pending' ? `<span class="new-badge pending-badge">${t('pending_badge')}</span>` : (isRecentlyAdded ? '<span class="new-badge">NEW</span>' : '')}
+        ${!isLiveType && s.durationSeconds ? `<span class="duration-badge">${formatDuration(s.durationSeconds)}</span>` : ''}
         ${offlineNoticeHtml}
         ${thumbHtml}
       </div>
