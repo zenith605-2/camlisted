@@ -405,6 +405,14 @@ async function main() {
   const scannedSet = new Set((scannedRows || []).map(r => r.channel_id));
 
   const observedChannelIds = new Set();
+
+  // 수동 등록된 시드 채널(관리자의 유튜브 구독 목록 등)도 스캔 대상에 합류
+  const { data: seedRows, error: seedErr } = await supabase.from('channel_seeds').select('channel_id');
+  if (seedErr) {
+    if (!/does not exist/.test(seedErr.message)) console.error('시드 채널 조회 실패:', seedErr.message);
+  } else {
+    for (const r of seedRows || []) observedChannelIds.add(r.channel_id);
+  }
   for (const row of existingRows) {
     if ((row.content_type || 'live') !== 'live') continue;
     const channelId = infoMap.get(row.video_id)?.snippet.channelId;
