@@ -775,6 +775,7 @@ body {
 }
 
 .copy-link-btn,
+.subscribe-btn,
 .upvote-btn,
 .downvote-btn,
 .favorite-btn,
@@ -790,6 +791,18 @@ body {
   font-size: 0.75rem;
   cursor: pointer;
   white-space: nowrap;
+}
+
+.subscribe-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+}
+
+.subscribe-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
 }
 
 .favorite-btn.active {

@@ -317,6 +317,7 @@ function cardInnerHtml(s, groupIndex) {
     const actionsHtml = `
       <div class="card-actions">
         <button type="button" class="copy-link-btn" data-video-id="${escapeHtml(s.videoId)}">${t('copy_url')}</button>
+        ${s.channelId ? `<a class="subscribe-btn" href="https://www.youtube.com/channel/${encodeURIComponent(s.channelId)}?sub_confirmation=1" target="_blank" rel="noopener">${t('subscribe_button')}</a>` : ''}
         ${currentUser ? `
           <button type="button" class="upvote-btn ${myUpvotes.has(s.videoId) ? 'active' : ''}" data-video-id="${escapeHtml(s.videoId)}" ${s.source === 'user' && s.addedBy === currentUser.id ? 'disabled title="' + escapeHtml(t('upvote_own_disabled')) + '"' : ''}>${t('upvote_button')}</button>
           <button type="button" class="downvote-btn ${myDownvotes.has(s.videoId) ? 'active' : ''}" data-video-id="${escapeHtml(s.videoId)}">${t('downvote_button')}</button>
@@ -406,6 +407,7 @@ function maybeAppendMore() {
 grid.addEventListener('click', async (e) => {
   if (e.target.closest('select')) return; // 카테고리 select 클릭은 모달을 열지 않음
   if (e.target.closest('.admin-select-checkbox') || e.target.closest('.channel-select-all')) return; // 체크박스는 모달을 열지 않음
+  if (e.target.closest('.subscribe-btn')) return; // 구독 링크는 새 탭으로만 열고 모달은 열지 않음
 
   const copyLinkBtn = e.target.closest('.copy-link-btn');
   if (copyLinkBtn) return handleCopyLink(copyLinkBtn);
