@@ -799,6 +799,7 @@ function clearHoverPreview() {
 
 function setupViewportAutoplay() {
   viewportPreviewObserver = new IntersectionObserver((entries) => {
+    if (previewMode() !== 'auto') return; // hover 모드에선 자동 재생 안 함
     for (const entry of entries) {
       const thumbWrap = entry.target;
       const card = thumbWrap.closest('.card');
@@ -1055,6 +1056,41 @@ function applyViewMode() {
 }
 gridViewBtn.addEventListener('click', () => { localStorage.setItem(VIEW_MODE_KEY, 'grid'); applyViewMode(); render(currentFiltered()); });
 listViewBtn.addEventListener('click', () => { localStorage.setItem(VIEW_MODE_KEY, 'list'); applyViewMode(); render(currentFiltered()); });
+
+// 미리보기 모드: 'auto' = 화면에 보이는 카드 전부 자동 재생 / 'hover' = 마우스를 올린 카드만 재생
+const PREVIEW_MODE_KEY = 'previewMode';
+const previewAutoBtn = document.getElementById('previewAutoBtn');
+const previewHoverBtn = document.getElementById('previewHoverBtn');
+
+function previewMode() {
+  return localStorage.getItem(PREVIEW_MODE_KEY) || 'auto';
+}
+
+function applyPreviewMode() {
+  if (!previewAutoBtn || !previewHoverBtn) return; // 캐시된 옛 HTML엔 버튼이 없을 수 있음
+  const mode = previewMode();
+  previewAutoBtn.classList.toggle('active', mode === 'auto');
+  previewHoverBtn.classList.toggle('active', mode === 'hover');
+}
+
+previewAutoBtn?.addEventListener('click', () => { localStorage.setItem(PREVIEW_MODE_KEY, 'auto'); applyPreviewMode(); render(currentFiltered()); });
+previewHoverBtn?.addEventListener('click', () => { localStorage.setItem(PREVIEW_MODE_KEY, 'hover'); applyPreviewMode(); render(currentFiltered()); });
+
+// hover 모드: 마우스가 올라간 카드만 재생, 벗어나면 정지
+grid.addEventListener('mouseover', (e) => {
+  if (previewMode() !== 'hover') return;
+  const card = e.target.closest('.card');
+  if (!card || card.contains(e.relatedTarget)) return;
+  const wrap = card.querySelector('.thumb-wrap');
+  if (wrap) startViewportPreview(wrap, card.dataset.videoId);
+});
+grid.addEventListener('mouseout', (e) => {
+  if (previewMode() !== 'hover') return;
+  const card = e.target.closest('.card');
+  if (!card || card.contains(e.relatedTarget)) return;
+  const wrap = card.querySelector('.thumb-wrap');
+  if (wrap) stopViewportPreview(wrap);
+});
 
 async function openLeaderboard() {
   leaderboardModal.hidden = false;
@@ -1372,6 +1408,7 @@ async function init() {
   langSelect.value = currentLang;
   applyStaticTranslations();
   applyViewMode();
+  applyPreviewMode();
 
   const { data: { session } } = await sb.auth.getSession();
   currentUser = session?.user || null;
