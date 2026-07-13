@@ -222,6 +222,7 @@ async function main() {
   const toUpdate = []; // 상태전환/정보보강 업데이트
   const creditRecipients = []; // 이번에 처음 검증 통과한 유저 제보의 제보자(added_by)
   const verticalIds = []; // 세로 영상(쇼츠 등) -> 삭제 + 차단목록
+  const nonEmbeddableIds = []; // 임베드 차단 영상 -> 삭제만 (설정 변경 시 재수집 가능)
   let validCount = 0;
   let offlineCount = 0;
 
@@ -232,6 +233,12 @@ async function main() {
     // 세로 영상(쇼츠 등)은 사이트 성격에 안 맞음 -> 삭제 + 차단목록 (비율은 안 변하니 재수집 방지)
     if (info && isVerticalInfo(info)) {
       verticalIds.push(row.video_id);
+      continue;
+    }
+
+    // 임베드 재생이 차단된 영상은 사이트에서 재생 불가 -> 삭제만 (설정이 풀리면 재수집 가능하게 차단목록엔 미등록)
+    if (info && info.status?.embeddable === false) {
+      nonEmbeddableIds.push(row.video_id);
       continue;
     }
 
@@ -419,7 +426,11 @@ async function main() {
   const candidateIds = [...candidateMap.keys()];
   const candidateInfoMap = await getVideoInfo(candidateIds);
 
-  const newCandidates = [...candidateMap.values()].filter(c => isValidFor(c.contentType, candidateInfoMap.get(c.videoId)));
+  // 임베드 재생이 차단된(embeddable=false) 영상은 사이트에서 재생이 안 되므로 애초에 제외
+  const newCandidates = [...candidateMap.values()].filter(c => {
+    const info = candidateInfoMap.get(c.videoId);
+    return isValidFor(c.contentType, info) && info?.status?.embeddable !== false;
+  });
   const newCountryMap = await getChannelCountries(newCandidates.map(c => c.channelId));
 
   const newRows = newCandidates.map(c => {
@@ -517,8 +528,15 @@ async function main() {
     }
   }
 
+  // 임베드 차단으로 전환된 영상 삭제 (차단목록 미등록 — 설정이 풀리면 자동 재수집)
+  if (nonEmbeddableIds.length) {
+    const { error: embErr } = await supabase.from('streams').delete().in('video_id', nonEmbeddableIds);
+    if (embErr) console.error('임베드 차단 영상 삭제 실패:', embErr.message);
+    else console.log(`임베드 차단 영상 삭제: ${nonEmbeddableIds.length}건`);
+  }
+
   // 오늘 실행 결과를 일일 집계 테이블에 기록 (관리자 대시보드용, 같은 날 재실행 시 덮어씀)
-  const deletedTotal = toDelete.length + (expiredRows?.length || 0) + (staleOfflineRows?.length || 0) + verticalIds.length;
+  const deletedTotal = toDelete.length + (expiredRows?.length || 0) + (staleOfflineRows?.length || 0) + verticalIds.length + nonEmbeddableIds.length;
   // 21:00 UTC(= KST 06:00)에 돌기 때문에 UTC 날짜를 쓰면 한국 기준으로 하루 밀린다 -> KST 날짜 사용
   const { error: statsErr } = await supabase.from('daily_stats').upsert({
     stat_date: new Date(Date.now() + 9 * 3600 * 1000).toISOString().slice(0, 10),
