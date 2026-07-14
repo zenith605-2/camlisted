@@ -82,12 +82,10 @@ async function loadStats() {
 
 async function loadCountryStats() {
   const body = document.getElementById('countryTableBody');
-  const since = new Date(Date.now() - 30 * 24 * 3600 * 1000).toISOString();
   const { data, error } = await sb
     .from('visit_log')
     .select('country')
-    .gte('created_at', since)
-    .limit(10000);
+    .limit(50000);
   if (error) {
     body.innerHTML = `<tr><td colspan="3">${escapeHtml(error.message)}</td></tr>`;
     return;
