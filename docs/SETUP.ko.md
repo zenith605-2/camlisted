@@ -69,7 +69,7 @@ $env:YOUTUBE_API_KEY="유튜브키"; $env:SUPABASE_URL="프로젝트URL"; $env:S
    - `SUPABASE_URL`
    - `SUPABASE_SERVICE_ROLE_KEY`
 3. Settings → Pages → Source를 `main` 브랜치 `/ (root)`로 설정 → 배포된 URL 확인
-4. Actions 탭에서 "Update CCTV live list" 워크플로가 매일 KST 06:00에 자동 실행됩니다.
+4. Actions 탭에서 "Update CCTV live list" 워크플로가 매일 KST 00:07에 자동 실행됩니다.
    (Actions 탭 → 워크플로 선택 → "Run workflow"로 즉시 수동 실행도 가능)
 
 ## 키워드 커스터마이즈
