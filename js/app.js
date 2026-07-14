@@ -1148,6 +1148,8 @@ document.addEventListener('keydown', (e) => {
 });
 
 function renderAuthArea() {
+  // 가입 혜택 안내는 비로그인 방문자에게만 보여준다
+  document.getElementById('memberPerks')?.toggleAttribute('hidden', !!currentUser);
   if (currentUser) {
     const name = myDisplayName || currentUser.user_metadata?.full_name || currentUser.email || t('anonymous');
     authArea.innerHTML = `

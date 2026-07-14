@@ -451,6 +451,22 @@ body {
   opacity: 0.85;
 }
 
+.member-perks {
+  margin: 0 auto 14px;
+  max-width: 760px;
+  color: var(--muted);
+  font-size: 0.78rem;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 6px 16px;
+  display: inline-block;
+}
+
+.member-perks[hidden] {
+  display: none;
+}
+
 .cheer-section {
   max-width: 760px;
   margin: 0 auto 20px;
