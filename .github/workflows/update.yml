@@ -2,7 +2,9 @@ name: Update CCTV live list
 
 on:
   schedule:
-    - cron: '0 21 * * *'  # 매일 UTC 21:00 = KST 06:00
+    # 매일 UTC 20:23 = KST 05:23. 정각(특히 21:00 UTC)은 전 세계 예약 작업이 몰려
+    # 2~3시간씩 지연되므로, 한산한 분(23분)으로 등록해 지연을 줄인다.
+    - cron: '23 20 * * *'
   workflow_dispatch: {}
 
 permissions:
