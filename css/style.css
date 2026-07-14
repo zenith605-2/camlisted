@@ -1499,6 +1499,10 @@ body {
   font-size: 1.1rem;
 }
 
+.stats-page {
+  max-width: 1200px; /* 통계 표(10컬럼)가 720px 약관용 폭엔 안 맞아서 넓게 */
+}
+
 .stats-table .ip-cell {
   word-break: break-all; /* IPv6 같은 긴 주소가 표를 밀어내지 않게 */
   white-space: normal;
