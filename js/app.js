@@ -1119,7 +1119,7 @@ function renderTagFilterBar() {
   if (!tagFilterBar) return;
   tagFilterBar.innerHTML = CONDITION_TAGS.map(tg =>
     `<button type="button" class="tag-chip ${activeTags.has(tg) ? 'active' : ''}" data-tag="${tg}">${escapeHtml(tagLabel(tg))}</button>`
-  ).join('');
+  ).join('') + `<span class="tag-filter-note">${escapeHtml(t('tag_filter_note'))}</span>`;
 }
 
 tagFilterBar?.addEventListener('click', (e) => {

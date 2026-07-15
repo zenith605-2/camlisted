@@ -436,6 +436,13 @@ body {
   background: rgba(255, 59, 59, 0.08);
 }
 
+.tag-filter-note {
+  color: var(--muted);
+  font-size: 0.72rem;
+  align-self: center;
+  white-space: nowrap;
+}
+
 .card-tag-row {
   display: flex;
   flex-wrap: wrap;
