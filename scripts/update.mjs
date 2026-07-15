@@ -36,6 +36,20 @@ function chunk(arr, size) {
   return out;
 }
 
+// Supabase는 조회당 최대 1000행만 반환하므로, 큰 테이블은 반드시 페이지를 돌며 전부 가져온다.
+// (1000행을 넘긴 뒤 기존 행을 "신규"로 착각해 중복 삽입이 터지는 사고 방지)
+async function fetchAllRows(table, columns = '*') {
+  const out = [];
+  const PAGE = 1000;
+  for (let from = 0; ; from += PAGE) {
+    const { data, error } = await supabase.from(table).select(columns).range(from, from + PAGE - 1);
+    if (error) throw error;
+    out.push(...(data || []));
+    if (!data || data.length < PAGE) break;
+  }
+  return out;
+}
+
 async function fetchJson(url) {
   const res = await fetch(url);
   if (!res.ok) {
@@ -233,21 +247,21 @@ function selectRotatingSubset(list, maxPerRun) {
 }
 
 async function main() {
-  const [keywordsRaw, keywordsVideoRaw, excludeRaw, categoriesResult, blocklistResult, blockedChannelsResult] = await Promise.all([
+  const [keywordsRaw, keywordsVideoRaw, excludeRaw, categoriesResult, blocklistRows, blockedChannelRows] = await Promise.all([
     readFile(KEYWORDS_PATH, 'utf-8'),
     readFile(KEYWORDS_VIDEO_PATH, 'utf-8').catch(() => '{"keywords":[]}'),
     readFile(EXCLUDE_KEYWORDS_PATH, 'utf-8').catch(() => '{"keywords":[]}'),
     supabase.from('categories').select('key, keywords'),
-    supabase.from('blocklist').select('video_id'),
-    supabase.from('blocked_channels').select('channel_id'),
+    fetchAllRows('blocklist', 'video_id'),
+    fetchAllRows('blocked_channels', 'channel_id'),
   ]);
   const keywords = JSON.parse(keywordsRaw).keywords || [];
   const keywordsVideo = JSON.parse(keywordsVideoRaw).keywords || [];
   const excludeKeywords = (JSON.parse(excludeRaw).keywords || []).map(k => k.toLowerCase());
   if (categoriesResult.error) throw categoriesResult.error;
   const categoryRows = (categoriesResult.data || []).filter(c => c.key !== 'other');
-  const blockedIds = new Set((blocklistResult.data || []).map(r => r.video_id));
-  const blockedChannelIds = new Set((blockedChannelsResult.data || []).map(r => r.channel_id));
+  const blockedIds = new Set(blocklistRows.map(r => r.video_id));
+  const blockedChannelIds = new Set(blockedChannelRows.map(r => r.channel_id));
 
   const isExcluded = (title, channelTitle) => {
     const haystack = `${title} ${channelTitle}`.toLowerCase();
@@ -274,8 +288,7 @@ async function main() {
     console.log('일회성 초기화 완료');
   }
 
-  const { data: existingRows, error: fetchErr } = await supabase.from('streams').select('*');
-  if (fetchErr) throw fetchErr;
+  const existingRows = await fetchAllRows('streams', '*');
 
   console.log(`기존 목록 ${existingRows.length}건 생존 확인 중...`);
   const existingIds = existingRows.map(r => r.video_id);
@@ -503,8 +516,8 @@ async function main() {
   // 채널 단위 전체 스캔: 이미 아는 채널(생존 행 + 이번에 새로 찾은 후보)의 다른 라이브도 함께 수집.
   // 채널당 1회만 수행하도록 scanned_channels에 기록해 매일 반복 조회하지 않음(쿼터 절약).
   // 키워드 검색에 쓰고 남은 예산을 전부 여기에 투입 (채널 스캔이 신규 발견 효율이 가장 좋음).
-  const { data: scannedRows } = await supabase.from('scanned_channels').select('channel_id');
-  const scannedSet = new Set((scannedRows || []).map(r => r.channel_id));
+  const scannedRows = await fetchAllRows('scanned_channels', 'channel_id');
+  const scannedSet = new Set(scannedRows.map(r => r.channel_id));
 
   const observedChannelIds = new Set();
 
@@ -598,7 +611,12 @@ async function main() {
   console.log(`  -> 검증 통과 신규 ${insertRows.length}건`);
 
   if (insertRows.length) {
-    const { error } = await supabase.from('streams').insert(insertRows);
+    // upsert(ignoreDuplicates): 만에 하나 기존 행과 겹쳐도 그 행만 무시되고 나머지는 들어가게
+    // (plain insert는 중복 1건 때문에 배치 전체가 실패함)
+    const { error } = await supabase.from('streams').upsert(insertRows, {
+      onConflict: 'video_id',
+      ignoreDuplicates: true,
+    });
     if (error) console.error('삽입 실패:', error.message);
   }
 

@@ -799,10 +799,16 @@ async function loadSubmitterNames(list) {
 }
 
 async function loadCommentCounts() {
-  const { data, error } = await sb.from('comments').select('video_id');
-  if (error || !data) return;
+  const PAGE = 1000;
+  const all = [];
+  for (let from = 0; ; from += PAGE) {
+    const { data, error } = await sb.from('comments').select('video_id').range(from, from + PAGE - 1);
+    if (error || !data) break;
+    all.push(...data);
+    if (data.length < PAGE) break;
+  }
   const counts = new Map();
-  for (const row of data) counts.set(row.video_id, (counts.get(row.video_id) || 0) + 1);
+  for (const row of all) counts.set(row.video_id, (counts.get(row.video_id) || 0) + 1);
   for (const s of streams) s.commentCount = counts.get(s.videoId) || 0;
 }
 
@@ -1492,19 +1498,26 @@ async function loadStreams() {
   selectedForDelete.clear();
   channelGroupsFullySelected.clear();
   updateBulkActionBar();
-  const { data, error } = await sb
-    .from('streams')
-    .select('*')
-    .order('added_at', { ascending: false });
-
-  if (error) {
-    emptyState.textContent = t('load_failed');
-    emptyState.hidden = false;
-    console.error(error);
-    return;
+  // Supabase는 조회당 최대 1000행만 주므로, 전체를 받으려면 페이지를 돌아야 한다
+  const PAGE = 1000;
+  const all = [];
+  for (let from = 0; ; from += PAGE) {
+    const { data, error } = await sb
+      .from('streams')
+      .select('*')
+      .order('added_at', { ascending: false })
+      .range(from, from + PAGE - 1);
+    if (error) {
+      emptyState.textContent = t('load_failed');
+      emptyState.hidden = false;
+      console.error(error);
+      return;
+    }
+    all.push(...(data || []));
+    if (!data || data.length < PAGE) break;
   }
 
-  streams = (data || []).map(mapRow);
+  streams = all.map(mapRow);
   await loadSubmitterNames(streams);
   await loadCommentCounts();
   populateCountryFilter();
