@@ -463,28 +463,6 @@ body {
   opacity: 0.45;
 }
 
-.tag-edit-btn {
-  background: transparent;
-  border: 1px dashed var(--border);
-  border-radius: 999px;
-  color: var(--muted);
-  padding: 2px 8px;
-  font-size: 0.68rem;
-  cursor: pointer;
-  white-space: nowrap;
-}
-
-.tag-edit-btn:hover {
-  color: var(--text);
-  border-color: var(--muted);
-}
-
-.tag-edit-btn.editing {
-  border-style: solid;
-  border-color: var(--accent);
-  color: var(--accent);
-}
-
 .clear-filters-btn {
   background: transparent;
   border: 1px dashed var(--border);

@@ -62,7 +62,6 @@ let showPendingOnly = false; // "대기중" 사이드바 항목을 눌렀을 때
 // 조건 태그 (일반 영상 전용) — 카테고리와 별개의 필터 축
 const CONDITION_TAGS = ['night', 'day', 'rain', 'heavy_rain', 'snow', 'heavy_snow', 'accident', 'fire', 'violence'];
 const activeTags = new Set();       // 현재 켜져 있는 태그 필터
-const tagEditingCards = new Set();  // 태그 편집 모드가 열린 카드들
 
 function tagLabel(tag) {
   return t(`tag_${tag}`);
@@ -356,18 +355,15 @@ function cardInnerHtml(s, groupIndex) {
       ? `<div class="offline-notice">${escapeHtml(t('offline_notice', { days: offlineDaysLeft }))}</div>`
       : '';
 
-    // 조건 태그 (일반 영상 전용): 평소엔 달린 태그만, 편집 모드에선 전체 태그를 토글 칩으로
+    // 조건 태그 (일반 영상 전용): 로그인 유저에겐 전체 칩을 펼쳐두고 클릭으로 바로 토글, 게스트에겐 달린 태그만
     let tagsHtml = '';
     if (!isLiveType) {
-      const editing = tagEditingCards.has(s.videoId);
+      const editing = !!currentUser;
       const shown = editing ? CONDITION_TAGS : s.tags.filter(tg => CONDITION_TAGS.includes(tg));
       const chips = shown.map(tg =>
         `<button type="button" class="card-tag ${s.tags.includes(tg) ? 'on' : ''} ${editing ? 'editing' : ''}" data-video-id="${escapeHtml(s.videoId)}" data-tag="${tg}">${escapeHtml(tagLabel(tg))}</button>`
       ).join('');
-      const editBtn = currentUser
-        ? `<button type="button" class="tag-edit-btn ${editing ? 'editing' : ''}" data-video-id="${escapeHtml(s.videoId)}">${editing ? t('tag_edit_done') : t('tag_edit_button')}</button>`
-        : '';
-      if (chips || editBtn) tagsHtml = `<div class="card-tag-row">${chips}${editBtn}</div>`;
+      if (chips) tagsHtml = `<div class="card-tag-row">${chips}</div>`;
     }
 
     const actionsHtml = `
@@ -467,22 +463,12 @@ grid.addEventListener('click', async (e) => {
   if (e.target.closest('.admin-select-checkbox') || e.target.closest('.channel-select-all')) return; // 체크박스는 모달을 열지 않음
   if (e.target.closest('.subscribe-btn')) return; // 구독 링크는 새 탭으로만 열고 모달은 열지 않음
 
-  // 태그 편집 모드 토글 (🏷 / ✔)
-  const tagEditBtn = e.target.closest('.tag-edit-btn');
-  if (tagEditBtn) {
-    const vid = tagEditBtn.dataset.videoId;
-    if (tagEditingCards.has(vid)) tagEditingCards.delete(vid);
-    else tagEditingCards.add(vid);
-    refreshCard(vid);
-    return;
-  }
-
-  // 태그 칩 클릭: 편집 모드면 해당 영상의 태그 토글, 아니면 그 태그로 필터
+  // 태그 칩 클릭: 로그인 유저는 해당 영상의 태그 토글, 게스트는 그 태그로 필터
   const tagChip = e.target.closest('.card-tag');
   if (tagChip) {
     const vid = tagChip.dataset.videoId;
     const tg = tagChip.dataset.tag;
-    if (tagEditingCards.has(vid) && currentUser) {
+    if (currentUser) {
       const s = streams.find(x => x.videoId === vid);
       if (!s) return;
       const next = s.tags.includes(tg) ? s.tags.filter(x => x !== tg) : [...s.tags, tg];
