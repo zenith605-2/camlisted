@@ -365,7 +365,7 @@ function cardInnerHtml(s, groupIndex) {
         `<button type="button" class="card-tag ${s.tags.includes(tg) ? 'on' : ''} ${editing ? 'editing' : ''}" data-video-id="${escapeHtml(s.videoId)}" data-tag="${tg}">${escapeHtml(tagLabel(tg))}</button>`
       ).join('');
       const editBtn = currentUser
-        ? `<button type="button" class="tag-edit-btn" data-video-id="${escapeHtml(s.videoId)}" title="tags">${editing ? '✔' : '🏷'}</button>`
+        ? `<button type="button" class="tag-edit-btn ${editing ? 'editing' : ''}" data-video-id="${escapeHtml(s.videoId)}">${editing ? t('tag_edit_done') : t('tag_edit_button')}</button>`
         : '';
       if (chips || editBtn) tagsHtml = `<div class="card-tag-row">${chips}${editBtn}</div>`;
     }
