@@ -473,12 +473,12 @@ grid.addEventListener('click', async (e) => {
       if (!s) return;
       const next = s.tags.includes(tg) ? s.tags.filter(x => x !== tg) : [...s.tags, tg];
       const prev = s.tags;
-      s.tags = next; // 낙관적 갱신
-      refreshCard(vid);
+      s.tags = next; // 낙관적 갱신 — 재생 중인 미리보기가 끊기지 않게 카드 재렌더 대신 칩만 갱신
+      tagChip.classList.toggle('on', next.includes(tg));
       const { error } = await sb.rpc('set_stream_tags', { p_video_id: vid, p_tags: next });
       if (error) {
         s.tags = prev;
-        refreshCard(vid);
+        tagChip.classList.toggle('on', prev.includes(tg));
         alert(error.message);
       }
     } else {
