@@ -423,11 +423,14 @@ adminSuggestionList?.addEventListener('click', async (e) => {
       alert(t('admin_sugg_key_invalid'));
       return;
     }
+    const icon = prompt(t('admin_sugg_icon_prompt'), '📍');
+    if (icon === null) return;
     const { error } = await sb.rpc('approve_category_suggestion', {
       p_id: Number(approveBtn.dataset.suggId),
       p_key: key,
       p_label: approveBtn.dataset.suggestion,
       p_sort: 90,
+      p_icon: icon.trim() || '📍',
     });
     if (error) alert(error.message);
     await loadSuggestions();
@@ -485,10 +488,14 @@ adminTagSuggestionList?.addEventListener('click', async (e) => {
       alert(t('admin_sugg_key_invalid'));
       return;
     }
+    const icon = prompt(t('admin_sugg_icon_prompt'), '');
+    if (icon === null) return;
+    // 태그는 별도 아이콘 컬럼 없이 라벨 앞에 이모지를 붙이는 구조 (기존 9개와 동일)
+    const label = icon.trim() ? `${icon.trim()} ${approveBtn.dataset.suggestion}` : approveBtn.dataset.suggestion;
     const { error } = await sb.rpc('approve_tag_suggestion', {
       p_id: Number(approveBtn.dataset.suggId),
       p_key: key,
-      p_label: approveBtn.dataset.suggestion,
+      p_label: label,
       p_sort: 90,
     });
     if (error) alert(error.message);
