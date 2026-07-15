@@ -60,11 +60,15 @@ let isAdmin = false;
 let showPendingOnly = false; // "대기중" 사이드바 항목을 눌렀을 때만 true
 
 // 조건 태그 (일반 영상 전용) — 카테고리와 별개의 필터 축
-const CONDITION_TAGS = ['night', 'day', 'rain', 'heavy_rain', 'snow', 'heavy_snow', 'accident', 'fire', 'violence'];
+// 기본 9개로 시작하고, 시작 시 condition_tags 테이블에서 승인된 태그 전체를 불러온다
+let CONDITION_TAGS = ['night', 'day', 'rain', 'heavy_rain', 'snow', 'heavy_snow', 'accident', 'fire', 'violence'];
+let conditionTagLabels = new Map(); // key -> DB 라벨 (i18n 번역이 없는 유저 제안 태그용)
 const activeTags = new Set();       // 현재 켜져 있는 태그 필터
 
 function tagLabel(tag) {
-  return t(`tag_${tag}`);
+  const key = `tag_${tag}`;
+  const v = t(key);
+  return v !== key ? v : (conditionTagLabels.get(tag) || tag);
 }
 let selectedForDelete = new Set(); // 관리자 일괄삭제용 선택된 videoId
 let channelGroupsFullySelected = new Map(); // groupIndex -> channelId ("채널 전체선택"으로 체크된 그룹만)
@@ -1343,6 +1347,14 @@ async function loadCategories() {
   if (!error && data) categoriesList = data;
 }
 
+async function loadConditionTags() {
+  const { data, error } = await sb.from('condition_tags').select('*').order('sort_order');
+  if (!error && data?.length) {
+    CONDITION_TAGS = data.map(r => r.key);
+    conditionTagLabels = new Map(data.map(r => [r.key, r.label]));
+  }
+}
+
 function populateCategoryFilter() {
   const current = categoryFilter.value;
   categoryFilter.innerHTML = `<option value="">${t('filter_all')}</option>` +
@@ -1387,6 +1399,7 @@ function renderSidebar() {
   const suggestHtml = currentUser ? `
     <div class="sidebar-section">
       <button type="button" id="suggestCategoryBtn" class="sidebar-cat-btn suggest-category-btn">＋ ${escapeHtml(t('suggest_category_button'))}</button>
+      <button type="button" id="suggestTagBtn" class="sidebar-cat-btn suggest-category-btn">＋ ${escapeHtml(t('suggest_tag_button'))}</button>
     </div>
   ` : '';
   sidebar.innerHTML = pendingHtml + suggestHtml + SIDEBAR_GROUPS.map(g => `
@@ -1425,6 +1438,17 @@ sidebar.addEventListener('click', async (e) => {
     const suggestion = prompt(t('suggest_category_prompt'));
     if (!suggestion || suggestion.trim().length < 2) return;
     const { error } = await sb.from('category_suggestions').insert({
+      suggestion: suggestion.trim().slice(0, 40),
+      suggested_by: currentUser.id,
+    });
+    alert(error ? t('suggest_failed', { message: error.message }) : t('suggest_thanks'));
+    return;
+  }
+  if (e.target.closest('#suggestTagBtn')) {
+    if (!currentUser) return;
+    const suggestion = prompt(t('suggest_tag_prompt'));
+    if (!suggestion || suggestion.trim().length < 2) return;
+    const { error } = await sb.from('tag_suggestions').insert({
       suggestion: suggestion.trim().slice(0, 40),
       suggested_by: currentUser.id,
     });
@@ -1643,7 +1667,7 @@ async function init() {
 
   const { data: { session } } = await sb.auth.getSession();
   currentUser = session?.user || null;
-  await loadCategories();
+  await Promise.all([loadCategories(), loadConditionTags()]);
   populateCategoryFilter();
   applyFiltersFromUrl(); // 딥링크(?category=... 등)로 들어온 경우 필터 상태 복원
   renderTagFilterBar();

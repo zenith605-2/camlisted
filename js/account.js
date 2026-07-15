@@ -299,7 +299,7 @@ async function refresh() {
   await checkAdmin();
   adminSections.hidden = !isAdmin;
   if (isAdmin) {
-    await Promise.all([loadFlagged(), loadUsers(), loadCategoryLog(), loadSuggestions()]);
+    await Promise.all([loadFlagged(), loadUsers(), loadCategoryLog(), loadSuggestions(), loadTagSuggestions()]);
   }
 }
 
@@ -419,6 +419,68 @@ adminSuggestionList?.addEventListener('click', async (e) => {
       .eq('id', Number(rejectBtn.dataset.suggId));
     if (error) alert(error.message);
     await loadSuggestions();
+  }
+});
+
+// ===== 조건 태그 제안 승인/거절 =====
+const adminTagSuggestionList = document.getElementById('adminTagSuggestionList');
+
+async function loadTagSuggestions() {
+  const { data, error } = await sb
+    .from('tag_suggestions')
+    .select('*')
+    .eq('status', 'pending')
+    .order('created_at', { ascending: false })
+    .limit(50);
+  if (error) {
+    adminTagSuggestionList.textContent = error.message;
+    return;
+  }
+  if (!data?.length) {
+    adminTagSuggestionList.textContent = t('admin_sugg_empty');
+    return;
+  }
+  adminTagSuggestionList.innerHTML = data.map(r => `
+    <div class="admin-row">
+      <div class="admin-info">
+        <div class="admin-title">${escapeHtml(r.suggestion)}</div>
+        <div class="admin-meta">${new Date(r.created_at).toLocaleDateString()}</div>
+      </div>
+      <div class="admin-actions">
+        <button type="button" class="tagsugg-approve-btn" data-sugg-id="${r.id}" data-suggestion="${escapeHtml(r.suggestion)}">${escapeHtml(t('admin_sugg_approve'))}</button>
+        <button type="button" class="tagsugg-reject-btn" data-sugg-id="${r.id}">${escapeHtml(t('admin_sugg_reject'))}</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+adminTagSuggestionList?.addEventListener('click', async (e) => {
+  const approveBtn = e.target.closest('.tagsugg-approve-btn');
+  if (approveBtn) {
+    // 태그 내부 키(영문 소문자, 예: fog)를 정해야 필터/저장에 쓸 수 있다
+    const key = prompt(t('admin_sugg_key_prompt'), '');
+    if (key === null) return;
+    if (!/^[a-z][a-z0-9_]{1,20}$/.test(key)) {
+      alert(t('admin_sugg_key_invalid'));
+      return;
+    }
+    const { error } = await sb.rpc('approve_tag_suggestion', {
+      p_id: Number(approveBtn.dataset.suggId),
+      p_key: key,
+      p_label: approveBtn.dataset.suggestion,
+      p_sort: 90,
+    });
+    if (error) alert(error.message);
+    await loadTagSuggestions();
+    return;
+  }
+  const rejectBtn = e.target.closest('.tagsugg-reject-btn');
+  if (rejectBtn) {
+    const { error } = await sb.from('tag_suggestions')
+      .update({ status: 'rejected' })
+      .eq('id', Number(rejectBtn.dataset.suggId));
+    if (error) alert(error.message);
+    await loadTagSuggestions();
   }
 });
 
