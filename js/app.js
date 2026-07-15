@@ -85,7 +85,8 @@ const pageLoadTime = Date.now();
 function categoryLabel(key) {
   const row = categoriesList.find(c => c.key === key);
   if (!row) return key;
-  return row[`label_${currentLang}`] || row.label_en || key;
+  const label = row[`label_${currentLang}`] || row.label_en || key;
+  return row.icon ? `${row.icon} ${label}` : label;
 }
 
 const QUALITY_LABELS = {
