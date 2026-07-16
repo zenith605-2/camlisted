@@ -320,7 +320,7 @@ async function refresh() {
   await checkAdmin();
   adminSections.hidden = !isAdmin;
   if (isAdmin) {
-    await Promise.all([loadFlagged(), loadUsers(), loadCategoryLog(), loadSuggestions(), loadTagSuggestions()]);
+    await Promise.all([loadFlagged(), loadUsers(), loadCategoryLog(), loadSuggestions(), loadTagSuggestions(), loadConditionTagList()]);
   }
 }
 
@@ -509,6 +509,51 @@ adminTagSuggestionList?.addEventListener('click', async (e) => {
       .eq('id', Number(rejectBtn.dataset.suggId));
     if (error) alert(error.message);
     await loadTagSuggestions();
+  }
+});
+
+// ===== 조건 태그 관리 (라벨 수정/삭제) =====
+const adminTagList = document.getElementById('adminTagList');
+
+async function loadConditionTagList() {
+  const { data, error } = await sb.from('condition_tags').select('*').order('sort_order');
+  if (error) {
+    adminTagList.textContent = error.message;
+    return;
+  }
+  adminTagList.innerHTML = (data || []).map(r => `
+    <div class="admin-row">
+      <div class="admin-info">
+        <div class="admin-title">${escapeHtml(r.label)}</div>
+        <div class="admin-meta">${escapeHtml(r.key)}</div>
+      </div>
+      <div class="admin-actions">
+        <button type="button" class="tag-label-edit-btn" data-key="${escapeHtml(r.key)}" data-label="${escapeHtml(r.label)}">${escapeHtml(t('admin_tag_edit_button'))}</button>
+        <button type="button" class="tag-delete-btn" data-key="${escapeHtml(r.key)}">${escapeHtml(t('admin_tag_delete_button'))}</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+adminTagList?.addEventListener('click', async (e) => {
+  const editBtn = e.target.closest('.tag-label-edit-btn');
+  if (editBtn) {
+    const next = prompt(t('admin_tag_edit_prompt'), editBtn.dataset.label);
+    if (next === null || !next.trim()) return;
+    const { error } = await sb.rpc('update_condition_tag', {
+      p_key: editBtn.dataset.key,
+      p_label: next.trim().slice(0, 40),
+    });
+    if (error) alert(error.message);
+    await loadConditionTagList();
+    return;
+  }
+  const deleteBtn = e.target.closest('.tag-delete-btn');
+  if (deleteBtn) {
+    if (!confirm(t('admin_tag_delete_confirm'))) return;
+    const { error } = await sb.rpc('delete_condition_tag', { p_key: deleteBtn.dataset.key });
+    if (error) alert(error.message);
+    await loadConditionTagList();
   }
 });
 
