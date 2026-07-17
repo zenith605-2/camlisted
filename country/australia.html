@@ -42,7 +42,13 @@
   .map-wrap path[data-href] { cursor: pointer; }
   .map-wrap path:hover { filter: brightness(1.6); stroke: #ffffff; }
   .map-tip { position: fixed; z-index: 10; background: rgba(0,0,0,.85); border: 1px solid #2a2f3a; color: #fff; padding: 5px 10px; border-radius: 6px; font-size: 0.85rem; pointer-events: none; white-space: nowrap; }
-  .map-note { color: #9aa4b2; font-size: 0.8rem; margin-bottom: 16px; }
+  .map-note { color: #9aa4b2; font-size: 0.8rem; margin-bottom: 4px; }
+  .map-legend { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; color: #9aa4b2; font-size: 0.8rem; margin-bottom: 18px; }
+  .map-legend .sw { display: inline-block; width: 14px; height: 14px; border-radius: 3px; margin-right: 5px; vertical-align: -2px; }
+  .thumb iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+  .preview-toggle { margin: 4px 0 14px; color: #9aa4b2; font-size: 0.85rem; display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+  .preview-toggle button { background: #161b22; color: #9aa4b2; border: 1px solid #2a2f3a; border-radius: 999px; padding: 4px 12px; cursor: pointer; font-size: 0.8rem; }
+  .preview-toggle button.active { color: #fff; border-color: #ff3b3b; }
   h2 { font-size: 1.15rem; margin: 28px 0 12px; }
   .cta { display: inline-block; margin: 20px 0; background: #ff3b3b; color: #fff; padding: 10px 18px; border-radius: 8px; text-decoration: none; font-weight: 600; }
   footer { border-top: 1px solid #2a2f3a; margin-top: 40px; padding: 20px 24px; color: #9aa4b2; font-size: 0.85rem; }
@@ -59,87 +65,134 @@
   <h1>Live Cams &amp; Footage in Australia</h1>
   <p class="intro">1 live cams and 19 videos from Australia, re-verified daily. Click any card to watch on YouTube. Updated 2026-07-17.</p>
   <a class="cta" href="/?country=AU">Open in interactive viewer →</a>
-  <div class="grid">
+  
+      <div class="preview-toggle">Preview:
+        <button type="button" data-mode="auto">▶ Auto</button>
+        <button type="button" data-mode="hover">🖱 Hover</button>
+        <button type="button" data-mode="off">Off</button>
+      </div><div class="grid">
     <a class="entry" href="https://www.youtube.com/watch?v=5uZa3-RMFos" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/5uZa3-RMFos/hqdefault_live.jpg" alt="WebcamSydney 1 Live Stream of Harbour 24/7 (~4K)" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="5uZa3-RMFos"><img src="https://i.ytimg.com/vi/5uZa3-RMFos/hqdefault_live.jpg" alt="WebcamSydney 1 Live Stream of Harbour 24/7 (~4K)" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>WebcamSydney 1 Live Stream of Harbour 24/7 (~4K)</strong><span>WebcamSydney</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=4zAEDLwl9HI" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/4zAEDLwl9HI/hqdefault.jpg" alt="Santorini, Greece 🇬🇷 in 4K ULTRA HD 60FPS Video by Drone" loading="lazy" width="320" height="180"><span class="badge">6:04</span></div>
+      <div class="thumb" data-vid="4zAEDLwl9HI"><img src="https://i.ytimg.com/vi/4zAEDLwl9HI/hqdefault.jpg" alt="Santorini, Greece 🇬🇷 in 4K ULTRA HD 60FPS Video by Drone" loading="lazy" width="320" height="180"><span class="badge">6:04</span></div>
       <div class="entry-body"><strong>Santorini, Greece 🇬🇷 in 4K ULTRA HD 60FPS Video by Drone</strong><span>Exploropia</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=tAdl83PE36w" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/tAdl83PE36w/hqdefault.jpg" alt="Dash Cam Owners Australia Weekly Submissions July Week 2" loading="lazy" width="320" height="180"><span class="badge">27:54</span></div>
+      <div class="thumb" data-vid="tAdl83PE36w"><img src="https://i.ytimg.com/vi/tAdl83PE36w/hqdefault.jpg" alt="Dash Cam Owners Australia Weekly Submissions July Week 2" loading="lazy" width="320" height="180"><span class="badge">27:54</span></div>
       <div class="entry-body"><strong>Dash Cam Owners Australia Weekly Submissions July Week 2</strong><span>Dash Cam Owners Australia</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=KV3wcnMOs30" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/KV3wcnMOs30/hqdefault.jpg" alt="Huntington Apartments Time Lapse" loading="lazy" width="320" height="180"><span class="badge">2:00</span></div>
+      <div class="thumb" data-vid="KV3wcnMOs30"><img src="https://i.ytimg.com/vi/KV3wcnMOs30/hqdefault.jpg" alt="Huntington Apartments Time Lapse" loading="lazy" width="320" height="180"><span class="badge">2:00</span></div>
       <div class="entry-body"><strong>Huntington Apartments Time Lapse</strong><span>Cedar Woods Properties</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=ABtkVGmEs8M" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/ABtkVGmEs8M/hqdefault.jpg" alt="Australian Car Crash / Dash Cam Compilation 34" loading="lazy" width="320" height="180"><span class="badge">20:58</span></div>
+      <div class="thumb" data-vid="ABtkVGmEs8M"><img src="https://i.ytimg.com/vi/ABtkVGmEs8M/hqdefault.jpg" alt="Australian Car Crash / Dash Cam Compilation 34" loading="lazy" width="320" height="180"><span class="badge">20:58</span></div>
       <div class="entry-body"><strong>Australian Car Crash / Dash Cam Compilation 34</strong><span>Dash Cam Owners Australia</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=vPtNlbJc9ZY" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/vPtNlbJc9ZY/hqdefault.jpg" alt="Dash Cam Owners Australia Crash Compilation 49" loading="lazy" width="320" height="180"><span class="badge">24:27</span></div>
+      <div class="thumb" data-vid="vPtNlbJc9ZY"><img src="https://i.ytimg.com/vi/vPtNlbJc9ZY/hqdefault.jpg" alt="Dash Cam Owners Australia Crash Compilation 49" loading="lazy" width="320" height="180"><span class="badge">24:27</span></div>
       <div class="entry-body"><strong>Dash Cam Owners Australia Crash Compilation 49</strong><span>Dash Cam Owners Australia</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=PXdkVl9jD1w" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/PXdkVl9jD1w/hqdefault.jpg" alt="Australian Car Crash / Dash Cam Compilation 32" loading="lazy" width="320" height="180"><span class="badge">25:39</span></div>
+      <div class="thumb" data-vid="PXdkVl9jD1w"><img src="https://i.ytimg.com/vi/PXdkVl9jD1w/hqdefault.jpg" alt="Australian Car Crash / Dash Cam Compilation 32" loading="lazy" width="320" height="180"><span class="badge">25:39</span></div>
       <div class="entry-body"><strong>Australian Car Crash / Dash Cam Compilation 32</strong><span>Dash Cam Owners Australia</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=yCDhSJdOHC4" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/yCDhSJdOHC4/hqdefault.jpg" alt="Australian Car Crash / Dash Cam Compilation 43" loading="lazy" width="320" height="180"><span class="badge">17:23</span></div>
+      <div class="thumb" data-vid="yCDhSJdOHC4"><img src="https://i.ytimg.com/vi/yCDhSJdOHC4/hqdefault.jpg" alt="Australian Car Crash / Dash Cam Compilation 43" loading="lazy" width="320" height="180"><span class="badge">17:23</span></div>
       <div class="entry-body"><strong>Australian Car Crash / Dash Cam Compilation 43</strong><span>Dash Cam Owners Australia</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=BRXIhpfyiSk" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/BRXIhpfyiSk/hqdefault.jpg" alt="Australian Car Crash / Dash Cam Compilation 44" loading="lazy" width="320" height="180"><span class="badge">22:51</span></div>
+      <div class="thumb" data-vid="BRXIhpfyiSk"><img src="https://i.ytimg.com/vi/BRXIhpfyiSk/hqdefault.jpg" alt="Australian Car Crash / Dash Cam Compilation 44" loading="lazy" width="320" height="180"><span class="badge">22:51</span></div>
       <div class="entry-body"><strong>Australian Car Crash / Dash Cam Compilation 44</strong><span>Dash Cam Owners Australia</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=qMYrhAwaX7o" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/qMYrhAwaX7o/hqdefault.jpg" alt="Australian Car Crash / Dash Cam Compilation 40" loading="lazy" width="320" height="180"><span class="badge">21:15</span></div>
+      <div class="thumb" data-vid="qMYrhAwaX7o"><img src="https://i.ytimg.com/vi/qMYrhAwaX7o/hqdefault.jpg" alt="Australian Car Crash / Dash Cam Compilation 40" loading="lazy" width="320" height="180"><span class="badge">21:15</span></div>
       <div class="entry-body"><strong>Australian Car Crash / Dash Cam Compilation 40</strong><span>Dash Cam Owners Australia</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=tAOyScTBFZE" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/tAOyScTBFZE/hqdefault.jpg" alt="Australian Car Crash / Dash Cam Compilation 48" loading="lazy" width="320" height="180"><span class="badge">28:23</span></div>
+      <div class="thumb" data-vid="tAOyScTBFZE"><img src="https://i.ytimg.com/vi/tAOyScTBFZE/hqdefault.jpg" alt="Australian Car Crash / Dash Cam Compilation 48" loading="lazy" width="320" height="180"><span class="badge">28:23</span></div>
       <div class="entry-body"><strong>Australian Car Crash / Dash Cam Compilation 48</strong><span>Dash Cam Owners Australia</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=X_yoLHwNSRU" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/X_yoLHwNSRU/hqdefault.jpg" alt="Australian Car Crash / Dash Cam Compilation 41" loading="lazy" width="320" height="180"><span class="badge">27:44</span></div>
+      <div class="thumb" data-vid="X_yoLHwNSRU"><img src="https://i.ytimg.com/vi/X_yoLHwNSRU/hqdefault.jpg" alt="Australian Car Crash / Dash Cam Compilation 41" loading="lazy" width="320" height="180"><span class="badge">27:44</span></div>
       <div class="entry-body"><strong>Australian Car Crash / Dash Cam Compilation 41</strong><span>Dash Cam Owners Australia</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=_E4jvaos-sM" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/_E4jvaos-sM/hqdefault.jpg" alt="Dash Cam Owners Australia Crash Compilation 51" loading="lazy" width="320" height="180"><span class="badge">31:03</span></div>
+      <div class="thumb" data-vid="_E4jvaos-sM"><img src="https://i.ytimg.com/vi/_E4jvaos-sM/hqdefault.jpg" alt="Dash Cam Owners Australia Crash Compilation 51" loading="lazy" width="320" height="180"><span class="badge">31:03</span></div>
       <div class="entry-body"><strong>Dash Cam Owners Australia Crash Compilation 51</strong><span>Dash Cam Owners Australia</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=PUTFLoobJkk" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/PUTFLoobJkk/hqdefault.jpg" alt="Best of 2025 - Dash Cam Owners Australia" loading="lazy" width="320" height="180"><span class="badge">11:56</span></div>
+      <div class="thumb" data-vid="PUTFLoobJkk"><img src="https://i.ytimg.com/vi/PUTFLoobJkk/hqdefault.jpg" alt="Best of 2025 - Dash Cam Owners Australia" loading="lazy" width="320" height="180"><span class="badge">11:56</span></div>
       <div class="entry-body"><strong>Best of 2025 - Dash Cam Owners Australia</strong><span>Dash Cam Owners Australia</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=46J9sLC84hY" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/46J9sLC84hY/hqdefault.jpg" alt="4K徒步旅行 | 澳大利亚墨尔本市斯旺斯顿街(Swanston St)墨尔本大学帕克维尔校区 Pt 02" loading="lazy" width="320" height="180"><span class="badge">33:21</span></div>
+      <div class="thumb" data-vid="46J9sLC84hY"><img src="https://i.ytimg.com/vi/46J9sLC84hY/hqdefault.jpg" alt="4K徒步旅行 | 澳大利亚墨尔本市斯旺斯顿街(Swanston St)墨尔本大学帕克维尔校区 Pt 02" loading="lazy" width="320" height="180"><span class="badge">33:21</span></div>
       <div class="entry-body"><strong>4K徒步旅行 | 澳大利亚墨尔本市斯旺斯顿街(Swanston St)墨尔本大学帕克维尔校区 Pt 02</strong><span>MPA万里行</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=oDkPVn-Dwm4" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/oDkPVn-Dwm4/hqdefault.jpg" alt="Dash Cam Owners Australia June 2026 On the Road Compilation" loading="lazy" width="320" height="180"><span class="badge">12:07</span></div>
+      <div class="thumb" data-vid="oDkPVn-Dwm4"><img src="https://i.ytimg.com/vi/oDkPVn-Dwm4/hqdefault.jpg" alt="Dash Cam Owners Australia June 2026 On the Road Compilation" loading="lazy" width="320" height="180"><span class="badge">12:07</span></div>
       <div class="entry-body"><strong>Dash Cam Owners Australia June 2026 On the Road Compilation</strong><span>Dash Cam Owners Australia</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=8CcUewMx98w" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/8CcUewMx98w/hqdefault.jpg" alt="Dash Cam Owners Australia February 2026 On the Road Compilation" loading="lazy" width="320" height="180"><span class="badge">12:22</span></div>
+      <div class="thumb" data-vid="8CcUewMx98w"><img src="https://i.ytimg.com/vi/8CcUewMx98w/hqdefault.jpg" alt="Dash Cam Owners Australia February 2026 On the Road Compilation" loading="lazy" width="320" height="180"><span class="badge">12:22</span></div>
       <div class="entry-body"><strong>Dash Cam Owners Australia February 2026 On the Road Compilation</strong><span>Dash Cam Owners Australia</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=pstThH5bETY" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/pstThH5bETY/hqdefault.jpg" alt="Dash Cam Owners Australia Weekly Submissions June Week 4" loading="lazy" width="320" height="180"><span class="badge">22:19</span></div>
+      <div class="thumb" data-vid="pstThH5bETY"><img src="https://i.ytimg.com/vi/pstThH5bETY/hqdefault.jpg" alt="Dash Cam Owners Australia Weekly Submissions June Week 4" loading="lazy" width="320" height="180"><span class="badge">22:19</span></div>
       <div class="entry-body"><strong>Dash Cam Owners Australia Weekly Submissions June Week 4</strong><span>Dash Cam Owners Australia</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=E4FnISFNdWk" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/E4FnISFNdWk/hqdefault.jpg" alt="Dash Cam Owners Australia Crash Compilation 52" loading="lazy" width="320" height="180"><span class="badge">25:09</span></div>
+      <div class="thumb" data-vid="E4FnISFNdWk"><img src="https://i.ytimg.com/vi/E4FnISFNdWk/hqdefault.jpg" alt="Dash Cam Owners Australia Crash Compilation 52" loading="lazy" width="320" height="180"><span class="badge">25:09</span></div>
       <div class="entry-body"><strong>Dash Cam Owners Australia Crash Compilation 52</strong><span>Dash Cam Owners Australia</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=DdN_NmZ_Upk" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/DdN_NmZ_Upk/hqdefault.jpg" alt="Dash Cam Owners Australia Weekly Submissions July Week 1" loading="lazy" width="320" height="180"><span class="badge">22:51</span></div>
+      <div class="thumb" data-vid="DdN_NmZ_Upk"><img src="https://i.ytimg.com/vi/DdN_NmZ_Upk/hqdefault.jpg" alt="Dash Cam Owners Australia Weekly Submissions July Week 1" loading="lazy" width="320" height="180"><span class="badge">22:51</span></div>
       <div class="entry-body"><strong>Dash Cam Owners Australia Weekly Submissions July Week 1</strong><span>Dash Cam Owners Australia</span></div>
     </a></div>
+      <script>
+        (function () {
+          var KEY = 'staticPreviewMode';
+          var mode = localStorage.getItem(KEY) || 'auto';
+          var thumbs = [].slice.call(document.querySelectorAll('.thumb[data-vid]'));
+          var io = null;
+          function play(t) {
+            if (t.querySelector('iframe')) return;
+            var f = document.createElement('iframe');
+            f.src = 'https://www.youtube.com/embed/' + t.dataset.vid + '?autoplay=1&mute=1&playsinline=1&rel=0';
+            f.allow = 'autoplay; encrypted-media';
+            t.appendChild(f);
+          }
+          function stop(t) { var f = t.querySelector('iframe'); if (f) f.remove(); }
+          function apply() {
+            thumbs.forEach(stop);
+            if (io) { io.disconnect(); io = null; }
+            document.querySelectorAll('.preview-toggle button').forEach(function (b) {
+              b.classList.toggle('active', b.dataset.mode === mode);
+            });
+            if (mode === 'auto') {
+              io = new IntersectionObserver(function (es) {
+                es.forEach(function (e) { e.isIntersecting ? play(e.target) : stop(e.target); });
+              }, { rootMargin: '50px' });
+              thumbs.forEach(function (t) { io.observe(t); });
+            }
+          }
+          thumbs.forEach(function (t) {
+            t.addEventListener('mouseenter', function () { if (mode === 'hover') play(t); });
+            t.addEventListener('mouseleave', function () { if (mode === 'hover') stop(t); });
+          });
+          document.querySelectorAll('.preview-toggle button').forEach(function (b) {
+            b.addEventListener('click', function (e) {
+              e.preventDefault();
+              mode = b.dataset.mode;
+              localStorage.setItem(KEY, mode);
+              apply();
+            });
+          });
+          apply();
+        })();
+      </script>
 </main>
 <footer>
   <a href="/">Home</a><a href="/browse.html">Browse all</a><a href="/about.html">About</a><a href="/privacy.html">Privacy</a><a href="/terms.html">Terms</a>

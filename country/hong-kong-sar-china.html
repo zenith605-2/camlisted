@@ -42,7 +42,13 @@
   .map-wrap path[data-href] { cursor: pointer; }
   .map-wrap path:hover { filter: brightness(1.6); stroke: #ffffff; }
   .map-tip { position: fixed; z-index: 10; background: rgba(0,0,0,.85); border: 1px solid #2a2f3a; color: #fff; padding: 5px 10px; border-radius: 6px; font-size: 0.85rem; pointer-events: none; white-space: nowrap; }
-  .map-note { color: #9aa4b2; font-size: 0.8rem; margin-bottom: 16px; }
+  .map-note { color: #9aa4b2; font-size: 0.8rem; margin-bottom: 4px; }
+  .map-legend { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; color: #9aa4b2; font-size: 0.8rem; margin-bottom: 18px; }
+  .map-legend .sw { display: inline-block; width: 14px; height: 14px; border-radius: 3px; margin-right: 5px; vertical-align: -2px; }
+  .thumb iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+  .preview-toggle { margin: 4px 0 14px; color: #9aa4b2; font-size: 0.85rem; display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+  .preview-toggle button { background: #161b22; color: #9aa4b2; border: 1px solid #2a2f3a; border-radius: 999px; padding: 4px 12px; cursor: pointer; font-size: 0.8rem; }
+  .preview-toggle button.active { color: #fff; border-color: #ff3b3b; }
   h2 { font-size: 1.15rem; margin: 28px 0 12px; }
   .cta { display: inline-block; margin: 20px 0; background: #ff3b3b; color: #fff; padding: 10px 18px; border-radius: 8px; text-decoration: none; font-weight: 600; }
   footer { border-top: 1px solid #2a2f3a; margin-top: 40px; padding: 20px 24px; color: #9aa4b2; font-size: 0.85rem; }
@@ -59,31 +65,78 @@
   <h1>Live Cams &amp; Footage in Hong Kong SAR China</h1>
   <p class="intro">1 live cams and 5 videos from Hong Kong SAR China, re-verified daily. Click any card to watch on YouTube. Updated 2026-07-17.</p>
   <a class="cta" href="/?country=HK">Open in interactive viewer →</a>
-  <div class="grid">
+  
+      <div class="preview-toggle">Preview:
+        <button type="button" data-mode="auto">▶ Auto</button>
+        <button type="button" data-mode="hover">🖱 Hover</button>
+        <button type="button" data-mode="off">Off</button>
+      </div><div class="grid">
     <a class="entry" href="https://www.youtube.com/watch?v=w1jf5BtFsWU" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/w1jf5BtFsWU/hqdefault_live.jpg" alt="🔴【LIVE】 Hong Kong&#39;s ONLY 24/7 LIVE camera from The Peak with Relaxing Music BGM 24/7 實景直播 抒情背景音樂" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="w1jf5BtFsWU"><img src="https://i.ytimg.com/vi/w1jf5BtFsWU/hqdefault_live.jpg" alt="🔴【LIVE】 Hong Kong&#39;s ONLY 24/7 LIVE camera from The Peak with Relaxing Music BGM 24/7 實景直播 抒情背景音樂" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>🔴【LIVE】 Hong Kong&#39;s ONLY 24/7 LIVE camera from The Peak with Relaxing Music BGM 24/7 實景直播 抒情背景音樂</strong><span>HK360VR</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=jUtYnGQhNtc" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/jUtYnGQhNtc/hqdefault.jpg" alt="公路交通事故，車禍現場，行車記錄器 。Traffic Accident Video Of China" loading="lazy" width="320" height="180"><span class="badge">11:56</span></div>
+      <div class="thumb" data-vid="jUtYnGQhNtc"><img src="https://i.ytimg.com/vi/jUtYnGQhNtc/hqdefault.jpg" alt="公路交通事故，車禍現場，行車記錄器 。Traffic Accident Video Of China" loading="lazy" width="320" height="180"><span class="badge">11:56</span></div>
       <div class="entry-body"><strong>公路交通事故，車禍現場，行車記錄器 。Traffic Accident Video Of China</strong><span>SKY EYE</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=YmG-w4DYqx0" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/YmG-w4DYqx0/hqdefault.jpg" alt="2023-9-2中国交通事故合集：开车不要分神，带着老婆一起翻车可就不好了 traffic accident in China" loading="lazy" width="320" height="180"><span class="badge">5:35</span></div>
+      <div class="thumb" data-vid="YmG-w4DYqx0"><img src="https://i.ytimg.com/vi/YmG-w4DYqx0/hqdefault.jpg" alt="2023-9-2中国交通事故合集：开车不要分神，带着老婆一起翻车可就不好了 traffic accident in China" loading="lazy" width="320" height="180"><span class="badge">5:35</span></div>
       <div class="entry-body"><strong>2023-9-2中国交通事故合集：开车不要分神，带着老婆一起翻车可就不好了 traffic accident in China</strong><span>法妞行车traffic accident</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=DJ-s0Dnqyv4" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/DJ-s0Dnqyv4/hqdefault.jpg" alt="徒步游览N首尔塔 | 白天 | 城市氛围 4K HDR" loading="lazy" width="320" height="180"><span class="badge">34:28</span></div>
+      <div class="thumb" data-vid="DJ-s0Dnqyv4"><img src="https://i.ytimg.com/vi/DJ-s0Dnqyv4/hqdefault.jpg" alt="徒步游览N首尔塔 | 白天 | 城市氛围 4K HDR" loading="lazy" width="320" height="180"><span class="badge">34:28</span></div>
       <div class="entry-body"><strong>徒步游览N首尔塔 | 白天 | 城市氛围 4K HDR</strong><span>小狮子去旅行</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=D4JJBjilgys" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/D4JJBjilgys/hqdefault.jpg" alt="中国城区步行，梧州市龙圩区一小时徒步旅行 [4k]#中国 #china #梧州 #automobile #park #street #travel #travel #bts #街头随拍 #china" loading="lazy" width="320" height="180"><span class="badge">45:13</span></div>
+      <div class="thumb" data-vid="D4JJBjilgys"><img src="https://i.ytimg.com/vi/D4JJBjilgys/hqdefault.jpg" alt="中国城区步行，梧州市龙圩区一小时徒步旅行 [4k]#中国 #china #梧州 #automobile #park #street #travel #travel #bts #街头随拍 #china" loading="lazy" width="320" height="180"><span class="badge">45:13</span></div>
       <div class="entry-body"><strong>中国城区步行，梧州市龙圩区一小时徒步旅行 [4k]#中国 #china #梧州 #automobile #park #street #travel #travel #bts #街头随拍 #china</strong><span>Chinese scenery</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=DUK0FWyv0jY" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/DUK0FWyv0jY/hqdefault.jpg" alt="【 4K / 60FPS 】龙泉山宝狮湖徒步探访超美景！宝狮湖全程记录！#徒步旅行 #自然风光 20250301 龙泉山" loading="lazy" width="320" height="180"><span class="badge">1:06:02</span></div>
+      <div class="thumb" data-vid="DUK0FWyv0jY"><img src="https://i.ytimg.com/vi/DUK0FWyv0jY/hqdefault.jpg" alt="【 4K / 60FPS 】龙泉山宝狮湖徒步探访超美景！宝狮湖全程记录！#徒步旅行 #自然风光 20250301 龙泉山" loading="lazy" width="320" height="180"><span class="badge">1:06:02</span></div>
       <div class="entry-body"><strong>【 4K / 60FPS 】龙泉山宝狮湖徒步探访超美景！宝狮湖全程记录！#徒步旅行 #自然风光 20250301 龙泉山</strong><span>CityVoyagerWalk</span></div>
     </a></div>
+      <script>
+        (function () {
+          var KEY = 'staticPreviewMode';
+          var mode = localStorage.getItem(KEY) || 'auto';
+          var thumbs = [].slice.call(document.querySelectorAll('.thumb[data-vid]'));
+          var io = null;
+          function play(t) {
+            if (t.querySelector('iframe')) return;
+            var f = document.createElement('iframe');
+            f.src = 'https://www.youtube.com/embed/' + t.dataset.vid + '?autoplay=1&mute=1&playsinline=1&rel=0';
+            f.allow = 'autoplay; encrypted-media';
+            t.appendChild(f);
+          }
+          function stop(t) { var f = t.querySelector('iframe'); if (f) f.remove(); }
+          function apply() {
+            thumbs.forEach(stop);
+            if (io) { io.disconnect(); io = null; }
+            document.querySelectorAll('.preview-toggle button').forEach(function (b) {
+              b.classList.toggle('active', b.dataset.mode === mode);
+            });
+            if (mode === 'auto') {
+              io = new IntersectionObserver(function (es) {
+                es.forEach(function (e) { e.isIntersecting ? play(e.target) : stop(e.target); });
+              }, { rootMargin: '50px' });
+              thumbs.forEach(function (t) { io.observe(t); });
+            }
+          }
+          thumbs.forEach(function (t) {
+            t.addEventListener('mouseenter', function () { if (mode === 'hover') play(t); });
+            t.addEventListener('mouseleave', function () { if (mode === 'hover') stop(t); });
+          });
+          document.querySelectorAll('.preview-toggle button').forEach(function (b) {
+            b.addEventListener('click', function (e) {
+              e.preventDefault();
+              mode = b.dataset.mode;
+              localStorage.setItem(KEY, mode);
+              apply();
+            });
+          });
+          apply();
+        })();
+      </script>
 </main>
 <footer>
   <a href="/">Home</a><a href="/browse.html">Browse all</a><a href="/about.html">About</a><a href="/privacy.html">Privacy</a><a href="/terms.html">Terms</a>

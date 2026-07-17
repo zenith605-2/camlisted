@@ -42,7 +42,13 @@
   .map-wrap path[data-href] { cursor: pointer; }
   .map-wrap path:hover { filter: brightness(1.6); stroke: #ffffff; }
   .map-tip { position: fixed; z-index: 10; background: rgba(0,0,0,.85); border: 1px solid #2a2f3a; color: #fff; padding: 5px 10px; border-radius: 6px; font-size: 0.85rem; pointer-events: none; white-space: nowrap; }
-  .map-note { color: #9aa4b2; font-size: 0.8rem; margin-bottom: 16px; }
+  .map-note { color: #9aa4b2; font-size: 0.8rem; margin-bottom: 4px; }
+  .map-legend { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; color: #9aa4b2; font-size: 0.8rem; margin-bottom: 18px; }
+  .map-legend .sw { display: inline-block; width: 14px; height: 14px; border-radius: 3px; margin-right: 5px; vertical-align: -2px; }
+  .thumb iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+  .preview-toggle { margin: 4px 0 14px; color: #9aa4b2; font-size: 0.85rem; display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+  .preview-toggle button { background: #161b22; color: #9aa4b2; border: 1px solid #2a2f3a; border-radius: 999px; padding: 4px 12px; cursor: pointer; font-size: 0.8rem; }
+  .preview-toggle button.active { color: #fff; border-color: #ff3b3b; }
   h2 { font-size: 1.15rem; margin: 28px 0 12px; }
   .cta { display: inline-block; margin: 20px 0; background: #ff3b3b; color: #fff; padding: 10px 18px; border-radius: 8px; text-decoration: none; font-weight: 600; }
   footer { border-top: 1px solid #2a2f3a; margin-top: 40px; padding: 20px 24px; color: #9aa4b2; font-size: 0.85rem; }
@@ -59,51 +65,98 @@
   <h1>Live Cams &amp; Footage in Finland</h1>
   <p class="intro">11 live cams and 0 videos from Finland, re-verified daily. Click any card to watch on YouTube. Updated 2026-07-17.</p>
   <a class="cta" href="/?country=FI">Open in interactive viewer →</a>
-  <div class="grid">
+  
+      <div class="preview-toggle">Preview:
+        <button type="button" data-mode="auto">▶ Auto</button>
+        <button type="button" data-mode="hover">🖱 Hover</button>
+        <button type="button" data-mode="off">Off</button>
+      </div><div class="grid">
     <a class="entry" href="https://www.youtube.com/watch?v=jCYOHipKprI" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/jCYOHipKprI/hqdefault_live.jpg" alt="🔴 HELSINKI SUMMER WALK 24/7 🇫🇮☀️ Beautiful Summer in Finland | 4K HDR PRE-RECORDED SLOW TV CITY 🔴" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="jCYOHipKprI"><img src="https://i.ytimg.com/vi/jCYOHipKprI/hqdefault_live.jpg" alt="🔴 HELSINKI SUMMER WALK 24/7 🇫🇮☀️ Beautiful Summer in Finland | 4K HDR PRE-RECORDED SLOW TV CITY 🔴" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>🔴 HELSINKI SUMMER WALK 24/7 🇫🇮☀️ Beautiful Summer in Finland | 4K HDR PRE-RECORDED SLOW TV CITY 🔴</strong><span>Helsinki Walks 🇫🇮</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=TwNS3BhAQJ4" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/TwNS3BhAQJ4/hqdefault_live.jpg" alt="🔴 HELSINKI NIGHTLIFE WALK 24/7 🇫🇮✨ Summer Nightlife in Finland 🔴 PRE-RECORDED SLOW TV CITY SOUND" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="TwNS3BhAQJ4"><img src="https://i.ytimg.com/vi/TwNS3BhAQJ4/hqdefault_live.jpg" alt="🔴 HELSINKI NIGHTLIFE WALK 24/7 🇫🇮✨ Summer Nightlife in Finland 🔴 PRE-RECORDED SLOW TV CITY SOUND" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>🔴 HELSINKI NIGHTLIFE WALK 24/7 🇫🇮✨ Summer Nightlife in Finland 🔴 PRE-RECORDED SLOW TV CITY SOUND</strong><span>Helsinki Walks 🇫🇮</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=JgDu8yQKpwg" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/JgDu8yQKpwg/hqdefault_live.jpg" alt="🔴 HEAVY Snow Blizzard City Walk 24/7 ❄️🌨️ Winter Storm in Helsinki Finland 4K February 2025 🔴 SLOWTV" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="JgDu8yQKpwg"><img src="https://i.ytimg.com/vi/JgDu8yQKpwg/hqdefault_live.jpg" alt="🔴 HEAVY Snow Blizzard City Walk 24/7 ❄️🌨️ Winter Storm in Helsinki Finland 4K February 2025 🔴 SLOWTV" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>🔴 HEAVY Snow Blizzard City Walk 24/7 ❄️🌨️ Winter Storm in Helsinki Finland 4K February 2025 🔴 SLOWTV</strong><span>Helsinki Walks 🇫🇮</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=Cp4RRAEgpeU" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/Cp4RRAEgpeU/hqdefault_live.jpg" alt="Live @ Santa Claus Village" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="Cp4RRAEgpeU"><img src="https://i.ytimg.com/vi/Cp4RRAEgpeU/hqdefault_live.jpg" alt="Live @ Santa Claus Village" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Live @ Santa Claus Village</strong><span>City of Rovaniemi</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=9h42Y9gHqnI" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/9h42Y9gHqnI/hqdefault_live.jpg" alt="🔴 SUPER Snow Storm City Walk 24/7 ❄️🌨️ Winter in Finland February  🔴 PRE-RECORDED SLOW TV CITY SOUND" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="9h42Y9gHqnI"><img src="https://i.ytimg.com/vi/9h42Y9gHqnI/hqdefault_live.jpg" alt="🔴 SUPER Snow Storm City Walk 24/7 ❄️🌨️ Winter in Finland February  🔴 PRE-RECORDED SLOW TV CITY SOUND" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>🔴 SUPER Snow Storm City Walk 24/7 ❄️🌨️ Winter in Finland February  🔴 PRE-RECORDED SLOW TV CITY SOUND</strong><span>Helsinki Walks 🇫🇮</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=aA9-nxILUH4" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/aA9-nxILUH4/hqdefault_live.jpg" alt="🔴 24/7 LIVE CAT TV NO ADS😺 Awesome Red Squirrels and Adorable Little Birds Forest Nut Party for All" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="aA9-nxILUH4"><img src="https://i.ytimg.com/vi/aA9-nxILUH4/hqdefault_live.jpg" alt="🔴 24/7 LIVE CAT TV NO ADS😺 Awesome Red Squirrels and Adorable Little Birds Forest Nut Party for All" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>🔴 24/7 LIVE CAT TV NO ADS😺 Awesome Red Squirrels and Adorable Little Birds Forest Nut Party for All</strong><span>Red Squirrel Studios</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=OS94xU5WhrQ" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/OS94xU5WhrQ/hqdefault_live.jpg" alt="🔴24/7 LIVE CAT TV NO ADS😺 Cheerful Birds and Cutest Squirrels bring Nature Fun for Everyone" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="OS94xU5WhrQ"><img src="https://i.ytimg.com/vi/OS94xU5WhrQ/hqdefault_live.jpg" alt="🔴24/7 LIVE CAT TV NO ADS😺 Cheerful Birds and Cutest Squirrels bring Nature Fun for Everyone" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>🔴24/7 LIVE CAT TV NO ADS😺 Cheerful Birds and Cutest Squirrels bring Nature Fun for Everyone</strong><span>Red Squirrel Studios</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=tm3fMnPT6d8" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/tm3fMnPT6d8/hqdefault_live.jpg" alt="🔴 24/7 LIVE CAT TV NO ADS😺 Beautiful Birds, Red Squirrels and Peaceful Nature" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="tm3fMnPT6d8"><img src="https://i.ytimg.com/vi/tm3fMnPT6d8/hqdefault_live.jpg" alt="🔴 24/7 LIVE CAT TV NO ADS😺 Beautiful Birds, Red Squirrels and Peaceful Nature" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>🔴 24/7 LIVE CAT TV NO ADS😺 Beautiful Birds, Red Squirrels and Peaceful Nature</strong><span>Red Squirrel Studios</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=PWJiDUUSNvs" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/PWJiDUUSNvs/hqdefault_live.jpg" alt="🔴24/7 LIVE CAT TV NO ADS😺 Unlimited Wild Birds and Squirrels at Autumn Festival" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="PWJiDUUSNvs"><img src="https://i.ytimg.com/vi/PWJiDUUSNvs/hqdefault_live.jpg" alt="🔴24/7 LIVE CAT TV NO ADS😺 Unlimited Wild Birds and Squirrels at Autumn Festival" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>🔴24/7 LIVE CAT TV NO ADS😺 Unlimited Wild Birds and Squirrels at Autumn Festival</strong><span>Red Squirrel Studios</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=X7tdyNFpp1g" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/X7tdyNFpp1g/hqdefault_live.jpg" alt="Kylänäkymä / Village view | Levi Ski Resort | Finland" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="X7tdyNFpp1g"><img src="https://i.ytimg.com/vi/X7tdyNFpp1g/hqdefault_live.jpg" alt="Kylänäkymä / Village view | Levi Ski Resort | Finland" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Kylänäkymä / Village view | Levi Ski Resort | Finland</strong><span>Levi Ski Resort</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=LwihxyJ4V20" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/LwihxyJ4V20/hqdefault_live.jpg" alt="Zero Point Levi | Levi Ski Resort | Finland" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="LwihxyJ4V20"><img src="https://i.ytimg.com/vi/LwihxyJ4V20/hqdefault_live.jpg" alt="Zero Point Levi | Levi Ski Resort | Finland" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Zero Point Levi | Levi Ski Resort | Finland</strong><span>Levi Ski Resort</span></div>
     </a></div>
+      <script>
+        (function () {
+          var KEY = 'staticPreviewMode';
+          var mode = localStorage.getItem(KEY) || 'auto';
+          var thumbs = [].slice.call(document.querySelectorAll('.thumb[data-vid]'));
+          var io = null;
+          function play(t) {
+            if (t.querySelector('iframe')) return;
+            var f = document.createElement('iframe');
+            f.src = 'https://www.youtube.com/embed/' + t.dataset.vid + '?autoplay=1&mute=1&playsinline=1&rel=0';
+            f.allow = 'autoplay; encrypted-media';
+            t.appendChild(f);
+          }
+          function stop(t) { var f = t.querySelector('iframe'); if (f) f.remove(); }
+          function apply() {
+            thumbs.forEach(stop);
+            if (io) { io.disconnect(); io = null; }
+            document.querySelectorAll('.preview-toggle button').forEach(function (b) {
+              b.classList.toggle('active', b.dataset.mode === mode);
+            });
+            if (mode === 'auto') {
+              io = new IntersectionObserver(function (es) {
+                es.forEach(function (e) { e.isIntersecting ? play(e.target) : stop(e.target); });
+              }, { rootMargin: '50px' });
+              thumbs.forEach(function (t) { io.observe(t); });
+            }
+          }
+          thumbs.forEach(function (t) {
+            t.addEventListener('mouseenter', function () { if (mode === 'hover') play(t); });
+            t.addEventListener('mouseleave', function () { if (mode === 'hover') stop(t); });
+          });
+          document.querySelectorAll('.preview-toggle button').forEach(function (b) {
+            b.addEventListener('click', function (e) {
+              e.preventDefault();
+              mode = b.dataset.mode;
+              localStorage.setItem(KEY, mode);
+              apply();
+            });
+          });
+          apply();
+        })();
+      </script>
 </main>
 <footer>
   <a href="/">Home</a><a href="/browse.html">Browse all</a><a href="/about.html">About</a><a href="/privacy.html">Privacy</a><a href="/terms.html">Terms</a>

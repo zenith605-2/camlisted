@@ -42,7 +42,13 @@
   .map-wrap path[data-href] { cursor: pointer; }
   .map-wrap path:hover { filter: brightness(1.6); stroke: #ffffff; }
   .map-tip { position: fixed; z-index: 10; background: rgba(0,0,0,.85); border: 1px solid #2a2f3a; color: #fff; padding: 5px 10px; border-radius: 6px; font-size: 0.85rem; pointer-events: none; white-space: nowrap; }
-  .map-note { color: #9aa4b2; font-size: 0.8rem; margin-bottom: 16px; }
+  .map-note { color: #9aa4b2; font-size: 0.8rem; margin-bottom: 4px; }
+  .map-legend { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; color: #9aa4b2; font-size: 0.8rem; margin-bottom: 18px; }
+  .map-legend .sw { display: inline-block; width: 14px; height: 14px; border-radius: 3px; margin-right: 5px; vertical-align: -2px; }
+  .thumb iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+  .preview-toggle { margin: 4px 0 14px; color: #9aa4b2; font-size: 0.85rem; display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+  .preview-toggle button { background: #161b22; color: #9aa4b2; border: 1px solid #2a2f3a; border-radius: 999px; padding: 4px 12px; cursor: pointer; font-size: 0.8rem; }
+  .preview-toggle button.active { color: #fff; border-color: #ff3b3b; }
   h2 { font-size: 1.15rem; margin: 28px 0 12px; }
   .cta { display: inline-block; margin: 20px 0; background: #ff3b3b; color: #fff; padding: 10px 18px; border-radius: 8px; text-decoration: none; font-weight: 600; }
   footer { border-top: 1px solid #2a2f3a; margin-top: 40px; padding: 20px 24px; color: #9aa4b2; font-size: 0.85rem; }
@@ -59,55 +65,102 @@
   <h1>🏗️ Construction Live Cams &amp; Videos</h1>
   <p class="intro">2 live cams and 10 videos in the Construction category, re-verified daily. Click any card to watch on YouTube. Updated 2026-07-17.</p>
   <a class="cta" href="/?category=construction">Open in interactive viewer →</a>
-  <div class="grid">
+  
+      <div class="preview-toggle">Preview:
+        <button type="button" data-mode="auto">▶ Auto</button>
+        <button type="button" data-mode="hover">🖱 Hover</button>
+        <button type="button" data-mode="off">Off</button>
+      </div><div class="grid">
     <a class="entry" href="https://www.youtube.com/watch?v=deBYo6TL6mo" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/deBYo6TL6mo/hqdefault_live.jpg" alt="Webcam Epura" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="deBYo6TL6mo"><img src="https://i.ytimg.com/vi/deBYo6TL6mo/hqdefault_live.jpg" alt="Webcam Epura" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Webcam Epura</strong><span>VilleLausanne</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=bGr1qtW1jnY" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/bGr1qtW1jnY/hqdefault_live.jpg" alt="🔴 Live Now: SpaceX Gigabay Construction | Starship’s Giant Florida Factory Rises on the Space Coast" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="bGr1qtW1jnY"><img src="https://i.ytimg.com/vi/bGr1qtW1jnY/hqdefault_live.jpg" alt="🔴 Live Now: SpaceX Gigabay Construction | Starship’s Giant Florida Factory Rises on the Space Coast" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>🔴 Live Now: SpaceX Gigabay Construction | Starship’s Giant Florida Factory Rises on the Space Coast</strong><span>afarTV</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=C3iI6S7TuCA" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/C3iI6S7TuCA/hqdefault.jpg" alt="Time lapse of home constructed start to finish" loading="lazy" width="320" height="180"><span class="badge">7:24</span></div>
+      <div class="thumb" data-vid="C3iI6S7TuCA"><img src="https://i.ytimg.com/vi/C3iI6S7TuCA/hqdefault.jpg" alt="Time lapse of home constructed start to finish" loading="lazy" width="320" height="180"><span class="badge">7:24</span></div>
       <div class="entry-body"><strong>Time lapse of home constructed start to finish</strong><span>Weaver Companies, Inc</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=TnfuGEKpPCI" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/TnfuGEKpPCI/hqdefault.jpg" alt="Waikato River Bridge | 2022 Construction Timelapse" loading="lazy" width="320" height="180"><span class="badge">1:48</span></div>
+      <div class="thumb" data-vid="TnfuGEKpPCI"><img src="https://i.ytimg.com/vi/TnfuGEKpPCI/hqdefault.jpg" alt="Waikato River Bridge | 2022 Construction Timelapse" loading="lazy" width="320" height="180"><span class="badge">1:48</span></div>
       <div class="entry-body"><strong>Waikato River Bridge | 2022 Construction Timelapse</strong><span>Timescapes</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=ftt-JWHI1Js" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/ftt-JWHI1Js/hqdefault.jpg" alt="Timelapse of Building Mountain Home" loading="lazy" width="320" height="180"><span class="badge">32:18</span></div>
+      <div class="thumb" data-vid="ftt-JWHI1Js"><img src="https://i.ytimg.com/vi/ftt-JWHI1Js/hqdefault.jpg" alt="Timelapse of Building Mountain Home" loading="lazy" width="320" height="180"><span class="badge">32:18</span></div>
       <div class="entry-body"><strong>Timelapse of Building Mountain Home</strong><span>Perkins Builder Brothers</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=gSRPcRDPy1w" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/gSRPcRDPy1w/hqdefault.jpg" alt="One Minute Time-Lapse: Subway connects York University" loading="lazy" width="320" height="180"><span class="badge">1:20</span></div>
+      <div class="thumb" data-vid="gSRPcRDPy1w"><img src="https://i.ytimg.com/vi/gSRPcRDPy1w/hqdefault.jpg" alt="One Minute Time-Lapse: Subway connects York University" loading="lazy" width="320" height="180"><span class="badge">1:20</span></div>
       <div class="entry-body"><strong>One Minute Time-Lapse: Subway connects York University</strong><span>York University</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=SvApoH3n9FE" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/SvApoH3n9FE/hqdefault.jpg" alt="construction site time lapse shopping mall | Minto Mönchengladbach - MFI" loading="lazy" width="320" height="180"><span class="badge">2:24</span></div>
+      <div class="thumb" data-vid="SvApoH3n9FE"><img src="https://i.ytimg.com/vi/SvApoH3n9FE/hqdefault.jpg" alt="construction site time lapse shopping mall | Minto Mönchengladbach - MFI" loading="lazy" width="320" height="180"><span class="badge">2:24</span></div>
       <div class="entry-body"><strong>construction site time lapse shopping mall | Minto Mönchengladbach - MFI</strong><span>panTerra | Zeitraffer &amp; Filmproduktion  🎥</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=wDmNBXfd7K8" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/wDmNBXfd7K8/hqdefault.jpg" alt="Time Lapse Construction OFFICEHOME Soul, Munich" loading="lazy" width="320" height="180"><span class="badge">2:44</span></div>
+      <div class="thumb" data-vid="wDmNBXfd7K8"><img src="https://i.ytimg.com/vi/wDmNBXfd7K8/hqdefault.jpg" alt="Time Lapse Construction OFFICEHOME Soul, Munich" loading="lazy" width="320" height="180"><span class="badge">2:44</span></div>
       <div class="entry-body"><strong>Time Lapse Construction OFFICEHOME Soul, Munich</strong><span>panTerra | Zeitraffer &amp; Filmproduktion  🎥</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=_KnoLCXwums" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/_KnoLCXwums/hqdefault.jpg" alt="Modern Bridge Construction Time Lapse Compilation" loading="lazy" width="320" height="180"><span class="badge">13:22</span></div>
+      <div class="thumb" data-vid="_KnoLCXwums"><img src="https://i.ytimg.com/vi/_KnoLCXwums/hqdefault.jpg" alt="Modern Bridge Construction Time Lapse Compilation" loading="lazy" width="320" height="180"><span class="badge">13:22</span></div>
       <div class="entry-body"><strong>Modern Bridge Construction Time Lapse Compilation</strong><span>Cherry On Top TerraTech</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=lavm7CausyA" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/lavm7CausyA/hqdefault.jpg" alt="The Construction of 300 METRE AIDAprima - CRUISE SHIP - CINEMATIC TIMELAPSE 4K" loading="lazy" width="320" height="180"><span class="badge">8:17</span></div>
+      <div class="thumb" data-vid="lavm7CausyA"><img src="https://i.ytimg.com/vi/lavm7CausyA/hqdefault.jpg" alt="The Construction of 300 METRE AIDAprima - CRUISE SHIP - CINEMATIC TIMELAPSE 4K" loading="lazy" width="320" height="180"><span class="badge">8:17</span></div>
       <div class="entry-body"><strong>The Construction of 300 METRE AIDAprima - CRUISE SHIP - CINEMATIC TIMELAPSE 4K</strong><span>MK timelapse</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=-KDNFBgHdBc" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/-KDNFBgHdBc/hqdefault.jpg" alt="Amazing cliffside home… built in 10 Minute Timelapse" loading="lazy" width="320" height="180"><span class="badge">9:39</span></div>
+      <div class="thumb" data-vid="-KDNFBgHdBc"><img src="https://i.ytimg.com/vi/-KDNFBgHdBc/hqdefault.jpg" alt="Amazing cliffside home… built in 10 Minute Timelapse" loading="lazy" width="320" height="180"><span class="badge">9:39</span></div>
       <div class="entry-body"><strong>Amazing cliffside home… built in 10 Minute Timelapse</strong><span>Perkins Builder Brothers</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=KV3wcnMOs30" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/KV3wcnMOs30/hqdefault.jpg" alt="Huntington Apartments Time Lapse" loading="lazy" width="320" height="180"><span class="badge">2:00</span></div>
+      <div class="thumb" data-vid="KV3wcnMOs30"><img src="https://i.ytimg.com/vi/KV3wcnMOs30/hqdefault.jpg" alt="Huntington Apartments Time Lapse" loading="lazy" width="320" height="180"><span class="badge">2:00</span></div>
       <div class="entry-body"><strong>Huntington Apartments Time Lapse</strong><span>Cedar Woods Properties</span></div>
     </a></div>
+      <script>
+        (function () {
+          var KEY = 'staticPreviewMode';
+          var mode = localStorage.getItem(KEY) || 'auto';
+          var thumbs = [].slice.call(document.querySelectorAll('.thumb[data-vid]'));
+          var io = null;
+          function play(t) {
+            if (t.querySelector('iframe')) return;
+            var f = document.createElement('iframe');
+            f.src = 'https://www.youtube.com/embed/' + t.dataset.vid + '?autoplay=1&mute=1&playsinline=1&rel=0';
+            f.allow = 'autoplay; encrypted-media';
+            t.appendChild(f);
+          }
+          function stop(t) { var f = t.querySelector('iframe'); if (f) f.remove(); }
+          function apply() {
+            thumbs.forEach(stop);
+            if (io) { io.disconnect(); io = null; }
+            document.querySelectorAll('.preview-toggle button').forEach(function (b) {
+              b.classList.toggle('active', b.dataset.mode === mode);
+            });
+            if (mode === 'auto') {
+              io = new IntersectionObserver(function (es) {
+                es.forEach(function (e) { e.isIntersecting ? play(e.target) : stop(e.target); });
+              }, { rootMargin: '50px' });
+              thumbs.forEach(function (t) { io.observe(t); });
+            }
+          }
+          thumbs.forEach(function (t) {
+            t.addEventListener('mouseenter', function () { if (mode === 'hover') play(t); });
+            t.addEventListener('mouseleave', function () { if (mode === 'hover') stop(t); });
+          });
+          document.querySelectorAll('.preview-toggle button').forEach(function (b) {
+            b.addEventListener('click', function (e) {
+              e.preventDefault();
+              mode = b.dataset.mode;
+              localStorage.setItem(KEY, mode);
+              apply();
+            });
+          });
+          apply();
+        })();
+      </script>
 </main>
 <footer>
   <a href="/">Home</a><a href="/browse.html">Browse all</a><a href="/about.html">About</a><a href="/privacy.html">Privacy</a><a href="/terms.html">Terms</a>

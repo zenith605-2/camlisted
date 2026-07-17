@@ -42,7 +42,13 @@
   .map-wrap path[data-href] { cursor: pointer; }
   .map-wrap path:hover { filter: brightness(1.6); stroke: #ffffff; }
   .map-tip { position: fixed; z-index: 10; background: rgba(0,0,0,.85); border: 1px solid #2a2f3a; color: #fff; padding: 5px 10px; border-radius: 6px; font-size: 0.85rem; pointer-events: none; white-space: nowrap; }
-  .map-note { color: #9aa4b2; font-size: 0.8rem; margin-bottom: 16px; }
+  .map-note { color: #9aa4b2; font-size: 0.8rem; margin-bottom: 4px; }
+  .map-legend { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; color: #9aa4b2; font-size: 0.8rem; margin-bottom: 18px; }
+  .map-legend .sw { display: inline-block; width: 14px; height: 14px; border-radius: 3px; margin-right: 5px; vertical-align: -2px; }
+  .thumb iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+  .preview-toggle { margin: 4px 0 14px; color: #9aa4b2; font-size: 0.85rem; display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+  .preview-toggle button { background: #161b22; color: #9aa4b2; border: 1px solid #2a2f3a; border-radius: 999px; padding: 4px 12px; cursor: pointer; font-size: 0.8rem; }
+  .preview-toggle button.active { color: #fff; border-color: #ff3b3b; }
   h2 { font-size: 1.15rem; margin: 28px 0 12px; }
   .cta { display: inline-block; margin: 20px 0; background: #ff3b3b; color: #fff; padding: 10px 18px; border-radius: 8px; text-decoration: none; font-weight: 600; }
   footer { border-top: 1px solid #2a2f3a; margin-top: 40px; padding: 20px 24px; color: #9aa4b2; font-size: 0.85rem; }
@@ -59,263 +65,310 @@
   <h1>Live Cams &amp; Footage in Brazil</h1>
   <p class="intro">64 live cams and 0 videos from Brazil, re-verified daily. Click any card to watch on YouTube. Updated 2026-07-17.</p>
   <a class="cta" href="/?country=BR">Open in interactive viewer →</a>
-  <div class="grid">
+  
+      <div class="preview-toggle">Preview:
+        <button type="button" data-mode="auto">▶ Auto</button>
+        <button type="button" data-mode="hover">🖱 Hover</button>
+        <button type="button" data-mode="off">Off</button>
+      </div><div class="grid">
     <a class="entry" href="https://www.youtube.com/watch?v=l8o5Q55p_pg" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/l8o5Q55p_pg/hqdefault_live.jpg" alt="LIVE 2 - 🔴 Praia do Forte – Cabo Frio AO VIVO 24h 🌊" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="l8o5Q55p_pg"><img src="https://i.ytimg.com/vi/l8o5Q55p_pg/hqdefault_live.jpg" alt="LIVE 2 - 🔴 Praia do Forte – Cabo Frio AO VIVO 24h 🌊" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>LIVE 2 - 🔴 Praia do Forte – Cabo Frio AO VIVO 24h 🌊</strong><span>Point do Forte</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=2yxLN78YOkg" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/2yxLN78YOkg/hqdefault_live.jpg" alt="Câmera TV Santa Cecilia  - ao vivo Orla de Santos" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="2yxLN78YOkg"><img src="https://i.ytimg.com/vi/2yxLN78YOkg/hqdefault_live.jpg" alt="Câmera TV Santa Cecilia  - ao vivo Orla de Santos" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Câmera TV Santa Cecilia  - ao vivo Orla de Santos</strong><span>Câmera Santa Portal</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=4e9mp4lLQpE" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/4e9mp4lLQpE/hqdefault_live.jpg" alt="AO VIVO | CENTRO DE LAGUNA SC | Parceria Laguna Business Center  IMAGENS AO VIVO 24H  | SE-CONNECT" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="4e9mp4lLQpE"><img src="https://i.ytimg.com/vi/4e9mp4lLQpE/hqdefault_live.jpg" alt="AO VIVO | CENTRO DE LAGUNA SC | Parceria Laguna Business Center  IMAGENS AO VIVO 24H  | SE-CONNECT" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>AO VIVO | CENTRO DE LAGUNA SC | Parceria Laguna Business Center  IMAGENS AO VIVO 24H  | SE-CONNECT</strong><span>SE-CONNECT</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=SnvVwulM48c" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/SnvVwulM48c/hqdefault_live.jpg" alt="Natal AO VIVO | 10 Câmeras em Tempo Real • Trânsito • Clima • 24h" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="SnvVwulM48c"><img src="https://i.ytimg.com/vi/SnvVwulM48c/hqdefault_live.jpg" alt="Natal AO VIVO | 10 Câmeras em Tempo Real • Trânsito • Clima • 24h" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Natal AO VIVO | 10 Câmeras em Tempo Real • Trânsito • Clima • 24h</strong><span>FVF DRONE LIVES 24H</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=5IEvI2t3tTw" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/5IEvI2t3tTw/hqdefault_live.jpg" alt="🔴 GOIOERÊ AO VIVO| CAM 3|  BAIRRO AGORA | AV. CURITIBA #cidadesdoparaná #centro" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="5IEvI2t3tTw"><img src="https://i.ytimg.com/vi/5IEvI2t3tTw/hqdefault_live.jpg" alt="🔴 GOIOERÊ AO VIVO| CAM 3|  BAIRRO AGORA | AV. CURITIBA #cidadesdoparaná #centro" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>🔴 GOIOERÊ AO VIVO| CAM 3|  BAIRRO AGORA | AV. CURITIBA #cidadesdoparaná #centro</strong><span>TRANSMISSÃO AO VIVO CIDADE</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=gHriUXwhUps" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/gHriUXwhUps/hqdefault_live.jpg" alt="Live do centro da cidade de Chapecó - SC - câmera ao vivo #chapeco #chapecoaovivo" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="gHriUXwhUps"><img src="https://i.ytimg.com/vi/gHriUXwhUps/hqdefault_live.jpg" alt="Live do centro da cidade de Chapecó - SC - câmera ao vivo #chapeco #chapecoaovivo" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Live do centro da cidade de Chapecó - SC - câmera ao vivo #chapeco #chapecoaovivo</strong><span>Portal Chapecó</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=TUSOjioYUN8" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/TUSOjioYUN8/hqdefault_live.jpg" alt="Foz do Iguaçu Ao Vivo - Câmeras no Centro da cidade" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="TUSOjioYUN8"><img src="https://i.ytimg.com/vi/TUSOjioYUN8/hqdefault_live.jpg" alt="Foz do Iguaçu Ao Vivo - Câmeras no Centro da cidade" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Foz do Iguaçu Ao Vivo - Câmeras no Centro da cidade</strong><span>Canal SSC</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=QMN4_62A3As" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/QMN4_62A3As/hqdefault_live.jpg" alt="Balneário Camboriú ao vivo - CENTRAL" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="QMN4_62A3As"><img src="https://i.ytimg.com/vi/QMN4_62A3As/hqdefault_live.jpg" alt="Balneário Camboriú ao vivo - CENTRAL" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Balneário Camboriú ao vivo - CENTRAL</strong><span>CLIMA BC Brazil</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=6DCKvZedIiM" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/6DCKvZedIiM/hqdefault_live.jpg" alt="Balneário Camboriú ao vivo - Avenida Atlântica" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="6DCKvZedIiM"><img src="https://i.ytimg.com/vi/6DCKvZedIiM/hqdefault_live.jpg" alt="Balneário Camboriú ao vivo - Avenida Atlântica" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Balneário Camboriú ao vivo - Avenida Atlântica</strong><span>CLIMA BC Brazil</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=MT9GLat65PM" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/MT9GLat65PM/hqdefault_live.jpg" alt="🔴 GOIOERÊ AO VIVO| CAM 2| Centro | Movimento na Av. Francisco Scarpari , agora !" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="MT9GLat65PM"><img src="https://i.ytimg.com/vi/MT9GLat65PM/hqdefault_live.jpg" alt="🔴 GOIOERÊ AO VIVO| CAM 2| Centro | Movimento na Av. Francisco Scarpari , agora !" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>🔴 GOIOERÊ AO VIVO| CAM 2| Centro | Movimento na Av. Francisco Scarpari , agora !</strong><span>TRANSMISSÃO AO VIVO CIDADE</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=427Rivtfz5I" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/427Rivtfz5I/hqdefault_live.jpg" alt="Balneário Camboriú ao vivo - Central" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="427Rivtfz5I"><img src="https://i.ytimg.com/vi/427Rivtfz5I/hqdefault_live.jpg" alt="Balneário Camboriú ao vivo - Central" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Balneário Camboriú ao vivo - Central</strong><span>CLIMA BC Brazil</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=zKsgtmgGHt4" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/zKsgtmgGHt4/hqdefault_live.jpg" alt="🔴 PRAIA DE PORTO DE GALINHAS AO VIVO 🌴 | Webcam PTZ 24H | Pernambuco Brasil" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="zKsgtmgGHt4"><img src="https://i.ytimg.com/vi/zKsgtmgGHt4/hqdefault_live.jpg" alt="🔴 PRAIA DE PORTO DE GALINHAS AO VIVO 🌴 | Webcam PTZ 24H | Pernambuco Brasil" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>🔴 PRAIA DE PORTO DE GALINHAS AO VIVO 🌴 | Webcam PTZ 24H | Pernambuco Brasil</strong><span>TRANSMISSÃO AO VIVO CIDADE</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=9aYIJ_lQ6Fw" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/9aYIJ_lQ6Fw/hqdefault_live.jpg" alt="Balneário Camboriú ao vivo - Avenida Brasil" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="9aYIJ_lQ6Fw"><img src="https://i.ytimg.com/vi/9aYIJ_lQ6Fw/hqdefault_live.jpg" alt="Balneário Camboriú ao vivo - Avenida Brasil" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Balneário Camboriú ao vivo - Avenida Brasil</strong><span>CLIMA BC Brazil</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=oXxx58i7B_w" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/oXxx58i7B_w/hqdefault_live.jpg" alt="🔴 GOIOERÊ AO VIVO| CAM 1| Centro agora| Catedral | Movimento  na Av. Francisco Scarpari" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="oXxx58i7B_w"><img src="https://i.ytimg.com/vi/oXxx58i7B_w/hqdefault_live.jpg" alt="🔴 GOIOERÊ AO VIVO| CAM 1| Centro agora| Catedral | Movimento  na Av. Francisco Scarpari" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>🔴 GOIOERÊ AO VIVO| CAM 1| Centro agora| Catedral | Movimento  na Av. Francisco Scarpari</strong><span>TRANSMISSÃO AO VIVO CIDADE</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=nKz6ARQsp-w" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/nKz6ARQsp-w/hqdefault_live.jpg" alt="Balneário Camboriú ao vivo - Avenida Atlântica" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="nKz6ARQsp-w"><img src="https://i.ytimg.com/vi/nKz6ARQsp-w/hqdefault_live.jpg" alt="Balneário Camboriú ao vivo - Avenida Atlântica" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Balneário Camboriú ao vivo - Avenida Atlântica</strong><span>CLIMA BC Brazil</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=wB5od5ExwKU" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/wB5od5ExwKU/hqdefault_live.jpg" alt="Balneário Camboriú ao vivo - Praia" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="wB5od5ExwKU"><img src="https://i.ytimg.com/vi/wB5od5ExwKU/hqdefault_live.jpg" alt="Balneário Camboriú ao vivo - Praia" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Balneário Camboriú ao vivo - Praia</strong><span>CLIMA BC Brazil</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=xC5YKDO_hdw" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/xC5YKDO_hdw/hqdefault_live.jpg" alt="Balneário Camboriú ao vivo - Avenida Atlântica" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="xC5YKDO_hdw"><img src="https://i.ytimg.com/vi/xC5YKDO_hdw/hqdefault_live.jpg" alt="Balneário Camboriú ao vivo - Avenida Atlântica" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Balneário Camboriú ao vivo - Avenida Atlântica</strong><span>CLIMA BC Brazil</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=mZkD91h_Bxk" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/mZkD91h_Bxk/hqdefault_live.jpg" alt="CABO FRIO AO VIVO AGORA | CÂMERAS" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="mZkD91h_Bxk"><img src="https://i.ytimg.com/vi/mZkD91h_Bxk/hqdefault_live.jpg" alt="CABO FRIO AO VIVO AGORA | CÂMERAS" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>CABO FRIO AO VIVO AGORA | CÂMERAS</strong><span>ConexãoDCTV - Oficial</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=v5Y6WsD577M" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/v5Y6WsD577M/hqdefault_live.jpg" alt="Guarujá ao vivo  - Hotel Palmar  - Enseada, posto 11 2026" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="v5Y6WsD577M"><img src="https://i.ytimg.com/vi/v5Y6WsD577M/hqdefault_live.jpg" alt="Guarujá ao vivo  - Hotel Palmar  - Enseada, posto 11 2026" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Guarujá ao vivo  - Hotel Palmar  - Enseada, posto 11 2026</strong><span>Surfistafotografo</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=yCeQueusZxs" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/yCeQueusZxs/hqdefault_live.jpg" alt="[LIVE] AO VIVO Porto Alegre POA / GUAÍBA - Lago Guaíba, Cidade e Movimentação Portuária MOVE NO CHAT" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="yCeQueusZxs"><img src="https://i.ytimg.com/vi/yCeQueusZxs/hqdefault_live.jpg" alt="[LIVE] AO VIVO Porto Alegre POA / GUAÍBA - Lago Guaíba, Cidade e Movimentação Portuária MOVE NO CHAT" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>[LIVE] AO VIVO Porto Alegre POA / GUAÍBA - Lago Guaíba, Cidade e Movimentação Portuária MOVE NO CHAT</strong><span>Câmeras ao Vivo RS - Pôr do Sol Guaíba</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=wyOFduGZStM" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/wyOFduGZStM/hqdefault_live.jpg" alt="🔴 AO VIVO Ji-Paraná RO 🇧🇷 | Ponte Rio Machado (Sentido 2º Distrito) Agora" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="wyOFduGZStM"><img src="https://i.ytimg.com/vi/wyOFduGZStM/hqdefault_live.jpg" alt="🔴 AO VIVO Ji-Paraná RO 🇧🇷 | Ponte Rio Machado (Sentido 2º Distrito) Agora" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>🔴 AO VIVO Ji-Paraná RO 🇧🇷 | Ponte Rio Machado (Sentido 2º Distrito) Agora</strong><span>TRANSMISSÃO AO VIVO CIDADE</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=KDSPk5ovOGw" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/KDSPk5ovOGw/hqdefault_live.jpg" alt="AO VIVO | TUBARÃO SC 🇧🇷 | IMAGENS AO VIVO 24H | SANTA CATARINA | SE-CONNECT INTERNET" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="KDSPk5ovOGw"><img src="https://i.ytimg.com/vi/KDSPk5ovOGw/hqdefault_live.jpg" alt="AO VIVO | TUBARÃO SC 🇧🇷 | IMAGENS AO VIVO 24H | SANTA CATARINA | SE-CONNECT INTERNET" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>AO VIVO | TUBARÃO SC 🇧🇷 | IMAGENS AO VIVO 24H | SANTA CATARINA | SE-CONNECT INTERNET</strong><span>SE-CONNECT</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=Tldo8RNCT-0" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/Tldo8RNCT-0/hqdefault_live.jpg" alt="🔴  PARAGUAI AO VIVO| CAMERA CIUDAD DEL ESTE | TRÂNSITO MOSTRA FRONTEIRA BRASIL E PONTE  DA AMIZADE" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="Tldo8RNCT-0"><img src="https://i.ytimg.com/vi/Tldo8RNCT-0/hqdefault_live.jpg" alt="🔴  PARAGUAI AO VIVO| CAMERA CIUDAD DEL ESTE | TRÂNSITO MOSTRA FRONTEIRA BRASIL E PONTE  DA AMIZADE" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>🔴  PARAGUAI AO VIVO| CAMERA CIUDAD DEL ESTE | TRÂNSITO MOSTRA FRONTEIRA BRASIL E PONTE  DA AMIZADE</strong><span>TRANSMISSÃO AO VIVO CIDADE</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=1a3i7ph5iuU" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/1a3i7ph5iuU/hqdefault_live.jpg" alt="Praias de Natal AO VIVO | Praia dos Artistas • Forte dos Reis Magos • Clima 24h" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="1a3i7ph5iuU"><img src="https://i.ytimg.com/vi/1a3i7ph5iuU/hqdefault_live.jpg" alt="Praias de Natal AO VIVO | Praia dos Artistas • Forte dos Reis Magos • Clima 24h" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Praias de Natal AO VIVO | Praia dos Artistas • Forte dos Reis Magos • Clima 24h</strong><span>FVF DRONE LIVES 24H</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=5wzl2LVv5Zo" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/5wzl2LVv5Zo/hqdefault_live.jpg" alt="Natal RN AO VIVO | Tirol, Centro, Rio Potengi e Ponte Velha | Trânsito e Clima em Tempo Real" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="5wzl2LVv5Zo"><img src="https://i.ytimg.com/vi/5wzl2LVv5Zo/hqdefault_live.jpg" alt="Natal RN AO VIVO | Tirol, Centro, Rio Potengi e Ponte Velha | Trânsito e Clima em Tempo Real" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Natal RN AO VIVO | Tirol, Centro, Rio Potengi e Ponte Velha | Trânsito e Clima em Tempo Real</strong><span>FVF DRONE LIVES 24H</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=lu8y-esixho" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/lu8y-esixho/hqdefault_live.jpg" alt="Santuário de São Francisco de Assis em Riachuelo-RN | AO VIVO 24H | Fé, Oração e Paisagens do RN" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="lu8y-esixho"><img src="https://i.ytimg.com/vi/lu8y-esixho/hqdefault_live.jpg" alt="Santuário de São Francisco de Assis em Riachuelo-RN | AO VIVO 24H | Fé, Oração e Paisagens do RN" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Santuário de São Francisco de Assis em Riachuelo-RN | AO VIVO 24H | Fé, Oração e Paisagens do RN</strong><span>FVF DRONE LIVES 24H</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=pnByrhgCiCk" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/pnByrhgCiCk/hqdefault_live.jpg" alt="BR-101 AO VIVO | Trânsito em Tempo Real • Arena das Dunas • Clima 24h | Natal/RN" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="pnByrhgCiCk"><img src="https://i.ytimg.com/vi/pnByrhgCiCk/hqdefault_live.jpg" alt="BR-101 AO VIVO | Trânsito em Tempo Real • Arena das Dunas • Clima 24h | Natal/RN" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>BR-101 AO VIVO | Trânsito em Tempo Real • Arena das Dunas • Clima 24h | Natal/RN</strong><span>FVF DRONE LIVES 24H</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=LCL2cOrgQj0" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/LCL2cOrgQj0/hqdefault_live.jpg" alt="Trânsito em Natal RN | Av. Romualdo Galvão x Av. Antônio Basílio | AO VIVO 24H" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="LCL2cOrgQj0"><img src="https://i.ytimg.com/vi/LCL2cOrgQj0/hqdefault_live.jpg" alt="Trânsito em Natal RN | Av. Romualdo Galvão x Av. Antônio Basílio | AO VIVO 24H" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Trânsito em Natal RN | Av. Romualdo Galvão x Av. Antônio Basílio | AO VIVO 24H</strong><span>FVF DRONE LIVES 24H</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=1F3bqlPsl6Y" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/1F3bqlPsl6Y/hqdefault_live.jpg" alt="AO VIVO Trânsito na Zona Norte de Natal/RN | Felizardo Moura e Principais Avenidas" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="1F3bqlPsl6Y"><img src="https://i.ytimg.com/vi/1F3bqlPsl6Y/hqdefault_live.jpg" alt="AO VIVO Trânsito na Zona Norte de Natal/RN | Felizardo Moura e Principais Avenidas" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>AO VIVO Trânsito na Zona Norte de Natal/RN | Felizardo Moura e Principais Avenidas</strong><span>FVF DRONE LIVES 24H</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=D_g0rrzul0I" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/D_g0rrzul0I/hqdefault_live.jpg" alt="AO VIVO: Trânsito em Natal RN 24H | Av. Salgado Filho x Av. Nevaldo Rocha" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="D_g0rrzul0I"><img src="https://i.ytimg.com/vi/D_g0rrzul0I/hqdefault_live.jpg" alt="AO VIVO: Trânsito em Natal RN 24H | Av. Salgado Filho x Av. Nevaldo Rocha" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>AO VIVO: Trânsito em Natal RN 24H | Av. Salgado Filho x Av. Nevaldo Rocha</strong><span>FVF DRONE LIVES 24H</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=mZlT_81Gs7c" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/mZlT_81Gs7c/hqdefault_live.jpg" alt="AO VIVO | AVENIDA PEDRO ZAPELINI – TUBARÃO SC 🇧🇷 | IMAGENS AO VIVO 24H | SE-CONNECT INTERNET" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="mZlT_81Gs7c"><img src="https://i.ytimg.com/vi/mZlT_81Gs7c/hqdefault_live.jpg" alt="AO VIVO | AVENIDA PEDRO ZAPELINI – TUBARÃO SC 🇧🇷 | IMAGENS AO VIVO 24H | SE-CONNECT INTERNET" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>AO VIVO | AVENIDA PEDRO ZAPELINI – TUBARÃO SC 🇧🇷 | IMAGENS AO VIVO 24H | SE-CONNECT INTERNET</strong><span>SE-CONNECT</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=2TOg3dXpMmE" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/2TOg3dXpMmE/hqdefault_live.jpg" alt="Goio-Ên - Rio Uruguai - Chapecó - SC - divisa entre SC e RS - câmera ao vivo #chapeco #riouruguai" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="2TOg3dXpMmE"><img src="https://i.ytimg.com/vi/2TOg3dXpMmE/hqdefault_live.jpg" alt="Goio-Ên - Rio Uruguai - Chapecó - SC - divisa entre SC e RS - câmera ao vivo #chapeco #riouruguai" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Goio-Ên - Rio Uruguai - Chapecó - SC - divisa entre SC e RS - câmera ao vivo #chapeco #riouruguai</strong><span>Portal Chapecó</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=iSw4gnAAAWw" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/iSw4gnAAAWw/hqdefault_live.jpg" alt="AO VIVO - PRAÇA TAMANDARÉ BALNEÁRIO CAMBORIÚ | FOTO NA CADEIRA  | PONTO 73 - CHURROS &amp; PAMONHA" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="iSw4gnAAAWw"><img src="https://i.ytimg.com/vi/iSw4gnAAAWw/hqdefault_live.jpg" alt="AO VIVO - PRAÇA TAMANDARÉ BALNEÁRIO CAMBORIÚ | FOTO NA CADEIRA  | PONTO 73 - CHURROS &amp; PAMONHA" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>AO VIVO - PRAÇA TAMANDARÉ BALNEÁRIO CAMBORIÚ | FOTO NA CADEIRA  | PONTO 73 - CHURROS &amp; PAMONHA</strong><span>ConexãoDCTV - Oficial</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=T217k6-9BmE" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/T217k6-9BmE/hqdefault_live.jpg" alt="[LIVE] AO VIVO Santa Maria - RS - Câmera 4k Tempo Agora Região Central Rio Grande do Sul" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="T217k6-9BmE"><img src="https://i.ytimg.com/vi/T217k6-9BmE/hqdefault_live.jpg" alt="[LIVE] AO VIVO Santa Maria - RS - Câmera 4k Tempo Agora Região Central Rio Grande do Sul" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>[LIVE] AO VIVO Santa Maria - RS - Câmera 4k Tempo Agora Região Central Rio Grande do Sul</strong><span>Câmeras ao Vivo RS - Pôr do Sol Guaíba</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=iKDw7vTD7z4" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/iKDw7vTD7z4/hqdefault_live.jpg" alt="AO VIVO | PONTE CABEÇUDAS – LAGUNA SC 🇧🇷 | IMAGENS AO VIVO 24H | SE-CONNECT AGORA LAGUNA" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="iKDw7vTD7z4"><img src="https://i.ytimg.com/vi/iKDw7vTD7z4/hqdefault_live.jpg" alt="AO VIVO | PONTE CABEÇUDAS – LAGUNA SC 🇧🇷 | IMAGENS AO VIVO 24H | SE-CONNECT AGORA LAGUNA" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>AO VIVO | PONTE CABEÇUDAS – LAGUNA SC 🇧🇷 | IMAGENS AO VIVO 24H | SE-CONNECT AGORA LAGUNA</strong><span>SE-CONNECT</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=srRJ1-e_Aco" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/srRJ1-e_Aco/hqdefault_live.jpg" alt="Imagens Pescaria Brava SC AOVIVO Centro Pescaria Brava" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="srRJ1-e_Aco"><img src="https://i.ytimg.com/vi/srRJ1-e_Aco/hqdefault_live.jpg" alt="Imagens Pescaria Brava SC AOVIVO Centro Pescaria Brava" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Imagens Pescaria Brava SC AOVIVO Centro Pescaria Brava</strong><span>SE-CONNECT</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=ypec41yg6oQ" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/ypec41yg6oQ/hqdefault_live.jpg" alt="AO VIVO: IMAGENS CRUZAMENTO EXPEDICIONÁRIO X PADRE NOBREGA TUBARÃO II SC | SE-CONNECT - TUBARÃO SC" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="ypec41yg6oQ"><img src="https://i.ytimg.com/vi/ypec41yg6oQ/hqdefault_live.jpg" alt="AO VIVO: IMAGENS CRUZAMENTO EXPEDICIONÁRIO X PADRE NOBREGA TUBARÃO II SC | SE-CONNECT - TUBARÃO SC" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>AO VIVO: IMAGENS CRUZAMENTO EXPEDICIONÁRIO X PADRE NOBREGA TUBARÃO II SC | SE-CONNECT - TUBARÃO SC</strong><span>SE-CONNECT</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=53jN8yLHmDo" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/53jN8yLHmDo/hqdefault_live.jpg" alt="AO VIVO - AVENIDA ATLÂNTICA BALNEÁRIO CAMBORIÚ | CALÇADÃO | PONTO 73 - CHURROS &amp; PAMONHA" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="53jN8yLHmDo"><img src="https://i.ytimg.com/vi/53jN8yLHmDo/hqdefault_live.jpg" alt="AO VIVO - AVENIDA ATLÂNTICA BALNEÁRIO CAMBORIÚ | CALÇADÃO | PONTO 73 - CHURROS &amp; PAMONHA" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>AO VIVO - AVENIDA ATLÂNTICA BALNEÁRIO CAMBORIÚ | CALÇADÃO | PONTO 73 - CHURROS &amp; PAMONHA</strong><span>ConexãoDCTV - Oficial</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=NwbOe1Mb__M" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/NwbOe1Mb__M/hqdefault_live.jpg" alt="AO VIVO ITAJAÍ | VIADUTO REINALDO SCHMITHAUSEN X JORGE LACERDA | SENTIDO ILHOTA E BR-101 SUL" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="NwbOe1Mb__M"><img src="https://i.ytimg.com/vi/NwbOe1Mb__M/hqdefault_live.jpg" alt="AO VIVO ITAJAÍ | VIADUTO REINALDO SCHMITHAUSEN X JORGE LACERDA | SENTIDO ILHOTA E BR-101 SUL" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>AO VIVO ITAJAÍ | VIADUTO REINALDO SCHMITHAUSEN X JORGE LACERDA | SENTIDO ILHOTA E BR-101 SUL</strong><span>ConexãoDCTV - Oficial</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=R-pfAgr06zI" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/R-pfAgr06zI/hqdefault_live.jpg" alt="ITAJAÍ AO VIVO | PORTO + RIO ITAJAÍ-AÇU | FastSignal Internet | CONEXÃODCTV" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="R-pfAgr06zI"><img src="https://i.ytimg.com/vi/R-pfAgr06zI/hqdefault_live.jpg" alt="ITAJAÍ AO VIVO | PORTO + RIO ITAJAÍ-AÇU | FastSignal Internet | CONEXÃODCTV" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>ITAJAÍ AO VIVO | PORTO + RIO ITAJAÍ-AÇU | FastSignal Internet | CONEXÃODCTV</strong><span>ConexãoDCTV - Oficial</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=x7LXRTX0cC4" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/x7LXRTX0cC4/hqdefault_live.jpg" alt="AO VIVO 24H | Trânsito na Av. Prudente de Moraes com Alexandrino de Alencar | Natal RN" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="x7LXRTX0cC4"><img src="https://i.ytimg.com/vi/x7LXRTX0cC4/hqdefault_live.jpg" alt="AO VIVO 24H | Trânsito na Av. Prudente de Moraes com Alexandrino de Alencar | Natal RN" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>AO VIVO 24H | Trânsito na Av. Prudente de Moraes com Alexandrino de Alencar | Natal RN</strong><span>FVF DRONE LIVES 24H</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=D5VLbXaqZfg" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/D5VLbXaqZfg/hqdefault_live.jpg" alt="AO VIVO da Praia de Xangri-Lá - Litoral do Rio Grande do Sul - Clima, Ondas, Mar Sul LIVE CAM VERÃO" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="D5VLbXaqZfg"><img src="https://i.ytimg.com/vi/D5VLbXaqZfg/hqdefault_live.jpg" alt="AO VIVO da Praia de Xangri-Lá - Litoral do Rio Grande do Sul - Clima, Ondas, Mar Sul LIVE CAM VERÃO" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>AO VIVO da Praia de Xangri-Lá - Litoral do Rio Grande do Sul - Clima, Ondas, Mar Sul LIVE CAM VERÃO</strong><span>Câmeras ao Vivo RS - Pôr do Sol Guaíba</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=ca9aDuflJ-k" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/ca9aDuflJ-k/hqdefault_live.jpg" alt="Boqueirão Praia Grande ao vivo! - Z Shapes" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="ca9aDuflJ-k"><img src="https://i.ytimg.com/vi/ca9aDuflJ-k/hqdefault_live.jpg" alt="Boqueirão Praia Grande ao vivo! - Z Shapes" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Boqueirão Praia Grande ao vivo! - Z Shapes</strong><span>Surfistafotografo</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=DfMo4FKM9RE" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/DfMo4FKM9RE/hqdefault_live.jpg" alt="AO VIVO | IGREJA MATRIZ - PARÓQUIA SÃO PIO X | RODOVIA JORGE LACERDA | ILHOTA - SC" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="DfMo4FKM9RE"><img src="https://i.ytimg.com/vi/DfMo4FKM9RE/hqdefault_live.jpg" alt="AO VIVO | IGREJA MATRIZ - PARÓQUIA SÃO PIO X | RODOVIA JORGE LACERDA | ILHOTA - SC" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>AO VIVO | IGREJA MATRIZ - PARÓQUIA SÃO PIO X | RODOVIA JORGE LACERDA | ILHOTA - SC</strong><span>ConexãoDCTV - Oficial</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=lFlovxrE9Og" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/lFlovxrE9Og/hqdefault_live.jpg" alt="BALNEÁRIO CAMBORIÚ SC AO VIVO | PRAIA DE LARANJEIRAS – CASA DO CAMARÃO | CONEXÃODCTV" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="lFlovxrE9Og"><img src="https://i.ytimg.com/vi/lFlovxrE9Og/hqdefault_live.jpg" alt="BALNEÁRIO CAMBORIÚ SC AO VIVO | PRAIA DE LARANJEIRAS – CASA DO CAMARÃO | CONEXÃODCTV" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>BALNEÁRIO CAMBORIÚ SC AO VIVO | PRAIA DE LARANJEIRAS – CASA DO CAMARÃO | CONEXÃODCTV</strong><span>ConexãoDCTV - Oficial</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=ZKmpS49T-Xk" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/ZKmpS49T-Xk/hqdefault_live.jpg" alt="Vista da Marina Zeus - Parque Prainha, Sol nascente Leste, São Vicente SP, Brasil" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="ZKmpS49T-Xk"><img src="https://i.ytimg.com/vi/ZKmpS49T-Xk/hqdefault_live.jpg" alt="Vista da Marina Zeus - Parque Prainha, Sol nascente Leste, São Vicente SP, Brasil" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Vista da Marina Zeus - Parque Prainha, Sol nascente Leste, São Vicente SP, Brasil</strong><span>Surfistafotografo</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=CkHrJQGVukI" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/CkHrJQGVukI/hqdefault_live.jpg" alt="Santos ao vivo!!! Canal 1/ Maranhão - Silversurfboards - 2026" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="CkHrJQGVukI"><img src="https://i.ytimg.com/vi/CkHrJQGVukI/hqdefault_live.jpg" alt="Santos ao vivo!!! Canal 1/ Maranhão - Silversurfboards - 2026" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Santos ao vivo!!! Canal 1/ Maranhão - Silversurfboards - 2026</strong><span>Surfistafotografo</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=pJvaJY7pKvk" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/pJvaJY7pKvk/hqdefault_live.jpg" alt="GBMar Pitangueiras Guarujá Ao Vivo - Docctormed Guarujá - 2026" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="pJvaJY7pKvk"><img src="https://i.ytimg.com/vi/pJvaJY7pKvk/hqdefault_live.jpg" alt="GBMar Pitangueiras Guarujá Ao Vivo - Docctormed Guarujá - 2026" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>GBMar Pitangueiras Guarujá Ao Vivo - Docctormed Guarujá - 2026</strong><span>Surfistafotografo</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=xVG4bS2sXzM" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/xVG4bS2sXzM/hqdefault_live.jpg" alt="Praia Grande ao vivo Vila Caiçara 2026 - Surf, clima LESTE" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="xVG4bS2sXzM"><img src="https://i.ytimg.com/vi/xVG4bS2sXzM/hqdefault_live.jpg" alt="Praia Grande ao vivo Vila Caiçara 2026 - Surf, clima LESTE" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Praia Grande ao vivo Vila Caiçara 2026 - Surf, clima LESTE</strong><span>Surfistafotografo</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=ukoSyGLdoTQ" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/ukoSyGLdoTQ/hqdefault_live.jpg" alt="CVLLP (Clube de Voo Livre do Litoral Paulista) Moro do Itararé, São Vicente e Santos ao vivo Web Cam" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="ukoSyGLdoTQ"><img src="https://i.ytimg.com/vi/ukoSyGLdoTQ/hqdefault_live.jpg" alt="CVLLP (Clube de Voo Livre do Litoral Paulista) Moro do Itararé, São Vicente e Santos ao vivo Web Cam" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>CVLLP (Clube de Voo Livre do Litoral Paulista) Moro do Itararé, São Vicente e Santos ao vivo Web Cam</strong><span>Surfistafotografo</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=zd_tmkOMZfA" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/zd_tmkOMZfA/hqdefault_live.jpg" alt="AO VIVO - ORLA PRAIA CENTRAL BALNEÁRIO CAMBORIÚ | PRAÇA TAMANDARÉ | PONTO 73 - CHURROS &amp; PAMONHA" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="zd_tmkOMZfA"><img src="https://i.ytimg.com/vi/zd_tmkOMZfA/hqdefault_live.jpg" alt="AO VIVO - ORLA PRAIA CENTRAL BALNEÁRIO CAMBORIÚ | PRAÇA TAMANDARÉ | PONTO 73 - CHURROS &amp; PAMONHA" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>AO VIVO - ORLA PRAIA CENTRAL BALNEÁRIO CAMBORIÚ | PRAÇA TAMANDARÉ | PONTO 73 - CHURROS &amp; PAMONHA</strong><span>ConexãoDCTV - Oficial</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=H2YxLr6OIco" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/H2YxLr6OIco/hqdefault_live.jpg" alt="Aeroporto de Chapecó AO VIVO - SBCH XAP Live - Tráfego aéreo em tempo real com fonia #chapeco" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="H2YxLr6OIco"><img src="https://i.ytimg.com/vi/H2YxLr6OIco/hqdefault_live.jpg" alt="Aeroporto de Chapecó AO VIVO - SBCH XAP Live - Tráfego aéreo em tempo real com fonia #chapeco" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Aeroporto de Chapecó AO VIVO - SBCH XAP Live - Tráfego aéreo em tempo real com fonia #chapeco</strong><span>Portal Chapecó</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=NC5XqtQUlko" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/NC5XqtQUlko/hqdefault_live.jpg" alt="ITAJAÍ SC AO VIVO | PORTO DE ITAJAÍ – 2K – FASTSIGNAL | CONEXÃODCTV" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="NC5XqtQUlko"><img src="https://i.ytimg.com/vi/NC5XqtQUlko/hqdefault_live.jpg" alt="ITAJAÍ SC AO VIVO | PORTO DE ITAJAÍ – 2K – FASTSIGNAL | CONEXÃODCTV" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>ITAJAÍ SC AO VIVO | PORTO DE ITAJAÍ – 2K – FASTSIGNAL | CONEXÃODCTV</strong><span>ConexãoDCTV - Oficial</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=TI8NpP5wQc8" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/TI8NpP5wQc8/hqdefault_live.jpg" alt="🔴 JI-PARANA AO VIVO | BR 364 | TRANSCONTINENTAL|" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="TI8NpP5wQc8"><img src="https://i.ytimg.com/vi/TI8NpP5wQc8/hqdefault_live.jpg" alt="🔴 JI-PARANA AO VIVO | BR 364 | TRANSCONTINENTAL|" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>🔴 JI-PARANA AO VIVO | BR 364 | TRANSCONTINENTAL|</strong><span>TRANSMISSÃO AO VIVO CIDADE</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=ZJH-a0CD0CQ" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/ZJH-a0CD0CQ/hqdefault_live.jpg" alt="SBSP LIVE #2 - Aeroporto de São Paulo Congonhas AO VIVO - CGH Airport - 13/07 Noite" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="ZJH-a0CD0CQ"><img src="https://i.ytimg.com/vi/ZJH-a0CD0CQ/hqdefault_live.jpg" alt="SBSP LIVE #2 - Aeroporto de São Paulo Congonhas AO VIVO - CGH Airport - 13/07 Noite" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>SBSP LIVE #2 - Aeroporto de São Paulo Congonhas AO VIVO - CGH Airport - 13/07 Noite</strong><span>Golf Oscar Romeo</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=npWPVCz8dHk" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/npWPVCz8dHk/hqdefault_live.jpg" alt="SBSP LIVE #1 - Aeroporto de São Paulo Congonhas AO VIVO - CGH Airport - 13/07 Noite" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="npWPVCz8dHk"><img src="https://i.ytimg.com/vi/npWPVCz8dHk/hqdefault_live.jpg" alt="SBSP LIVE #1 - Aeroporto de São Paulo Congonhas AO VIVO - CGH Airport - 13/07 Noite" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>SBSP LIVE #1 - Aeroporto de São Paulo Congonhas AO VIVO - CGH Airport - 13/07 Noite</strong><span>Golf Oscar Romeo</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=R6rzU6xTP74" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/R6rzU6xTP74/hqdefault_live.jpg" alt="SBGR 10R LIVE - Aeroporto Internacional de São Paulo Guarulhos AO VIVO - GRU Airport - 13/07 Noite" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="R6rzU6xTP74"><img src="https://i.ytimg.com/vi/R6rzU6xTP74/hqdefault_live.jpg" alt="SBGR 10R LIVE - Aeroporto Internacional de São Paulo Guarulhos AO VIVO - GRU Airport - 13/07 Noite" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>SBGR 10R LIVE - Aeroporto Internacional de São Paulo Guarulhos AO VIVO - GRU Airport - 13/07 Noite</strong><span>Golf Oscar Romeo</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=lnD4BOFpBss" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/lnD4BOFpBss/hqdefault_live.jpg" alt="SBGR 10L LIVE - Aeroporto Internacional de São Paulo Guarulhos AO VIVO - GRU Airport - 13/07 Noite" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="lnD4BOFpBss"><img src="https://i.ytimg.com/vi/lnD4BOFpBss/hqdefault_live.jpg" alt="SBGR 10L LIVE - Aeroporto Internacional de São Paulo Guarulhos AO VIVO - GRU Airport - 13/07 Noite" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>SBGR 10L LIVE - Aeroporto Internacional de São Paulo Guarulhos AO VIVO - GRU Airport - 13/07 Noite</strong><span>Golf Oscar Romeo</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=yXrjdS-Pmkk" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/yXrjdS-Pmkk/hqdefault_live.jpg" alt="SBGR 28 LIVE - Aeroporto Internacional de São Paulo Guarulhos AO VIVO - GRU Airport - 13/07 Noite" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="yXrjdS-Pmkk"><img src="https://i.ytimg.com/vi/yXrjdS-Pmkk/hqdefault_live.jpg" alt="SBGR 28 LIVE - Aeroporto Internacional de São Paulo Guarulhos AO VIVO - GRU Airport - 13/07 Noite" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>SBGR 28 LIVE - Aeroporto Internacional de São Paulo Guarulhos AO VIVO - GRU Airport - 13/07 Noite</strong><span>Golf Oscar Romeo</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=XEuLZHhSv_0" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/XEuLZHhSv_0/hqdefault_live.jpg" alt="SBKP LIVE - Aeroporto Internacional de Viracopos - VCP Airport - 13/07 Noite" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="XEuLZHhSv_0"><img src="https://i.ytimg.com/vi/XEuLZHhSv_0/hqdefault_live.jpg" alt="SBKP LIVE - Aeroporto Internacional de Viracopos - VCP Airport - 13/07 Noite" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>SBKP LIVE - Aeroporto Internacional de Viracopos - VCP Airport - 13/07 Noite</strong><span>Golf Oscar Romeo</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=b8g-NPuIZI0" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/b8g-NPuIZI0/hqdefault_live.jpg" alt="SBSP LIVE #3 - Aeroporto de São Paulo Congonhas AO VIVO - CGH Airport - 13/07 Noite" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="b8g-NPuIZI0"><img src="https://i.ytimg.com/vi/b8g-NPuIZI0/hqdefault_live.jpg" alt="SBSP LIVE #3 - Aeroporto de São Paulo Congonhas AO VIVO - CGH Airport - 13/07 Noite" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>SBSP LIVE #3 - Aeroporto de São Paulo Congonhas AO VIVO - CGH Airport - 13/07 Noite</strong><span>Golf Oscar Romeo</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=5Xl6pSgiy3A" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/5Xl6pSgiy3A/hqdefault_live.jpg" alt="Balneário Camboriú ao vivo - Avenida Atlântica" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="5Xl6pSgiy3A"><img src="https://i.ytimg.com/vi/5Xl6pSgiy3A/hqdefault_live.jpg" alt="Balneário Camboriú ao vivo - Avenida Atlântica" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Balneário Camboriú ao vivo - Avenida Atlântica</strong><span>CLIMA BC Brazil</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=wLFguzuaYDo" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/wLFguzuaYDo/hqdefault_live.jpg" alt="🔴 Praia do Forte – Cabo Frio AO VIVO 24h 🌊" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="wLFguzuaYDo"><img src="https://i.ytimg.com/vi/wLFguzuaYDo/hqdefault_live.jpg" alt="🔴 Praia do Forte – Cabo Frio AO VIVO 24h 🌊" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>🔴 Praia do Forte – Cabo Frio AO VIVO 24h 🌊</strong><span>Point do Forte</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=P620mizDmkM" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/P620mizDmkM/hqdefault_live.jpg" alt="PRAIA DE PONTA NEGRA AO VIVO! NATAL-RN / BRASIL - LIVE CAM NATAL" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="P620mizDmkM"><img src="https://i.ytimg.com/vi/P620mizDmkM/hqdefault_live.jpg" alt="PRAIA DE PONTA NEGRA AO VIVO! NATAL-RN / BRASIL - LIVE CAM NATAL" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>PRAIA DE PONTA NEGRA AO VIVO! NATAL-RN / BRASIL - LIVE CAM NATAL</strong><span>Live Cam Natal</span></div>
     </a></div>
+      <script>
+        (function () {
+          var KEY = 'staticPreviewMode';
+          var mode = localStorage.getItem(KEY) || 'auto';
+          var thumbs = [].slice.call(document.querySelectorAll('.thumb[data-vid]'));
+          var io = null;
+          function play(t) {
+            if (t.querySelector('iframe')) return;
+            var f = document.createElement('iframe');
+            f.src = 'https://www.youtube.com/embed/' + t.dataset.vid + '?autoplay=1&mute=1&playsinline=1&rel=0';
+            f.allow = 'autoplay; encrypted-media';
+            t.appendChild(f);
+          }
+          function stop(t) { var f = t.querySelector('iframe'); if (f) f.remove(); }
+          function apply() {
+            thumbs.forEach(stop);
+            if (io) { io.disconnect(); io = null; }
+            document.querySelectorAll('.preview-toggle button').forEach(function (b) {
+              b.classList.toggle('active', b.dataset.mode === mode);
+            });
+            if (mode === 'auto') {
+              io = new IntersectionObserver(function (es) {
+                es.forEach(function (e) { e.isIntersecting ? play(e.target) : stop(e.target); });
+              }, { rootMargin: '50px' });
+              thumbs.forEach(function (t) { io.observe(t); });
+            }
+          }
+          thumbs.forEach(function (t) {
+            t.addEventListener('mouseenter', function () { if (mode === 'hover') play(t); });
+            t.addEventListener('mouseleave', function () { if (mode === 'hover') stop(t); });
+          });
+          document.querySelectorAll('.preview-toggle button').forEach(function (b) {
+            b.addEventListener('click', function (e) {
+              e.preventDefault();
+              mode = b.dataset.mode;
+              localStorage.setItem(KEY, mode);
+              apply();
+            });
+          });
+          apply();
+        })();
+      </script>
 </main>
 <footer>
   <a href="/">Home</a><a href="/browse.html">Browse all</a><a href="/about.html">About</a><a href="/privacy.html">Privacy</a><a href="/terms.html">Terms</a>

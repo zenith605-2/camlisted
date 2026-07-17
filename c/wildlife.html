@@ -42,7 +42,13 @@
   .map-wrap path[data-href] { cursor: pointer; }
   .map-wrap path:hover { filter: brightness(1.6); stroke: #ffffff; }
   .map-tip { position: fixed; z-index: 10; background: rgba(0,0,0,.85); border: 1px solid #2a2f3a; color: #fff; padding: 5px 10px; border-radius: 6px; font-size: 0.85rem; pointer-events: none; white-space: nowrap; }
-  .map-note { color: #9aa4b2; font-size: 0.8rem; margin-bottom: 16px; }
+  .map-note { color: #9aa4b2; font-size: 0.8rem; margin-bottom: 4px; }
+  .map-legend { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; color: #9aa4b2; font-size: 0.8rem; margin-bottom: 18px; }
+  .map-legend .sw { display: inline-block; width: 14px; height: 14px; border-radius: 3px; margin-right: 5px; vertical-align: -2px; }
+  .thumb iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+  .preview-toggle { margin: 4px 0 14px; color: #9aa4b2; font-size: 0.85rem; display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+  .preview-toggle button { background: #161b22; color: #9aa4b2; border: 1px solid #2a2f3a; border-radius: 999px; padding: 4px 12px; cursor: pointer; font-size: 0.8rem; }
+  .preview-toggle button.active { color: #fff; border-color: #ff3b3b; }
   h2 { font-size: 1.15rem; margin: 28px 0 12px; }
   .cta { display: inline-block; margin: 20px 0; background: #ff3b3b; color: #fff; padding: 10px 18px; border-radius: 8px; text-decoration: none; font-weight: 600; }
   footer { border-top: 1px solid #2a2f3a; margin-top: 40px; padding: 20px 24px; color: #9aa4b2; font-size: 0.85rem; }
@@ -59,323 +65,370 @@
   <h1>🦌 Wildlife Live Cams &amp; Videos</h1>
   <p class="intro">56 live cams and 23 videos in the Wildlife category, re-verified daily. Click any card to watch on YouTube. Updated 2026-07-17.</p>
   <a class="cta" href="/?category=wildlife">Open in interactive viewer →</a>
-  <div class="grid">
+  
+      <div class="preview-toggle">Preview:
+        <button type="button" data-mode="auto">▶ Auto</button>
+        <button type="button" data-mode="hover">🖱 Hover</button>
+        <button type="button" data-mode="off">Off</button>
+      </div><div class="grid">
     <a class="entry" href="https://www.youtube.com/watch?v=JMMoRwYo5kE" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/JMMoRwYo5kE/hqdefault_live.jpg" alt="Okaukuejo Resort, Wildlife Waterhole: Live camera stream in the Etosha National Park in Namibia" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="JMMoRwYo5kE"><img src="https://i.ytimg.com/vi/JMMoRwYo5kE/hqdefault_live.jpg" alt="Okaukuejo Resort, Wildlife Waterhole: Live camera stream in the Etosha National Park in Namibia" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Okaukuejo Resort, Wildlife Waterhole: Live camera stream in the Etosha National Park in Namibia</strong><span>Namibia Wildlife Resorts</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=6riIu3VNAgc" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/6riIu3VNAgc/hqdefault_live.jpg" alt="🔴 LIVE Peaceful Bird Feeder 🌿 Cardinals, Blue Jays &amp; Squirrels | Nature Sounds, Cat TV, Sleep, Study" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="6riIu3VNAgc"><img src="https://i.ytimg.com/vi/6riIu3VNAgc/hqdefault_live.jpg" alt="🔴 LIVE Peaceful Bird Feeder 🌿 Cardinals, Blue Jays &amp; Squirrels | Nature Sounds, Cat TV, Sleep, Study" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>🔴 LIVE Peaceful Bird Feeder 🌿 Cardinals, Blue Jays &amp; Squirrels | Nature Sounds, Cat TV, Sleep, Study</strong><span>Shalom Jewish Choir</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=qpukdDslCjk" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/qpukdDslCjk/hqdefault_live.jpg" alt="Wild Africa Live!  24/7 Safari Cam | Watch Lions, Elephants &amp; More" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="qpukdDslCjk"><img src="https://i.ytimg.com/vi/qpukdDslCjk/hqdefault_live.jpg" alt="Wild Africa Live!  24/7 Safari Cam | Watch Lions, Elephants &amp; More" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Wild Africa Live!  24/7 Safari Cam | Watch Lions, Elephants &amp; More</strong><span>Africam</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=SdIZN-tPs_4" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/SdIZN-tPs_4/hqdefault_live.jpg" alt="Friends of Felines Rescue Center (FFRC)" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="SdIZN-tPs_4"><img src="https://i.ytimg.com/vi/SdIZN-tPs_4/hqdefault_live.jpg" alt="Friends of Felines Rescue Center (FFRC)" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Friends of Felines Rescue Center (FFRC)</strong><span>FOFRescueCenter</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=e-cq3mVMKqE" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/e-cq3mVMKqE/hqdefault_live.jpg" alt="Mauersegler Brutpaar 2026" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="e-cq3mVMKqE"><img src="https://i.ytimg.com/vi/e-cq3mVMKqE/hqdefault_live.jpg" alt="Mauersegler Brutpaar 2026" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Mauersegler Brutpaar 2026</strong><span>Enrique Abacho</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=jzx_n25g3kA" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/jzx_n25g3kA/hqdefault_live.jpg" alt="Utopia Village Sandy Channel Underwater Reef Cam powered by EXPLORE.org" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="jzx_n25g3kA"><img src="https://i.ytimg.com/vi/jzx_n25g3kA/hqdefault_live.jpg" alt="Utopia Village Sandy Channel Underwater Reef Cam powered by EXPLORE.org" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Utopia Village Sandy Channel Underwater Reef Cam powered by EXPLORE.org</strong><span>Explore Oceans</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=yuIm1V7Ne7I" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/yuIm1V7Ne7I/hqdefault_live.jpg" alt="LIVE: Onguma Waterhole - Elephants, Giraffes &amp; More | Namibia 24/7" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="yuIm1V7Ne7I"><img src="https://i.ytimg.com/vi/yuIm1V7Ne7I/hqdefault_live.jpg" alt="LIVE: Onguma Waterhole - Elephants, Giraffes &amp; More | Namibia 24/7" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>LIVE: Onguma Waterhole - Elephants, Giraffes &amp; More | Namibia 24/7</strong><span>Africam</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=1rwvL-RdJBo" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/1rwvL-RdJBo/hqdefault_live.jpg" alt="🔴 LIVE Backyard Birds &amp; Squirrels 🌿 Cardinals, Blue Jays &amp; Goldfinches, Nature Sounds, Cat TV, Sleep" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="1rwvL-RdJBo"><img src="https://i.ytimg.com/vi/1rwvL-RdJBo/hqdefault_live.jpg" alt="🔴 LIVE Backyard Birds &amp; Squirrels 🌿 Cardinals, Blue Jays &amp; Goldfinches, Nature Sounds, Cat TV, Sleep" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>🔴 LIVE Backyard Birds &amp; Squirrels 🌿 Cardinals, Blue Jays &amp; Goldfinches, Nature Sounds, Cat TV, Sleep</strong><span>DELTOR-MC</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=-bPoW10xJvU" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/-bPoW10xJvU/hqdefault_live.jpg" alt="🔴 LIVE Rainy Day Bird Feeder 🌧️ Cardinals, Blue Jays &amp; Squirrels | Rain Sounds, Cat TV, Study, Sleep" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="-bPoW10xJvU"><img src="https://i.ytimg.com/vi/-bPoW10xJvU/hqdefault_live.jpg" alt="🔴 LIVE Rainy Day Bird Feeder 🌧️ Cardinals, Blue Jays &amp; Squirrels | Rain Sounds, Cat TV, Study, Sleep" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>🔴 LIVE Rainy Day Bird Feeder 🌧️ Cardinals, Blue Jays &amp; Squirrels | Rain Sounds, Cat TV, Study, Sleep</strong><span>AVEX MCC</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=Vic35s0Xd0Y" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/Vic35s0Xd0Y/hqdefault_live.jpg" alt="🔴 LIVE Peaceful Backyard Wildlife Haven 🐿️ Cardinals, Blue Jays &amp; Chickadees | Nature Sounds, Cat TV" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="Vic35s0Xd0Y"><img src="https://i.ytimg.com/vi/Vic35s0Xd0Y/hqdefault_live.jpg" alt="🔴 LIVE Peaceful Backyard Wildlife Haven 🐿️ Cardinals, Blue Jays &amp; Chickadees | Nature Sounds, Cat TV" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>🔴 LIVE Peaceful Backyard Wildlife Haven 🐿️ Cardinals, Blue Jays &amp; Chickadees | Nature Sounds, Cat TV</strong><span>Chickadee Birdplace</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=JpJbwO55XZU" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/JpJbwO55XZU/hqdefault_live.jpg" alt="🔴 Live Bird Feeder CCTV Cameras" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="JpJbwO55XZU"><img src="https://i.ytimg.com/vi/JpJbwO55XZU/hqdefault_live.jpg" alt="🔴 Live Bird Feeder CCTV Cameras" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>🔴 Live Bird Feeder CCTV Cameras</strong><span>Bird CCTV</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=9hAG4UoFVuo" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/9hAG4UoFVuo/hqdefault_live.jpg" alt="Vista subacuática de Cozumel" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="9hAG4UoFVuo"><img src="https://i.ytimg.com/vi/9hAG4UoFVuo/hqdefault_live.jpg" alt="Vista subacuática de Cozumel" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Vista subacuática de Cozumel</strong><span>Webcams de México TV / Canal 6</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=NQrmlwqsxP4" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/NQrmlwqsxP4/hqdefault_live.jpg" alt="Friends of Felines Rescue Center Kabana Cam" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="NQrmlwqsxP4"><img src="https://i.ytimg.com/vi/NQrmlwqsxP4/hqdefault_live.jpg" alt="Friends of Felines Rescue Center Kabana Cam" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Friends of Felines Rescue Center Kabana Cam</strong><span>FOFRescueCenter</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=IuTBwO8lSog" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/IuTBwO8lSog/hqdefault_live.jpg" alt="Storch-Cam" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="IuTBwO8lSog"><img src="https://i.ytimg.com/vi/IuTBwO8lSog/hqdefault_live.jpg" alt="Storch-Cam" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Storch-Cam</strong><span>Stadt Biberach</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=sCTxVD51vzE" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/sCTxVD51vzE/hqdefault_live.jpg" alt="Kirchturm-Cam" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="sCTxVD51vzE"><img src="https://i.ytimg.com/vi/sCTxVD51vzE/hqdefault_live.jpg" alt="Kirchturm-Cam" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Kirchturm-Cam</strong><span>Stadt Biberach</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=HTAG-8pdWNc" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/HTAG-8pdWNc/hqdefault_live.jpg" alt="🔴 LIVE Bird Feeder in the Forest 🌿 Cardinals, Blue Jays &amp; Squirrels | Nature Sounds, Cat TV, Sleep" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="HTAG-8pdWNc"><img src="https://i.ytimg.com/vi/HTAG-8pdWNc/hqdefault_live.jpg" alt="🔴 LIVE Bird Feeder in the Forest 🌿 Cardinals, Blue Jays &amp; Squirrels | Nature Sounds, Cat TV, Sleep" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>🔴 LIVE Bird Feeder in the Forest 🌿 Cardinals, Blue Jays &amp; Squirrels | Nature Sounds, Cat TV, Sleep</strong><span>Netherix MCC</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=SxXx0nFpJRo" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/SxXx0nFpJRo/hqdefault_live.jpg" alt="Laguna de Torrevieja. Hospital Universitario. Webcam de Torrevieja" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="SxXx0nFpJRo"><img src="https://i.ytimg.com/vi/SxXx0nFpJRo/hqdefault_live.jpg" alt="Laguna de Torrevieja. Hospital Universitario. Webcam de Torrevieja" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Laguna de Torrevieja. Hospital Universitario. Webcam de Torrevieja</strong><span>ProyectoMastral</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=SUXPnIEpbn4" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/SUXPnIEpbn4/hqdefault_live.jpg" alt="Panda 24/7 HD Live At Chengdu Panda Base" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="SUXPnIEpbn4"><img src="https://i.ytimg.com/vi/SUXPnIEpbn4/hqdefault_live.jpg" alt="Panda 24/7 HD Live At Chengdu Panda Base" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Panda 24/7 HD Live At Chengdu Panda Base</strong><span>iPanda</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=y9t1g8Ike6g" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/y9t1g8Ike6g/hqdefault_live.jpg" alt="LIVE Bird Feeder &amp; Wildlife Cam - Gettysburg, PA" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="y9t1g8Ike6g"><img src="https://i.ytimg.com/vi/y9t1g8Ike6g/hqdefault_live.jpg" alt="LIVE Bird Feeder &amp; Wildlife Cam - Gettysburg, PA" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>LIVE Bird Feeder &amp; Wildlife Cam - Gettysburg, PA</strong><span>Gettysburg LiveCam</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=UKkc40WQm0c" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/UKkc40WQm0c/hqdefault_live.jpg" alt="LIVE Giant Panda Cam - Wolong Grove | explore.org" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="UKkc40WQm0c"><img src="https://i.ytimg.com/vi/UKkc40WQm0c/hqdefault_live.jpg" alt="LIVE Giant Panda Cam - Wolong Grove | explore.org" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>LIVE Giant Panda Cam - Wolong Grove | explore.org</strong><span>Explore Panda and Polar Bear Cams</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=sDi4kIajaFE" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/sDi4kIajaFE/hqdefault_live.jpg" alt="【コガタペンギンの赤ちゃん 24時間見守りカメラ】" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="sDi4kIajaFE"><img src="https://i.ytimg.com/vi/sDi4kIajaFE/hqdefault_live.jpg" alt="【コガタペンギンの赤ちゃん 24時間見守りカメラ】" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>【コガタペンギンの赤ちゃん 24時間見守りカメラ】</strong><span>アドベンチャーワールド公式</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=m1qnYXnHQMU" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/m1qnYXnHQMU/hqdefault_live.jpg" alt="【LIVE】多頭飼いロボロフスキーハムスター 24Hライブカメラ生配信　Robo house 4" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="m1qnYXnHQMU"><img src="https://i.ytimg.com/vi/m1qnYXnHQMU/hqdefault_live.jpg" alt="【LIVE】多頭飼いロボロフスキーハムスター 24Hライブカメラ生配信　Robo house 4" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>【LIVE】多頭飼いロボロフスキーハムスター 24Hライブカメラ生配信　Robo house 4</strong><span>dakeのハムスター</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=0Hjtz4Kw62s" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/0Hjtz4Kw62s/hqdefault_live.jpg" alt="雲場池ライブカメラ" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="0Hjtz4Kw62s"><img src="https://i.ytimg.com/vi/0Hjtz4Kw62s/hqdefault_live.jpg" alt="雲場池ライブカメラ" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>雲場池ライブカメラ</strong><span>長野県軽井沢町</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=XyK4DNDkp7c" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/XyK4DNDkp7c/hqdefault_live.jpg" alt="LIVE Arctic Tundra: Cape South - Wapusk National Park | explore.org" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="XyK4DNDkp7c"><img src="https://i.ytimg.com/vi/XyK4DNDkp7c/hqdefault_live.jpg" alt="LIVE Arctic Tundra: Cape South - Wapusk National Park | explore.org" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>LIVE Arctic Tundra: Cape South - Wapusk National Park | explore.org</strong><span>Explore Panda and Polar Bear Cams</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=mU095dvAvDE" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/mU095dvAvDE/hqdefault_live.jpg" alt="【LIVE】キンクマハムスター 茶太郎  又は むさし ライブカメラ生配信 kink bear hamster Chataro or Musashi 24 hours live streaming" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="mU095dvAvDE"><img src="https://i.ytimg.com/vi/mU095dvAvDE/hqdefault_live.jpg" alt="【LIVE】キンクマハムスター 茶太郎  又は むさし ライブカメラ生配信 kink bear hamster Chataro or Musashi 24 hours live streaming" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>【LIVE】キンクマハムスター 茶太郎  又は むさし ライブカメラ生配信 kink bear hamster Chataro or Musashi 24 hours live streaming</strong><span>dakeのハムスター</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=BsZEOvS3qTM" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/BsZEOvS3qTM/hqdefault_live.jpg" alt="LIVE Giant Panda Cam - Gengda Valley | explore.org" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="BsZEOvS3qTM"><img src="https://i.ytimg.com/vi/BsZEOvS3qTM/hqdefault_live.jpg" alt="LIVE Giant Panda Cam - Gengda Valley | explore.org" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>LIVE Giant Panda Cam - Gengda Valley | explore.org</strong><span>Explore Panda and Polar Bear Cams</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=qg7JOZt9K7Q" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/qg7JOZt9K7Q/hqdefault_live.jpg" alt="【 LIVE 】JAPAN 東京都足立区 みだまえ公園側防犯カメラ02 ライブカメラ TOKYO ADACHI-KU LIVECAMERA" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="qg7JOZt9K7Q"><img src="https://i.ytimg.com/vi/qg7JOZt9K7Q/hqdefault_live.jpg" alt="【 LIVE 】JAPAN 東京都足立区 みだまえ公園側防犯カメラ02 ライブカメラ TOKYO ADACHI-KU LIVECAMERA" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>【 LIVE 】JAPAN 東京都足立区 みだまえ公園側防犯カメラ02 ライブカメラ TOKYO ADACHI-KU LIVECAMERA</strong><span>夜光電気</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=-gs2SXjHPYA" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/-gs2SXjHPYA/hqdefault_live.jpg" alt="【LIVE】JAPAN 東京都足立区 みだまえ公園側防犯カメラ01　ライブカメラ TOKYO LIVECAMERA" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="-gs2SXjHPYA"><img src="https://i.ytimg.com/vi/-gs2SXjHPYA/hqdefault_live.jpg" alt="【LIVE】JAPAN 東京都足立区 みだまえ公園側防犯カメラ01　ライブカメラ TOKYO LIVECAMERA" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>【LIVE】JAPAN 東京都足立区 みだまえ公園側防犯カメラ01　ライブカメラ TOKYO LIVECAMERA</strong><span>夜光電気</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=-qvYCbvbeN8" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/-qvYCbvbeN8/hqdefault_live.jpg" alt="Hellgate Ospreys Nest Cam | Cornell Lab | University of Montana" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="-qvYCbvbeN8"><img src="https://i.ytimg.com/vi/-qvYCbvbeN8/hqdefault_live.jpg" alt="Hellgate Ospreys Nest Cam | Cornell Lab | University of Montana" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Hellgate Ospreys Nest Cam | Cornell Lab | University of Montana</strong><span>Cornell Lab Bird Cams</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=lsxYH2XQQCg" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/lsxYH2XQQCg/hqdefault_live.jpg" alt="淡路島モンキーセンター" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="lsxYH2XQQCg"><img src="https://i.ytimg.com/vi/lsxYH2XQQCg/hqdefault_live.jpg" alt="淡路島モンキーセンター" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>淡路島モンキーセンター</strong><span>淡路ザル</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=7i8ARjIeM2k" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/7i8ARjIeM2k/hqdefault_live.jpg" alt="Coral City Camera (Miami&#39;s Free-Range Aquarium Underwater Livestream)" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="7i8ARjIeM2k"><img src="https://i.ytimg.com/vi/7i8ARjIeM2k/hqdefault_live.jpg" alt="Coral City Camera (Miami&#39;s Free-Range Aquarium Underwater Livestream)" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Coral City Camera (Miami&#39;s Free-Range Aquarium Underwater Livestream)</strong><span>Coral Morphologic</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=dJNXhtg-3ug" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/dJNXhtg-3ug/hqdefault_live.jpg" alt="【ライブ配信】🐱離島の猫たちが自由に遊ぶ庭🏝️ 小値賀島の保護猫たちの癒し時間🐾 #五島列島" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="dJNXhtg-3ug"><img src="https://i.ytimg.com/vi/dJNXhtg-3ug/hqdefault_live.jpg" alt="【ライブ配信】🐱離島の猫たちが自由に遊ぶ庭🏝️ 小値賀島の保護猫たちの癒し時間🐾 #五島列島" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>【ライブ配信】🐱離島の猫たちが自由に遊ぶ庭🏝️ 小値賀島の保護猫たちの癒し時間🐾 #五島列島</strong><span>御縁チャンネル【保護猫の猫宿、ゴールデンレトリバー日記】</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=xitRa4VO4as" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/xitRa4VO4as/hqdefault_live.jpg" alt="【24時間LIVE】五島列島・小値賀島の保護猫たち🐾離島の猫宿から癒し配信 【24/7 LIVE】Rescue Cats on Japanese Island  Ojika, Nagasaki" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="xitRa4VO4as"><img src="https://i.ytimg.com/vi/xitRa4VO4as/hqdefault_live.jpg" alt="【24時間LIVE】五島列島・小値賀島の保護猫たち🐾離島の猫宿から癒し配信 【24/7 LIVE】Rescue Cats on Japanese Island  Ojika, Nagasaki" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>【24時間LIVE】五島列島・小値賀島の保護猫たち🐾離島の猫宿から癒し配信 【24/7 LIVE】Rescue Cats on Japanese Island  Ojika, Nagasaki</strong><span>御縁チャンネル【保護猫の猫宿、ゴールデンレトリバー日記】</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=0v8x5wyXeB8" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/0v8x5wyXeB8/hqdefault_live.jpg" alt="Seoul Namsan 4K LIVE 🔴 | Namsan Tower | 서울 남산타워 라이브 | ソウル南山タワーライブ | 首尔南山塔直播" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="0v8x5wyXeB8"><img src="https://i.ytimg.com/vi/0v8x5wyXeB8/hqdefault_live.jpg" alt="Seoul Namsan 4K LIVE 🔴 | Namsan Tower | 서울 남산타워 라이브 | ソウル南山タワーライブ | 首尔南山塔直播" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Seoul Namsan 4K LIVE 🔴 | Namsan Tower | 서울 남산타워 라이브 | ソウル南山タワーライブ | 首尔南山塔直播</strong><span>한강 라이브 365</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=aA9-nxILUH4" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/aA9-nxILUH4/hqdefault_live.jpg" alt="🔴 24/7 LIVE CAT TV NO ADS😺 Awesome Red Squirrels and Adorable Little Birds Forest Nut Party for All" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="aA9-nxILUH4"><img src="https://i.ytimg.com/vi/aA9-nxILUH4/hqdefault_live.jpg" alt="🔴 24/7 LIVE CAT TV NO ADS😺 Awesome Red Squirrels and Adorable Little Birds Forest Nut Party for All" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>🔴 24/7 LIVE CAT TV NO ADS😺 Awesome Red Squirrels and Adorable Little Birds Forest Nut Party for All</strong><span>Red Squirrel Studios</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=OS94xU5WhrQ" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/OS94xU5WhrQ/hqdefault_live.jpg" alt="🔴24/7 LIVE CAT TV NO ADS😺 Cheerful Birds and Cutest Squirrels bring Nature Fun for Everyone" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="OS94xU5WhrQ"><img src="https://i.ytimg.com/vi/OS94xU5WhrQ/hqdefault_live.jpg" alt="🔴24/7 LIVE CAT TV NO ADS😺 Cheerful Birds and Cutest Squirrels bring Nature Fun for Everyone" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>🔴24/7 LIVE CAT TV NO ADS😺 Cheerful Birds and Cutest Squirrels bring Nature Fun for Everyone</strong><span>Red Squirrel Studios</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=tm3fMnPT6d8" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/tm3fMnPT6d8/hqdefault_live.jpg" alt="🔴 24/7 LIVE CAT TV NO ADS😺 Beautiful Birds, Red Squirrels and Peaceful Nature" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="tm3fMnPT6d8"><img src="https://i.ytimg.com/vi/tm3fMnPT6d8/hqdefault_live.jpg" alt="🔴 24/7 LIVE CAT TV NO ADS😺 Beautiful Birds, Red Squirrels and Peaceful Nature" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>🔴 24/7 LIVE CAT TV NO ADS😺 Beautiful Birds, Red Squirrels and Peaceful Nature</strong><span>Red Squirrel Studios</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=PWJiDUUSNvs" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/PWJiDUUSNvs/hqdefault_live.jpg" alt="🔴24/7 LIVE CAT TV NO ADS😺 Unlimited Wild Birds and Squirrels at Autumn Festival" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="PWJiDUUSNvs"><img src="https://i.ytimg.com/vi/PWJiDUUSNvs/hqdefault_live.jpg" alt="🔴24/7 LIVE CAT TV NO ADS😺 Unlimited Wild Birds and Squirrels at Autumn Festival" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>🔴24/7 LIVE CAT TV NO ADS😺 Unlimited Wild Birds and Squirrels at Autumn Festival</strong><span>Red Squirrel Studios</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=wyfL7lGC0N4" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/wyfL7lGC0N4/hqdefault_live.jpg" alt="LIVE 🔴 Bird Feeder &amp; Wildlife Camera Scotland UK | 24/7 Garden Birds &amp; Night Wildlife" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="wyfL7lGC0N4"><img src="https://i.ytimg.com/vi/wyfL7lGC0N4/hqdefault_live.jpg" alt="LIVE 🔴 Bird Feeder &amp; Wildlife Camera Scotland UK | 24/7 Garden Birds &amp; Night Wildlife" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>LIVE 🔴 Bird Feeder &amp; Wildlife Camera Scotland UK | 24/7 Garden Birds &amp; Night Wildlife</strong><span>Scottish Wildlife Garden</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=7gBzLGlJnwk" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/7gBzLGlJnwk/hqdefault_live.jpg" alt="Niagara Falls Live" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="7gBzLGlJnwk"><img src="https://i.ytimg.com/vi/7gBzLGlJnwk/hqdefault_live.jpg" alt="Niagara Falls Live" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Niagara Falls Live</strong><span>Niagara Falls Live</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=97YNts0D2ak" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/97YNts0D2ak/hqdefault_live.jpg" alt="Key West Southernmost Point Live Cam 2" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="97YNts0D2ak"><img src="https://i.ytimg.com/vi/97YNts0D2ak/hqdefault_live.jpg" alt="Key West Southernmost Point Live Cam 2" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Key West Southernmost Point Live Cam 2</strong><span>Beach Live Cams</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=WEhuDqlxHmM" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/WEhuDqlxHmM/hqdefault_live.jpg" alt="Live Outer Banks, NC Webcam from Twiddy &amp; Company" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="WEhuDqlxHmM"><img src="https://i.ytimg.com/vi/WEhuDqlxHmM/hqdefault_live.jpg" alt="Live Outer Banks, NC Webcam from Twiddy &amp; Company" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Live Outer Banks, NC Webcam from Twiddy &amp; Company</strong><span>Twiddy &amp; Company Vacation Rentals</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=XsOU8JnEpNM" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/XsOU8JnEpNM/hqdefault_live.jpg" alt="ol Donyo Lodge | Wildlife Live Stream – Kenya" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="XsOU8JnEpNM"><img src="https://i.ytimg.com/vi/XsOU8JnEpNM/hqdefault_live.jpg" alt="ol Donyo Lodge | Wildlife Live Stream – Kenya" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>ol Donyo Lodge | Wildlife Live Stream – Kenya</strong><span>Africam</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=afsaYKQ3vac" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/afsaYKQ3vac/hqdefault_live.jpg" alt="Cornell Red-tailed Hawks Live Cam - #CornellHawks | Cornell Lab" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="afsaYKQ3vac"><img src="https://i.ytimg.com/vi/afsaYKQ3vac/hqdefault_live.jpg" alt="Cornell Red-tailed Hawks Live Cam - #CornellHawks | Cornell Lab" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Cornell Red-tailed Hawks Live Cam - #CornellHawks | Cornell Lab</strong><span>Cornell Lab Bird Cams</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=SHfAtWHr9Ks" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/SHfAtWHr9Ks/hqdefault_live.jpg" alt="Underwater Camera - Deerfield Beach, Florida" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="SHfAtWHr9Ks"><img src="https://i.ytimg.com/vi/SHfAtWHr9Ks/hqdefault_live.jpg" alt="Underwater Camera - Deerfield Beach, Florida" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Underwater Camera - Deerfield Beach, Florida</strong><span>Deerfield Beach Live</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=cWR8KGKftUw" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/cWR8KGKftUw/hqdefault_live.jpg" alt="EarthCam Live:  Statue of Liberty" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="cWR8KGKftUw"><img src="https://i.ytimg.com/vi/cWR8KGKftUw/hqdefault_live.jpg" alt="EarthCam Live:  Statue of Liberty" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>EarthCam Live:  Statue of Liberty</strong><span>EarthCam</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=cTi5sCsUSfc" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/cTi5sCsUSfc/hqdefault_live.jpg" alt="Penguin Cam Live | Pittsburgh Zoo &amp; PPG Aquarium Webcam" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="cTi5sCsUSfc"><img src="https://i.ytimg.com/vi/cTi5sCsUSfc/hqdefault_live.jpg" alt="Penguin Cam Live | Pittsburgh Zoo &amp; PPG Aquarium Webcam" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Penguin Cam Live | Pittsburgh Zoo &amp; PPG Aquarium Webcam</strong><span>Ozolio Live</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=N4goZC_1kVg" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/N4goZC_1kVg/hqdefault_live.jpg" alt="Aurora Borealis Live Cam - Batchawana Bay JULY 9-10, 2026 - Lake Superior, Ontario" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="N4goZC_1kVg"><img src="https://i.ytimg.com/vi/N4goZC_1kVg/hqdefault_live.jpg" alt="Aurora Borealis Live Cam - Batchawana Bay JULY 9-10, 2026 - Lake Superior, Ontario" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Aurora Borealis Live Cam - Batchawana Bay JULY 9-10, 2026 - Lake Superior, Ontario</strong><span>Superior Wilds</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=TF1aS7A0cr0" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/TF1aS7A0cr0/hqdefault_live.jpg" alt="Webcam Lanzarote - Live Stream from the Beachbar in Costa Teguise" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="TF1aS7A0cr0"><img src="https://i.ytimg.com/vi/TF1aS7A0cr0/hqdefault_live.jpg" alt="Webcam Lanzarote - Live Stream from the Beachbar in Costa Teguise" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Webcam Lanzarote - Live Stream from the Beachbar in Costa Teguise</strong><span>Beach Bar Lanzarote</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=HHp4rjhJsWI" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/HHp4rjhJsWI/hqdefault_live.jpg" alt="Moody Gardens Penguin Cam LIVE | Penguin Habitat Stream at the Aquarium in Galveston, Texas" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="HHp4rjhJsWI"><img src="https://i.ytimg.com/vi/HHp4rjhJsWI/hqdefault_live.jpg" alt="Moody Gardens Penguin Cam LIVE | Penguin Habitat Stream at the Aquarium in Galveston, Texas" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Moody Gardens Penguin Cam LIVE | Penguin Habitat Stream at the Aquarium in Galveston, Texas</strong><span>Moody Gardens</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=C6WPvXAypfE" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/C6WPvXAypfE/hqdefault_live.jpg" alt="Poole Harbour Osprey Nest Camera - Aerial View" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="C6WPvXAypfE"><img src="https://i.ytimg.com/vi/C6WPvXAypfE/hqdefault_live.jpg" alt="Poole Harbour Osprey Nest Camera - Aerial View" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Poole Harbour Osprey Nest Camera - Aerial View</strong><span>birdsofpooleharbour</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=rzX1emU7UFE" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/rzX1emU7UFE/hqdefault_live.jpg" alt="펀제주 실시간 제주도 날씨 제주 서귀포 엉또폭포" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="rzX1emU7UFE"><img src="https://i.ytimg.com/vi/rzX1emU7UFE/hqdefault_live.jpg" alt="펀제주 실시간 제주도 날씨 제주 서귀포 엉또폭포" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>펀제주 실시간 제주도 날씨 제주 서귀포 엉또폭포</strong><span>펀제주</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=ydYDqZQpim8" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/ydYDqZQpim8/hqdefault_live.jpg" alt="Namibia: Live stream in the Namib Desert" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="ydYDqZQpim8"><img src="https://i.ytimg.com/vi/ydYDqZQpim8/hqdefault_live.jpg" alt="Namibia: Live stream in the Namib Desert" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Namibia: Live stream in the Namib Desert</strong><span>NamibiaCam</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=LKymCnp4qf0" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/LKymCnp4qf0/hqdefault_live.jpg" alt="🔴 Rick&#39;s Cafe - Negril, Jamaica - Live Cam" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="LKymCnp4qf0"><img src="https://i.ytimg.com/vi/LKymCnp4qf0/hqdefault_live.jpg" alt="🔴 Rick&#39;s Cafe - Negril, Jamaica - Live Cam" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>🔴 Rick&#39;s Cafe - Negril, Jamaica - Live Cam</strong><span>Beach Live Cams</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=F0GOOP82094" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/F0GOOP82094/hqdefault_live.jpg" alt="Wildlife In The Forest - 24/7 LIVE 🔴 by Morten Hilmer" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="F0GOOP82094"><img src="https://i.ytimg.com/vi/F0GOOP82094/hqdefault_live.jpg" alt="Wildlife In The Forest - 24/7 LIVE 🔴 by Morten Hilmer" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Wildlife In The Forest - 24/7 LIVE 🔴 by Morten Hilmer</strong><span>Nature Live Camera</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=sp_a_4n0qI4" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/sp_a_4n0qI4/hqdefault_live.jpg" alt="아쿠아플라넷 제주 메인수조 [4K LIVE CAM - AQUAPLANET JEJU]" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="sp_a_4n0qI4"><img src="https://i.ytimg.com/vi/sp_a_4n0qI4/hqdefault_live.jpg" alt="아쿠아플라넷 제주 메인수조 [4K LIVE CAM - AQUAPLANET JEJU]" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>아쿠아플라넷 제주 메인수조 [4K LIVE CAM - AQUAPLANET JEJU]</strong><span>SeeSeaTV 씨씨티비 x 아쿠아플라넷</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=8_OQ5KIU3j8" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/8_OQ5KIU3j8/hqdefault.jpg" alt="Urban Coyote On The Street Encountering People" loading="lazy" width="320" height="180"><span class="badge">1:27</span></div>
+      <div class="thumb" data-vid="8_OQ5KIU3j8"><img src="https://i.ytimg.com/vi/8_OQ5KIU3j8/hqdefault.jpg" alt="Urban Coyote On The Street Encountering People" loading="lazy" width="320" height="180"><span class="badge">1:27</span></div>
       <div class="entry-body"><strong>Urban Coyote On The Street Encountering People</strong><span>Allen Egbert</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=7Hva8JCYa1g" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/7Hva8JCYa1g/hqdefault.jpg" alt="Dug up backyard 11225" loading="lazy" width="320" height="180"><span class="badge">1:47</span></div>
+      <div class="thumb" data-vid="7Hva8JCYa1g"><img src="https://i.ytimg.com/vi/7Hva8JCYa1g/hqdefault.jpg" alt="Dug up backyard 11225" loading="lazy" width="320" height="180"><span class="badge">1:47</span></div>
       <div class="entry-body"><strong>Dug up backyard 11225</strong><span>Allen Egbert</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=M64S36sebzg" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/M64S36sebzg/hqdefault.jpg" alt="092425 Coyote Pair Final" loading="lazy" width="320" height="180"><span class="badge">5:47</span></div>
+      <div class="thumb" data-vid="M64S36sebzg"><img src="https://i.ytimg.com/vi/M64S36sebzg/hqdefault.jpg" alt="092425 Coyote Pair Final" loading="lazy" width="320" height="180"><span class="badge">5:47</span></div>
       <div class="entry-body"><strong>092425 Coyote Pair Final</strong><span>Allen Egbert</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=1zbIUknc4uU" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/1zbIUknc4uU/hqdefault.jpg" alt="07312024 Coyote with a Cat in Its Mouth" loading="lazy" width="320" height="180"><span class="badge">0:46</span></div>
+      <div class="thumb" data-vid="1zbIUknc4uU"><img src="https://i.ytimg.com/vi/1zbIUknc4uU/hqdefault.jpg" alt="07312024 Coyote with a Cat in Its Mouth" loading="lazy" width="320" height="180"><span class="badge">0:46</span></div>
       <div class="entry-body"><strong>07312024 Coyote with a Cat in Its Mouth</strong><span>Allen Egbert</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=rITjvTwU_Tw" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/rITjvTwU_Tw/hqdefault.jpg" alt="Five and a half months in five and a half minutes!" loading="lazy" width="320" height="180"><span class="badge">5:31</span></div>
+      <div class="thumb" data-vid="rITjvTwU_Tw"><img src="https://i.ytimg.com/vi/rITjvTwU_Tw/hqdefault.jpg" alt="Five and a half months in five and a half minutes!" loading="lazy" width="320" height="180"><span class="badge">5:31</span></div>
       <div class="entry-body"><strong>Five and a half months in five and a half minutes!</strong><span>Yukon Wildlife Cams</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=MrYnX0Uujqg" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/MrYnX0Uujqg/hqdefault.jpg" alt="50 of the Craziest Trail Camera Videos of 2024 (In order)" loading="lazy" width="320" height="180"><span class="badge">5:09</span></div>
+      <div class="thumb" data-vid="MrYnX0Uujqg"><img src="https://i.ytimg.com/vi/MrYnX0Uujqg/hqdefault.jpg" alt="50 of the Craziest Trail Camera Videos of 2024 (In order)" loading="lazy" width="320" height="180"><span class="badge">5:09</span></div>
       <div class="entry-body"><strong>50 of the Craziest Trail Camera Videos of 2024 (In order)</strong><span>Nick’s Trail Cams</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=5fGI9B7oAEk" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/5fGI9B7oAEk/hqdefault.jpg" alt="Neat trail camera moments from the Northwoods of Minnesota" loading="lazy" width="320" height="180"><span class="badge">2:21</span></div>
+      <div class="thumb" data-vid="5fGI9B7oAEk"><img src="https://i.ytimg.com/vi/5fGI9B7oAEk/hqdefault.jpg" alt="Neat trail camera moments from the Northwoods of Minnesota" loading="lazy" width="320" height="180"><span class="badge">2:21</span></div>
       <div class="entry-body"><strong>Neat trail camera moments from the Northwoods of Minnesota</strong><span>Voyageurs Wolf Project</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=B4-L2nfGcuE" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/B4-L2nfGcuE/hqdefault_live.jpg" alt="Big Bear Bald Eagle Live Nest - Cam 1" loading="lazy" width="320" height="180"></div>
+      <div class="thumb" data-vid="B4-L2nfGcuE"><img src="https://i.ytimg.com/vi/B4-L2nfGcuE/hqdefault_live.jpg" alt="Big Bear Bald Eagle Live Nest - Cam 1" loading="lazy" width="320" height="180"></div>
       <div class="entry-body"><strong>Big Bear Bald Eagle Live Nest - Cam 1</strong><span>FOBBV CAM</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=dmndvCBJe5k" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/dmndvCBJe5k/hqdefault.jpg" alt="Trail Cam Videos-12 Months in the Wild" loading="lazy" width="320" height="180"><span class="badge">46:42</span></div>
+      <div class="thumb" data-vid="dmndvCBJe5k"><img src="https://i.ytimg.com/vi/dmndvCBJe5k/hqdefault.jpg" alt="Trail Cam Videos-12 Months in the Wild" loading="lazy" width="320" height="180"><span class="badge">46:42</span></div>
       <div class="entry-body"><strong>Trail Cam Videos-12 Months in the Wild</strong><span>603Wild</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=jF8v3wScoBA" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/jF8v3wScoBA/hqdefault.jpg" alt="Houston Zoo Giraffe Platform Cam | Feeding Live Cam | Ozolio Webcam Services" loading="lazy" width="320" height="180"><span class="badge">1:55:43</span></div>
+      <div class="thumb" data-vid="jF8v3wScoBA"><img src="https://i.ytimg.com/vi/jF8v3wScoBA/hqdefault.jpg" alt="Houston Zoo Giraffe Platform Cam | Feeding Live Cam | Ozolio Webcam Services" loading="lazy" width="320" height="180"><span class="badge">1:55:43</span></div>
       <div class="entry-body"><strong>Houston Zoo Giraffe Platform Cam | Feeding Live Cam | Ozolio Webcam Services</strong><span>Ozolio Live</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=13NuUqnsrDk" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/13NuUqnsrDk/hqdefault.jpg" alt="The 50 Craziest Trail Camera Videos of 2025 (In Order)" loading="lazy" width="320" height="180"><span class="badge">13:49</span></div>
+      <div class="thumb" data-vid="13NuUqnsrDk"><img src="https://i.ytimg.com/vi/13NuUqnsrDk/hqdefault.jpg" alt="The 50 Craziest Trail Camera Videos of 2025 (In Order)" loading="lazy" width="320" height="180"><span class="badge">13:49</span></div>
       <div class="entry-body"><strong>The 50 Craziest Trail Camera Videos of 2025 (In Order)</strong><span>Nick’s Trail Cams</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=BSUnBPvX9K4" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/BSUnBPvX9K4/hqdefault_live.jpg" alt="KC Zoo Polar Bear Cam" loading="lazy" width="320" height="180"></div>
+      <div class="thumb" data-vid="BSUnBPvX9K4"><img src="https://i.ytimg.com/vi/BSUnBPvX9K4/hqdefault_live.jpg" alt="KC Zoo Polar Bear Cam" loading="lazy" width="320" height="180"></div>
       <div class="entry-body"><strong>KC Zoo Polar Bear Cam</strong><span>Kansas City Zoo &amp; Aquarium</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=s5iU3nLOvi8" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/s5iU3nLOvi8/hqdefault.jpg" alt="2021 Swan Valley Wildlife Trail Camera Compilation" loading="lazy" width="320" height="180"><span class="badge">19:36</span></div>
+      <div class="thumb" data-vid="s5iU3nLOvi8"><img src="https://i.ytimg.com/vi/s5iU3nLOvi8/hqdefault.jpg" alt="2021 Swan Valley Wildlife Trail Camera Compilation" loading="lazy" width="320" height="180"><span class="badge">19:36</span></div>
       <div class="entry-body"><strong>2021 Swan Valley Wildlife Trail Camera Compilation</strong><span>Swan Valley Connections</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=9k68-W1T_mA" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/9k68-W1T_mA/hqdefault.jpg" alt="Trail Cam Caught Unexpected Visitors at 3AM" loading="lazy" width="320" height="180"><span class="badge">8:04</span></div>
+      <div class="thumb" data-vid="9k68-W1T_mA"><img src="https://i.ytimg.com/vi/9k68-W1T_mA/hqdefault.jpg" alt="Trail Cam Caught Unexpected Visitors at 3AM" loading="lazy" width="320" height="180"><span class="badge">8:04</span></div>
       <div class="entry-body"><strong>Trail Cam Caught Unexpected Visitors at 3AM</strong><span>Eyes In The Rockies</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=vVvuW5Mb-_Y" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/vVvuW5Mb-_Y/hqdefault.jpg" alt="My Best trail cam videos of June 2023" loading="lazy" width="320" height="180"><span class="badge">10:53</span></div>
+      <div class="thumb" data-vid="vVvuW5Mb-_Y"><img src="https://i.ytimg.com/vi/vVvuW5Mb-_Y/hqdefault.jpg" alt="My Best trail cam videos of June 2023" loading="lazy" width="320" height="180"><span class="badge">10:53</span></div>
       <div class="entry-body"><strong>My Best trail cam videos of June 2023</strong><span>Yukon Wildlife Cams</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=3suTUQbML0Y" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/3suTUQbML0Y/hqdefault.jpg" alt="1.5 HOURS of Relaxing Trail Camera Videos (Deer, Coyotes, Wild Boar)" loading="lazy" width="320" height="180"><span class="badge">1:38:30</span></div>
+      <div class="thumb" data-vid="3suTUQbML0Y"><img src="https://i.ytimg.com/vi/3suTUQbML0Y/hqdefault.jpg" alt="1.5 HOURS of Relaxing Trail Camera Videos (Deer, Coyotes, Wild Boar)" loading="lazy" width="320" height="180"><span class="badge">1:38:30</span></div>
       <div class="entry-body"><strong>1.5 HOURS of Relaxing Trail Camera Videos (Deer, Coyotes, Wild Boar)</strong><span>Michael Outside</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=hv-NOW9PSBQ" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/hv-NOW9PSBQ/hqdefault.jpg" alt="Relaxing Wildlife - One hour of trail camera footage featuring a wide variety of Canadian fauna" loading="lazy" width="320" height="180"><span class="badge">1:00:00</span></div>
+      <div class="thumb" data-vid="hv-NOW9PSBQ"><img src="https://i.ytimg.com/vi/hv-NOW9PSBQ/hqdefault.jpg" alt="Relaxing Wildlife - One hour of trail camera footage featuring a wide variety of Canadian fauna" loading="lazy" width="320" height="180"><span class="badge">1:00:00</span></div>
       <div class="entry-body"><strong>Relaxing Wildlife - One hour of trail camera footage featuring a wide variety of Canadian fauna</strong><span>Wild Ontario Trail Cams</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=_NrVo1ougNg" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/_NrVo1ougNg/hqdefault.jpg" alt="Relaxing Wildlife - One hour of peaceful trail cam footage from Ontario, Canada" loading="lazy" width="320" height="180"><span class="badge">1:00:00</span></div>
+      <div class="thumb" data-vid="_NrVo1ougNg"><img src="https://i.ytimg.com/vi/_NrVo1ougNg/hqdefault.jpg" alt="Relaxing Wildlife - One hour of peaceful trail cam footage from Ontario, Canada" loading="lazy" width="320" height="180"><span class="badge">1:00:00</span></div>
       <div class="entry-body"><strong>Relaxing Wildlife - One hour of peaceful trail cam footage from Ontario, Canada</strong><span>Wild Ontario Trail Cams</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=vcD82iPrw7o" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/vcD82iPrw7o/hqdefault.jpg" alt="Trail Camera Footage From Idaho&#39;s Backcountry | 2026 Week 27" loading="lazy" width="320" height="180"><span class="badge">9:51</span></div>
+      <div class="thumb" data-vid="vcD82iPrw7o"><img src="https://i.ytimg.com/vi/vcD82iPrw7o/hqdefault.jpg" alt="Trail Camera Footage From Idaho&#39;s Backcountry | 2026 Week 27" loading="lazy" width="320" height="180"><span class="badge">9:51</span></div>
       <div class="entry-body"><strong>Trail Camera Footage From Idaho&#39;s Backcountry | 2026 Week 27</strong><span>Peek Outdoors</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=9gS8qjouyTM" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/9gS8qjouyTM/hqdefault.jpg" alt="1 HOUR of Relaxing Trail Camera Videos (Wolves, Deer, Black Bear, Bald Eagles &amp; More!)" loading="lazy" width="320" height="180"><span class="badge">1:00:22</span></div>
+      <div class="thumb" data-vid="9gS8qjouyTM"><img src="https://i.ytimg.com/vi/9gS8qjouyTM/hqdefault.jpg" alt="1 HOUR of Relaxing Trail Camera Videos (Wolves, Deer, Black Bear, Bald Eagles &amp; More!)" loading="lazy" width="320" height="180"><span class="badge">1:00:22</span></div>
       <div class="entry-body"><strong>1 HOUR of Relaxing Trail Camera Videos (Wolves, Deer, Black Bear, Bald Eagles &amp; More!)</strong><span>The Outdoor Theater</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=pI9KDVRGRCw" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/pI9KDVRGRCw/hqdefault.jpg" alt="10 Minutes of the BEST Trail Camera Clips you will EVER see!" loading="lazy" width="320" height="180"><span class="badge">10:36</span></div>
+      <div class="thumb" data-vid="pI9KDVRGRCw"><img src="https://i.ytimg.com/vi/pI9KDVRGRCw/hqdefault.jpg" alt="10 Minutes of the BEST Trail Camera Clips you will EVER see!" loading="lazy" width="320" height="180"><span class="badge">10:36</span></div>
       <div class="entry-body"><strong>10 Minutes of the BEST Trail Camera Clips you will EVER see!</strong><span>The Outdoor Theater</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=iU8NpRavask" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/iU8NpRavask/hqdefault.jpg" alt="Leaving a PEANUT BUTTER Mountain in the Woods - Here&#39;s what happened! Trail Camera" loading="lazy" width="320" height="180"><span class="badge">12:20</span></div>
+      <div class="thumb" data-vid="iU8NpRavask"><img src="https://i.ytimg.com/vi/iU8NpRavask/hqdefault.jpg" alt="Leaving a PEANUT BUTTER Mountain in the Woods - Here&#39;s what happened! Trail Camera" loading="lazy" width="320" height="180"><span class="badge">12:20</span></div>
       <div class="entry-body"><strong>Leaving a PEANUT BUTTER Mountain in the Woods - Here&#39;s what happened! Trail Camera</strong><span>The Outdoor Theater</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=ff5c1P9xA7o" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/ff5c1P9xA7o/hqdefault.jpg" alt="So Many Animals Walked Down this Old Road in 1 Year!" loading="lazy" width="320" height="180"><span class="badge">22:07</span></div>
+      <div class="thumb" data-vid="ff5c1P9xA7o"><img src="https://i.ytimg.com/vi/ff5c1P9xA7o/hqdefault.jpg" alt="So Many Animals Walked Down this Old Road in 1 Year!" loading="lazy" width="320" height="180"><span class="badge">22:07</span></div>
       <div class="entry-body"><strong>So Many Animals Walked Down this Old Road in 1 Year!</strong><span>Trail Cam Guy</span></div>
     </a></div>
+      <script>
+        (function () {
+          var KEY = 'staticPreviewMode';
+          var mode = localStorage.getItem(KEY) || 'auto';
+          var thumbs = [].slice.call(document.querySelectorAll('.thumb[data-vid]'));
+          var io = null;
+          function play(t) {
+            if (t.querySelector('iframe')) return;
+            var f = document.createElement('iframe');
+            f.src = 'https://www.youtube.com/embed/' + t.dataset.vid + '?autoplay=1&mute=1&playsinline=1&rel=0';
+            f.allow = 'autoplay; encrypted-media';
+            t.appendChild(f);
+          }
+          function stop(t) { var f = t.querySelector('iframe'); if (f) f.remove(); }
+          function apply() {
+            thumbs.forEach(stop);
+            if (io) { io.disconnect(); io = null; }
+            document.querySelectorAll('.preview-toggle button').forEach(function (b) {
+              b.classList.toggle('active', b.dataset.mode === mode);
+            });
+            if (mode === 'auto') {
+              io = new IntersectionObserver(function (es) {
+                es.forEach(function (e) { e.isIntersecting ? play(e.target) : stop(e.target); });
+              }, { rootMargin: '50px' });
+              thumbs.forEach(function (t) { io.observe(t); });
+            }
+          }
+          thumbs.forEach(function (t) {
+            t.addEventListener('mouseenter', function () { if (mode === 'hover') play(t); });
+            t.addEventListener('mouseleave', function () { if (mode === 'hover') stop(t); });
+          });
+          document.querySelectorAll('.preview-toggle button').forEach(function (b) {
+            b.addEventListener('click', function (e) {
+              e.preventDefault();
+              mode = b.dataset.mode;
+              localStorage.setItem(KEY, mode);
+              apply();
+            });
+          });
+          apply();
+        })();
+      </script>
 </main>
 <footer>
   <a href="/">Home</a><a href="/browse.html">Browse all</a><a href="/about.html">About</a><a href="/privacy.html">Privacy</a><a href="/terms.html">Terms</a>

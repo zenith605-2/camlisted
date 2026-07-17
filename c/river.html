@@ -42,7 +42,13 @@
   .map-wrap path[data-href] { cursor: pointer; }
   .map-wrap path:hover { filter: brightness(1.6); stroke: #ffffff; }
   .map-tip { position: fixed; z-index: 10; background: rgba(0,0,0,.85); border: 1px solid #2a2f3a; color: #fff; padding: 5px 10px; border-radius: 6px; font-size: 0.85rem; pointer-events: none; white-space: nowrap; }
-  .map-note { color: #9aa4b2; font-size: 0.8rem; margin-bottom: 16px; }
+  .map-note { color: #9aa4b2; font-size: 0.8rem; margin-bottom: 4px; }
+  .map-legend { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; color: #9aa4b2; font-size: 0.8rem; margin-bottom: 18px; }
+  .map-legend .sw { display: inline-block; width: 14px; height: 14px; border-radius: 3px; margin-right: 5px; vertical-align: -2px; }
+  .thumb iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+  .preview-toggle { margin: 4px 0 14px; color: #9aa4b2; font-size: 0.85rem; display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+  .preview-toggle button { background: #161b22; color: #9aa4b2; border: 1px solid #2a2f3a; border-radius: 999px; padding: 4px 12px; cursor: pointer; font-size: 0.8rem; }
+  .preview-toggle button.active { color: #fff; border-color: #ff3b3b; }
   h2 { font-size: 1.15rem; margin: 28px 0 12px; }
   .cta { display: inline-block; margin: 20px 0; background: #ff3b3b; color: #fff; padding: 10px 18px; border-radius: 8px; text-decoration: none; font-weight: 600; }
   footer { border-top: 1px solid #2a2f3a; margin-top: 40px; padding: 20px 24px; color: #9aa4b2; font-size: 0.85rem; }
@@ -59,63 +65,110 @@
   <h1>🏞️ River / Lake Live Cams &amp; Videos</h1>
   <p class="intro">12 live cams and 2 videos in the River / Lake category, re-verified daily. Click any card to watch on YouTube. Updated 2026-07-17.</p>
   <a class="cta" href="/?category=river">Open in interactive viewer →</a>
-  <div class="grid">
+  
+      <div class="preview-toggle">Preview:
+        <button type="button" data-mode="auto">▶ Auto</button>
+        <button type="button" data-mode="hover">🖱 Hover</button>
+        <button type="button" data-mode="off">Off</button>
+      </div><div class="grid">
     <a class="entry" href="https://www.youtube.com/watch?v=gzgrofStPJ0" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/gzgrofStPJ0/hqdefault_live.jpg" alt="🔴 Venice Italy Live Webcam - Dorsoduro in Live Streaming from Hotel American Dinesen - Full HD" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="gzgrofStPJ0"><img src="https://i.ytimg.com/vi/gzgrofStPJ0/hqdefault_live.jpg" alt="🔴 Venice Italy Live Webcam - Dorsoduro in Live Streaming from Hotel American Dinesen - Full HD" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>🔴 Venice Italy Live Webcam - Dorsoduro in Live Streaming from Hotel American Dinesen - Full HD</strong><span>I Love You Venice</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=I2wYxnjTLWg" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/I2wYxnjTLWg/hqdefault_live.jpg" alt="🔴 Live Webcam Paris - La Seine et Notre Dame Ambiance en direct du bateau &quot;Le Son de la Terre&quot;" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="I2wYxnjTLWg"><img src="https://i.ytimg.com/vi/I2wYxnjTLWg/hqdefault_live.jpg" alt="🔴 Live Webcam Paris - La Seine et Notre Dame Ambiance en direct du bateau &quot;Le Son de la Terre&quot;" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>🔴 Live Webcam Paris - La Seine et Notre Dame Ambiance en direct du bateau &quot;Le Son de la Terre&quot;</strong><span>Le Son de la terre</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=VG0ZLw1Bx3Y" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/VG0ZLw1Bx3Y/hqdefault_live.jpg" alt="Камера 5  Вид на город Ленск" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="VG0ZLw1Bx3Y"><img src="https://i.ytimg.com/vi/VG0ZLw1Bx3Y/hqdefault_live.jpg" alt="Камера 5  Вид на город Ленск" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Камера 5  Вид на город Ленск</strong><span>LarryRos</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=UiPTCUz8NEQ" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/UiPTCUz8NEQ/hqdefault_live.jpg" alt="Laguna de La Mata - Parque Natural Lagunas de La Mata y Torrevieja - Webcam de Torrevieja" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="UiPTCUz8NEQ"><img src="https://i.ytimg.com/vi/UiPTCUz8NEQ/hqdefault_live.jpg" alt="Laguna de La Mata - Parque Natural Lagunas de La Mata y Torrevieja - Webcam de Torrevieja" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Laguna de La Mata - Parque Natural Lagunas de La Mata y Torrevieja - Webcam de Torrevieja</strong><span>ProyectoMastral</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=p3m2po8KcAg" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/p3m2po8KcAg/hqdefault_live.jpg" alt="Salinas de Torrevieja - Webcam en directo" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="p3m2po8KcAg"><img src="https://i.ytimg.com/vi/p3m2po8KcAg/hqdefault_live.jpg" alt="Salinas de Torrevieja - Webcam en directo" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Salinas de Torrevieja - Webcam en directo</strong><span>ProyectoMastral</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=RNnegygsAc8" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/RNnegygsAc8/hqdefault_live.jpg" alt="El Parque de Xel Ha, Quintana Roo, en vivo" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="RNnegygsAc8"><img src="https://i.ytimg.com/vi/RNnegygsAc8/hqdefault_live.jpg" alt="El Parque de Xel Ha, Quintana Roo, en vivo" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>El Parque de Xel Ha, Quintana Roo, en vivo</strong><span>Webcams de México TV / Canal 8</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=LVj9-QDUnAA" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/LVj9-QDUnAA/hqdefault_live.jpg" alt="Laguna de Bacalar, en Quintana Roo, desde Presidencia Mpal." loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="LVj9-QDUnAA"><img src="https://i.ytimg.com/vi/LVj9-QDUnAA/hqdefault_live.jpg" alt="Laguna de Bacalar, en Quintana Roo, desde Presidencia Mpal." loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Laguna de Bacalar, en Quintana Roo, desde Presidencia Mpal.</strong><span>Webcams de México TV / Canal 7</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=Q0HnrUeceac" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/Q0HnrUeceac/hqdefault_live.jpg" alt="🔴 LIVE: Brunsbüttel – Nord-Ostsee-Kanal / Kiel Canal | Live Ship Traffic" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="Q0HnrUeceac"><img src="https://i.ytimg.com/vi/Q0HnrUeceac/hqdefault_live.jpg" alt="🔴 LIVE: Brunsbüttel – Nord-Ostsee-Kanal / Kiel Canal | Live Ship Traffic" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>🔴 LIVE: Brunsbüttel – Nord-Ostsee-Kanal / Kiel Canal | Live Ship Traffic</strong><span>livespotting</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=AgsPlSXjN7g" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/AgsPlSXjN7g/hqdefault_live.jpg" alt="Ленск камера PTZ. Вид на реку Лена" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="AgsPlSXjN7g"><img src="https://i.ytimg.com/vi/AgsPlSXjN7g/hqdefault_live.jpg" alt="Ленск камера PTZ. Вид на реку Лена" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Ленск камера PTZ. Вид на реку Лена</strong><span>LarryRos</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=DhyLMW939OU" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/DhyLMW939OU/hqdefault_live.jpg" alt="Ленск вид на реку Лену" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="DhyLMW939OU"><img src="https://i.ytimg.com/vi/DhyLMW939OU/hqdefault_live.jpg" alt="Ленск вид на реку Лену" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Ленск вид на реку Лену</strong><span>LarryRos</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=Uvv36FxMKDU" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/Uvv36FxMKDU/hqdefault_live.jpg" alt="Онлайн камера 2 ( 24/7 )РОССИЯ  г. Ленск .  Online camera 2 (24/7 ) RUSSIA  Lensk" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="Uvv36FxMKDU"><img src="https://i.ytimg.com/vi/Uvv36FxMKDU/hqdefault_live.jpg" alt="Онлайн камера 2 ( 24/7 )РОССИЯ  г. Ленск .  Online camera 2 (24/7 ) RUSSIA  Lensk" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Онлайн камера 2 ( 24/7 )РОССИЯ  г. Ленск .  Online camera 2 (24/7 ) RUSSIA  Lensk</strong><span>LarryRos</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=lzHbycN2CmY" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/lzHbycN2CmY/hqdefault_live.jpg" alt="Stars, Aurora, Meteors LIVE Cam from Mt Katahdin from MAINE US - CAM 2" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="lzHbycN2CmY"><img src="https://i.ytimg.com/vi/lzHbycN2CmY/hqdefault_live.jpg" alt="Stars, Aurora, Meteors LIVE Cam from Mt Katahdin from MAINE US - CAM 2" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Stars, Aurora, Meteors LIVE Cam from Mt Katahdin from MAINE US - CAM 2</strong><span>Boston and Maine Live</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=2sIbwK8tMMk" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/2sIbwK8tMMk/hqdefault.jpg" alt="Bangkok, Thailand | 15 May 26" loading="lazy" width="320" height="180"><span class="badge">3:05</span></div>
+      <div class="thumb" data-vid="2sIbwK8tMMk"><img src="https://i.ytimg.com/vi/2sIbwK8tMMk/hqdefault.jpg" alt="Bangkok, Thailand | 15 May 26" loading="lazy" width="320" height="180"><span class="badge">3:05</span></div>
       <div class="entry-body"><strong>Bangkok, Thailand | 15 May 26</strong><span>Randomly Entertained</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=OD3DfIEI-rA" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/OD3DfIEI-rA/hqdefault.jpg" alt="Chao Phraya River, Bangkok, Thailand | 30 May 26" loading="lazy" width="320" height="180"><span class="badge">1:05</span></div>
+      <div class="thumb" data-vid="OD3DfIEI-rA"><img src="https://i.ytimg.com/vi/OD3DfIEI-rA/hqdefault.jpg" alt="Chao Phraya River, Bangkok, Thailand | 30 May 26" loading="lazy" width="320" height="180"><span class="badge">1:05</span></div>
       <div class="entry-body"><strong>Chao Phraya River, Bangkok, Thailand | 30 May 26</strong><span>Randomly Entertained</span></div>
     </a></div>
+      <script>
+        (function () {
+          var KEY = 'staticPreviewMode';
+          var mode = localStorage.getItem(KEY) || 'auto';
+          var thumbs = [].slice.call(document.querySelectorAll('.thumb[data-vid]'));
+          var io = null;
+          function play(t) {
+            if (t.querySelector('iframe')) return;
+            var f = document.createElement('iframe');
+            f.src = 'https://www.youtube.com/embed/' + t.dataset.vid + '?autoplay=1&mute=1&playsinline=1&rel=0';
+            f.allow = 'autoplay; encrypted-media';
+            t.appendChild(f);
+          }
+          function stop(t) { var f = t.querySelector('iframe'); if (f) f.remove(); }
+          function apply() {
+            thumbs.forEach(stop);
+            if (io) { io.disconnect(); io = null; }
+            document.querySelectorAll('.preview-toggle button').forEach(function (b) {
+              b.classList.toggle('active', b.dataset.mode === mode);
+            });
+            if (mode === 'auto') {
+              io = new IntersectionObserver(function (es) {
+                es.forEach(function (e) { e.isIntersecting ? play(e.target) : stop(e.target); });
+              }, { rootMargin: '50px' });
+              thumbs.forEach(function (t) { io.observe(t); });
+            }
+          }
+          thumbs.forEach(function (t) {
+            t.addEventListener('mouseenter', function () { if (mode === 'hover') play(t); });
+            t.addEventListener('mouseleave', function () { if (mode === 'hover') stop(t); });
+          });
+          document.querySelectorAll('.preview-toggle button').forEach(function (b) {
+            b.addEventListener('click', function (e) {
+              e.preventDefault();
+              mode = b.dataset.mode;
+              localStorage.setItem(KEY, mode);
+              apply();
+            });
+          });
+          apply();
+        })();
+      </script>
 </main>
 <footer>
   <a href="/">Home</a><a href="/browse.html">Browse all</a><a href="/about.html">About</a><a href="/privacy.html">Privacy</a><a href="/terms.html">Terms</a>

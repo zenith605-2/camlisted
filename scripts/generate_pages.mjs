@@ -82,7 +82,13 @@ const PAGE_CSS = `
   .map-wrap path[data-href] { cursor: pointer; }
   .map-wrap path:hover { filter: brightness(1.6); stroke: #ffffff; }
   .map-tip { position: fixed; z-index: 10; background: rgba(0,0,0,.85); border: 1px solid #2a2f3a; color: #fff; padding: 5px 10px; border-radius: 6px; font-size: 0.85rem; pointer-events: none; white-space: nowrap; }
-  .map-note { color: #9aa4b2; font-size: 0.8rem; margin-bottom: 16px; }
+  .map-note { color: #9aa4b2; font-size: 0.8rem; margin-bottom: 4px; }
+  .map-legend { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; color: #9aa4b2; font-size: 0.8rem; margin-bottom: 18px; }
+  .map-legend .sw { display: inline-block; width: 14px; height: 14px; border-radius: 3px; margin-right: 5px; vertical-align: -2px; }
+  .thumb iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+  .preview-toggle { margin: 4px 0 14px; color: #9aa4b2; font-size: 0.85rem; display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+  .preview-toggle button { background: #161b22; color: #9aa4b2; border: 1px solid #2a2f3a; border-radius: 999px; padding: 4px 12px; cursor: pointer; font-size: 0.8rem; }
+  .preview-toggle button.active { color: #fff; border-color: #ff3b3b; }
   h2 { font-size: 1.15rem; margin: 28px 0 12px; }
   .cta { display: inline-block; margin: 20px 0; background: #ff3b3b; color: #fff; padding: 10px 18px; border-radius: 8px; text-decoration: none; font-weight: 600; }
   footer { border-top: 1px solid #2a2f3a; margin-top: 40px; padding: 20px 24px; color: #9aa4b2; font-size: 0.85rem; }
@@ -133,10 +139,61 @@ function entryCard(s) {
     : (s.duration_seconds ? `<span class="badge">${formatDuration(s.duration_seconds)}</span>` : '');
   return `
     <a class="entry" href="https://www.youtube.com/watch?v=${encodeURIComponent(s.video_id)}" target="_blank" rel="noopener">
-      <div class="thumb"><img src="${escapeHtml(thumb)}" alt="${escapeHtml(s.title)}" loading="lazy" width="320" height="180">${badge}</div>
+      <div class="thumb" data-vid="${escapeHtml(s.video_id)}"><img src="${escapeHtml(thumb)}" alt="${escapeHtml(s.title)}" loading="lazy" width="320" height="180">${badge}</div>
       <div class="entry-body"><strong>${escapeHtml(s.title)}</strong><span>${escapeHtml(s.channel_title || '')}</span></div>
     </a>`;
 }
+
+// 메인 페이지와 같은 미리보기 UX: 화면에 보이면 자동재생 / 마우스 올릴 때만 / 끄기 (기기별 저장)
+const PREVIEW_TOGGLE_HTML = `
+      <div class="preview-toggle">Preview:
+        <button type="button" data-mode="auto">▶ Auto</button>
+        <button type="button" data-mode="hover">🖱 Hover</button>
+        <button type="button" data-mode="off">Off</button>
+      </div>`;
+const PREVIEW_SCRIPT = `
+      <script>
+        (function () {
+          var KEY = 'staticPreviewMode';
+          var mode = localStorage.getItem(KEY) || 'auto';
+          var thumbs = [].slice.call(document.querySelectorAll('.thumb[data-vid]'));
+          var io = null;
+          function play(t) {
+            if (t.querySelector('iframe')) return;
+            var f = document.createElement('iframe');
+            f.src = 'https://www.youtube.com/embed/' + t.dataset.vid + '?autoplay=1&mute=1&playsinline=1&rel=0';
+            f.allow = 'autoplay; encrypted-media';
+            t.appendChild(f);
+          }
+          function stop(t) { var f = t.querySelector('iframe'); if (f) f.remove(); }
+          function apply() {
+            thumbs.forEach(stop);
+            if (io) { io.disconnect(); io = null; }
+            document.querySelectorAll('.preview-toggle button').forEach(function (b) {
+              b.classList.toggle('active', b.dataset.mode === mode);
+            });
+            if (mode === 'auto') {
+              io = new IntersectionObserver(function (es) {
+                es.forEach(function (e) { e.isIntersecting ? play(e.target) : stop(e.target); });
+              }, { rootMargin: '50px' });
+              thumbs.forEach(function (t) { io.observe(t); });
+            }
+          }
+          thumbs.forEach(function (t) {
+            t.addEventListener('mouseenter', function () { if (mode === 'hover') play(t); });
+            t.addEventListener('mouseleave', function () { if (mode === 'hover') stop(t); });
+          });
+          document.querySelectorAll('.preview-toggle button').forEach(function (b) {
+            b.addEventListener('click', function (e) {
+              e.preventDefault();
+              mode = b.dataset.mode;
+              localStorage.setItem(KEY, mode);
+              apply();
+            });
+          });
+          apply();
+        })();
+      </script>`;
 
 function sortForPage(list) {
   // 라이브 먼저, 그 안에서는 추천 많은 순 → 최신 순
@@ -192,7 +249,7 @@ async function main() {
       h1: `Live Cams & Footage in ${name}`,
       intro: `${liveCount} live cams and ${videoCount} videos from ${name}, re-verified daily. Click any card to watch on YouTube. Updated ${today}.`,
       ctaHref: `/?country=${encodeURIComponent(code)}`,
-      bodyHtml: `<div class="grid">${entries.map(entryCard).join('')}</div>`,
+      bodyHtml: `${PREVIEW_TOGGLE_HTML}<div class="grid">${entries.map(entryCard).join('')}</div>${PREVIEW_SCRIPT}`,
     });
     await writeFile(path.join(ROOT, 'country', `${slug}.html`), html);
     countryPages.push({ code, name, slug, count: list.length });
@@ -218,7 +275,7 @@ async function main() {
       h1: `${cat.icon ? cat.icon + ' ' : ''}${label} Live Cams & Videos`,
       intro: `${liveCount} live cams and ${videoCount} videos in the ${label} category, re-verified daily. Click any card to watch on YouTube. Updated ${today}.`,
       ctaHref: `/?category=${encodeURIComponent(cat.key)}`,
-      bodyHtml: `<div class="grid">${entries.map(entryCard).join('')}</div>`,
+      bodyHtml: `${PREVIEW_TOGGLE_HTML}<div class="grid">${entries.map(entryCard).join('')}</div>${PREVIEW_SCRIPT}`,
     });
     await writeFile(path.join(ROOT, 'c', `${cat.key}.html`), html);
     categoryPages.push({ key: cat.key, label, icon: cat.icon, count: list.length });
@@ -232,13 +289,15 @@ async function main() {
   for (const s of visible) {
     if (s.country) countByCode.set(s.country, (countByCode.get(s.country) || 0) + 1);
   }
-  const maxCount = Math.max(1, ...countByCode.values());
-  const heatColor = (count) => {
-    if (!count) return '#1e242e';
-    const t = 0.25 + 0.75 * (Math.log(count + 1) / Math.log(maxCount + 1));
-    const mix = (a, b) => Math.round(a + (b - a) * t).toString(16).padStart(2, '0');
-    return `#${mix(0x4a, 0xff)}${mix(0x22, 0x3b)}${mix(0x28, 0x3b)}`;
-  };
+  // 뚜렷한 구간별 색상 (연속 그라데이션은 구분이 잘 안 보여서 단계형으로)
+  const MAP_BUCKETS = [
+    { min: 200, color: '#ff3b3b', label: '200+' },
+    { min: 50, color: '#ff7a45', label: '50–199' },
+    { min: 10, color: '#ffb020', label: '10–49' },
+    { min: 1, color: '#f2e284', label: '1–9' },
+    { min: 0, color: '#232a35', label: 'None' },
+  ];
+  const heatColor = (count) => MAP_BUCKETS.find(b => count >= b.min).color;
   const slugByCode = new Map(countryPages.map(c => [c.code, c.slug]));
   const mapPaths = JSON.parse(await readFile(path.join(ROOT, 'config', 'world_map_paths.json'), 'utf-8'));
   const mapSvgPaths = Object.entries(mapPaths).map(([code, v]) => {
@@ -252,6 +311,9 @@ async function main() {
         <div id="mapTip" class="map-tip" hidden></div>
       </div>
       <p class="map-note">Hover a country to see how many cams it has — click to browse them.</p>
+      <div class="map-legend">
+        ${[...MAP_BUCKETS].reverse().map(b => `<span><span class="sw" style="background:${b.color}"></span>${b.label}</span>`).join('')}
+      </div>
       <script>
         (function () {
           var tip = document.getElementById('mapTip');

@@ -42,7 +42,13 @@
   .map-wrap path[data-href] { cursor: pointer; }
   .map-wrap path:hover { filter: brightness(1.6); stroke: #ffffff; }
   .map-tip { position: fixed; z-index: 10; background: rgba(0,0,0,.85); border: 1px solid #2a2f3a; color: #fff; padding: 5px 10px; border-radius: 6px; font-size: 0.85rem; pointer-events: none; white-space: nowrap; }
-  .map-note { color: #9aa4b2; font-size: 0.8rem; margin-bottom: 16px; }
+  .map-note { color: #9aa4b2; font-size: 0.8rem; margin-bottom: 4px; }
+  .map-legend { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; color: #9aa4b2; font-size: 0.8rem; margin-bottom: 18px; }
+  .map-legend .sw { display: inline-block; width: 14px; height: 14px; border-radius: 3px; margin-right: 5px; vertical-align: -2px; }
+  .thumb iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+  .preview-toggle { margin: 4px 0 14px; color: #9aa4b2; font-size: 0.85rem; display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+  .preview-toggle button { background: #161b22; color: #9aa4b2; border: 1px solid #2a2f3a; border-radius: 999px; padding: 4px 12px; cursor: pointer; font-size: 0.8rem; }
+  .preview-toggle button.active { color: #fff; border-color: #ff3b3b; }
   h2 { font-size: 1.15rem; margin: 28px 0 12px; }
   .cta { display: inline-block; margin: 20px 0; background: #ff3b3b; color: #fff; padding: 10px 18px; border-radius: 8px; text-decoration: none; font-weight: 600; }
   footer { border-top: 1px solid #2a2f3a; margin-top: 40px; padding: 20px 24px; color: #9aa4b2; font-size: 0.85rem; }
@@ -59,39 +65,86 @@
   <h1>Live Cams &amp; Footage in Sweden</h1>
   <p class="intro">8 live cams and 0 videos from Sweden, re-verified daily. Click any card to watch on YouTube. Updated 2026-07-17.</p>
   <a class="cta" href="/?country=SE">Open in interactive viewer →</a>
-  <div class="grid">
+  
+      <div class="preview-toggle">Preview:
+        <button type="button" data-mode="auto">▶ Auto</button>
+        <button type="button" data-mode="hover">🖱 Hover</button>
+        <button type="button" data-mode="off">Off</button>
+      </div><div class="grid">
     <a class="entry" href="https://www.youtube.com/watch?v=Ol3U9XSQqCo" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/Ol3U9XSQqCo/hqdefault_live.jpg" alt="🔴 LIVE Stockholm Night Life Walk 🇸🇪 Summer City Centre Ambient 🇸🇪 Sweden’s Capital in 4K 🇸🇪 🔴 Loop" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="Ol3U9XSQqCo"><img src="https://i.ytimg.com/vi/Ol3U9XSQqCo/hqdefault_live.jpg" alt="🔴 LIVE Stockholm Night Life Walk 🇸🇪 Summer City Centre Ambient 🇸🇪 Sweden’s Capital in 4K 🇸🇪 🔴 Loop" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>🔴 LIVE Stockholm Night Life Walk 🇸🇪 Summer City Centre Ambient 🇸🇪 Sweden’s Capital in 4K 🇸🇪 🔴 Loop</strong><span>Stockholm HD</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=OUBslrCqREs" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/OUBslrCqREs/hqdefault_live.jpg" alt="LGA Airport LIVE 24/7 • LaGuardia, New York" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="OUBslrCqREs"><img src="https://i.ytimg.com/vi/OUBslrCqREs/hqdefault_live.jpg" alt="LGA Airport LIVE 24/7 • LaGuardia, New York" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>LGA Airport LIVE 24/7 • LaGuardia, New York</strong><span>Flightradar24</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=fFl0qD108sk" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/fFl0qD108sk/hqdefault_live.jpg" alt="RNO Reno Airport LIVE 24/7" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="fFl0qD108sk"><img src="https://i.ytimg.com/vi/fFl0qD108sk/hqdefault_live.jpg" alt="RNO Reno Airport LIVE 24/7" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>RNO Reno Airport LIVE 24/7</strong><span>Flightradar24</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=NtbquzembC8" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/NtbquzembC8/hqdefault_live.jpg" alt="ACE Lanzarote Airport LIVE 24/7 - Canary Islands SPAIN" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="NtbquzembC8"><img src="https://i.ytimg.com/vi/NtbquzembC8/hqdefault_live.jpg" alt="ACE Lanzarote Airport LIVE 24/7 - Canary Islands SPAIN" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>ACE Lanzarote Airport LIVE 24/7 - Canary Islands SPAIN</strong><span>Flightradar24</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=V7_orOtu-oo" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/V7_orOtu-oo/hqdefault_live.jpg" alt="LAS Vegas Airport LIVE 24/7 with views of 26R &amp; 26L" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="V7_orOtu-oo"><img src="https://i.ytimg.com/vi/V7_orOtu-oo/hqdefault_live.jpg" alt="LAS Vegas Airport LIVE 24/7 with views of 26R &amp; 26L" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>LAS Vegas Airport LIVE 24/7 with views of 26R &amp; 26L</strong><span>Flightradar24</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=2IQmpCXbOmM" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/2IQmpCXbOmM/hqdefault_live.jpg" alt="Iconic SXM Airport LIVE 24/7 – Sint Maarten Maho Beach" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="2IQmpCXbOmM"><img src="https://i.ytimg.com/vi/2IQmpCXbOmM/hqdefault_live.jpg" alt="Iconic SXM Airport LIVE 24/7 – Sint Maarten Maho Beach" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Iconic SXM Airport LIVE 24/7 – Sint Maarten Maho Beach</strong><span>Flightradar24</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=_-Qg5jD-PfA" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/_-Qg5jD-PfA/hqdefault_live.jpg" alt="LAS Vegas Airport LIVE 24/7 with views of 26R &amp; 26L" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="_-Qg5jD-PfA"><img src="https://i.ytimg.com/vi/_-Qg5jD-PfA/hqdefault_live.jpg" alt="LAS Vegas Airport LIVE 24/7 with views of 26R &amp; 26L" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>LAS Vegas Airport LIVE 24/7 with views of 26R &amp; 26L</strong><span>Flightradar24</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=MH0_mPt-VXE" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/MH0_mPt-VXE/hqdefault_live.jpg" alt="FR24 - MSY New Orleans LIVE 24/7" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="MH0_mPt-VXE"><img src="https://i.ytimg.com/vi/MH0_mPt-VXE/hqdefault_live.jpg" alt="FR24 - MSY New Orleans LIVE 24/7" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>FR24 - MSY New Orleans LIVE 24/7</strong><span>Flightradar24</span></div>
     </a></div>
+      <script>
+        (function () {
+          var KEY = 'staticPreviewMode';
+          var mode = localStorage.getItem(KEY) || 'auto';
+          var thumbs = [].slice.call(document.querySelectorAll('.thumb[data-vid]'));
+          var io = null;
+          function play(t) {
+            if (t.querySelector('iframe')) return;
+            var f = document.createElement('iframe');
+            f.src = 'https://www.youtube.com/embed/' + t.dataset.vid + '?autoplay=1&mute=1&playsinline=1&rel=0';
+            f.allow = 'autoplay; encrypted-media';
+            t.appendChild(f);
+          }
+          function stop(t) { var f = t.querySelector('iframe'); if (f) f.remove(); }
+          function apply() {
+            thumbs.forEach(stop);
+            if (io) { io.disconnect(); io = null; }
+            document.querySelectorAll('.preview-toggle button').forEach(function (b) {
+              b.classList.toggle('active', b.dataset.mode === mode);
+            });
+            if (mode === 'auto') {
+              io = new IntersectionObserver(function (es) {
+                es.forEach(function (e) { e.isIntersecting ? play(e.target) : stop(e.target); });
+              }, { rootMargin: '50px' });
+              thumbs.forEach(function (t) { io.observe(t); });
+            }
+          }
+          thumbs.forEach(function (t) {
+            t.addEventListener('mouseenter', function () { if (mode === 'hover') play(t); });
+            t.addEventListener('mouseleave', function () { if (mode === 'hover') stop(t); });
+          });
+          document.querySelectorAll('.preview-toggle button').forEach(function (b) {
+            b.addEventListener('click', function (e) {
+              e.preventDefault();
+              mode = b.dataset.mode;
+              localStorage.setItem(KEY, mode);
+              apply();
+            });
+          });
+          apply();
+        })();
+      </script>
 </main>
 <footer>
   <a href="/">Home</a><a href="/browse.html">Browse all</a><a href="/about.html">About</a><a href="/privacy.html">Privacy</a><a href="/terms.html">Terms</a>

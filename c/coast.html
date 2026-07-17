@@ -42,7 +42,13 @@
   .map-wrap path[data-href] { cursor: pointer; }
   .map-wrap path:hover { filter: brightness(1.6); stroke: #ffffff; }
   .map-tip { position: fixed; z-index: 10; background: rgba(0,0,0,.85); border: 1px solid #2a2f3a; color: #fff; padding: 5px 10px; border-radius: 6px; font-size: 0.85rem; pointer-events: none; white-space: nowrap; }
-  .map-note { color: #9aa4b2; font-size: 0.8rem; margin-bottom: 16px; }
+  .map-note { color: #9aa4b2; font-size: 0.8rem; margin-bottom: 4px; }
+  .map-legend { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; color: #9aa4b2; font-size: 0.8rem; margin-bottom: 18px; }
+  .map-legend .sw { display: inline-block; width: 14px; height: 14px; border-radius: 3px; margin-right: 5px; vertical-align: -2px; }
+  .thumb iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+  .preview-toggle { margin: 4px 0 14px; color: #9aa4b2; font-size: 0.85rem; display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+  .preview-toggle button { background: #161b22; color: #9aa4b2; border: 1px solid #2a2f3a; border-radius: 999px; padding: 4px 12px; cursor: pointer; font-size: 0.8rem; }
+  .preview-toggle button.active { color: #fff; border-color: #ff3b3b; }
   h2 { font-size: 1.15rem; margin: 28px 0 12px; }
   .cta { display: inline-block; margin: 20px 0; background: #ff3b3b; color: #fff; padding: 10px 18px; border-radius: 8px; text-decoration: none; font-weight: 600; }
   footer { border-top: 1px solid #2a2f3a; margin-top: 40px; padding: 20px 24px; color: #9aa4b2; font-size: 0.85rem; }
@@ -59,35 +65,82 @@
   <h1>🌊 Coast / Seaside Live Cams &amp; Videos</h1>
   <p class="intro">7 live cams and 0 videos in the Coast / Seaside category, re-verified daily. Click any card to watch on YouTube. Updated 2026-07-17.</p>
   <a class="cta" href="/?category=coast">Open in interactive viewer →</a>
-  <div class="grid">
+  
+      <div class="preview-toggle">Preview:
+        <button type="button" data-mode="auto">▶ Auto</button>
+        <button type="button" data-mode="hover">🖱 Hover</button>
+        <button type="button" data-mode="off">Off</button>
+      </div><div class="grid">
     <a class="entry" href="https://www.youtube.com/watch?v=LO2Fvujwc8M" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/LO2Fvujwc8M/hqdefault_live.jpg" alt="Webcam Live Golfo di Napoli (NA)" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="LO2Fvujwc8M"><img src="https://i.ytimg.com/vi/LO2Fvujwc8M/hqdefault_live.jpg" alt="Webcam Live Golfo di Napoli (NA)" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Webcam Live Golfo di Napoli (NA)</strong><span>Paesaggi Digitali</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=albRLCpp2b8" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/albRLCpp2b8/hqdefault_live.jpg" alt="Vista de la Laguna de Nichupté desde Breathless Cancún Soul Resort &amp; Spa" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="albRLCpp2b8"><img src="https://i.ytimg.com/vi/albRLCpp2b8/hqdefault_live.jpg" alt="Vista de la Laguna de Nichupté desde Breathless Cancún Soul Resort &amp; Spa" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Vista de la Laguna de Nichupté desde Breathless Cancún Soul Resort &amp; Spa</strong><span>Webcams de México TV / Canal 6</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=0IQtewFXA20" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/0IQtewFXA20/hqdefault_live.jpg" alt="Live Webcam Cala Agulla ☀️ Capdepera 🏖️ Mallorca 🌎 Baleares 🅻🅸🆅🅴" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="0IQtewFXA20"><img src="https://i.ytimg.com/vi/0IQtewFXA20/hqdefault_live.jpg" alt="Live Webcam Cala Agulla ☀️ Capdepera 🏖️ Mallorca 🌎 Baleares 🅻🅸🆅🅴" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Live Webcam Cala Agulla ☀️ Capdepera 🏖️ Mallorca 🌎 Baleares 🅻🅸🆅🅴</strong><span>WEBCAMS ONLINE</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=y-Gso1zgPIw" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/y-Gso1zgPIw/hqdefault_live.jpg" alt="Laguna de Bacalar en vivo desde Casa China" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="y-Gso1zgPIw"><img src="https://i.ytimg.com/vi/y-Gso1zgPIw/hqdefault_live.jpg" alt="Laguna de Bacalar en vivo desde Casa China" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Laguna de Bacalar en vivo desde Casa China</strong><span>Los Recomendados by Webcams MX</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=4VAvvsBeV9Y" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/4VAvvsBeV9Y/hqdefault_live.jpg" alt="🌞 Mallorca Webcam Paguera Cala Fornells | 4K UHD | 24/7 Stream |  #Mallorca #Calvia #Balearics" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="4VAvvsBeV9Y"><img src="https://i.ytimg.com/vi/4VAvvsBeV9Y/hqdefault_live.jpg" alt="🌞 Mallorca Webcam Paguera Cala Fornells | 4K UHD | 24/7 Stream |  #Mallorca #Calvia #Balearics" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>🌞 Mallorca Webcam Paguera Cala Fornells | 4K UHD | 24/7 Stream |  #Mallorca #Calvia #Balearics</strong><span>Mallorca Webcam</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=V7sUbjD_e3I" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/V7sUbjD_e3I/hqdefault_live.jpg" alt="The Edge Hotel Clearwater Beach" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="V7sUbjD_e3I"><img src="https://i.ytimg.com/vi/V7sUbjD_e3I/hqdefault_live.jpg" alt="The Edge Hotel Clearwater Beach" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>The Edge Hotel Clearwater Beach</strong><span>Clearwater Beach Live Cams</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=hm9iAviOZ20" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/hm9iAviOZ20/hqdefault_live.jpg" alt="Surfline TV | LIVE Surf Cams 24/7" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="hm9iAviOZ20"><img src="https://i.ytimg.com/vi/hm9iAviOZ20/hqdefault_live.jpg" alt="Surfline TV | LIVE Surf Cams 24/7" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Surfline TV | LIVE Surf Cams 24/7</strong><span>Surfline</span></div>
     </a></div>
+      <script>
+        (function () {
+          var KEY = 'staticPreviewMode';
+          var mode = localStorage.getItem(KEY) || 'auto';
+          var thumbs = [].slice.call(document.querySelectorAll('.thumb[data-vid]'));
+          var io = null;
+          function play(t) {
+            if (t.querySelector('iframe')) return;
+            var f = document.createElement('iframe');
+            f.src = 'https://www.youtube.com/embed/' + t.dataset.vid + '?autoplay=1&mute=1&playsinline=1&rel=0';
+            f.allow = 'autoplay; encrypted-media';
+            t.appendChild(f);
+          }
+          function stop(t) { var f = t.querySelector('iframe'); if (f) f.remove(); }
+          function apply() {
+            thumbs.forEach(stop);
+            if (io) { io.disconnect(); io = null; }
+            document.querySelectorAll('.preview-toggle button').forEach(function (b) {
+              b.classList.toggle('active', b.dataset.mode === mode);
+            });
+            if (mode === 'auto') {
+              io = new IntersectionObserver(function (es) {
+                es.forEach(function (e) { e.isIntersecting ? play(e.target) : stop(e.target); });
+              }, { rootMargin: '50px' });
+              thumbs.forEach(function (t) { io.observe(t); });
+            }
+          }
+          thumbs.forEach(function (t) {
+            t.addEventListener('mouseenter', function () { if (mode === 'hover') play(t); });
+            t.addEventListener('mouseleave', function () { if (mode === 'hover') stop(t); });
+          });
+          document.querySelectorAll('.preview-toggle button').forEach(function (b) {
+            b.addEventListener('click', function (e) {
+              e.preventDefault();
+              mode = b.dataset.mode;
+              localStorage.setItem(KEY, mode);
+              apply();
+            });
+          });
+          apply();
+        })();
+      </script>
 </main>
 <footer>
   <a href="/">Home</a><a href="/browse.html">Browse all</a><a href="/about.html">About</a><a href="/privacy.html">Privacy</a><a href="/terms.html">Terms</a>

@@ -42,7 +42,13 @@
   .map-wrap path[data-href] { cursor: pointer; }
   .map-wrap path:hover { filter: brightness(1.6); stroke: #ffffff; }
   .map-tip { position: fixed; z-index: 10; background: rgba(0,0,0,.85); border: 1px solid #2a2f3a; color: #fff; padding: 5px 10px; border-radius: 6px; font-size: 0.85rem; pointer-events: none; white-space: nowrap; }
-  .map-note { color: #9aa4b2; font-size: 0.8rem; margin-bottom: 16px; }
+  .map-note { color: #9aa4b2; font-size: 0.8rem; margin-bottom: 4px; }
+  .map-legend { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; color: #9aa4b2; font-size: 0.8rem; margin-bottom: 18px; }
+  .map-legend .sw { display: inline-block; width: 14px; height: 14px; border-radius: 3px; margin-right: 5px; vertical-align: -2px; }
+  .thumb iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+  .preview-toggle { margin: 4px 0 14px; color: #9aa4b2; font-size: 0.85rem; display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+  .preview-toggle button { background: #161b22; color: #9aa4b2; border: 1px solid #2a2f3a; border-radius: 999px; padding: 4px 12px; cursor: pointer; font-size: 0.8rem; }
+  .preview-toggle button.active { color: #fff; border-color: #ff3b3b; }
   h2 { font-size: 1.15rem; margin: 28px 0 12px; }
   .cta { display: inline-block; margin: 20px 0; background: #ff3b3b; color: #fff; padding: 10px 18px; border-radius: 8px; text-decoration: none; font-weight: 600; }
   footer { border-top: 1px solid #2a2f3a; margin-top: 40px; padding: 20px 24px; color: #9aa4b2; font-size: 0.85rem; }
@@ -59,187 +65,234 @@
   <h1>🏢 Indoor Live Cams &amp; Videos</h1>
   <p class="intro">22 live cams and 23 videos in the Indoor category, re-verified daily. Click any card to watch on YouTube. Updated 2026-07-17.</p>
   <a class="cta" href="/?category=indoor">Open in interactive viewer →</a>
-  <div class="grid">
+  
+      <div class="preview-toggle">Preview:
+        <button type="button" data-mode="auto">▶ Auto</button>
+        <button type="button" data-mode="hover">🖱 Hover</button>
+        <button type="button" data-mode="off">Off</button>
+      </div><div class="grid">
     <a class="entry" href="https://www.youtube.com/watch?v=S605ycm0Vlk" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/S605ycm0Vlk/hqdefault_live.jpg" alt="Hogs Breath Mini Bar Cam" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="S605ycm0Vlk"><img src="https://i.ytimg.com/vi/S605ycm0Vlk/hqdefault_live.jpg" alt="Hogs Breath Mini Bar Cam" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Hogs Breath Mini Bar Cam</strong><span>Hogs Breath Saloon Key West</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=k5pcFcJgJK8" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/k5pcFcJgJK8/hqdefault_live.jpg" alt="Живу. Постоянная живая трансляция 24/7 (камера 2)" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="k5pcFcJgJK8"><img src="https://i.ytimg.com/vi/k5pcFcJgJK8/hqdefault_live.jpg" alt="Живу. Постоянная живая трансляция 24/7 (камера 2)" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Живу. Постоянная живая трансляция 24/7 (камера 2)</strong><span>Пятк</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=MpPn1vzKf84" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/MpPn1vzKf84/hqdefault_live.jpg" alt="Живу. Постоянная живая трансляция 24/7 (камера 3)" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="MpPn1vzKf84"><img src="https://i.ytimg.com/vi/MpPn1vzKf84/hqdefault_live.jpg" alt="Живу. Постоянная живая трансляция 24/7 (камера 3)" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Живу. Постоянная живая трансляция 24/7 (камера 3)</strong><span>Пятк</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=0Kaji9GHl68" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/0Kaji9GHl68/hqdefault_live.jpg" alt="🔴 PHILIPPINES Live camera Inside Dodong Barber Shop, Agdao, Davao City #philippines" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="0Kaji9GHl68"><img src="https://i.ytimg.com/vi/0Kaji9GHl68/hqdefault_live.jpg" alt="🔴 PHILIPPINES Live camera Inside Dodong Barber Shop, Agdao, Davao City #philippines" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>🔴 PHILIPPINES Live camera Inside Dodong Barber Shop, Agdao, Davao City #philippines</strong><span>JazBaz Philippines</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=7op6k-N2S48" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/7op6k-N2S48/hqdefault_live.jpg" alt="🔴PHILIPPINES Live camera Inside Lodi&#39;s Eatery, Agdao, Davao City #philippines" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="7op6k-N2S48"><img src="https://i.ytimg.com/vi/7op6k-N2S48/hqdefault_live.jpg" alt="🔴PHILIPPINES Live camera Inside Lodi&#39;s Eatery, Agdao, Davao City #philippines" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>🔴PHILIPPINES Live camera Inside Lodi&#39;s Eatery, Agdao, Davao City #philippines</strong><span>JazBaz Philippines</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=thzfsD7VDFg" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/thzfsD7VDFg/hqdefault_live.jpg" alt="Hogs Breath Outside Cam" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="thzfsD7VDFg"><img src="https://i.ytimg.com/vi/thzfsD7VDFg/hqdefault_live.jpg" alt="Hogs Breath Outside Cam" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Hogs Breath Outside Cam</strong><span>Hogs Breath Saloon Key West</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=_eE4GBEjjs4" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/_eE4GBEjjs4/hqdefault_live.jpg" alt="Hogs Breath Stage Cam" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="_eE4GBEjjs4"><img src="https://i.ytimg.com/vi/_eE4GBEjjs4/hqdefault_live.jpg" alt="Hogs Breath Stage Cam" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Hogs Breath Stage Cam</strong><span>Hogs Breath Saloon Key West</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=fTGQTIdcPQY" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/fTGQTIdcPQY/hqdefault_live.jpg" alt="Живу. Постоянная живая трансляция 24/7 (камера 1)" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="fTGQTIdcPQY"><img src="https://i.ytimg.com/vi/fTGQTIdcPQY/hqdefault_live.jpg" alt="Живу. Постоянная живая трансляция 24/7 (камера 1)" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Живу. Постоянная живая трансляция 24/7 (камера 1)</strong><span>Пятк</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=naVWFv9HIho" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/naVWFv9HIho/hqdefault_live.jpg" alt="WebCam.NL | vinkmotorsport.com | live FULL HD camera." loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="naVWFv9HIho"><img src="https://i.ytimg.com/vi/naVWFv9HIho/hqdefault_live.jpg" alt="WebCam.NL | vinkmotorsport.com | live FULL HD camera." loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>WebCam.NL | vinkmotorsport.com | live FULL HD camera.</strong><span>WebCam NL</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=3o9aoRyrvAk" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/3o9aoRyrvAk/hqdefault_live.jpg" alt="ウミネコ商店（店内カメラ）" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="3o9aoRyrvAk"><img src="https://i.ytimg.com/vi/3o9aoRyrvAk/hqdefault_live.jpg" alt="ウミネコ商店（店内カメラ）" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>ウミネコ商店（店内カメラ）</strong><span>ウミネコ商店</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=JLUebPP29KY" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/JLUebPP29KY/hqdefault_live.jpg" alt="Live Camera Axis V5925" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="JLUebPP29KY"><img src="https://i.ytimg.com/vi/JLUebPP29KY/hqdefault_live.jpg" alt="Live Camera Axis V5925" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Live Camera Axis V5925</strong><span>St. John the Evangelist &amp; St. Cornelius Parish</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=bwAGkQ7FWjk" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/bwAGkQ7FWjk/hqdefault_live.jpg" alt="BOY SAYONG ( CAM 3A ) INSIDE AGDAO PUBLIC MARKET DAVAO CITY PHILIPPINES ( SAYONG STORE )" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="bwAGkQ7FWjk"><img src="https://i.ytimg.com/vi/bwAGkQ7FWjk/hqdefault_live.jpg" alt="BOY SAYONG ( CAM 3A ) INSIDE AGDAO PUBLIC MARKET DAVAO CITY PHILIPPINES ( SAYONG STORE )" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>BOY SAYONG ( CAM 3A ) INSIDE AGDAO PUBLIC MARKET DAVAO CITY PHILIPPINES ( SAYONG STORE )</strong><span>Maria Deseo - Philippines Live Webcam</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=B2cFqhyIwI0" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/B2cFqhyIwI0/hqdefault_live.jpg" alt="Maria&#39;s Cam 4a Rachel Store #philippines #davaocity" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="B2cFqhyIwI0"><img src="https://i.ytimg.com/vi/B2cFqhyIwI0/hqdefault_live.jpg" alt="Maria&#39;s Cam 4a Rachel Store #philippines #davaocity" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Maria&#39;s Cam 4a Rachel Store #philippines #davaocity</strong><span>Maria Deseo - Philippines Live Webcam</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=zXehjXzOWxM" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/zXehjXzOWxM/hqdefault_live.jpg" alt="BOY SAYONG CAM4 AGDAO PUBLIC MARKET DAVAO CITY PHILIPPINE RACHEL STORE  #philippines #davaocity" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="zXehjXzOWxM"><img src="https://i.ytimg.com/vi/zXehjXzOWxM/hqdefault_live.jpg" alt="BOY SAYONG CAM4 AGDAO PUBLIC MARKET DAVAO CITY PHILIPPINE RACHEL STORE  #philippines #davaocity" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>BOY SAYONG CAM4 AGDAO PUBLIC MARKET DAVAO CITY PHILIPPINE RACHEL STORE  #philippines #davaocity</strong><span>Maria Deseo - Philippines Live Webcam</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=P5WnSGXJpkM" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/P5WnSGXJpkM/hqdefault_live.jpg" alt="Maria&#39;s Cam 1 STORE AGDAO  PUBLIC MARKET DAVAO CITY PHILIPPINES  #philippines #davaocity" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="P5WnSGXJpkM"><img src="https://i.ytimg.com/vi/P5WnSGXJpkM/hqdefault_live.jpg" alt="Maria&#39;s Cam 1 STORE AGDAO  PUBLIC MARKET DAVAO CITY PHILIPPINES  #philippines #davaocity" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Maria&#39;s Cam 1 STORE AGDAO  PUBLIC MARKET DAVAO CITY PHILIPPINES  #philippines #davaocity</strong><span>Maria Deseo - Philippines Live Webcam</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=L0KKPfh4tXk" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/L0KKPfh4tXk/hqdefault_live.jpg" alt="Inside Maria&#39;s Living Room 24/7 #philippines #davaocity" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="L0KKPfh4tXk"><img src="https://i.ytimg.com/vi/L0KKPfh4tXk/hqdefault_live.jpg" alt="Inside Maria&#39;s Living Room 24/7 #philippines #davaocity" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Inside Maria&#39;s Living Room 24/7 #philippines #davaocity</strong><span>Maria Deseo - Philippines Live Webcam</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=CmtuOVxcKRo" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/CmtuOVxcKRo/hqdefault_live.jpg" alt="Maria&#39;s Store Cam6, Agdao Davao City, Philippines  #philippines #davaocity" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="CmtuOVxcKRo"><img src="https://i.ytimg.com/vi/CmtuOVxcKRo/hqdefault_live.jpg" alt="Maria&#39;s Store Cam6, Agdao Davao City, Philippines  #philippines #davaocity" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Maria&#39;s Store Cam6, Agdao Davao City, Philippines  #philippines #davaocity</strong><span>Maria Deseo - Philippines Live Webcam</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=2wqpy036z24" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/2wqpy036z24/hqdefault_live.jpg" alt="Beach Bar St. John Webcam" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="2wqpy036z24"><img src="https://i.ytimg.com/vi/2wqpy036z24/hqdefault_live.jpg" alt="Beach Bar St. John Webcam" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Beach Bar St. John Webcam</strong><span>St. John USVI</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=bM0GplM_vPY" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/bM0GplM_vPY/hqdefault_live.jpg" alt="🌴 LAS OLAS LIVE 🔴 Fort Lauderdale Patio Cam | Elbo Room A1A" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="bM0GplM_vPY"><img src="https://i.ytimg.com/vi/bM0GplM_vPY/hqdefault_live.jpg" alt="🌴 LAS OLAS LIVE 🔴 Fort Lauderdale Patio Cam | Elbo Room A1A" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>🌴 LAS OLAS LIVE 🔴 Fort Lauderdale Patio Cam | Elbo Room A1A</strong><span>Elbo Room (Home of ElboTV)</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=wVNt3l657X0" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/wVNt3l657X0/hqdefault_live.jpg" alt="🍹 BAR CAM 🔴 LIVE | Elbo Room Beach Bar • Fort Lauderdale" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="wVNt3l657X0"><img src="https://i.ytimg.com/vi/wVNt3l657X0/hqdefault_live.jpg" alt="🍹 BAR CAM 🔴 LIVE | Elbo Room Beach Bar • Fort Lauderdale" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>🍹 BAR CAM 🔴 LIVE | Elbo Room Beach Bar • Fort Lauderdale</strong><span>Elbo Room (Home of ElboTV)</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=6kX0K9u3NTQ" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/6kX0K9u3NTQ/hqdefault_live.jpg" alt="🔴 PHILIPPINES Live Camera Bankerohan Lyn&#39;s Food Haus, Davao City #philippines" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="6kX0K9u3NTQ"><img src="https://i.ytimg.com/vi/6kX0K9u3NTQ/hqdefault_live.jpg" alt="🔴 PHILIPPINES Live Camera Bankerohan Lyn&#39;s Food Haus, Davao City #philippines" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>🔴 PHILIPPINES Live Camera Bankerohan Lyn&#39;s Food Haus, Davao City #philippines</strong><span>JazBaz Philippines</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=YWs0HMRVCBY" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/YWs0HMRVCBY/hqdefault_live.jpg" alt="🎸 BandCam LIVE 🔴 Elbo Room Dance Floor &amp; Bands | Fort Lauderdale" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="YWs0HMRVCBY"><img src="https://i.ytimg.com/vi/YWs0HMRVCBY/hqdefault_live.jpg" alt="🎸 BandCam LIVE 🔴 Elbo Room Dance Floor &amp; Bands | Fort Lauderdale" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>🎸 BandCam LIVE 🔴 Elbo Room Dance Floor &amp; Bands | Fort Lauderdale</strong><span>Elbo Room (Home of ElboTV)</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=gtjiV8odPAQ" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/gtjiV8odPAQ/hqdefault.jpg" alt="Axis Cameras Q1715 and analytics" loading="lazy" width="320" height="180"><span class="badge">0:26</span></div>
+      <div class="thumb" data-vid="gtjiV8odPAQ"><img src="https://i.ytimg.com/vi/gtjiV8odPAQ/hqdefault.jpg" alt="Axis Cameras Q1715 and analytics" loading="lazy" width="320" height="180"><span class="badge">0:26</span></div>
       <div class="entry-body"><strong>Axis Cameras Q1715 and analytics</strong><span>Francois Bernard</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=M33bI2ltkEs" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/M33bI2ltkEs/hqdefault.jpg" alt="SY 2M DHD - SYROTECH 2MP DOME HD CAMERAS - SAMPLE VIDEO FOOTAGE" loading="lazy" width="320" height="180"><span class="badge">0:29</span></div>
+      <div class="thumb" data-vid="M33bI2ltkEs"><img src="https://i.ytimg.com/vi/M33bI2ltkEs/hqdefault.jpg" alt="SY 2M DHD - SYROTECH 2MP DOME HD CAMERAS - SAMPLE VIDEO FOOTAGE" loading="lazy" width="320" height="180"><span class="badge">0:29</span></div>
       <div class="entry-body"><strong>SY 2M DHD - SYROTECH 2MP DOME HD CAMERAS - SAMPLE VIDEO FOOTAGE</strong><span>CCTV Camera Updates India</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=DOoSsbYZq6s" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/DOoSsbYZq6s/hqdefault.jpg" alt="Axis Cameras P3807-PVE" loading="lazy" width="320" height="180"><span class="badge">1:17</span></div>
+      <div class="thumb" data-vid="DOoSsbYZq6s"><img src="https://i.ytimg.com/vi/DOoSsbYZq6s/hqdefault.jpg" alt="Axis Cameras P3807-PVE" loading="lazy" width="320" height="180"><span class="badge">1:17</span></div>
       <div class="entry-body"><strong>Axis Cameras P3807-PVE</strong><span>Francois Bernard</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=lGaXMA9NCVw" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/lGaXMA9NCVw/hqdefault.jpg" alt="Axis Cameras P3807-PVE" loading="lazy" width="320" height="180"><span class="badge">1:01</span></div>
+      <div class="thumb" data-vid="lGaXMA9NCVw"><img src="https://i.ytimg.com/vi/lGaXMA9NCVw/hqdefault.jpg" alt="Axis Cameras P3807-PVE" loading="lazy" width="320" height="180"><span class="badge">1:01</span></div>
       <div class="entry-body"><strong>Axis Cameras P3807-PVE</strong><span>Francois Bernard</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=IHOrz6NmaS8" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/IHOrz6NmaS8/hqdefault.jpg" alt="Axis Live Privacy Shield face showing option" loading="lazy" width="320" height="180"><span class="badge">0:18</span></div>
+      <div class="thumb" data-vid="IHOrz6NmaS8"><img src="https://i.ytimg.com/vi/IHOrz6NmaS8/hqdefault.jpg" alt="Axis Live Privacy Shield face showing option" loading="lazy" width="320" height="180"><span class="badge">0:18</span></div>
       <div class="entry-body"><strong>Axis Live Privacy Shield face showing option</strong><span>Francois Bernard</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=_gHH-C93zOc" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/_gHH-C93zOc/hqdefault.jpg" alt="Axis M5526-E test WDR" loading="lazy" width="320" height="180"><span class="badge">2:13</span></div>
+      <div class="thumb" data-vid="_gHH-C93zOc"><img src="https://i.ytimg.com/vi/_gHH-C93zOc/hqdefault.jpg" alt="Axis M5526-E test WDR" loading="lazy" width="320" height="180"><span class="badge">2:13</span></div>
       <div class="entry-body"><strong>Axis M5526-E test WDR</strong><span>Francois Bernard</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=rc_Owbji9Ro" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/rc_Owbji9Ro/hqdefault.jpg" alt="Axis M5526-E garage dark and bright scene" loading="lazy" width="320" height="180"><span class="badge">4:23</span></div>
+      <div class="thumb" data-vid="rc_Owbji9Ro"><img src="https://i.ytimg.com/vi/rc_Owbji9Ro/hqdefault.jpg" alt="Axis M5526-E garage dark and bright scene" loading="lazy" width="320" height="180"><span class="badge">4:23</span></div>
       <div class="entry-body"><strong>Axis M5526-E garage dark and bright scene</strong><span>Francois Bernard</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=Oq_1sLX50VA" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/Oq_1sLX50VA/hqdefault.jpg" alt="Axis Live Privacy Mask options (face only)" loading="lazy" width="320" height="180"><span class="badge">0:37</span></div>
+      <div class="thumb" data-vid="Oq_1sLX50VA"><img src="https://i.ytimg.com/vi/Oq_1sLX50VA/hqdefault.jpg" alt="Axis Live Privacy Mask options (face only)" loading="lazy" width="320" height="180"><span class="badge">0:37</span></div>
       <div class="entry-body"><strong>Axis Live Privacy Mask options (face only)</strong><span>Francois Bernard</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=GWXB1Oq3ijw" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/GWXB1Oq3ijw/hqdefault.jpg" alt="Axis Cameras P3715-PLVE" loading="lazy" width="320" height="180"><span class="badge">0:58</span></div>
+      <div class="thumb" data-vid="GWXB1Oq3ijw"><img src="https://i.ytimg.com/vi/GWXB1Oq3ijw/hqdefault.jpg" alt="Axis Cameras P3715-PLVE" loading="lazy" width="320" height="180"><span class="badge">0:58</span></div>
       <div class="entry-body"><strong>Axis Cameras P3715-PLVE</strong><span>Francois Bernard</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=T7g7HtDEsh8" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/T7g7HtDEsh8/hqdefault.jpg" alt="Axis Live Privacy Shield - full body shadow option in green" loading="lazy" width="320" height="180"><span class="badge">0:54</span></div>
+      <div class="thumb" data-vid="T7g7HtDEsh8"><img src="https://i.ytimg.com/vi/T7g7HtDEsh8/hqdefault.jpg" alt="Axis Live Privacy Shield - full body shadow option in green" loading="lazy" width="320" height="180"><span class="badge">0:54</span></div>
       <div class="entry-body"><strong>Axis Live Privacy Shield - full body shadow option in green</strong><span>Francois Bernard</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=kTAria4R9ko" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/kTAria4R9ko/hqdefault.jpg" alt="Axis Live Privacy Shield Full Body Mosaic option" loading="lazy" width="320" height="180"><span class="badge">0:33</span></div>
+      <div class="thumb" data-vid="kTAria4R9ko"><img src="https://i.ytimg.com/vi/kTAria4R9ko/hqdefault.jpg" alt="Axis Live Privacy Shield Full Body Mosaic option" loading="lazy" width="320" height="180"><span class="badge">0:33</span></div>
       <div class="entry-body"><strong>Axis Live Privacy Shield Full Body Mosaic option</strong><span>Francois Bernard</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=x-biRwNGtPc" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/x-biRwNGtPc/hqdefault.jpg" alt="Axis Q6315-LE PTZ quick zoom and focus capability" loading="lazy" width="320" height="180"><span class="badge">2:49</span></div>
+      <div class="thumb" data-vid="x-biRwNGtPc"><img src="https://i.ytimg.com/vi/x-biRwNGtPc/hqdefault.jpg" alt="Axis Q6315-LE PTZ quick zoom and focus capability" loading="lazy" width="320" height="180"><span class="badge">2:49</span></div>
       <div class="entry-body"><strong>Axis Q6315-LE PTZ quick zoom and focus capability</strong><span>Francois Bernard</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=WYt82dBvfV4" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/WYt82dBvfV4/hqdefault.jpg" alt="Axis V5938 wdr test" loading="lazy" width="320" height="180"><span class="badge">2:14</span></div>
+      <div class="thumb" data-vid="WYt82dBvfV4"><img src="https://i.ytimg.com/vi/WYt82dBvfV4/hqdefault.jpg" alt="Axis V5938 wdr test" loading="lazy" width="320" height="180"><span class="badge">2:14</span></div>
       <div class="entry-body"><strong>Axis V5938 wdr test</strong><span>Francois Bernard</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=b4YJoFlTD-E" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/b4YJoFlTD-E/hqdefault.jpg" alt="Canon VB-H47B WDR" loading="lazy" width="320" height="180"><span class="badge">2:14</span></div>
+      <div class="thumb" data-vid="b4YJoFlTD-E"><img src="https://i.ytimg.com/vi/b4YJoFlTD-E/hqdefault.jpg" alt="Canon VB-H47B WDR" loading="lazy" width="320" height="180"><span class="badge">2:14</span></div>
       <div class="entry-body"><strong>Canon VB-H47B WDR</strong><span>Francois Bernard</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=JVBWvlgeRh8" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/JVBWvlgeRh8/hqdefault.jpg" alt="Panasonic S6131 test" loading="lazy" width="320" height="180"><span class="badge">2:14</span></div>
+      <div class="thumb" data-vid="JVBWvlgeRh8"><img src="https://i.ytimg.com/vi/JVBWvlgeRh8/hqdefault.jpg" alt="Panasonic S6131 test" loading="lazy" width="320" height="180"><span class="badge">2:14</span></div>
       <div class="entry-body"><strong>Panasonic S6131 test</strong><span>Francois Bernard</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=1gi5qn1khVk" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/1gi5qn1khVk/hqdefault.jpg" alt="4MP PTZ Camera with Night Vision &amp; Motion Detection | CCTV Camera: Video | Sample Video Footage" loading="lazy" width="320" height="180"><span class="badge">0:16</span></div>
+      <div class="thumb" data-vid="1gi5qn1khVk"><img src="https://i.ytimg.com/vi/1gi5qn1khVk/hqdefault.jpg" alt="4MP PTZ Camera with Night Vision &amp; Motion Detection | CCTV Camera: Video | Sample Video Footage" loading="lazy" width="320" height="180"><span class="badge">0:16</span></div>
       <div class="entry-body"><strong>4MP PTZ Camera with Night Vision &amp; Motion Detection | CCTV Camera: Video | Sample Video Footage</strong><span>CCTV Camera Updates India</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=iaWNKvMLXU0" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/iaWNKvMLXU0/hqdefault.jpg" alt="LIVE BROADCAST: Elbo Room Live Concert &amp; Beach Network Session | ElboTV" loading="lazy" width="320" height="180"><span class="badge">3:59:51</span></div>
+      <div class="thumb" data-vid="iaWNKvMLXU0"><img src="https://i.ytimg.com/vi/iaWNKvMLXU0/hqdefault.jpg" alt="LIVE BROADCAST: Elbo Room Live Concert &amp; Beach Network Session | ElboTV" loading="lazy" width="320" height="180"><span class="badge">3:59:51</span></div>
       <div class="entry-body"><strong>LIVE BROADCAST: Elbo Room Live Concert &amp; Beach Network Session | ElboTV</strong><span>Elbo Room (Home of ElboTV)</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=L0kB9xGhWJU" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/L0kB9xGhWJU/hqdefault.jpg" alt="LIVE BROADCAST: Elbo Room Live Concert &amp; Beach Network Session | ElboTV" loading="lazy" width="320" height="180"><span class="badge">3:59:44</span></div>
+      <div class="thumb" data-vid="L0kB9xGhWJU"><img src="https://i.ytimg.com/vi/L0kB9xGhWJU/hqdefault.jpg" alt="LIVE BROADCAST: Elbo Room Live Concert &amp; Beach Network Session | ElboTV" loading="lazy" width="320" height="180"><span class="badge">3:59:44</span></div>
       <div class="entry-body"><strong>LIVE BROADCAST: Elbo Room Live Concert &amp; Beach Network Session | ElboTV</strong><span>Elbo Room (Home of ElboTV)</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=wlaQI-HQXNI" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/wlaQI-HQXNI/hqdefault.jpg" alt="LIVE BROADCAST: Elbo Room Live Concert &amp; Beach Network Session | ElboTV" loading="lazy" width="320" height="180"><span class="badge">3:59:45</span></div>
+      <div class="thumb" data-vid="wlaQI-HQXNI"><img src="https://i.ytimg.com/vi/wlaQI-HQXNI/hqdefault.jpg" alt="LIVE BROADCAST: Elbo Room Live Concert &amp; Beach Network Session | ElboTV" loading="lazy" width="320" height="180"><span class="badge">3:59:45</span></div>
       <div class="entry-body"><strong>LIVE BROADCAST: Elbo Room Live Concert &amp; Beach Network Session | ElboTV</strong><span>Elbo Room (Home of ElboTV)</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=O91ub4iEt-o" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/O91ub4iEt-o/hqdefault.jpg" alt="LIVE BROADCAST: Elbo Room Live Concert &amp; Beach Network Session | ElboTV" loading="lazy" width="320" height="180"><span class="badge">3:59:52</span></div>
+      <div class="thumb" data-vid="O91ub4iEt-o"><img src="https://i.ytimg.com/vi/O91ub4iEt-o/hqdefault.jpg" alt="LIVE BROADCAST: Elbo Room Live Concert &amp; Beach Network Session | ElboTV" loading="lazy" width="320" height="180"><span class="badge">3:59:52</span></div>
       <div class="entry-body"><strong>LIVE BROADCAST: Elbo Room Live Concert &amp; Beach Network Session | ElboTV</strong><span>Elbo Room (Home of ElboTV)</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=01oFymiYKf8" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/01oFymiYKf8/hqdefault.jpg" alt="LIVE BROADCAST: Elbo Room Live Concert &amp; Beach Network Session | ElboTV" loading="lazy" width="320" height="180"><span class="badge">3:59:51</span></div>
+      <div class="thumb" data-vid="01oFymiYKf8"><img src="https://i.ytimg.com/vi/01oFymiYKf8/hqdefault.jpg" alt="LIVE BROADCAST: Elbo Room Live Concert &amp; Beach Network Session | ElboTV" loading="lazy" width="320" height="180"><span class="badge">3:59:51</span></div>
       <div class="entry-body"><strong>LIVE BROADCAST: Elbo Room Live Concert &amp; Beach Network Session | ElboTV</strong><span>Elbo Room (Home of ElboTV)</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=ko6_OB_DKDQ" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/ko6_OB_DKDQ/hqdefault.jpg" alt="LIVE BROADCAST: Elbo Room Live Concert &amp; Beach Network Session | ElboTV" loading="lazy" width="320" height="180"><span class="badge">3:59:50</span></div>
+      <div class="thumb" data-vid="ko6_OB_DKDQ"><img src="https://i.ytimg.com/vi/ko6_OB_DKDQ/hqdefault.jpg" alt="LIVE BROADCAST: Elbo Room Live Concert &amp; Beach Network Session | ElboTV" loading="lazy" width="320" height="180"><span class="badge">3:59:50</span></div>
       <div class="entry-body"><strong>LIVE BROADCAST: Elbo Room Live Concert &amp; Beach Network Session | ElboTV</strong><span>Elbo Room (Home of ElboTV)</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=IEWFO1YpHEY" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/IEWFO1YpHEY/hqdefault.jpg" alt="LIVE BROADCAST: Elbo Room Live Concert &amp; Beach Network Session | ElboTV" loading="lazy" width="320" height="180"><span class="badge">3:59:37</span></div>
+      <div class="thumb" data-vid="IEWFO1YpHEY"><img src="https://i.ytimg.com/vi/IEWFO1YpHEY/hqdefault.jpg" alt="LIVE BROADCAST: Elbo Room Live Concert &amp; Beach Network Session | ElboTV" loading="lazy" width="320" height="180"><span class="badge">3:59:37</span></div>
       <div class="entry-body"><strong>LIVE BROADCAST: Elbo Room Live Concert &amp; Beach Network Session | ElboTV</strong><span>Elbo Room (Home of ElboTV)</span></div>
     </a></div>
+      <script>
+        (function () {
+          var KEY = 'staticPreviewMode';
+          var mode = localStorage.getItem(KEY) || 'auto';
+          var thumbs = [].slice.call(document.querySelectorAll('.thumb[data-vid]'));
+          var io = null;
+          function play(t) {
+            if (t.querySelector('iframe')) return;
+            var f = document.createElement('iframe');
+            f.src = 'https://www.youtube.com/embed/' + t.dataset.vid + '?autoplay=1&mute=1&playsinline=1&rel=0';
+            f.allow = 'autoplay; encrypted-media';
+            t.appendChild(f);
+          }
+          function stop(t) { var f = t.querySelector('iframe'); if (f) f.remove(); }
+          function apply() {
+            thumbs.forEach(stop);
+            if (io) { io.disconnect(); io = null; }
+            document.querySelectorAll('.preview-toggle button').forEach(function (b) {
+              b.classList.toggle('active', b.dataset.mode === mode);
+            });
+            if (mode === 'auto') {
+              io = new IntersectionObserver(function (es) {
+                es.forEach(function (e) { e.isIntersecting ? play(e.target) : stop(e.target); });
+              }, { rootMargin: '50px' });
+              thumbs.forEach(function (t) { io.observe(t); });
+            }
+          }
+          thumbs.forEach(function (t) {
+            t.addEventListener('mouseenter', function () { if (mode === 'hover') play(t); });
+            t.addEventListener('mouseleave', function () { if (mode === 'hover') stop(t); });
+          });
+          document.querySelectorAll('.preview-toggle button').forEach(function (b) {
+            b.addEventListener('click', function (e) {
+              e.preventDefault();
+              mode = b.dataset.mode;
+              localStorage.setItem(KEY, mode);
+              apply();
+            });
+          });
+          apply();
+        })();
+      </script>
 </main>
 <footer>
   <a href="/">Home</a><a href="/browse.html">Browse all</a><a href="/about.html">About</a><a href="/privacy.html">Privacy</a><a href="/terms.html">Terms</a>

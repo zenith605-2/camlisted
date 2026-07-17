@@ -42,7 +42,13 @@
   .map-wrap path[data-href] { cursor: pointer; }
   .map-wrap path:hover { filter: brightness(1.6); stroke: #ffffff; }
   .map-tip { position: fixed; z-index: 10; background: rgba(0,0,0,.85); border: 1px solid #2a2f3a; color: #fff; padding: 5px 10px; border-radius: 6px; font-size: 0.85rem; pointer-events: none; white-space: nowrap; }
-  .map-note { color: #9aa4b2; font-size: 0.8rem; margin-bottom: 16px; }
+  .map-note { color: #9aa4b2; font-size: 0.8rem; margin-bottom: 4px; }
+  .map-legend { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; color: #9aa4b2; font-size: 0.8rem; margin-bottom: 18px; }
+  .map-legend .sw { display: inline-block; width: 14px; height: 14px; border-radius: 3px; margin-right: 5px; vertical-align: -2px; }
+  .thumb iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+  .preview-toggle { margin: 4px 0 14px; color: #9aa4b2; font-size: 0.85rem; display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+  .preview-toggle button { background: #161b22; color: #9aa4b2; border: 1px solid #2a2f3a; border-radius: 999px; padding: 4px 12px; cursor: pointer; font-size: 0.8rem; }
+  .preview-toggle button.active { color: #fff; border-color: #ff3b3b; }
   h2 { font-size: 1.15rem; margin: 28px 0 12px; }
   .cta { display: inline-block; margin: 20px 0; background: #ff3b3b; color: #fff; padding: 10px 18px; border-radius: 8px; text-decoration: none; font-weight: 600; }
   footer { border-top: 1px solid #2a2f3a; margin-top: 40px; padding: 20px 24px; color: #9aa4b2; font-size: 0.85rem; }
@@ -59,143 +65,190 @@
   <h1>Live Cams &amp; Footage in Taiwan</h1>
   <p class="intro">32 live cams and 2 videos from Taiwan, re-verified daily. Click any card to watch on YouTube. Updated 2026-07-17.</p>
   <a class="cta" href="/?country=TW">Open in interactive viewer →</a>
-  <div class="grid">
+  
+      <div class="preview-toggle">Preview:
+        <button type="button" data-mode="auto">▶ Auto</button>
+        <button type="button" data-mode="hover">🖱 Hover</button>
+        <button type="button" data-mode="off">Off</button>
+      </div><div class="grid">
     <a class="entry" href="https://www.youtube.com/watch?v=pmM2CeSAx0I" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/pmM2CeSAx0I/hqdefault_live.jpg" alt="Live Cam Taiwan Taipei City 台湾、台北のライブカメラ川岸の夜景 給大家放鬆的畫面和音樂," loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="pmM2CeSAx0I"><img src="https://i.ytimg.com/vi/pmM2CeSAx0I/hqdefault_live.jpg" alt="Live Cam Taiwan Taipei City 台湾、台北のライブカメラ川岸の夜景 給大家放鬆的畫面和音樂," loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Live Cam Taiwan Taipei City 台湾、台北のライブカメラ川岸の夜景 給大家放鬆的畫面和音樂,</strong><span>Taiwan Taipei Jacky</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=z_fY1pj1VBw" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/z_fY1pj1VBw/hqdefault_live.jpg" alt="【Taipei Live Cam】象山看台北 - 4K即時影像 | Overlooking Taipei at the top of Xiangshan | 象山から望む台北 | Taipei 101" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="z_fY1pj1VBw"><img src="https://i.ytimg.com/vi/z_fY1pj1VBw/hqdefault_live.jpg" alt="【Taipei Live Cam】象山看台北 - 4K即時影像 | Overlooking Taipei at the top of Xiangshan | 象山から望む台北 | Taipei 101" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>【Taipei Live Cam】象山看台北 - 4K即時影像 | Overlooking Taipei at the top of Xiangshan | 象山から望む台北 | Taipei 101</strong><span>Taipei Travel Live Cam  台北觀光即時影像 </span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=lhXXhDyjFtI" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/lhXXhDyjFtI/hqdefault_live.jpg" alt="【4K Live Camera】台中望高寮4K即時影像｜Taichung Wang Gao Liao 4K Live Camera" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="lhXXhDyjFtI"><img src="https://i.ytimg.com/vi/lhXXhDyjFtI/hqdefault_live.jpg" alt="【4K Live Camera】台中望高寮4K即時影像｜Taichung Wang Gao Liao 4K Live Camera" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>【4K Live Camera】台中望高寮4K即時影像｜Taichung Wang Gao Liao 4K Live Camera</strong><span>大玩台中-臺中觀光旅遊局</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=91PfFoqvuUk" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/91PfFoqvuUk/hqdefault_live.jpg" alt="【4K】Taiwan Taoyuan International Airport (TPE/RCTP) Live Camera 24/7 桃園國際機場即時影像｜桃園機場" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="91PfFoqvuUk"><img src="https://i.ytimg.com/vi/91PfFoqvuUk/hqdefault_live.jpg" alt="【4K】Taiwan Taoyuan International Airport (TPE/RCTP) Live Camera 24/7 桃園國際機場即時影像｜桃園機場" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>【4K】Taiwan Taoyuan International Airport (TPE/RCTP) Live Camera 24/7 桃園國際機場即時影像｜桃園機場</strong><span>遊桃園 Taoyuan Travel</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=Nz9-_x5ecWc" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/Nz9-_x5ecWc/hqdefault_live.jpg" alt="[Live][61] 淡江大橋即時影像路況 #淡江大橋 #路況直播" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="Nz9-_x5ecWc"><img src="https://i.ytimg.com/vi/Nz9-_x5ecWc/hqdefault_live.jpg" alt="[Live][61] 淡江大橋即時影像路況 #淡江大橋 #路況直播" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>[Live][61] 淡江大橋即時影像路況 #淡江大橋 #路況直播</strong><span>台灣即時影像監視器</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=R_5jhoux3nY" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/R_5jhoux3nY/hqdefault_live.jpg" alt="【三峽老街24小時LIVE直播2】三峽老街南段 (北往南即時影像)" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="R_5jhoux3nY"><img src="https://i.ytimg.com/vi/R_5jhoux3nY/hqdefault_live.jpg" alt="【三峽老街24小時LIVE直播2】三峽老街南段 (北往南即時影像)" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>【三峽老街24小時LIVE直播2】三峽老街南段 (北往南即時影像)</strong><span>三峽民權老街商圈 </span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=2lVMTs_Fj0M" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/2lVMTs_Fj0M/hqdefault_live.jpg" alt="[Live][01] 合歡山武嶺亭即時影像 Wuling Hehuanshan Taiwan #武嶺 #合歡山武嶺亭" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="2lVMTs_Fj0M"><img src="https://i.ytimg.com/vi/2lVMTs_Fj0M/hqdefault_live.jpg" alt="[Live][01] 合歡山武嶺亭即時影像 Wuling Hehuanshan Taiwan #武嶺 #合歡山武嶺亭" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>[Live][01] 合歡山武嶺亭即時影像 Wuling Hehuanshan Taiwan #武嶺 #合歡山武嶺亭</strong><span>台灣即時影像監視器</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=34h_Cy_n0Ok" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/34h_Cy_n0Ok/hqdefault_live.jpg" alt="【Taipei Live Cam】劍潭山微風平台 - 4K即時影像 | Jiantanshan Weifeng Observatory | 剣潭山微風デッキ" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="34h_Cy_n0Ok"><img src="https://i.ytimg.com/vi/34h_Cy_n0Ok/hqdefault_live.jpg" alt="【Taipei Live Cam】劍潭山微風平台 - 4K即時影像 | Jiantanshan Weifeng Observatory | 剣潭山微風デッキ" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>【Taipei Live Cam】劍潭山微風平台 - 4K即時影像 | Jiantanshan Weifeng Observatory | 剣潭山微風デッキ</strong><span>Taipei Travel Live Cam  台北觀光即時影像 </span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=AhPEgn67rpE" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/AhPEgn67rpE/hqdefault_live.jpg" alt="【Taipei Live Cam】大稻埕碼頭 - 4K即時影像 | Taipei Dadaocheng Wharf | 台北大稲埕埠頭" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="AhPEgn67rpE"><img src="https://i.ytimg.com/vi/AhPEgn67rpE/hqdefault_live.jpg" alt="【Taipei Live Cam】大稻埕碼頭 - 4K即時影像 | Taipei Dadaocheng Wharf | 台北大稲埕埠頭" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>【Taipei Live Cam】大稻埕碼頭 - 4K即時影像 | Taipei Dadaocheng Wharf | 台北大稲埕埠頭</strong><span>Taipei Travel Live Cam  台北觀光即時影像 </span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=215ahZ_0rTg" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/215ahZ_0rTg/hqdefault_live.jpg" alt="【Taipei Live Cam】貓空指南宮 - 4K即時影像｜Maokong Zhinan Temple｜猫空指南宮" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="215ahZ_0rTg"><img src="https://i.ytimg.com/vi/215ahZ_0rTg/hqdefault_live.jpg" alt="【Taipei Live Cam】貓空指南宮 - 4K即時影像｜Maokong Zhinan Temple｜猫空指南宮" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>【Taipei Live Cam】貓空指南宮 - 4K即時影像｜Maokong Zhinan Temple｜猫空指南宮</strong><span>Taipei Travel Live Cam  台北觀光即時影像 </span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=uvwfYzwY8tg" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/uvwfYzwY8tg/hqdefault_live.jpg" alt="【Taipei Live Cam】碧山巖 - 4K即時影像 | Bishan Temple | 碧山巌開漳聖王廟 | TAIPEI 101" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="uvwfYzwY8tg"><img src="https://i.ytimg.com/vi/uvwfYzwY8tg/hqdefault_live.jpg" alt="【Taipei Live Cam】碧山巖 - 4K即時影像 | Bishan Temple | 碧山巌開漳聖王廟 | TAIPEI 101" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>【Taipei Live Cam】碧山巖 - 4K即時影像 | Bishan Temple | 碧山巌開漳聖王廟 | TAIPEI 101</strong><span>Taipei Travel Live Cam  台北觀光即時影像 </span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=va8zBSJWHVM" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/va8zBSJWHVM/hqdefault_live.jpg" alt="Live Cam 台北市河岸直播即時影像 台湾、台北のライブカメラ川岸の夜景 河岸美景 relax music Sleep peacefully, help sleep, relax the mind" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="va8zBSJWHVM"><img src="https://i.ytimg.com/vi/va8zBSJWHVM/hqdefault_live.jpg" alt="Live Cam 台北市河岸直播即時影像 台湾、台北のライブカメラ川岸の夜景 河岸美景 relax music Sleep peacefully, help sleep, relax the mind" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Live Cam 台北市河岸直播即時影像 台湾、台北のライブカメラ川岸の夜景 河岸美景 relax music Sleep peacefully, help sleep, relax the mind</strong><span>Taiwan Taipei Jacky</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=c-fsELxk5aw" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/c-fsELxk5aw/hqdefault_live.jpg" alt="Live Cam Taiwan Taipei City 台湾、台北のライブカメラ川岸の夜景 給大家放鬆的畫面和音樂,請勿談論政治, 和沒意義的話題" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="c-fsELxk5aw"><img src="https://i.ytimg.com/vi/c-fsELxk5aw/hqdefault_live.jpg" alt="Live Cam Taiwan Taipei City 台湾、台北のライブカメラ川岸の夜景 給大家放鬆的畫面和音樂,請勿談論政治, 和沒意義的話題" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Live Cam Taiwan Taipei City 台湾、台北のライブカメラ川岸の夜景 給大家放鬆的畫面和音樂,請勿談論政治, 和沒意義的話題</strong><span>Taiwan Taipei Jacky</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=fP4ecxfsJos" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/fP4ecxfsJos/hqdefault_live.jpg" alt="【Taipei Live Cam】大佳河濱公園 - 4K即時影像 | Taipei Dajia Riverside Park | 台北大佳河濱公園" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="fP4ecxfsJos"><img src="https://i.ytimg.com/vi/fP4ecxfsJos/hqdefault_live.jpg" alt="【Taipei Live Cam】大佳河濱公園 - 4K即時影像 | Taipei Dajia Riverside Park | 台北大佳河濱公園" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>【Taipei Live Cam】大佳河濱公園 - 4K即時影像 | Taipei Dajia Riverside Park | 台北大佳河濱公園</strong><span>Taipei Travel Live Cam  台北觀光即時影像 </span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=fjhg3gAnMFg" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/fjhg3gAnMFg/hqdefault_live.jpg" alt="【4K Live Camera】台中高美濕地4K即時影像 | Taichung Gaomei Wetland 4K Live Camera" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="fjhg3gAnMFg"><img src="https://i.ytimg.com/vi/fjhg3gAnMFg/hqdefault_live.jpg" alt="【4K Live Camera】台中高美濕地4K即時影像 | Taichung Gaomei Wetland 4K Live Camera" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>【4K Live Camera】台中高美濕地4K即時影像 | Taichung Gaomei Wetland 4K Live Camera</strong><span>大玩台中-臺中觀光旅遊局</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=UCG1aXVO8H8" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/UCG1aXVO8H8/hqdefault_live.jpg" alt="【4K】台東多良車站即時影像 Taitung Duoliang Station Live Camera" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="UCG1aXVO8H8"><img src="https://i.ytimg.com/vi/UCG1aXVO8H8/hqdefault_live.jpg" alt="【4K】台東多良車站即時影像 Taitung Duoliang Station Live Camera" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>【4K】台東多良車站即時影像 Taitung Duoliang Station Live Camera</strong><span>Amazing Taitung 台東就醬玩</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=JhQuR77AR7U" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/JhQuR77AR7U/hqdefault_live.jpg" alt="【Live Cam】東海岸即時影像 - 都歷遊客中心｜Torik Visitor Center｜都歷ビジターセンター 2160p" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="JhQuR77AR7U"><img src="https://i.ytimg.com/vi/JhQuR77AR7U/hqdefault_live.jpg" alt="【Live Cam】東海岸即時影像 - 都歷遊客中心｜Torik Visitor Center｜都歷ビジターセンター 2160p" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>【Live Cam】東海岸即時影像 - 都歷遊客中心｜Torik Visitor Center｜都歷ビジターセンター 2160p</strong><span>東部海岸國家風景區管理處</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=JkoXcXI04Qk" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/JkoXcXI04Qk/hqdefault_live.jpg" alt="【Live Cam】東海岸即時影像 - 大石鼻山｜Dashshibi Hill｜大石鼻山 2160p" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="JkoXcXI04Qk"><img src="https://i.ytimg.com/vi/JkoXcXI04Qk/hqdefault_live.jpg" alt="【Live Cam】東海岸即時影像 - 大石鼻山｜Dashshibi Hill｜大石鼻山 2160p" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>【Live Cam】東海岸即時影像 - 大石鼻山｜Dashshibi Hill｜大石鼻山 2160p</strong><span>東部海岸國家風景區管理處</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=fv1yFousBvc" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/fv1yFousBvc/hqdefault_live.jpg" alt="【Live Cam】東海岸即時影像 - 綠島帆船鼻｜Fanchuanbi Grassland in Green Island｜緑島帆船鼻の大草原 2160p" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="fv1yFousBvc"><img src="https://i.ytimg.com/vi/fv1yFousBvc/hqdefault_live.jpg" alt="【Live Cam】東海岸即時影像 - 綠島帆船鼻｜Fanchuanbi Grassland in Green Island｜緑島帆船鼻の大草原 2160p" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>【Live Cam】東海岸即時影像 - 綠島帆船鼻｜Fanchuanbi Grassland in Green Island｜緑島帆船鼻の大草原 2160p</strong><span>東部海岸國家風景區管理處</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=a8nJQr5rBGs" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/a8nJQr5rBGs/hqdefault_live.jpg" alt="【Live Cam】東海岸即時影像 - 綠島柴口浮潛區｜Chaikou Snorkeling Area｜柴口スノーケリングスポット 2160p｜台東綠島｜Green Island" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="a8nJQr5rBGs"><img src="https://i.ytimg.com/vi/a8nJQr5rBGs/hqdefault_live.jpg" alt="【Live Cam】東海岸即時影像 - 綠島柴口浮潛區｜Chaikou Snorkeling Area｜柴口スノーケリングスポット 2160p｜台東綠島｜Green Island" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>【Live Cam】東海岸即時影像 - 綠島柴口浮潛區｜Chaikou Snorkeling Area｜柴口スノーケリングスポット 2160p｜台東綠島｜Green Island</strong><span>東部海岸國家風景區管理處</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=dQ7Sd6PGLdA" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/dQ7Sd6PGLdA/hqdefault_live.jpg" alt="【Live Cam】東海岸即時影像 - 三仙台｜Sanxiantai｜三仙台（さんせんたい）風景区 2160p" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="dQ7Sd6PGLdA"><img src="https://i.ytimg.com/vi/dQ7Sd6PGLdA/hqdefault_live.jpg" alt="【Live Cam】東海岸即時影像 - 三仙台｜Sanxiantai｜三仙台（さんせんたい）風景区 2160p" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>【Live Cam】東海岸即時影像 - 三仙台｜Sanxiantai｜三仙台（さんせんたい）風景区 2160p</strong><span>東部海岸國家風景區管理處</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=AKl3F6cAY2Q" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/AKl3F6cAY2Q/hqdefault_live.jpg" alt="【Live Cam】東海岸即時影像 - 加路蘭遊憩區｜Jialulan｜加路蘭休憩区 2160p" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="AKl3F6cAY2Q"><img src="https://i.ytimg.com/vi/AKl3F6cAY2Q/hqdefault_live.jpg" alt="【Live Cam】東海岸即時影像 - 加路蘭遊憩區｜Jialulan｜加路蘭休憩区 2160p" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>【Live Cam】東海岸即時影像 - 加路蘭遊憩區｜Jialulan｜加路蘭休憩区 2160p</strong><span>東部海岸國家風景區管理處</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=mXnigLvIL0Q" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/mXnigLvIL0Q/hqdefault_live.jpg" alt="【Live Cam】東海岸即時影像 - 石梯坪｜Shitiping｜石梯坪 2160p" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="mXnigLvIL0Q"><img src="https://i.ytimg.com/vi/mXnigLvIL0Q/hqdefault_live.jpg" alt="【Live Cam】東海岸即時影像 - 石梯坪｜Shitiping｜石梯坪 2160p" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>【Live Cam】東海岸即時影像 - 石梯坪｜Shitiping｜石梯坪 2160p</strong><span>東部海岸國家風景區管理處</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=wTHhv7M0vCI" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/wTHhv7M0vCI/hqdefault_live.jpg" alt="【Live Cam】東海岸即時影像 - 綠島南寮漁港｜Green Island Nanliao Fishing Harbor｜緑島南寮漁港 2160p｜台東綠島｜石朗潛水區" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="wTHhv7M0vCI"><img src="https://i.ytimg.com/vi/wTHhv7M0vCI/hqdefault_live.jpg" alt="【Live Cam】東海岸即時影像 - 綠島南寮漁港｜Green Island Nanliao Fishing Harbor｜緑島南寮漁港 2160p｜台東綠島｜石朗潛水區" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>【Live Cam】東海岸即時影像 - 綠島南寮漁港｜Green Island Nanliao Fishing Harbor｜緑島南寮漁港 2160p｜台東綠島｜石朗潛水區</strong><span>東部海岸國家風景區管理處</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=TY4qQElcUrA" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/TY4qQElcUrA/hqdefault_live.jpg" alt="【4K】台東華源曙光觀景台即時影像 Taitung Huayuan Live Camera" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="TY4qQElcUrA"><img src="https://i.ytimg.com/vi/TY4qQElcUrA/hqdefault_live.jpg" alt="【4K】台東華源曙光觀景台即時影像 Taitung Huayuan Live Camera" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>【4K】台東華源曙光觀景台即時影像 Taitung Huayuan Live Camera</strong><span>Amazing Taitung 台東就醬玩</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=ka7FV0sCvxQ" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/ka7FV0sCvxQ/hqdefault_live.jpg" alt="高雄旗津海水浴場 4K即時影像 | Kaohsiung Cijin (Qijin) Beach 4K Live Camera" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="ka7FV0sCvxQ"><img src="https://i.ytimg.com/vi/ka7FV0sCvxQ/hqdefault_live.jpg" alt="高雄旗津海水浴場 4K即時影像 | Kaohsiung Cijin (Qijin) Beach 4K Live Camera" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>高雄旗津海水浴場 4K即時影像 | Kaohsiung Cijin (Qijin) Beach 4K Live Camera</strong><span>高雄旅遊網</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=JnD8Rk3o0BM" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/JnD8Rk3o0BM/hqdefault_live.jpg" alt="【Live Cam】東海岸即時影像 - 長虹橋｜Changhong Bridge｜長虹橋 2160p" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="JnD8Rk3o0BM"><img src="https://i.ytimg.com/vi/JnD8Rk3o0BM/hqdefault_live.jpg" alt="【Live Cam】東海岸即時影像 - 長虹橋｜Changhong Bridge｜長虹橋 2160p" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>【Live Cam】東海岸即時影像 - 長虹橋｜Changhong Bridge｜長虹橋 2160p</strong><span>東部海岸國家風景區管理處</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=6zOsnHxN7_I" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/6zOsnHxN7_I/hqdefault_live.jpg" alt="【Kinmen Live】金門料羅港即時影像｜Kinmen Liaoluo Port 4K Live Camera" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="6zOsnHxN7_I"><img src="https://i.ytimg.com/vi/6zOsnHxN7_I/hqdefault_live.jpg" alt="【Kinmen Live】金門料羅港即時影像｜Kinmen Liaoluo Port 4K Live Camera" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>【Kinmen Live】金門料羅港即時影像｜Kinmen Liaoluo Port 4K Live Camera</strong><span>樂遊金門</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=tD_a03trUvE" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/tD_a03trUvE/hqdefault_live.jpg" alt="【4K】Yongan Fishing Harbor Live Cam 永安漁港即時影像" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="tD_a03trUvE"><img src="https://i.ytimg.com/vi/tD_a03trUvE/hqdefault_live.jpg" alt="【4K】Yongan Fishing Harbor Live Cam 永安漁港即時影像" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>【4K】Yongan Fishing Harbor Live Cam 永安漁港即時影像</strong><span>遊桃園 Taoyuan Travel</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=ZdqHgQwvZOw" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/ZdqHgQwvZOw/hqdefault_live.jpg" alt="【Live Cam】東海岸即時影像 - 金樽遊憩區｜Jinzun｜金樽休憩エリア 2160p" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="ZdqHgQwvZOw"><img src="https://i.ytimg.com/vi/ZdqHgQwvZOw/hqdefault_live.jpg" alt="【Live Cam】東海岸即時影像 - 金樽遊憩區｜Jinzun｜金樽休憩エリア 2160p" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>【Live Cam】東海岸即時影像 - 金樽遊憩區｜Jinzun｜金樽休憩エリア 2160p</strong><span>東部海岸國家風景區管理處</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=D945F_dauls" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/D945F_dauls/hqdefault_live.jpg" alt="【4K】台東富岡漁港即時影像 Taitung Fugang Fishing Port Live Camera" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="D945F_dauls"><img src="https://i.ytimg.com/vi/D945F_dauls/hqdefault_live.jpg" alt="【4K】台東富岡漁港即時影像 Taitung Fugang Fishing Port Live Camera" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>【4K】台東富岡漁港即時影像 Taitung Fugang Fishing Port Live Camera</strong><span>Amazing Taitung 台東就醬玩</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=XSD5ptYisw8" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/XSD5ptYisw8/hqdefault_live.jpg" alt="九份即時影像 Jiufen Live Camera 실시간 주펀 라이브캠  | 新北觀光即時影像 | ライブカメラ" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="XSD5ptYisw8"><img src="https://i.ytimg.com/vi/XSD5ptYisw8/hqdefault_live.jpg" alt="九份即時影像 Jiufen Live Camera 실시간 주펀 라이브캠  | 新北觀光即時影像 | ライブカメラ" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>九份即時影像 Jiufen Live Camera 실시간 주펀 라이브캠  | 新北觀光即時影像 | ライブカメラ</strong><span>新北旅客 New Taipei Tour</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=icbTFe8T_XM" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/icbTFe8T_XM/hqdefault.jpg" alt="[4K] 傣族村莊徒步旅行（原聲） @霸派·騰衝·雲南省·中國" loading="lazy" width="320" height="180"><span class="badge">16:02</span></div>
+      <div class="thumb" data-vid="icbTFe8T_XM"><img src="https://i.ytimg.com/vi/icbTFe8T_XM/hqdefault.jpg" alt="[4K] 傣族村莊徒步旅行（原聲） @霸派·騰衝·雲南省·中國" loading="lazy" width="320" height="180"><span class="badge">16:02</span></div>
       <div class="entry-body"><strong>[4K] 傣族村莊徒步旅行（原聲） @霸派·騰衝·雲南省·中國</strong><span>Cloud Residence Diary雲居日記</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=ELOXTBVBGcg" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/ELOXTBVBGcg/hqdefault.jpg" alt="【4K】徒步探险，废弃工厂之旅｜徒步旅行｜Hiking Adventure, Abandoned Factory Tour | Hiking｜Hiking Guizhou" loading="lazy" width="320" height="180"><span class="badge">18:19</span></div>
+      <div class="thumb" data-vid="ELOXTBVBGcg"><img src="https://i.ytimg.com/vi/ELOXTBVBGcg/hqdefault.jpg" alt="【4K】徒步探险，废弃工厂之旅｜徒步旅行｜Hiking Adventure, Abandoned Factory Tour | Hiking｜Hiking Guizhou" loading="lazy" width="320" height="180"><span class="badge">18:19</span></div>
       <div class="entry-body"><strong>【4K】徒步探险，废弃工厂之旅｜徒步旅行｜Hiking Adventure, Abandoned Factory Tour | Hiking｜Hiking Guizhou</strong><span>TrailXun</span></div>
     </a></div>
+      <script>
+        (function () {
+          var KEY = 'staticPreviewMode';
+          var mode = localStorage.getItem(KEY) || 'auto';
+          var thumbs = [].slice.call(document.querySelectorAll('.thumb[data-vid]'));
+          var io = null;
+          function play(t) {
+            if (t.querySelector('iframe')) return;
+            var f = document.createElement('iframe');
+            f.src = 'https://www.youtube.com/embed/' + t.dataset.vid + '?autoplay=1&mute=1&playsinline=1&rel=0';
+            f.allow = 'autoplay; encrypted-media';
+            t.appendChild(f);
+          }
+          function stop(t) { var f = t.querySelector('iframe'); if (f) f.remove(); }
+          function apply() {
+            thumbs.forEach(stop);
+            if (io) { io.disconnect(); io = null; }
+            document.querySelectorAll('.preview-toggle button').forEach(function (b) {
+              b.classList.toggle('active', b.dataset.mode === mode);
+            });
+            if (mode === 'auto') {
+              io = new IntersectionObserver(function (es) {
+                es.forEach(function (e) { e.isIntersecting ? play(e.target) : stop(e.target); });
+              }, { rootMargin: '50px' });
+              thumbs.forEach(function (t) { io.observe(t); });
+            }
+          }
+          thumbs.forEach(function (t) {
+            t.addEventListener('mouseenter', function () { if (mode === 'hover') play(t); });
+            t.addEventListener('mouseleave', function () { if (mode === 'hover') stop(t); });
+          });
+          document.querySelectorAll('.preview-toggle button').forEach(function (b) {
+            b.addEventListener('click', function (e) {
+              e.preventDefault();
+              mode = b.dataset.mode;
+              localStorage.setItem(KEY, mode);
+              apply();
+            });
+          });
+          apply();
+        })();
+      </script>
 </main>
 <footer>
   <a href="/">Home</a><a href="/browse.html">Browse all</a><a href="/about.html">About</a><a href="/privacy.html">Privacy</a><a href="/terms.html">Terms</a>

@@ -42,7 +42,13 @@
   .map-wrap path[data-href] { cursor: pointer; }
   .map-wrap path:hover { filter: brightness(1.6); stroke: #ffffff; }
   .map-tip { position: fixed; z-index: 10; background: rgba(0,0,0,.85); border: 1px solid #2a2f3a; color: #fff; padding: 5px 10px; border-radius: 6px; font-size: 0.85rem; pointer-events: none; white-space: nowrap; }
-  .map-note { color: #9aa4b2; font-size: 0.8rem; margin-bottom: 16px; }
+  .map-note { color: #9aa4b2; font-size: 0.8rem; margin-bottom: 4px; }
+  .map-legend { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; color: #9aa4b2; font-size: 0.8rem; margin-bottom: 18px; }
+  .map-legend .sw { display: inline-block; width: 14px; height: 14px; border-radius: 3px; margin-right: 5px; vertical-align: -2px; }
+  .thumb iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+  .preview-toggle { margin: 4px 0 14px; color: #9aa4b2; font-size: 0.85rem; display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+  .preview-toggle button { background: #161b22; color: #9aa4b2; border: 1px solid #2a2f3a; border-radius: 999px; padding: 4px 12px; cursor: pointer; font-size: 0.8rem; }
+  .preview-toggle button.active { color: #fff; border-color: #ff3b3b; }
   h2 { font-size: 1.15rem; margin: 28px 0 12px; }
   .cta { display: inline-block; margin: 20px 0; background: #ff3b3b; color: #fff; padding: 10px 18px; border-radius: 8px; text-decoration: none; font-weight: 600; }
   footer { border-top: 1px solid #2a2f3a; margin-top: 40px; padding: 20px 24px; color: #9aa4b2; font-size: 0.85rem; }
@@ -59,607 +65,654 @@
   <h1>🚦 Traffic Live Cams &amp; Videos</h1>
   <p class="intro">215 live cams and 4 videos in the Traffic category, re-verified daily. Click any card to watch on YouTube. Updated 2026-07-17.</p>
   <a class="cta" href="/?category=traffic">Open in interactive viewer →</a>
-  <div class="grid">
+  
+      <div class="preview-toggle">Preview:
+        <button type="button" data-mode="auto">▶ Auto</button>
+        <button type="button" data-mode="hover">🖱 Hover</button>
+        <button type="button" data-mode="off">Off</button>
+      </div><div class="grid">
     <a class="entry" href="https://www.youtube.com/watch?v=RDchI1SLh4Q" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/RDchI1SLh4Q/hqdefault_live.jpg" alt="LIVE St. Petersburg Nevskiy ave. Sadovaya str. Невский проспект Садовая улица Санкт-Петербург онлайн" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="RDchI1SLh4Q"><img src="https://i.ytimg.com/vi/RDchI1SLh4Q/hqdefault_live.jpg" alt="LIVE St. Petersburg Nevskiy ave. Sadovaya str. Невский проспект Садовая улица Санкт-Петербург онлайн" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>LIVE St. Petersburg Nevskiy ave. Sadovaya str. Невский проспект Садовая улица Санкт-Петербург онлайн</strong><span>Алёна Юнусова</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=4e9mp4lLQpE" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/4e9mp4lLQpE/hqdefault_live.jpg" alt="AO VIVO | CENTRO DE LAGUNA SC | Parceria Laguna Business Center  IMAGENS AO VIVO 24H  | SE-CONNECT" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="4e9mp4lLQpE"><img src="https://i.ytimg.com/vi/4e9mp4lLQpE/hqdefault_live.jpg" alt="AO VIVO | CENTRO DE LAGUNA SC | Parceria Laguna Business Center  IMAGENS AO VIVO 24H  | SE-CONNECT" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>AO VIVO | CENTRO DE LAGUNA SC | Parceria Laguna Business Center  IMAGENS AO VIVO 24H  | SE-CONNECT</strong><span>SE-CONNECT</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=SnvVwulM48c" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/SnvVwulM48c/hqdefault_live.jpg" alt="Natal AO VIVO | 10 Câmeras em Tempo Real • Trânsito • Clima • 24h" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="SnvVwulM48c"><img src="https://i.ytimg.com/vi/SnvVwulM48c/hqdefault_live.jpg" alt="Natal AO VIVO | 10 Câmeras em Tempo Real • Trânsito • Clima • 24h" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Natal AO VIVO | 10 Câmeras em Tempo Real • Trânsito • Clima • 24h</strong><span>FVF DRONE LIVES 24H</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=5IEvI2t3tTw" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/5IEvI2t3tTw/hqdefault_live.jpg" alt="🔴 GOIOERÊ AO VIVO| CAM 3|  BAIRRO AGORA | AV. CURITIBA #cidadesdoparaná #centro" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="5IEvI2t3tTw"><img src="https://i.ytimg.com/vi/5IEvI2t3tTw/hqdefault_live.jpg" alt="🔴 GOIOERÊ AO VIVO| CAM 3|  BAIRRO AGORA | AV. CURITIBA #cidadesdoparaná #centro" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>🔴 GOIOERÊ AO VIVO| CAM 3|  BAIRRO AGORA | AV. CURITIBA #cidadesdoparaná #centro</strong><span>TRANSMISSÃO AO VIVO CIDADE</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=_6thFzLFy2E" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/_6thFzLFy2E/hqdefault_live.jpg" alt="Управляемая камера, Пермь, &quot;Пермская ярмарка&quot; | Live camera at Perm Expo with AI Chatbot" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="_6thFzLFy2E"><img src="https://i.ytimg.com/vi/_6thFzLFy2E/hqdefault_live.jpg" alt="Управляемая камера, Пермь, &quot;Пермская ярмарка&quot; | Live camera at Perm Expo with AI Chatbot" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Управляемая камера, Пермь, &quot;Пермская ярмарка&quot; | Live camera at Perm Expo with AI Chatbot</strong><span>Nik CCTV</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=kjem5-kanuc" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/kjem5-kanuc/hqdefault_live.jpg" alt="LIVE Сенатская площадь Медный всадник онлайн камера Санкт-Петербург. Bronze Horseman Senatskaya Sq." loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="kjem5-kanuc"><img src="https://i.ytimg.com/vi/kjem5-kanuc/hqdefault_live.jpg" alt="LIVE Сенатская площадь Медный всадник онлайн камера Санкт-Петербург. Bronze Horseman Senatskaya Sq." loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>LIVE Сенатская площадь Медный всадник онлайн камера Санкт-Петербург. Bronze Horseman Senatskaya Sq.</strong><span>Mobotix Webcams Russia</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=9ZyKdBaRQrs" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/9ZyKdBaRQrs/hqdefault_live.jpg" alt="Камера Соликамск (Боровск), Россия, Пермский край / Сamera Solikamsk, Russia with AI chatbot" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="9ZyKdBaRQrs"><img src="https://i.ytimg.com/vi/9ZyKdBaRQrs/hqdefault_live.jpg" alt="Камера Соликамск (Боровск), Россия, Пермский край / Сamera Solikamsk, Russia with AI chatbot" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Камера Соликамск (Боровск), Россия, Пермский край / Сamera Solikamsk, Russia with AI chatbot</strong><span>Nik CCTV</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=yhqeaqVVxlc" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/yhqeaqVVxlc/hqdefault_live.jpg" alt="Медный Всадник, Сенатская площадь, Санкт-Петербург, Bronze Horseman, Senate Square, St.Petersburg" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="yhqeaqVVxlc"><img src="https://i.ytimg.com/vi/yhqeaqVVxlc/hqdefault_live.jpg" alt="Медный Всадник, Сенатская площадь, Санкт-Петербург, Bronze Horseman, Senate Square, St.Petersburg" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Медный Всадник, Сенатская площадь, Санкт-Петербург, Bronze Horseman, Senate Square, St.Petersburg</strong><span>Cams SPB</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=eBsRKdlctxc" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/eBsRKdlctxc/hqdefault_live.jpg" alt="LIVE St. Petersburg, Russia Nevskiy ave. Kazan Cathedral. Невский проспект и Казанский собор онлайн" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="eBsRKdlctxc"><img src="https://i.ytimg.com/vi/eBsRKdlctxc/hqdefault_live.jpg" alt="LIVE St. Petersburg, Russia Nevskiy ave. Kazan Cathedral. Невский проспект и Казанский собор онлайн" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>LIVE St. Petersburg, Russia Nevskiy ave. Kazan Cathedral. Невский проспект и Казанский собор онлайн</strong><span>Mobotix Webcams Russia Live</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=sWF5RQ_OzpM" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/sWF5RQ_OzpM/hqdefault_live.jpg" alt="Boston, MA Live Cam - Boston Common at Boylston St." loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="sWF5RQ_OzpM"><img src="https://i.ytimg.com/vi/sWF5RQ_OzpM/hqdefault_live.jpg" alt="Boston, MA Live Cam - Boston Common at Boylston St." loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Boston, MA Live Cam - Boston Common at Boylston St.</strong><span>Boston and Maine Live</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=GQRnp3GLx1U" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/GQRnp3GLx1U/hqdefault_live.jpg" alt="LIVE Площадь Ала-Тоо г.Бишкек, Кыргызстан | онлайн-трансляция" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="GQRnp3GLx1U"><img src="https://i.ytimg.com/vi/GQRnp3GLx1U/hqdefault_live.jpg" alt="LIVE Площадь Ала-Тоо г.Бишкек, Кыргызстан | онлайн-трансляция" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>LIVE Площадь Ала-Тоо г.Бишкек, Кыргызстан | онлайн-трансляция</strong><span>Saima Telecom</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=Jy1Y9f8NEY0" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/Jy1Y9f8NEY0/hqdefault_live.jpg" alt="Live Camera AXIS Q1808-LE Bullet Camera" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="Jy1Y9f8NEY0"><img src="https://i.ytimg.com/vi/Jy1Y9f8NEY0/hqdefault_live.jpg" alt="Live Camera AXIS Q1808-LE Bullet Camera" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Live Camera AXIS Q1808-LE Bullet Camera</strong><span>Axis Experience Center The Netherlands</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=bu6XkQUmdJ8" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/bu6XkQUmdJ8/hqdefault_live.jpg" alt="24/7 • multichannel camera, Omsk, Russia, Siberia • Россия, г. Омск, многоканальная камера" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="bu6XkQUmdJ8"><img src="https://i.ytimg.com/vi/bu6XkQUmdJ8/hqdefault_live.jpg" alt="24/7 • multichannel camera, Omsk, Russia, Siberia • Россия, г. Омск, многоканальная камера" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>24/7 • multichannel camera, Omsk, Russia, Siberia • Россия, г. Омск, многоканальная камера</strong><span>smotriomsk</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=sJvEFrG0wq0" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/sJvEFrG0wq0/hqdefault_live.jpg" alt="Camera cổng trường Nguyễn Huệ Đà Nẵng" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="sJvEFrG0wq0"><img src="https://i.ytimg.com/vi/sJvEFrG0wq0/hqdefault_live.jpg" alt="Camera cổng trường Nguyễn Huệ Đà Nẵng" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Camera cổng trường Nguyễn Huệ Đà Nẵng</strong><span>Phát Triển Đà Nẵng</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=AQd-p5hFtQo" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/AQd-p5hFtQo/hqdefault_live.jpg" alt="🔴 LIVE CCTV Jalur Puncak Cisarua Real Time 24 Jam | Depan Polsek Cisarua | Cemerlang CCTV" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="AQd-p5hFtQo"><img src="https://i.ytimg.com/vi/AQd-p5hFtQo/hqdefault_live.jpg" alt="🔴 LIVE CCTV Jalur Puncak Cisarua Real Time 24 Jam | Depan Polsek Cisarua | Cemerlang CCTV" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>🔴 LIVE CCTV Jalur Puncak Cisarua Real Time 24 Jam | Depan Polsek Cisarua | Cemerlang CCTV</strong><span>Pakuan Network</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=JJ3MWNYVCU4" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/JJ3MWNYVCU4/hqdefault_live.jpg" alt="🔴 LIVE CCTV Simpang Gadog – Pantauan Lalu Lintas Real Time | by Cemerlang CCTV" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="JJ3MWNYVCU4"><img src="https://i.ytimg.com/vi/JJ3MWNYVCU4/hqdefault_live.jpg" alt="🔴 LIVE CCTV Simpang Gadog – Pantauan Lalu Lintas Real Time | by Cemerlang CCTV" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>🔴 LIVE CCTV Simpang Gadog – Pantauan Lalu Lintas Real Time | by Cemerlang CCTV</strong><span>Pakuan Network</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=LMQ5J-Dtj2M" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/LMQ5J-Dtj2M/hqdefault_live.jpg" alt="🔴En directo 🌿 #Gasteiz #Vitoria #Wolkam – ¡Webcam en vivo desde los Apartamentos Divan! 🌿" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="LMQ5J-Dtj2M"><img src="https://i.ytimg.com/vi/LMQ5J-Dtj2M/hqdefault_live.jpg" alt="🔴En directo 🌿 #Gasteiz #Vitoria #Wolkam – ¡Webcam en vivo desde los Apartamentos Divan! 🌿" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>🔴En directo 🌿 #Gasteiz #Vitoria #Wolkam – ¡Webcam en vivo desde los Apartamentos Divan! 🌿</strong><span>Wolkam IT</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=9d0i7WG6wHg" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/9d0i7WG6wHg/hqdefault_live.jpg" alt="Avenida 5 Febrero desde Hotel Holiday Inn, Querétaro" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="9d0i7WG6wHg"><img src="https://i.ytimg.com/vi/9d0i7WG6wHg/hqdefault_live.jpg" alt="Avenida 5 Febrero desde Hotel Holiday Inn, Querétaro" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Avenida 5 Febrero desde Hotel Holiday Inn, Querétaro</strong><span>Webcams de México TV / Canal 8</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=2ETj1sUmEmU" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/2ETj1sUmEmU/hqdefault_live.jpg" alt="LIVE | Traverse City, MI | West Bay Camera" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="2ETj1sUmEmU"><img src="https://i.ytimg.com/vi/2ETj1sUmEmU/hqdefault_live.jpg" alt="LIVE | Traverse City, MI | West Bay Camera" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>LIVE | Traverse City, MI | West Bay Camera</strong><span>Radio Centre</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=H1Uk1LMkbQA" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/H1Uk1LMkbQA/hqdefault_live.jpg" alt="Bremen Webcam --- Weserblick" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="H1Uk1LMkbQA"><img src="https://i.ytimg.com/vi/H1Uk1LMkbQA/hqdefault_live.jpg" alt="Bremen Webcam --- Weserblick" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Bremen Webcam --- Weserblick</strong><span>Visit Bremen</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=KDSPk5ovOGw" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/KDSPk5ovOGw/hqdefault_live.jpg" alt="AO VIVO | TUBARÃO SC 🇧🇷 | IMAGENS AO VIVO 24H | SANTA CATARINA | SE-CONNECT INTERNET" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="KDSPk5ovOGw"><img src="https://i.ytimg.com/vi/KDSPk5ovOGw/hqdefault_live.jpg" alt="AO VIVO | TUBARÃO SC 🇧🇷 | IMAGENS AO VIVO 24H | SANTA CATARINA | SE-CONNECT INTERNET" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>AO VIVO | TUBARÃO SC 🇧🇷 | IMAGENS AO VIVO 24H | SANTA CATARINA | SE-CONNECT INTERNET</strong><span>SE-CONNECT</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=Tldo8RNCT-0" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/Tldo8RNCT-0/hqdefault_live.jpg" alt="🔴  PARAGUAI AO VIVO| CAMERA CIUDAD DEL ESTE | TRÂNSITO MOSTRA FRONTEIRA BRASIL E PONTE  DA AMIZADE" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="Tldo8RNCT-0"><img src="https://i.ytimg.com/vi/Tldo8RNCT-0/hqdefault_live.jpg" alt="🔴  PARAGUAI AO VIVO| CAMERA CIUDAD DEL ESTE | TRÂNSITO MOSTRA FRONTEIRA BRASIL E PONTE  DA AMIZADE" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>🔴  PARAGUAI AO VIVO| CAMERA CIUDAD DEL ESTE | TRÂNSITO MOSTRA FRONTEIRA BRASIL E PONTE  DA AMIZADE</strong><span>TRANSMISSÃO AO VIVO CIDADE</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=pnByrhgCiCk" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/pnByrhgCiCk/hqdefault_live.jpg" alt="BR-101 AO VIVO | Trânsito em Tempo Real • Arena das Dunas • Clima 24h | Natal/RN" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="pnByrhgCiCk"><img src="https://i.ytimg.com/vi/pnByrhgCiCk/hqdefault_live.jpg" alt="BR-101 AO VIVO | Trânsito em Tempo Real • Arena das Dunas • Clima 24h | Natal/RN" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>BR-101 AO VIVO | Trânsito em Tempo Real • Arena das Dunas • Clima 24h | Natal/RN</strong><span>FVF DRONE LIVES 24H</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=LCL2cOrgQj0" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/LCL2cOrgQj0/hqdefault_live.jpg" alt="Trânsito em Natal RN | Av. Romualdo Galvão x Av. Antônio Basílio | AO VIVO 24H" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="LCL2cOrgQj0"><img src="https://i.ytimg.com/vi/LCL2cOrgQj0/hqdefault_live.jpg" alt="Trânsito em Natal RN | Av. Romualdo Galvão x Av. Antônio Basílio | AO VIVO 24H" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Trânsito em Natal RN | Av. Romualdo Galvão x Av. Antônio Basílio | AO VIVO 24H</strong><span>FVF DRONE LIVES 24H</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=1F3bqlPsl6Y" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/1F3bqlPsl6Y/hqdefault_live.jpg" alt="AO VIVO Trânsito na Zona Norte de Natal/RN | Felizardo Moura e Principais Avenidas" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="1F3bqlPsl6Y"><img src="https://i.ytimg.com/vi/1F3bqlPsl6Y/hqdefault_live.jpg" alt="AO VIVO Trânsito na Zona Norte de Natal/RN | Felizardo Moura e Principais Avenidas" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>AO VIVO Trânsito na Zona Norte de Natal/RN | Felizardo Moura e Principais Avenidas</strong><span>FVF DRONE LIVES 24H</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=D_g0rrzul0I" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/D_g0rrzul0I/hqdefault_live.jpg" alt="AO VIVO: Trânsito em Natal RN 24H | Av. Salgado Filho x Av. Nevaldo Rocha" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="D_g0rrzul0I"><img src="https://i.ytimg.com/vi/D_g0rrzul0I/hqdefault_live.jpg" alt="AO VIVO: Trânsito em Natal RN 24H | Av. Salgado Filho x Av. Nevaldo Rocha" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>AO VIVO: Trânsito em Natal RN 24H | Av. Salgado Filho x Av. Nevaldo Rocha</strong><span>FVF DRONE LIVES 24H</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=mZlT_81Gs7c" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/mZlT_81Gs7c/hqdefault_live.jpg" alt="AO VIVO | AVENIDA PEDRO ZAPELINI – TUBARÃO SC 🇧🇷 | IMAGENS AO VIVO 24H | SE-CONNECT INTERNET" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="mZlT_81Gs7c"><img src="https://i.ytimg.com/vi/mZlT_81Gs7c/hqdefault_live.jpg" alt="AO VIVO | AVENIDA PEDRO ZAPELINI – TUBARÃO SC 🇧🇷 | IMAGENS AO VIVO 24H | SE-CONNECT INTERNET" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>AO VIVO | AVENIDA PEDRO ZAPELINI – TUBARÃO SC 🇧🇷 | IMAGENS AO VIVO 24H | SE-CONNECT INTERNET</strong><span>SE-CONNECT</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=iKDw7vTD7z4" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/iKDw7vTD7z4/hqdefault_live.jpg" alt="AO VIVO | PONTE CABEÇUDAS – LAGUNA SC 🇧🇷 | IMAGENS AO VIVO 24H | SE-CONNECT AGORA LAGUNA" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="iKDw7vTD7z4"><img src="https://i.ytimg.com/vi/iKDw7vTD7z4/hqdefault_live.jpg" alt="AO VIVO | PONTE CABEÇUDAS – LAGUNA SC 🇧🇷 | IMAGENS AO VIVO 24H | SE-CONNECT AGORA LAGUNA" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>AO VIVO | PONTE CABEÇUDAS – LAGUNA SC 🇧🇷 | IMAGENS AO VIVO 24H | SE-CONNECT AGORA LAGUNA</strong><span>SE-CONNECT</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=x7LXRTX0cC4" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/x7LXRTX0cC4/hqdefault_live.jpg" alt="AO VIVO 24H | Trânsito na Av. Prudente de Moraes com Alexandrino de Alencar | Natal RN" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="x7LXRTX0cC4"><img src="https://i.ytimg.com/vi/x7LXRTX0cC4/hqdefault_live.jpg" alt="AO VIVO 24H | Trânsito na Av. Prudente de Moraes com Alexandrino de Alencar | Natal RN" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>AO VIVO 24H | Trânsito na Av. Prudente de Moraes com Alexandrino de Alencar | Natal RN</strong><span>FVF DRONE LIVES 24H</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=TI8NpP5wQc8" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/TI8NpP5wQc8/hqdefault_live.jpg" alt="🔴 JI-PARANA AO VIVO | BR 364 | TRANSCONTINENTAL|" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="TI8NpP5wQc8"><img src="https://i.ytimg.com/vi/TI8NpP5wQc8/hqdefault_live.jpg" alt="🔴 JI-PARANA AO VIVO | BR 364 | TRANSCONTINENTAL|" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>🔴 JI-PARANA AO VIVO | BR 364 | TRANSCONTINENTAL|</strong><span>TRANSMISSÃO AO VIVO CIDADE</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=OB-HApxnVzk" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/OB-HApxnVzk/hqdefault_live.jpg" alt="LIVE: Mackinac Bridge hazy conditions from Canadian wildfire smoke" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="OB-HApxnVzk"><img src="https://i.ytimg.com/vi/OB-HApxnVzk/hqdefault_live.jpg" alt="LIVE: Mackinac Bridge hazy conditions from Canadian wildfire smoke" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>LIVE: Mackinac Bridge hazy conditions from Canadian wildfire smoke</strong><span>WWMT-TV</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=2LF0KcvHB94" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/2LF0KcvHB94/hqdefault_live.jpg" alt="[실시간 라이브] 서울 힐링 노원 우이천 경치(LiveCam_Healing_Nowon_Seoul_Korea 4K LIVE CAM Uycheon)" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="2LF0KcvHB94"><img src="https://i.ytimg.com/vi/2LF0KcvHB94/hqdefault_live.jpg" alt="[실시간 라이브] 서울 힐링 노원 우이천 경치(LiveCam_Healing_Nowon_Seoul_Korea 4K LIVE CAM Uycheon)" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>[실시간 라이브] 서울 힐링 노원 우이천 경치(LiveCam_Healing_Nowon_Seoul_Korea 4K LIVE CAM Uycheon)</strong><span>HEALING NOWON LIVE</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=8Idkr-w-MO8" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/8Idkr-w-MO8/hqdefault_live.jpg" alt="【LIVE】首都高 都心環状線 竹橋JCT付近 ライブカメラ/Tokyo highway Live Camera 2026/07/16 00:20～" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="8Idkr-w-MO8"><img src="https://i.ytimg.com/vi/8Idkr-w-MO8/hqdefault_live.jpg" alt="【LIVE】首都高 都心環状線 竹橋JCT付近 ライブカメラ/Tokyo highway Live Camera 2026/07/16 00:20～" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>【LIVE】首都高 都心環状線 竹橋JCT付近 ライブカメラ/Tokyo highway Live Camera 2026/07/16 00:20～</strong><span>交通情報ライブカメラCH</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=Kozl3hd56Y0" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/Kozl3hd56Y0/hqdefault_live.jpg" alt="LIVE Tokyo Bay 🇯🇵 | 首都高速湾岸線 東雲JCT付近 東京ライブカメラ | Expressway Traffic | 24/7 Japan Livestream" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="Kozl3hd56Y0"><img src="https://i.ytimg.com/vi/Kozl3hd56Y0/hqdefault_live.jpg" alt="LIVE Tokyo Bay 🇯🇵 | 首都高速湾岸線 東雲JCT付近 東京ライブカメラ | Expressway Traffic | 24/7 Japan Livestream" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>LIVE Tokyo Bay 🇯🇵 | 首都高速湾岸線 東雲JCT付近 東京ライブカメラ | Expressway Traffic | 24/7 Japan Livestream</strong><span>HMTV | Tokyo Bay Live &amp; Archive</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=9UYFGM8CGt0" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/9UYFGM8CGt0/hqdefault_live.jpg" alt="大阪ライブカメラ【LIVE】Ｆ.Ｓ.Ｔ.ＮＥＴ 提供✨ 超高感度ライブカメラ 　門真市コストコ　三井アウトレット前" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="9UYFGM8CGt0"><img src="https://i.ytimg.com/vi/9UYFGM8CGt0/hqdefault_live.jpg" alt="大阪ライブカメラ【LIVE】Ｆ.Ｓ.Ｔ.ＮＥＴ 提供✨ 超高感度ライブカメラ 　門真市コストコ　三井アウトレット前" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>大阪ライブカメラ【LIVE】Ｆ.Ｓ.Ｔ.ＮＥＴ 提供✨ 超高感度ライブカメラ 　門真市コストコ　三井アウトレット前</strong><span>F.S.T. NET</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=wT59DZpcb78" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/wT59DZpcb78/hqdefault_live.jpg" alt="じゃがいも街道 市街側 暴風雪監視カメラ | &quot;Jagaimo Road&quot;, City Side: Blizzard Monitoring Camera" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="wT59DZpcb78"><img src="https://i.ytimg.com/vi/wT59DZpcb78/hqdefault_live.jpg" alt="じゃがいも街道 市街側 暴風雪監視カメラ | &quot;Jagaimo Road&quot;, City Side: Blizzard Monitoring Camera" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>じゃがいも街道 市街側 暴風雪監視カメラ | &quot;Jagaimo Road&quot;, City Side: Blizzard Monitoring Camera</strong><span>小清水町役場ライブカメラ</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=EJ4pPEGWsWQ" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/EJ4pPEGWsWQ/hqdefault_live.jpg" alt="小清水町共和西基幹道路ライブカメラ | Koshimizu Town Kyowa-Nishi Trunk Road Live Camera" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="EJ4pPEGWsWQ"><img src="https://i.ytimg.com/vi/EJ4pPEGWsWQ/hqdefault_live.jpg" alt="小清水町共和西基幹道路ライブカメラ | Koshimizu Town Kyowa-Nishi Trunk Road Live Camera" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>小清水町共和西基幹道路ライブカメラ | Koshimizu Town Kyowa-Nishi Trunk Road Live Camera</strong><span>小清水町役場ライブカメラ</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=pGiTbBOXgXM" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/pGiTbBOXgXM/hqdefault_live.jpg" alt="じゃがいも街道 南3号交差点 暴風雪用カメラ | &quot;Jagaimo Road&quot;, South 3rd Intersection: Blizzard-proof camera" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="pGiTbBOXgXM"><img src="https://i.ytimg.com/vi/pGiTbBOXgXM/hqdefault_live.jpg" alt="じゃがいも街道 南3号交差点 暴風雪用カメラ | &quot;Jagaimo Road&quot;, South 3rd Intersection: Blizzard-proof camera" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>じゃがいも街道 南3号交差点 暴風雪用カメラ | &quot;Jagaimo Road&quot;, South 3rd Intersection: Blizzard-proof camera</strong><span>小清水町役場ライブカメラ</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=x0L-kxjjBI0" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/x0L-kxjjBI0/hqdefault_live.jpg" alt="南3号基幹道路 暴風雪監視用カメラ | Camera for monitoring blizzards on South Route 3 main road" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="x0L-kxjjBI0"><img src="https://i.ytimg.com/vi/x0L-kxjjBI0/hqdefault_live.jpg" alt="南3号基幹道路 暴風雪監視用カメラ | Camera for monitoring blizzards on South Route 3 main road" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>南3号基幹道路 暴風雪監視用カメラ | Camera for monitoring blizzards on South Route 3 main road</strong><span>小清水町役場ライブカメラ</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=iLfmRhMarWM" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/iLfmRhMarWM/hqdefault_live.jpg" alt="旧軽井沢ロータリーライブカメラ" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="iLfmRhMarWM"><img src="https://i.ytimg.com/vi/iLfmRhMarWM/hqdefault_live.jpg" alt="旧軽井沢ロータリーライブカメラ" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>旧軽井沢ロータリーライブカメラ</strong><span>長野県軽井沢町</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=y2xaFSo83aM" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/y2xaFSo83aM/hqdefault_live.jpg" alt="軽井沢中学校付近ライブカメラ" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="y2xaFSo83aM"><img src="https://i.ytimg.com/vi/y2xaFSo83aM/hqdefault_live.jpg" alt="軽井沢中学校付近ライブカメラ" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>軽井沢中学校付近ライブカメラ</strong><span>長野県軽井沢町</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=8VbOUB-dplM" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/8VbOUB-dplM/hqdefault_live.jpg" alt="プリンス通り付近ライブカメラ" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="8VbOUB-dplM"><img src="https://i.ytimg.com/vi/8VbOUB-dplM/hqdefault_live.jpg" alt="プリンス通り付近ライブカメラ" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>プリンス通り付近ライブカメラ</strong><span>長野県軽井沢町</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=WKtAv5OepmU" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/WKtAv5OepmU/hqdefault_live.jpg" alt="るるぱる（子育て支援センター）付近ライブカメラ" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="WKtAv5OepmU"><img src="https://i.ytimg.com/vi/WKtAv5OepmU/hqdefault_live.jpg" alt="るるぱる（子育て支援センター）付近ライブカメラ" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>るるぱる（子育て支援センター）付近ライブカメラ</strong><span>長野県軽井沢町</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=Y4KAMd2eGuU" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/Y4KAMd2eGuU/hqdefault_live.jpg" alt="国道18号追分付近ライブカメラ" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="Y4KAMd2eGuU"><img src="https://i.ytimg.com/vi/Y4KAMd2eGuU/hqdefault_live.jpg" alt="国道18号追分付近ライブカメラ" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>国道18号追分付近ライブカメラ</strong><span>長野県軽井沢町</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=GkoIAnOeazM" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/GkoIAnOeazM/hqdefault_live.jpg" alt="新軽井沢西交差点付近ライブカメラ" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="GkoIAnOeazM"><img src="https://i.ytimg.com/vi/GkoIAnOeazM/hqdefault_live.jpg" alt="新軽井沢西交差点付近ライブカメラ" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>新軽井沢西交差点付近ライブカメラ</strong><span>長野県軽井沢町</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=BEo6iGXiFXI" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/BEo6iGXiFXI/hqdefault_live.jpg" alt="【Nature Sound 🔊】Hong Kong City Scape Live Camera - Ap lei chau South Horizons 香港市景即時影像 - 鴨脷洲海怡半島" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="BEo6iGXiFXI"><img src="https://i.ytimg.com/vi/BEo6iGXiFXI/hqdefault_live.jpg" alt="【Nature Sound 🔊】Hong Kong City Scape Live Camera - Ap lei chau South Horizons 香港市景即時影像 - 鴨脷洲海怡半島" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>【Nature Sound 🔊】Hong Kong City Scape Live Camera - Ap lei chau South Horizons 香港市景即時影像 - 鴨脷洲海怡半島</strong><span>香港人の日常生活</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=gaNLXSEUVRw" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/gaNLXSEUVRw/hqdefault_live.jpg" alt="いまのJR札幌駅／Live streaming from JR Sapporo Station 北海道ｏｎ天気カメラ" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="gaNLXSEUVRw"><img src="https://i.ytimg.com/vi/gaNLXSEUVRw/hqdefault_live.jpg" alt="いまのJR札幌駅／Live streaming from JR Sapporo Station 北海道ｏｎ天気カメラ" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>いまのJR札幌駅／Live streaming from JR Sapporo Station 北海道ｏｎ天気カメラ</strong><span>HTB北海道テレビ</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=3-QV-UfQOjQ" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/3-QV-UfQOjQ/hqdefault_live.jpg" alt="じゃがいも街道 浜小清水側 暴風雪用カメラ | &quot;Jagaimo Road&quot;, Hamakoshimizu side: Blizzard-resistant camera" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="3-QV-UfQOjQ"><img src="https://i.ytimg.com/vi/3-QV-UfQOjQ/hqdefault_live.jpg" alt="じゃがいも街道 浜小清水側 暴風雪用カメラ | &quot;Jagaimo Road&quot;, Hamakoshimizu side: Blizzard-resistant camera" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>じゃがいも街道 浜小清水側 暴風雪用カメラ | &quot;Jagaimo Road&quot;, Hamakoshimizu side: Blizzard-resistant camera</strong><span>小清水町役場ライブカメラ</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=YiUnKdAq424" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/YiUnKdAq424/hqdefault_live.jpg" alt="国道18号バイパス（軽井沢グリーンライン）消防署付近" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="YiUnKdAq424"><img src="https://i.ytimg.com/vi/YiUnKdAq424/hqdefault_live.jpg" alt="国道18号バイパス（軽井沢グリーンライン）消防署付近" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>国道18号バイパス（軽井沢グリーンライン）消防署付近</strong><span>長野県軽井沢町</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=FbAaCT9ykC4" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/FbAaCT9ykC4/hqdefault_live.jpg" alt="立石公園道路状況ライブカメラ" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="FbAaCT9ykC4"><img src="https://i.ytimg.com/vi/FbAaCT9ykC4/hqdefault_live.jpg" alt="立石公園道路状況ライブカメラ" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>立石公園道路状況ライブカメラ</strong><span>諏訪市公式チャンネル</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=q8CKL80CHsk" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/q8CKL80CHsk/hqdefault_live.jpg" alt="【有明ライブカメラ】陸海空を望む景色を24時間ライブ配信中 / Live cam" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="q8CKL80CHsk"><img src="https://i.ytimg.com/vi/q8CKL80CHsk/hqdefault_live.jpg" alt="【有明ライブカメラ】陸海空を望む景色を24時間ライブ配信中 / Live cam" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>【有明ライブカメラ】陸海空を望む景色を24時間ライブ配信中 / Live cam</strong><span>EN DAIBA</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=voBpVg8e6jk" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/voBpVg8e6jk/hqdefault_live.jpg" alt="Aeropuerto Internacional Ciudad de México Pista 5R - En vivo desde la terraza de Skyline Coffee" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="voBpVg8e6jk"><img src="https://i.ytimg.com/vi/voBpVg8e6jk/hqdefault_live.jpg" alt="Aeropuerto Internacional Ciudad de México Pista 5R - En vivo desde la terraza de Skyline Coffee" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Aeropuerto Internacional Ciudad de México Pista 5R - En vivo desde la terraza de Skyline Coffee</strong><span>Skyline Coffee Mexico</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=A2Lgrc0B4Rw" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/A2Lgrc0B4Rw/hqdefault_live.jpg" alt="🔴[LIVE CCTV] PERTIGAAN JEMBATAN KRACAAN DEMAK [01] by DISHUB KAB. DEMAK" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="A2Lgrc0B4Rw"><img src="https://i.ytimg.com/vi/A2Lgrc0B4Rw/hqdefault_live.jpg" alt="🔴[LIVE CCTV] PERTIGAAN JEMBATAN KRACAAN DEMAK [01] by DISHUB KAB. DEMAK" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>🔴[LIVE CCTV] PERTIGAAN JEMBATAN KRACAAN DEMAK [01] by DISHUB KAB. DEMAK</strong><span>CCTV DISHUB KAB. DEMAK</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=GHuRrOnW2MQ" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/GHuRrOnW2MQ/hqdefault_live.jpg" alt="🔴[LIVE CCTV] PERTIGAAN DEPAN KABUPATEN DEMAK [2] by DISHUB KAB. DEMAK" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="GHuRrOnW2MQ"><img src="https://i.ytimg.com/vi/GHuRrOnW2MQ/hqdefault_live.jpg" alt="🔴[LIVE CCTV] PERTIGAAN DEPAN KABUPATEN DEMAK [2] by DISHUB KAB. DEMAK" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>🔴[LIVE CCTV] PERTIGAAN DEPAN KABUPATEN DEMAK [2] by DISHUB KAB. DEMAK</strong><span>CCTV DISHUB KAB. DEMAK</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=uM1gksCoh8I" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/uM1gksCoh8I/hqdefault_live.jpg" alt="🔴[LIVE CCTV] TRAFFIC LIGHT JL. SULTAN FATAH BOGORAME DEMAK [01] by DISHUB KAB. DEMAK" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="uM1gksCoh8I"><img src="https://i.ytimg.com/vi/uM1gksCoh8I/hqdefault_live.jpg" alt="🔴[LIVE CCTV] TRAFFIC LIGHT JL. SULTAN FATAH BOGORAME DEMAK [01] by DISHUB KAB. DEMAK" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>🔴[LIVE CCTV] TRAFFIC LIGHT JL. SULTAN FATAH BOGORAME DEMAK [01] by DISHUB KAB. DEMAK</strong><span>CCTV DISHUB KAB. DEMAK</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=Oo8pSXi0R6U" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/Oo8pSXi0R6U/hqdefault_live.jpg" alt="🔴[LIVE CCTV] JL. PANTURA SAYUNG DEMAK [01] by DISHUB KAB. DEMAK" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="Oo8pSXi0R6U"><img src="https://i.ytimg.com/vi/Oo8pSXi0R6U/hqdefault_live.jpg" alt="🔴[LIVE CCTV] JL. PANTURA SAYUNG DEMAK [01] by DISHUB KAB. DEMAK" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>🔴[LIVE CCTV] JL. PANTURA SAYUNG DEMAK [01] by DISHUB KAB. DEMAK</strong><span>CCTV DISHUB KAB. DEMAK</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=czcqVgHG3y0" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/czcqVgHG3y0/hqdefault_live.jpg" alt="Village of Tilton 5th Street" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="czcqVgHG3y0"><img src="https://i.ytimg.com/vi/czcqVgHG3y0/hqdefault_live.jpg" alt="Village of Tilton 5th Street" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Village of Tilton 5th Street</strong><span>Village of Tilton Traffic Camera</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=vaDjY-5Ymxc" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/vaDjY-5Ymxc/hqdefault_live.jpg" alt="Live Stream — Public Square, Watertown NY" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="vaDjY-5Ymxc"><img src="https://i.ytimg.com/vi/vaDjY-5Ymxc/hqdefault_live.jpg" alt="Live Stream — Public Square, Watertown NY" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Live Stream — Public Square, Watertown NY</strong><span>nny․live</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=Zz9hMrxl20I" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/Zz9hMrxl20I/hqdefault_live.jpg" alt="Live Stream — Public Square, Watertown NY — Jake Johnson Properties" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="Zz9hMrxl20I"><img src="https://i.ytimg.com/vi/Zz9hMrxl20I/hqdefault_live.jpg" alt="Live Stream — Public Square, Watertown NY — Jake Johnson Properties" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Live Stream — Public Square, Watertown NY — Jake Johnson Properties</strong><span>nny․live</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=MUQJubAnBmI" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/MUQJubAnBmI/hqdefault_live.jpg" alt="SH123@Broadway" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="MUQJubAnBmI"><img src="https://i.ytimg.com/vi/MUQJubAnBmI/hqdefault_live.jpg" alt="SH123@Broadway" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>SH123@Broadway</strong><span>San Marcos, TX Traffic Cameras</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=tDFokEet4Ys" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/tDFokEet4Ys/hqdefault_live.jpg" alt="Hopkins@LBJ" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="tDFokEet4Ys"><img src="https://i.ytimg.com/vi/tDFokEet4Ys/hqdefault_live.jpg" alt="Hopkins@LBJ" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Hopkins@LBJ</strong><span>San Marcos, TX Traffic Cameras</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=4Uwmss-8J5I" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/4Uwmss-8J5I/hqdefault_live.jpg" alt="IH 35 @ Wonder World Drive" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="4Uwmss-8J5I"><img src="https://i.ytimg.com/vi/4Uwmss-8J5I/hqdefault_live.jpg" alt="IH 35 @ Wonder World Drive" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>IH 35 @ Wonder World Drive</strong><span>San Marcos, TX Traffic Cameras</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=wMsY4Sj9ljg" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/wMsY4Sj9ljg/hqdefault_live.jpg" alt="Sessom @ Comanche" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="wMsY4Sj9ljg"><img src="https://i.ytimg.com/vi/wMsY4Sj9ljg/hqdefault_live.jpg" alt="Sessom @ Comanche" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Sessom @ Comanche</strong><span>San Marcos, TX Traffic Cameras</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=qRYILPnsOns" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/qRYILPnsOns/hqdefault_live.jpg" alt="Hopkins@Charles Austin" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="qRYILPnsOns"><img src="https://i.ytimg.com/vi/qRYILPnsOns/hqdefault_live.jpg" alt="Hopkins@Charles Austin" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Hopkins@Charles Austin</strong><span>San Marcos, TX Traffic Cameras</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=MYNXvJGw0NE" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/MYNXvJGw0NE/hqdefault_live.jpg" alt="Aquarena Springs Drive @ Post Road" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="MYNXvJGw0NE"><img src="https://i.ytimg.com/vi/MYNXvJGw0NE/hqdefault_live.jpg" alt="Aquarena Springs Drive @ Post Road" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Aquarena Springs Drive @ Post Road</strong><span>San Marcos, TX Traffic Cameras</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=S_o0_F9BiuY" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/S_o0_F9BiuY/hqdefault_live.jpg" alt="Aquarena Springs Drive @ Sessom Drive" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="S_o0_F9BiuY"><img src="https://i.ytimg.com/vi/S_o0_F9BiuY/hqdefault_live.jpg" alt="Aquarena Springs Drive @ Sessom Drive" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Aquarena Springs Drive @ Sessom Drive</strong><span>San Marcos, TX Traffic Cameras</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=bYd6ChdCblg" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/bYd6ChdCblg/hqdefault_live.jpg" alt="Aquarena Springs @Thorpe" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="bYd6ChdCblg"><img src="https://i.ytimg.com/vi/bYd6ChdCblg/hqdefault_live.jpg" alt="Aquarena Springs @Thorpe" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Aquarena Springs @Thorpe</strong><span>San Marcos, TX Traffic Cameras</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=0hhjsyXRHGA" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/0hhjsyXRHGA/hqdefault_live.jpg" alt="Post @ Uhland" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="0hhjsyXRHGA"><img src="https://i.ytimg.com/vi/0hhjsyXRHGA/hqdefault_live.jpg" alt="Post @ Uhland" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Post @ Uhland</strong><span>San Marcos, TX Traffic Cameras</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=Qj6osxu6XVI" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/Qj6osxu6XVI/hqdefault_live.jpg" alt="Hopkins Street @ Moore Street" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="Qj6osxu6XVI"><img src="https://i.ytimg.com/vi/Qj6osxu6XVI/hqdefault_live.jpg" alt="Hopkins Street @ Moore Street" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Hopkins Street @ Moore Street</strong><span>San Marcos, TX Traffic Cameras</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=fiUqVsMR8z4" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/fiUqVsMR8z4/hqdefault_live.jpg" alt="Aquarena Spring @ Charles Austin" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="fiUqVsMR8z4"><img src="https://i.ytimg.com/vi/fiUqVsMR8z4/hqdefault_live.jpg" alt="Aquarena Spring @ Charles Austin" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Aquarena Spring @ Charles Austin</strong><span>San Marcos, TX Traffic Cameras</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=1v52cQ1qJBA" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/1v52cQ1qJBA/hqdefault_live.jpg" alt="🔴[LIVE CCTV] SIMPANG TUGU" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="1v52cQ1qJBA"><img src="https://i.ytimg.com/vi/1v52cQ1qJBA/hqdefault_live.jpg" alt="🔴[LIVE CCTV] SIMPANG TUGU" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>🔴[LIVE CCTV] SIMPANG TUGU</strong><span>CCTV Pemerintah Kota Yogyakarta</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=FCuHGm6VMHs" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/FCuHGm6VMHs/hqdefault_live.jpg" alt="🔴[LIVE CCTV] SIMPANG BOROBUDUR PLAZA V. UTARA" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="FCuHGm6VMHs"><img src="https://i.ytimg.com/vi/FCuHGm6VMHs/hqdefault_live.jpg" alt="🔴[LIVE CCTV] SIMPANG BOROBUDUR PLAZA V. UTARA" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>🔴[LIVE CCTV] SIMPANG BOROBUDUR PLAZA V. UTARA</strong><span>CCTV Pemerintah Kota Yogyakarta</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=8gvvo_7W6G0" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/8gvvo_7W6G0/hqdefault_live.jpg" alt="Junction Cam - Traffic Jams and Queues at Town Quay Southampton (Travel News 4K)" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="8gvvo_7W6G0"><img src="https://i.ytimg.com/vi/8gvvo_7W6G0/hqdefault_live.jpg" alt="Junction Cam - Traffic Jams and Queues at Town Quay Southampton (Travel News 4K)" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Junction Cam - Traffic Jams and Queues at Town Quay Southampton (Travel News 4K)</strong><span>Solent Ships</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=JUI1Wx4E25Q" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/JUI1Wx4E25Q/hqdefault_live.jpg" alt="🔴[LIVE CCTV] MARGO UTOMO - UTARA TETEG" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="JUI1Wx4E25Q"><img src="https://i.ytimg.com/vi/JUI1Wx4E25Q/hqdefault_live.jpg" alt="🔴[LIVE CCTV] MARGO UTOMO - UTARA TETEG" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>🔴[LIVE CCTV] MARGO UTOMO - UTARA TETEG</strong><span>CCTV Pemerintah Kota Yogyakarta</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=ghJg364QRkQ" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/ghJg364QRkQ/hqdefault_live.jpg" alt="🔴[LIVE CCTV] MARGO UTOMO - OPTIC TUGU" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="ghJg364QRkQ"><img src="https://i.ytimg.com/vi/ghJg364QRkQ/hqdefault_live.jpg" alt="🔴[LIVE CCTV] MARGO UTOMO - OPTIC TUGU" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>🔴[LIVE CCTV] MARGO UTOMO - OPTIC TUGU</strong><span>CCTV Pemerintah Kota Yogyakarta</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=H9YpOXcJO_s" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/H9YpOXcJO_s/hqdefault_live.jpg" alt="🔴[LIVE CCTV] TRAFFIC LIGHT JL. LINGKAR BOTOREJO DEMAK [02] by DISHUB KAB. DEMAK" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="H9YpOXcJO_s"><img src="https://i.ytimg.com/vi/H9YpOXcJO_s/hqdefault_live.jpg" alt="🔴[LIVE CCTV] TRAFFIC LIGHT JL. LINGKAR BOTOREJO DEMAK [02] by DISHUB KAB. DEMAK" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>🔴[LIVE CCTV] TRAFFIC LIGHT JL. LINGKAR BOTOREJO DEMAK [02] by DISHUB KAB. DEMAK</strong><span>CCTV DISHUB KAB. DEMAK</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=axG6-jsmVqI" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/axG6-jsmVqI/hqdefault_live.jpg" alt="🔴[LIVE CCTV] U-TURN LOIRENG SAYUNG [2] by DISHUB KAB. DEMAK" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="axG6-jsmVqI"><img src="https://i.ytimg.com/vi/axG6-jsmVqI/hqdefault_live.jpg" alt="🔴[LIVE CCTV] U-TURN LOIRENG SAYUNG [2] by DISHUB KAB. DEMAK" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>🔴[LIVE CCTV] U-TURN LOIRENG SAYUNG [2] by DISHUB KAB. DEMAK</strong><span>CCTV DISHUB KAB. DEMAK</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=2bvOgSbbQPE" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/2bvOgSbbQPE/hqdefault_live.jpg" alt="🔴[LIVE CCTV] TRAFFIC LIGHT JL. PANTURA JEBOR DEMAK [01] by DISHUB KAB. DEMAK" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="2bvOgSbbQPE"><img src="https://i.ytimg.com/vi/2bvOgSbbQPE/hqdefault_live.jpg" alt="🔴[LIVE CCTV] TRAFFIC LIGHT JL. PANTURA JEBOR DEMAK [01] by DISHUB KAB. DEMAK" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>🔴[LIVE CCTV] TRAFFIC LIGHT JL. PANTURA JEBOR DEMAK [01] by DISHUB KAB. DEMAK</strong><span>CCTV DISHUB KAB. DEMAK</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=XoqlfevtBaE" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/XoqlfevtBaE/hqdefault_live.jpg" alt="🔴[LIVE CCTV] U-TURN LOIRENG SAYUNG [1] by DISHUB KAB. DEMAK" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="XoqlfevtBaE"><img src="https://i.ytimg.com/vi/XoqlfevtBaE/hqdefault_live.jpg" alt="🔴[LIVE CCTV] U-TURN LOIRENG SAYUNG [1] by DISHUB KAB. DEMAK" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>🔴[LIVE CCTV] U-TURN LOIRENG SAYUNG [1] by DISHUB KAB. DEMAK</strong><span>CCTV DISHUB KAB. DEMAK</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=P1Xy8IWI-WQ" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/P1Xy8IWI-WQ/hqdefault_live.jpg" alt="Aeropuerto Internacional Ciudad de México Pista 5L - En vivo desde la terraza de Skyline Coffee" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="P1Xy8IWI-WQ"><img src="https://i.ytimg.com/vi/P1Xy8IWI-WQ/hqdefault_live.jpg" alt="Aeropuerto Internacional Ciudad de México Pista 5L - En vivo desde la terraza de Skyline Coffee" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Aeropuerto Internacional Ciudad de México Pista 5L - En vivo desde la terraza de Skyline Coffee</strong><span>Skyline Coffee Mexico</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=SUhOdlj8aW8" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/SUhOdlj8aW8/hqdefault_live.jpg" alt="🔴[LIVE CCTV] PERTIGAAN DEPAN KABUPATEN DEMAK [1] by DISHUB KAB. DEMAK" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="SUhOdlj8aW8"><img src="https://i.ytimg.com/vi/SUhOdlj8aW8/hqdefault_live.jpg" alt="🔴[LIVE CCTV] PERTIGAAN DEPAN KABUPATEN DEMAK [1] by DISHUB KAB. DEMAK" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>🔴[LIVE CCTV] PERTIGAAN DEPAN KABUPATEN DEMAK [1] by DISHUB KAB. DEMAK</strong><span>CCTV DISHUB KAB. DEMAK</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=8NrddOWEf1k" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/8NrddOWEf1k/hqdefault_live.jpg" alt="Wonder World Drive @ Hunter Road" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="8NrddOWEf1k"><img src="https://i.ytimg.com/vi/8NrddOWEf1k/hqdefault_live.jpg" alt="Wonder World Drive @ Hunter Road" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Wonder World Drive @ Hunter Road</strong><span>San Marcos, TX Traffic Cameras</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=b8g-NPuIZI0" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/b8g-NPuIZI0/hqdefault_live.jpg" alt="SBSP LIVE #3 - Aeroporto de São Paulo Congonhas AO VIVO - CGH Airport - 13/07 Noite" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="b8g-NPuIZI0"><img src="https://i.ytimg.com/vi/b8g-NPuIZI0/hqdefault_live.jpg" alt="SBSP LIVE #3 - Aeroporto de São Paulo Congonhas AO VIVO - CGH Airport - 13/07 Noite" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>SBSP LIVE #3 - Aeroporto de São Paulo Congonhas AO VIVO - CGH Airport - 13/07 Noite</strong><span>Golf Oscar Romeo</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=8U0M_mionOs" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/8U0M_mionOs/hqdefault_live.jpg" alt="Springfield, Massachusetts, USA | LIVE Train Camera (PTZ)" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="8U0M_mionOs"><img src="https://i.ytimg.com/vi/8U0M_mionOs/hqdefault_live.jpg" alt="Springfield, Massachusetts, USA | LIVE Train Camera (PTZ)" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Springfield, Massachusetts, USA | LIVE Train Camera (PTZ)</strong><span>Virtual Railfan</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=BGy9PRQQ0wA" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/BGy9PRQQ0wA/hqdefault_live.jpg" alt="城山公園ライブカメラ" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="BGy9PRQQ0wA"><img src="https://i.ytimg.com/vi/BGy9PRQQ0wA/hqdefault_live.jpg" alt="城山公園ライブカメラ" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>城山公園ライブカメラ</strong><span>城山公園ライブカメラ</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=fic_lTH_4KY" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/fic_lTH_4KY/hqdefault_live.jpg" alt="役場前湯川ふるさと公園駐車場付近ライブカメラ" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="fic_lTH_4KY"><img src="https://i.ytimg.com/vi/fic_lTH_4KY/hqdefault_live.jpg" alt="役場前湯川ふるさと公園駐車場付近ライブカメラ" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>役場前湯川ふるさと公園駐車場付近ライブカメラ</strong><span>長野県軽井沢町</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=slOgQojt8w8" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/slOgQojt8w8/hqdefault_live.jpg" alt="【上野原ライブカメラ】中央自動車道 上野原インターチェンジ 提供:UTYテレビ山梨" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="slOgQojt8w8"><img src="https://i.ytimg.com/vi/slOgQojt8w8/hqdefault_live.jpg" alt="【上野原ライブカメラ】中央自動車道 上野原インターチェンジ 提供:UTYテレビ山梨" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>【上野原ライブカメラ】中央自動車道 上野原インターチェンジ 提供:UTYテレビ山梨</strong><span>UTYテレビ山梨公式チャンネル</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=CHd0z44hTQc" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/CHd0z44hTQc/hqdefault_live.jpg" alt="🟢 GOMV.COM Vineyard Haven Downtown Live Webcam" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="CHd0z44hTQc"><img src="https://i.ytimg.com/vi/CHd0z44hTQc/hqdefault_live.jpg" alt="🟢 GOMV.COM Vineyard Haven Downtown Live Webcam" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>🟢 GOMV.COM Vineyard Haven Downtown Live Webcam</strong><span>Go Martha&#39;s Vineyard</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=HkHhXsWci7Q" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/HkHhXsWci7Q/hqdefault_live.jpg" alt="Galveston, Texas | 24/7 Live Beach Camera" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="HkHhXsWci7Q"><img src="https://i.ytimg.com/vi/HkHhXsWci7Q/hqdefault_live.jpg" alt="Galveston, Texas | 24/7 Live Beach Camera" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Galveston, Texas | 24/7 Live Beach Camera</strong><span>ABC13 Houston</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=gu0Ow9UqaF0" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/gu0Ow9UqaF0/hqdefault_live.jpg" alt="N Main Traffic Camera" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="gu0Ow9UqaF0"><img src="https://i.ytimg.com/vi/gu0Ow9UqaF0/hqdefault_live.jpg" alt="N Main Traffic Camera" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>N Main Traffic Camera</strong><span>Ashland Fiber Network</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=I1kJB1jdGo0" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/I1kJB1jdGo0/hqdefault_live.jpg" alt="ライブカメラ ＪＲ札幌駅 (ＳＴＶ札幌テレビ放送)  Live Camera Sapporo Station , Hokkaido" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="I1kJB1jdGo0"><img src="https://i.ytimg.com/vi/I1kJB1jdGo0/hqdefault_live.jpg" alt="ライブカメラ ＪＲ札幌駅 (ＳＴＶ札幌テレビ放送)  Live Camera Sapporo Station , Hokkaido" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>ライブカメラ ＪＲ札幌駅 (ＳＴＶ札幌テレビ放送)  Live Camera Sapporo Station , Hokkaido</strong><span>STV札幌テレビ放送 公式</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=XpIILFB9iS0" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/XpIILFB9iS0/hqdefault_live.jpg" alt="東京ライブカメラ Tokyo live camera｜両国・相撲の街｜伝統ある下町風景｜24時間" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="XpIILFB9iS0"><img src="https://i.ytimg.com/vi/XpIILFB9iS0/hqdefault_live.jpg" alt="東京ライブカメラ Tokyo live camera｜両国・相撲の街｜伝統ある下町風景｜24時間" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>東京ライブカメラ Tokyo live camera｜両国・相撲の街｜伝統ある下町風景｜24時間</strong><span>東京ライブカメラ | Tokyo Live Cam</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=yETDDgrE2E4" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/yETDDgrE2E4/hqdefault_live.jpg" alt="【LIVE】福岡・博多駅前ライブカメラ　Hakata station in Fukuoka, Kyushu 하카타 역 라이브" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="yETDDgrE2E4"><img src="https://i.ytimg.com/vi/yETDDgrE2E4/hqdefault_live.jpg" alt="【LIVE】福岡・博多駅前ライブカメラ　Hakata station in Fukuoka, Kyushu 하카타 역 라이브" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>【LIVE】福岡・博多駅前ライブカメラ　Hakata station in Fukuoka, Kyushu 하카타 역 라이브</strong><span>朝日新聞LIVE</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=lA6TaaMGgDo" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/lA6TaaMGgDo/hqdefault_live.jpg" alt="【 LIVE 】東京都 新宿 24時間 ライブカメラ / 西武新宿駅 pepe前広場 交差点 （YUNIKA VISION前） Tokyo Shinjuku Live camera" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="lA6TaaMGgDo"><img src="https://i.ytimg.com/vi/lA6TaaMGgDo/hqdefault_live.jpg" alt="【 LIVE 】東京都 新宿 24時間 ライブカメラ / 西武新宿駅 pepe前広場 交差点 （YUNIKA VISION前） Tokyo Shinjuku Live camera" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>【 LIVE 】東京都 新宿 24時間 ライブカメラ / 西武新宿駅 pepe前広場 交差点 （YUNIKA VISION前） Tokyo Shinjuku Live camera</strong><span>インフォ新宿 channel</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=6h36HYcO4k4" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/6h36HYcO4k4/hqdefault_live.jpg" alt="道路カメラ_荒島交差点(荒島町)" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="6h36HYcO4k4"><img src="https://i.ytimg.com/vi/6h36HYcO4k4/hqdefault_live.jpg" alt="道路カメラ_荒島交差点(荒島町)" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>道路カメラ_荒島交差点(荒島町)</strong><span>山陰ケーブルビジョン株式会社</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=ErHJBXTmm2Q" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/ErHJBXTmm2Q/hqdefault_live.jpg" alt="【24Ｈ：LIVE】東京 新宿 歌舞伎町 交差点 ライブカメラ  / Tokyo  Shinjuku Kabukicho Live Camera【テイケイ屋上カメラ】　#靖国通り #４K #歌舞伎町" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="ErHJBXTmm2Q"><img src="https://i.ytimg.com/vi/ErHJBXTmm2Q/hqdefault_live.jpg" alt="【24Ｈ：LIVE】東京 新宿 歌舞伎町 交差点 ライブカメラ  / Tokyo  Shinjuku Kabukicho Live Camera【テイケイ屋上カメラ】　#靖国通り #４K #歌舞伎町" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>【24Ｈ：LIVE】東京 新宿 歌舞伎町 交差点 ライブカメラ  / Tokyo  Shinjuku Kabukicho Live Camera【テイケイ屋上カメラ】　#靖国通り #４K #歌舞伎町</strong><span>テイケイ公式チャンネル</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=UjRGL3FPRko" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/UjRGL3FPRko/hqdefault_live.jpg" alt="道路カメラ_安来駅前(安来町)" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="UjRGL3FPRko"><img src="https://i.ytimg.com/vi/UjRGL3FPRko/hqdefault_live.jpg" alt="道路カメラ_安来駅前(安来町)" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>道路カメラ_安来駅前(安来町)</strong><span>山陰ケーブルビジョン株式会社</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=vuP9iwdyyFM" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/vuP9iwdyyFM/hqdefault_live.jpg" alt="【24Ｈ：LIVE】東京 新宿 歌舞伎町 第２（区役所交差点）ライブカメラ  / Tokyo  Shinjuku Kabukicho Live Camera【テイケイ屋上カメラ】　 #４K #歌舞伎町" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="vuP9iwdyyFM"><img src="https://i.ytimg.com/vi/vuP9iwdyyFM/hqdefault_live.jpg" alt="【24Ｈ：LIVE】東京 新宿 歌舞伎町 第２（区役所交差点）ライブカメラ  / Tokyo  Shinjuku Kabukicho Live Camera【テイケイ屋上カメラ】　 #４K #歌舞伎町" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>【24Ｈ：LIVE】東京 新宿 歌舞伎町 第２（区役所交差点）ライブカメラ  / Tokyo  Shinjuku Kabukicho Live Camera【テイケイ屋上カメラ】　 #４K #歌舞伎町</strong><span>テイケイ公式チャンネル</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=7T3SV0zMQVI" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/7T3SV0zMQVI/hqdefault_live.jpg" alt="【LIVE】鳥取砂丘ライブカメラ Tottori Sand Dunes" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="7T3SV0zMQVI"><img src="https://i.ytimg.com/vi/7T3SV0zMQVI/hqdefault_live.jpg" alt="【LIVE】鳥取砂丘ライブカメラ Tottori Sand Dunes" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>【LIVE】鳥取砂丘ライブカメラ Tottori Sand Dunes</strong><span>鳥取砂丘チャンネル</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=dh2ad5EvYCA" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/dh2ad5EvYCA/hqdefault_live.jpg" alt="【LIVE】首都高 都心環状線 宝町付近 ライブカメラ/Tokyo highway Live Camera 2026/07/13 01:00～" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="dh2ad5EvYCA"><img src="https://i.ytimg.com/vi/dh2ad5EvYCA/hqdefault_live.jpg" alt="【LIVE】首都高 都心環状線 宝町付近 ライブカメラ/Tokyo highway Live Camera 2026/07/13 01:00～" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>【LIVE】首都高 都心環状線 宝町付近 ライブカメラ/Tokyo highway Live Camera 2026/07/13 01:00～</strong><span>交通情報ライブカメラCH</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=hlbh4P0Mz8M" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/hlbh4P0Mz8M/hqdefault_live.jpg" alt="Tokyo Odaiba Live Camera  お台場ライブカメラ｜レインボーブリッジと東京の景色 勉強・作業用Lofi BGM" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="hlbh4P0Mz8M"><img src="https://i.ytimg.com/vi/hlbh4P0Mz8M/hqdefault_live.jpg" alt="Tokyo Odaiba Live Camera  お台場ライブカメラ｜レインボーブリッジと東京の景色 勉強・作業用Lofi BGM" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Tokyo Odaiba Live Camera  お台場ライブカメラ｜レインボーブリッジと東京の景色 勉強・作業用Lofi BGM</strong><span>ODAIBA TOKYO LIVE</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=79ZymEtzBjE" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/79ZymEtzBjE/hqdefault_live.jpg" alt="【フリー動画】さいたま市鉄道ライブカメラ（JR上野東京ライン・京浜東北線・湘南新宿ライン・東北本線の運行情報）" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="79ZymEtzBjE"><img src="https://i.ytimg.com/vi/79ZymEtzBjE/hqdefault_live.jpg" alt="【フリー動画】さいたま市鉄道ライブカメラ（JR上野東京ライン・京浜東北線・湘南新宿ライン・東北本線の運行情報）" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>【フリー動画】さいたま市鉄道ライブカメラ（JR上野東京ライン・京浜東北線・湘南新宿ライン・東北本線の運行情報）</strong><span>フリー動画集・自由にダウンロードして商用利用可能</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=W0V8-6WrgBY" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/W0V8-6WrgBY/hqdefault_live.jpg" alt="[Live] 東京・浜松町駅 ライブカメラ  Live Stream of Hamamatsu-cho  railway tracks Tokyo" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="W0V8-6WrgBY"><img src="https://i.ytimg.com/vi/W0V8-6WrgBY/hqdefault_live.jpg" alt="[Live] 東京・浜松町駅 ライブカメラ  Live Stream of Hamamatsu-cho  railway tracks Tokyo" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>[Live] 東京・浜松町駅 ライブカメラ  Live Stream of Hamamatsu-cho  railway tracks Tokyo</strong><span>共同通信LiveCamera</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=pmM2CeSAx0I" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/pmM2CeSAx0I/hqdefault_live.jpg" alt="Live Cam Taiwan Taipei City 台湾、台北のライブカメラ川岸の夜景 給大家放鬆的畫面和音樂," loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="pmM2CeSAx0I"><img src="https://i.ytimg.com/vi/pmM2CeSAx0I/hqdefault_live.jpg" alt="Live Cam Taiwan Taipei City 台湾、台北のライブカメラ川岸の夜景 給大家放鬆的畫面和音樂," loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Live Cam Taiwan Taipei City 台湾、台北のライブカメラ川岸の夜景 給大家放鬆的畫面和音樂,</strong><span>Taiwan Taipei Jacky</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=IqnTjRGTLb4" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/IqnTjRGTLb4/hqdefault_live.jpg" alt="道路カメラ_春日北交差点" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="IqnTjRGTLb4"><img src="https://i.ytimg.com/vi/IqnTjRGTLb4/hqdefault_live.jpg" alt="道路カメラ_春日北交差点" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>道路カメラ_春日北交差点</strong><span>山陰ケーブルビジョン株式会社</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=u0zZ27ba_ag" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/u0zZ27ba_ag/hqdefault_live.jpg" alt="Sapporo Streetcar—Since 1918 Live 24/7 | 🚋 路面電車 札幌市電 1918- | ambient beats" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="u0zZ27ba_ag"><img src="https://i.ytimg.com/vi/u0zZ27ba_ag/hqdefault_live.jpg" alt="Sapporo Streetcar—Since 1918 Live 24/7 | 🚋 路面電車 札幌市電 1918- | ambient beats" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Sapporo Streetcar—Since 1918 Live 24/7 | 🚋 路面電車 札幌市電 1918- | ambient beats</strong><span>Hokkaido Kurashi no Yomimono</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=G8RIAgPxaMc" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/G8RIAgPxaMc/hqdefault_live.jpg" alt="San Francisco Live Camera | 24/7 Stream" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="G8RIAgPxaMc"><img src="https://i.ytimg.com/vi/G8RIAgPxaMc/hqdefault_live.jpg" alt="San Francisco Live Camera | 24/7 Stream" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>San Francisco Live Camera | 24/7 Stream</strong><span>ABC7 News Bay Area</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=6M6rK0ssjYg" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/6M6rK0ssjYg/hqdefault_live.jpg" alt="Chicago &amp; North Western Power House Live Webcam (East) - Chicago, IL  #SteelHighway" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="6M6rK0ssjYg"><img src="https://i.ytimg.com/vi/6M6rK0ssjYg/hqdefault_live.jpg" alt="Chicago &amp; North Western Power House Live Webcam (East) - Chicago, IL  #SteelHighway" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Chicago &amp; North Western Power House Live Webcam (East) - Chicago, IL  #SteelHighway</strong><span>Steel Highway Railcams</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=NA03F_l4KQE" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/NA03F_l4KQE/hqdefault_live.jpg" alt="Ⓑ-07-🔴Live-基隆市 重要路口 即時影像 24H Keelung City, Taiwan》 24/7, 365 天氣、地震、車流人流狀況  Love Song 🅣ⓁⓈ204" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="NA03F_l4KQE"><img src="https://i.ytimg.com/vi/NA03F_l4KQE/hqdefault_live.jpg" alt="Ⓑ-07-🔴Live-基隆市 重要路口 即時影像 24H Keelung City, Taiwan》 24/7, 365 天氣、地震、車流人流狀況  Love Song 🅣ⓁⓈ204" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Ⓑ-07-🔴Live-基隆市 重要路口 即時影像 24H Keelung City, Taiwan》 24/7, 365 天氣、地震、車流人流狀況  Love Song 🅣ⓁⓈ204</strong><span>禿鷹 Music</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=P0CYZnOGxHU" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/P0CYZnOGxHU/hqdefault_live.jpg" alt="Ⓓ-01🔴 Live-台南市 重要路口 即時影像 台南市專屬 🎧 終極應援歌曲已上線 💥禿鷹Music 獨播 24H Tainan, Taiwan 》 24/7, 365 天氣、車流人流 🅣ⓉⓃ48" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="P0CYZnOGxHU"><img src="https://i.ytimg.com/vi/P0CYZnOGxHU/hqdefault_live.jpg" alt="Ⓓ-01🔴 Live-台南市 重要路口 即時影像 台南市專屬 🎧 終極應援歌曲已上線 💥禿鷹Music 獨播 24H Tainan, Taiwan 》 24/7, 365 天氣、車流人流 🅣ⓉⓃ48" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Ⓓ-01🔴 Live-台南市 重要路口 即時影像 台南市專屬 🎧 終極應援歌曲已上線 💥禿鷹Music 獨播 24H Tainan, Taiwan 》 24/7, 365 天氣、車流人流 🅣ⓉⓃ48</strong><span>禿鷹 Music</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=Nz9-_x5ecWc" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/Nz9-_x5ecWc/hqdefault_live.jpg" alt="[Live][61] 淡江大橋即時影像路況 #淡江大橋 #路況直播" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="Nz9-_x5ecWc"><img src="https://i.ytimg.com/vi/Nz9-_x5ecWc/hqdefault_live.jpg" alt="[Live][61] 淡江大橋即時影像路況 #淡江大橋 #路況直播" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>[Live][61] 淡江大橋即時影像路況 #淡江大橋 #路況直播</strong><span>台灣即時影像監視器</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=36mNi1GN1AE" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/36mNi1GN1AE/hqdefault_live.jpg" alt="Paseo de la Reforma en vivo. Monumento Ángel de la Independencia" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="36mNi1GN1AE"><img src="https://i.ytimg.com/vi/36mNi1GN1AE/hqdefault_live.jpg" alt="Paseo de la Reforma en vivo. Monumento Ángel de la Independencia" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Paseo de la Reforma en vivo. Monumento Ángel de la Independencia</strong><span>webcamsdemexico</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=KpB5CMofRI8" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/KpB5CMofRI8/hqdefault_live.jpg" alt="Ⓓ-08🔴 Live-高雄市 重要路口 即時影像 啦啦隊應援曲 x Jazz爵士曲風 🎧 歌曲已上線，💥禿鷹Music 獨播  24H Kaohsiung, Taiwan 》 天氣、車流人流 🅣Ⓚ16" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="KpB5CMofRI8"><img src="https://i.ytimg.com/vi/KpB5CMofRI8/hqdefault_live.jpg" alt="Ⓓ-08🔴 Live-高雄市 重要路口 即時影像 啦啦隊應援曲 x Jazz爵士曲風 🎧 歌曲已上線，💥禿鷹Music 獨播  24H Kaohsiung, Taiwan 》 天氣、車流人流 🅣Ⓚ16" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Ⓓ-08🔴 Live-高雄市 重要路口 即時影像 啦啦隊應援曲 x Jazz爵士曲風 🎧 歌曲已上線，💥禿鷹Music 獨播  24H Kaohsiung, Taiwan 》 天氣、車流人流 🅣Ⓚ16</strong><span>禿鷹 Music</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=AShvF9ILGkc" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/AShvF9ILGkc/hqdefault_live.jpg" alt="City of Orange Plaza Camera" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="AShvF9ILGkc"><img src="https://i.ytimg.com/vi/AShvF9ILGkc/hqdefault_live.jpg" alt="City of Orange Plaza Camera" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>City of Orange Plaza Camera</strong><span>City of Orange, CA</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=l4omud4afQQ" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/l4omud4afQQ/hqdefault_live.jpg" alt="🔴Live Ⓒ-08-新北市 中和區 重要路口 即時影像 24/7, 365 24H 》天氣、車流人流狀況 Love Song 🅣ⓁⒽ80" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="l4omud4afQQ"><img src="https://i.ytimg.com/vi/l4omud4afQQ/hqdefault_live.jpg" alt="🔴Live Ⓒ-08-新北市 中和區 重要路口 即時影像 24/7, 365 24H 》天氣、車流人流狀況 Love Song 🅣ⓁⒽ80" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>🔴Live Ⓒ-08-新北市 中和區 重要路口 即時影像 24/7, 365 24H 》天氣、車流人流狀況 Love Song 🅣ⓁⒽ80</strong><span>禿鷹 Music</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=5Xl6pSgiy3A" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/5Xl6pSgiy3A/hqdefault_live.jpg" alt="Balneário Camboriú ao vivo - Avenida Atlântica" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="5Xl6pSgiy3A"><img src="https://i.ytimg.com/vi/5Xl6pSgiy3A/hqdefault_live.jpg" alt="Balneário Camboriú ao vivo - Avenida Atlântica" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Balneário Camboriú ao vivo - Avenida Atlântica</strong><span>CLIMA BC Brazil</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=rqBfiegG5qU" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/rqBfiegG5qU/hqdefault_live.jpg" alt="Cámara en vivo | UADE Campus Buenos Aires" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="rqBfiegG5qU"><img src="https://i.ytimg.com/vi/rqBfiegG5qU/hqdefault_live.jpg" alt="Cámara en vivo | UADE Campus Buenos Aires" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Cámara en vivo | UADE Campus Buenos Aires</strong><span>UADE</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=HDf-nfqrEUU" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/HDf-nfqrEUU/hqdefault_live.jpg" alt="🔴 EN VIVO | Plaza de Armas de Huaraz: Audio Ambiental | Restaurante Encuentro de los Andes | 24/7" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="HDf-nfqrEUU"><img src="https://i.ytimg.com/vi/HDf-nfqrEUU/hqdefault_live.jpg" alt="🔴 EN VIVO | Plaza de Armas de Huaraz: Audio Ambiental | Restaurante Encuentro de los Andes | 24/7" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>🔴 EN VIVO | Plaza de Armas de Huaraz: Audio Ambiental | Restaurante Encuentro de los Andes | 24/7</strong><span>webcamvibe</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=0Pg3S6s76IE" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/0Pg3S6s76IE/hqdefault_live.jpg" alt="Transmisión en vivo Puente Internacional Paso del Norte (Norte)" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="0Pg3S6s76IE"><img src="https://i.ytimg.com/vi/0Pg3S6s76IE/hqdefault_live.jpg" alt="Transmisión en vivo Puente Internacional Paso del Norte (Norte)" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Transmisión en vivo Puente Internacional Paso del Norte (Norte)</strong><span>Fideicomiso de Puentes Fronterizos de Chihuahua</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=TSoAAJdt56s" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/TSoAAJdt56s/hqdefault_live.jpg" alt="Vista Panorámica de la Minerva en Guadalajara" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="TSoAAJdt56s"><img src="https://i.ytimg.com/vi/TSoAAJdt56s/hqdefault_live.jpg" alt="Vista Panorámica de la Minerva en Guadalajara" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Vista Panorámica de la Minerva en Guadalajara</strong><span>webcamsdemexico</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=ysuOBI9HO-8" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/ysuOBI9HO-8/hqdefault_live.jpg" alt="⚽️  #CDMX  | Todos a celebrar al Ángel 🇲🇽⚽️ #EnVivo" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="ysuOBI9HO-8"><img src="https://i.ytimg.com/vi/ysuOBI9HO-8/hqdefault_live.jpg" alt="⚽️  #CDMX  | Todos a celebrar al Ángel 🇲🇽⚽️ #EnVivo" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>⚽️  #CDMX  | Todos a celebrar al Ángel 🇲🇽⚽️ #EnVivo</strong><span>webcamsdemexico</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=IcvugJWPXz8" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/IcvugJWPXz8/hqdefault_live.jpg" alt="Transmisión en vivo Puente Internacional Paso del Norte (Sur)" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="IcvugJWPXz8"><img src="https://i.ytimg.com/vi/IcvugJWPXz8/hqdefault_live.jpg" alt="Transmisión en vivo Puente Internacional Paso del Norte (Sur)" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Transmisión en vivo Puente Internacional Paso del Norte (Sur)</strong><span>Fideicomiso de Puentes Fronterizos de Chihuahua</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=6IM2hDEs7GM" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/6IM2hDEs7GM/hqdefault_live.jpg" alt="Maria&#39;s Cam 5A Street View Agdao Public Market, Davao City Philippines  #philippines #davaocity" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="6IM2hDEs7GM"><img src="https://i.ytimg.com/vi/6IM2hDEs7GM/hqdefault_live.jpg" alt="Maria&#39;s Cam 5A Street View Agdao Public Market, Davao City Philippines  #philippines #davaocity" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Maria&#39;s Cam 5A Street View Agdao Public Market, Davao City Philippines  #philippines #davaocity</strong><span>Maria Deseo - Philippines Live Webcam</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=-3a_6XzwHas" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/-3a_6XzwHas/hqdefault_live.jpg" alt="Maria&#39;s Cam1a Outside Store  #philippines #davaocity" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="-3a_6XzwHas"><img src="https://i.ytimg.com/vi/-3a_6XzwHas/hqdefault_live.jpg" alt="Maria&#39;s Cam1a Outside Store  #philippines #davaocity" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Maria&#39;s Cam1a Outside Store  #philippines #davaocity</strong><span>Maria Deseo - Philippines Live Webcam</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=cJg57DfzptM" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/cJg57DfzptM/hqdefault_live.jpg" alt="Columbia Hotel Camera" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="cJg57DfzptM"><img src="https://i.ytimg.com/vi/cJg57DfzptM/hqdefault_live.jpg" alt="Columbia Hotel Camera" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Columbia Hotel Camera</strong><span>Ashland Fiber Network</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=QkBL9SJI8iM" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/QkBL9SJI8iM/hqdefault_live.jpg" alt="🔴 LIVE CAM: Bankhead Tunnel in Downtown Mobile, AL" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="QkBL9SJI8iM"><img src="https://i.ytimg.com/vi/QkBL9SJI8iM/hqdefault_live.jpg" alt="🔴 LIVE CAM: Bankhead Tunnel in Downtown Mobile, AL" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>🔴 LIVE CAM: Bankhead Tunnel in Downtown Mobile, AL</strong><span>FOX10 News</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=rjASdnpfONo" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/rjASdnpfONo/hqdefault_live.jpg" alt="🔴 LIVE CAM: Downtown Mobile, AL from The Admiral Hotel" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="rjASdnpfONo"><img src="https://i.ytimg.com/vi/rjASdnpfONo/hqdefault_live.jpg" alt="🔴 LIVE CAM: Downtown Mobile, AL from The Admiral Hotel" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>🔴 LIVE CAM: Downtown Mobile, AL from The Admiral Hotel</strong><span>FOX10 News</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=iQPgyQYfVjQ" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/iQPgyQYfVjQ/hqdefault_live.jpg" alt="🔴 LIVE CAM: USS Alabama Battleship in Mobile, AL" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="iQPgyQYfVjQ"><img src="https://i.ytimg.com/vi/iQPgyQYfVjQ/hqdefault_live.jpg" alt="🔴 LIVE CAM: USS Alabama Battleship in Mobile, AL" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>🔴 LIVE CAM: USS Alabama Battleship in Mobile, AL</strong><span>FOX10 News</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=6HYjCFkmDPA" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/6HYjCFkmDPA/hqdefault_live.jpg" alt="【LIVE】沖縄ライブカメラ　那覇市内の現在の様子　眼下には「ゆいレール」　Okinawa, Naha　 오키나와、 나하" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="6HYjCFkmDPA"><img src="https://i.ytimg.com/vi/6HYjCFkmDPA/hqdefault_live.jpg" alt="【LIVE】沖縄ライブカメラ　那覇市内の現在の様子　眼下には「ゆいレール」　Okinawa, Naha　 오키나와、 나하" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>【LIVE】沖縄ライブカメラ　那覇市内の現在の様子　眼下には「ゆいレール」　Okinawa, Naha　 오키나와、 나하</strong><span>朝日新聞LIVE</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=Xr781EeLdqs" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/Xr781EeLdqs/hqdefault_live.jpg" alt="「LIVE CAMERA」草津温泉・温泉門" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="Xr781EeLdqs"><img src="https://i.ytimg.com/vi/Xr781EeLdqs/hqdefault_live.jpg" alt="「LIVE CAMERA」草津温泉・温泉門" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>「LIVE CAMERA」草津温泉・温泉門</strong><span>草津町公式YouTubeチャンネル</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=WB4jllqVRCc" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/WB4jllqVRCc/hqdefault_live.jpg" alt="「LIVECAMERA」国道292号 草津前口" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="WB4jllqVRCc"><img src="https://i.ytimg.com/vi/WB4jllqVRCc/hqdefault_live.jpg" alt="「LIVECAMERA」国道292号 草津前口" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>「LIVECAMERA」国道292号 草津前口</strong><span>草津町公式YouTubeチャンネル</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=nbtzTBRBuzM" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/nbtzTBRBuzM/hqdefault_live.jpg" alt="ライブカメラ 北広島市（STV札幌テレビ放送）北海道北広島市／Live Camera Kitahirosima City, Hokkaido" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="nbtzTBRBuzM"><img src="https://i.ytimg.com/vi/nbtzTBRBuzM/hqdefault_live.jpg" alt="ライブカメラ 北広島市（STV札幌テレビ放送）北海道北広島市／Live Camera Kitahirosima City, Hokkaido" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>ライブカメラ 北広島市（STV札幌テレビ放送）北海道北広島市／Live Camera Kitahirosima City, Hokkaido</strong><span>STV札幌テレビ放送 公式</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=hN8mxz3-1pg" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/hN8mxz3-1pg/hqdefault_live.jpg" alt="「LIVE CAMERA」草津温泉スキー場　天狗山山頂エリア" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="hN8mxz3-1pg"><img src="https://i.ytimg.com/vi/hN8mxz3-1pg/hqdefault_live.jpg" alt="「LIVE CAMERA」草津温泉スキー場　天狗山山頂エリア" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>「LIVE CAMERA」草津温泉スキー場　天狗山山頂エリア</strong><span>草津町公式YouTubeチャンネル</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=UdOAbyzxKto" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/UdOAbyzxKto/hqdefault_live.jpg" alt="「LIVECAMERA 」草津温泉・西の河原公園駐車場" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="UdOAbyzxKto"><img src="https://i.ytimg.com/vi/UdOAbyzxKto/hqdefault_live.jpg" alt="「LIVECAMERA 」草津温泉・西の河原公園駐車場" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>「LIVECAMERA 」草津温泉・西の河原公園駐車場</strong><span>草津町公式YouTubeチャンネル</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=bcW3LznxSyA" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/bcW3LznxSyA/hqdefault_live.jpg" alt="【 Archive 】2026-07-13『06:00』 東京都 新宿 24時間 ライブカメラ" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="bcW3LznxSyA"><img src="https://i.ytimg.com/vi/bcW3LznxSyA/hqdefault_live.jpg" alt="【 Archive 】2026-07-13『06:00』 東京都 新宿 24時間 ライブカメラ" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>【 Archive 】2026-07-13『06:00』 東京都 新宿 24時間 ライブカメラ</strong><span>インフォ新宿 channel</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=rHuoK_TWOnA" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/rHuoK_TWOnA/hqdefault_live.jpg" alt="「LIVECAMERA」国道292号 草津温泉入口" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="rHuoK_TWOnA"><img src="https://i.ytimg.com/vi/rHuoK_TWOnA/hqdefault_live.jpg" alt="「LIVECAMERA」国道292号 草津温泉入口" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>「LIVECAMERA」国道292号 草津温泉入口</strong><span>草津町公式YouTubeチャンネル</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=PVvIVCkmQDY" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/PVvIVCkmQDY/hqdefault_live.jpg" alt="ネパール　カトマンズ　24時間ライブカメラ　Nepal Katmandu Live camera" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="PVvIVCkmQDY"><img src="https://i.ytimg.com/vi/PVvIVCkmQDY/hqdefault_live.jpg" alt="ネパール　カトマンズ　24時間ライブカメラ　Nepal Katmandu Live camera" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>ネパール　カトマンズ　24時間ライブカメラ　Nepal Katmandu Live camera</strong><span>ZAZAマガジンチャンネル</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=lqK0MvuAe9U" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/lqK0MvuAe9U/hqdefault_live.jpg" alt="【LIVE】首都高 都心環状線 竹橋JCT付近 ライブカメラ/Tokyo highway Live Camera 2026/07/13 01:00～" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="lqK0MvuAe9U"><img src="https://i.ytimg.com/vi/lqK0MvuAe9U/hqdefault_live.jpg" alt="【LIVE】首都高 都心環状線 竹橋JCT付近 ライブカメラ/Tokyo highway Live Camera 2026/07/13 01:00～" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>【LIVE】首都高 都心環状線 竹橋JCT付近 ライブカメラ/Tokyo highway Live Camera 2026/07/13 01:00～</strong><span>交通情報ライブカメラCH</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=Gjq_iOV0R00" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/Gjq_iOV0R00/hqdefault_live.jpg" alt="【LIVE】首都高 都心環状線 呉服橋JCT付近 ライブカメラ/Tokyo highway Live Camera 2026/07/13 01:00～" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="Gjq_iOV0R00"><img src="https://i.ytimg.com/vi/Gjq_iOV0R00/hqdefault_live.jpg" alt="【LIVE】首都高 都心環状線 呉服橋JCT付近 ライブカメラ/Tokyo highway Live Camera 2026/07/13 01:00～" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>【LIVE】首都高 都心環状線 呉服橋JCT付近 ライブカメラ/Tokyo highway Live Camera 2026/07/13 01:00～</strong><span>交通情報ライブカメラCH</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=Mk8z2d1lHfg" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/Mk8z2d1lHfg/hqdefault_live.jpg" alt="道路カメラ_東上乃木" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="Mk8z2d1lHfg"><img src="https://i.ytimg.com/vi/Mk8z2d1lHfg/hqdefault_live.jpg" alt="道路カメラ_東上乃木" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>道路カメラ_東上乃木</strong><span>山陰ケーブルビジョン株式会社</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=832oyounAII" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/832oyounAII/hqdefault_live.jpg" alt="東京新聞ライブカメラ_内幸町" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="832oyounAII"><img src="https://i.ytimg.com/vi/832oyounAII/hqdefault_live.jpg" alt="東京新聞ライブカメラ_内幸町" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>東京新聞ライブカメラ_内幸町</strong><span>東京新聞チャンネル</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=hrjhbPfLYBA" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/hrjhbPfLYBA/hqdefault_live.jpg" alt="【LIVE】首都高 1号羽田線 浜崎橋JCT ライブカメラ/Tokyo highway Live Camera 2026/07/13 01:00～" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="hrjhbPfLYBA"><img src="https://i.ytimg.com/vi/hrjhbPfLYBA/hqdefault_live.jpg" alt="【LIVE】首都高 1号羽田線 浜崎橋JCT ライブカメラ/Tokyo highway Live Camera 2026/07/13 01:00～" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>【LIVE】首都高 1号羽田線 浜崎橋JCT ライブカメラ/Tokyo highway Live Camera 2026/07/13 01:00～</strong><span>交通情報ライブカメラCH</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=tMzspbinTzY" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/tMzspbinTzY/hqdefault_live.jpg" alt="道路カメラ_県境交差点(吉佐町)" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="tMzspbinTzY"><img src="https://i.ytimg.com/vi/tMzspbinTzY/hqdefault_live.jpg" alt="道路カメラ_県境交差点(吉佐町)" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>道路カメラ_県境交差点(吉佐町)</strong><span>山陰ケーブルビジョン株式会社</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=mspMbWuEbxk" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/mspMbWuEbxk/hqdefault_live.jpg" alt="道路カメラ_宍道湖大橋" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="mspMbWuEbxk"><img src="https://i.ytimg.com/vi/mspMbWuEbxk/hqdefault_live.jpg" alt="道路カメラ_宍道湖大橋" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>道路カメラ_宍道湖大橋</strong><span>山陰ケーブルビジョン株式会社</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=gCSr3Qm3BDM" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/gCSr3Qm3BDM/hqdefault_live.jpg" alt="道路カメラ_縁結び大橋" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="gCSr3Qm3BDM"><img src="https://i.ytimg.com/vi/gCSr3Qm3BDM/hqdefault_live.jpg" alt="道路カメラ_縁結び大橋" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>道路カメラ_縁結び大橋</strong><span>山陰ケーブルビジョン株式会社</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=JEFoqOUDUI4" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/JEFoqOUDUI4/hqdefault_live.jpg" alt="道路カメラ_くにびき大橋" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="JEFoqOUDUI4"><img src="https://i.ytimg.com/vi/JEFoqOUDUI4/hqdefault_live.jpg" alt="道路カメラ_くにびき大橋" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>道路カメラ_くにびき大橋</strong><span>山陰ケーブルビジョン株式会社</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=K0aKsmCk9MI" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/K0aKsmCk9MI/hqdefault_live.jpg" alt="須川ライブカメラ（上流側）" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="K0aKsmCk9MI"><img src="https://i.ytimg.com/vi/K0aKsmCk9MI/hqdefault_live.jpg" alt="須川ライブカメラ（上流側）" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>須川ライブカメラ（上流側）</strong><span>株式会社クリーンシステム</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=oxM2E0SBITA" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/oxM2E0SBITA/hqdefault_live.jpg" alt="🔴 Live-Taipei 台北市 重要路口 即時影像 台北市專屬 🎧 終極應援歌曲已上線 💥禿鷹Music 獨播 24H Taipei , Taiwan 》 天氣、車流人流狀況 🅣ⓉⓅ80-Ⓟ-03" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="oxM2E0SBITA"><img src="https://i.ytimg.com/vi/oxM2E0SBITA/hqdefault_live.jpg" alt="🔴 Live-Taipei 台北市 重要路口 即時影像 台北市專屬 🎧 終極應援歌曲已上線 💥禿鷹Music 獨播 24H Taipei , Taiwan 》 天氣、車流人流狀況 🅣ⓉⓅ80-Ⓟ-03" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>🔴 Live-Taipei 台北市 重要路口 即時影像 台北市專屬 🎧 終極應援歌曲已上線 💥禿鷹Music 獨播 24H Taipei , Taiwan 》 天氣、車流人流狀況 🅣ⓉⓅ80-Ⓟ-03</strong><span>禿鷹 Music</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=gTO_FJzv70k" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/gTO_FJzv70k/hqdefault_live.jpg" alt="【24Ｈ：LIVE】４K配信 東京 新宿 五丁目 交差点 ライブカメラ  Tokyo Shinjuku Kabukicho  Live Camera【テイケイ屋上カメラ】#靖国通り#明治通り#歌舞伎町" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="gTO_FJzv70k"><img src="https://i.ytimg.com/vi/gTO_FJzv70k/hqdefault_live.jpg" alt="【24Ｈ：LIVE】４K配信 東京 新宿 五丁目 交差点 ライブカメラ  Tokyo Shinjuku Kabukicho  Live Camera【テイケイ屋上カメラ】#靖国通り#明治通り#歌舞伎町" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>【24Ｈ：LIVE】４K配信 東京 新宿 五丁目 交差点 ライブカメラ  Tokyo Shinjuku Kabukicho  Live Camera【テイケイ屋上カメラ】#靖国通り#明治通り#歌舞伎町</strong><span>テイケイ公式チャンネル</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=dCT-JPC9Ug4" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/dCT-JPC9Ug4/hqdefault_live.jpg" alt="【香港直播】實時東九龍維港 live cam, hong kong live stream, lofi hip hop bgm, 作業用bgm, 工作音樂, 溫習音樂, 東九龍天氣" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="dCT-JPC9Ug4"><img src="https://i.ytimg.com/vi/dCT-JPC9Ug4/hqdefault_live.jpg" alt="【香港直播】實時東九龍維港 live cam, hong kong live stream, lofi hip hop bgm, 作業用bgm, 工作音樂, 溫習音樂, 東九龍天氣" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>【香港直播】實時東九龍維港 live cam, hong kong live stream, lofi hip hop bgm, 作業用bgm, 工作音樂, 溫習音樂, 東九龍天氣</strong><span>Marcus Wong</span></div>
     </a></div>
+      <script>
+        (function () {
+          var KEY = 'staticPreviewMode';
+          var mode = localStorage.getItem(KEY) || 'auto';
+          var thumbs = [].slice.call(document.querySelectorAll('.thumb[data-vid]'));
+          var io = null;
+          function play(t) {
+            if (t.querySelector('iframe')) return;
+            var f = document.createElement('iframe');
+            f.src = 'https://www.youtube.com/embed/' + t.dataset.vid + '?autoplay=1&mute=1&playsinline=1&rel=0';
+            f.allow = 'autoplay; encrypted-media';
+            t.appendChild(f);
+          }
+          function stop(t) { var f = t.querySelector('iframe'); if (f) f.remove(); }
+          function apply() {
+            thumbs.forEach(stop);
+            if (io) { io.disconnect(); io = null; }
+            document.querySelectorAll('.preview-toggle button').forEach(function (b) {
+              b.classList.toggle('active', b.dataset.mode === mode);
+            });
+            if (mode === 'auto') {
+              io = new IntersectionObserver(function (es) {
+                es.forEach(function (e) { e.isIntersecting ? play(e.target) : stop(e.target); });
+              }, { rootMargin: '50px' });
+              thumbs.forEach(function (t) { io.observe(t); });
+            }
+          }
+          thumbs.forEach(function (t) {
+            t.addEventListener('mouseenter', function () { if (mode === 'hover') play(t); });
+            t.addEventListener('mouseleave', function () { if (mode === 'hover') stop(t); });
+          });
+          document.querySelectorAll('.preview-toggle button').forEach(function (b) {
+            b.addEventListener('click', function (e) {
+              e.preventDefault();
+              mode = b.dataset.mode;
+              localStorage.setItem(KEY, mode);
+              apply();
+            });
+          });
+          apply();
+        })();
+      </script>
 </main>
 <footer>
   <a href="/">Home</a><a href="/browse.html">Browse all</a><a href="/about.html">About</a><a href="/privacy.html">Privacy</a><a href="/terms.html">Terms</a>

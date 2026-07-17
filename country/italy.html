@@ -42,7 +42,13 @@
   .map-wrap path[data-href] { cursor: pointer; }
   .map-wrap path:hover { filter: brightness(1.6); stroke: #ffffff; }
   .map-tip { position: fixed; z-index: 10; background: rgba(0,0,0,.85); border: 1px solid #2a2f3a; color: #fff; padding: 5px 10px; border-radius: 6px; font-size: 0.85rem; pointer-events: none; white-space: nowrap; }
-  .map-note { color: #9aa4b2; font-size: 0.8rem; margin-bottom: 16px; }
+  .map-note { color: #9aa4b2; font-size: 0.8rem; margin-bottom: 4px; }
+  .map-legend { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; color: #9aa4b2; font-size: 0.8rem; margin-bottom: 18px; }
+  .map-legend .sw { display: inline-block; width: 14px; height: 14px; border-radius: 3px; margin-right: 5px; vertical-align: -2px; }
+  .thumb iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+  .preview-toggle { margin: 4px 0 14px; color: #9aa4b2; font-size: 0.85rem; display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+  .preview-toggle button { background: #161b22; color: #9aa4b2; border: 1px solid #2a2f3a; border-radius: 999px; padding: 4px 12px; cursor: pointer; font-size: 0.8rem; }
+  .preview-toggle button.active { color: #fff; border-color: #ff3b3b; }
   h2 { font-size: 1.15rem; margin: 28px 0 12px; }
   .cta { display: inline-block; margin: 20px 0; background: #ff3b3b; color: #fff; padding: 10px 18px; border-radius: 8px; text-decoration: none; font-weight: 600; }
   footer { border-top: 1px solid #2a2f3a; margin-top: 40px; padding: 20px 24px; color: #9aa4b2; font-size: 0.85rem; }
@@ -59,155 +65,202 @@
   <h1>Live Cams &amp; Footage in Italy</h1>
   <p class="intro">34 live cams and 3 videos from Italy, re-verified daily. Click any card to watch on YouTube. Updated 2026-07-17.</p>
   <a class="cta" href="/?country=IT">Open in interactive viewer →</a>
-  <div class="grid">
+  
+      <div class="preview-toggle">Preview:
+        <button type="button" data-mode="auto">▶ Auto</button>
+        <button type="button" data-mode="hover">🖱 Hover</button>
+        <button type="button" data-mode="off">Off</button>
+      </div><div class="grid">
     <a class="entry" href="https://www.youtube.com/watch?v=gzgrofStPJ0" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/gzgrofStPJ0/hqdefault_live.jpg" alt="🔴 Venice Italy Live Webcam - Dorsoduro in Live Streaming from Hotel American Dinesen - Full HD" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="gzgrofStPJ0"><img src="https://i.ytimg.com/vi/gzgrofStPJ0/hqdefault_live.jpg" alt="🔴 Venice Italy Live Webcam - Dorsoduro in Live Streaming from Hotel American Dinesen - Full HD" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>🔴 Venice Italy Live Webcam - Dorsoduro in Live Streaming from Hotel American Dinesen - Full HD</strong><span>I Love You Venice</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=CkNeltsc5ps" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/CkNeltsc5ps/hqdefault_live.jpg" alt="🔴Assisi Live Webcam Piazza del Comune" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="CkNeltsc5ps"><img src="https://i.ytimg.com/vi/CkNeltsc5ps/hqdefault_live.jpg" alt="🔴Assisi Live Webcam Piazza del Comune" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>🔴Assisi Live Webcam Piazza del Comune</strong><span>Umbria Webcam</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=Bc_bgHNApZ8" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/Bc_bgHNApZ8/hqdefault_live.jpg" alt="🔴Gualdo Tadino Live Webcam" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="Bc_bgHNApZ8"><img src="https://i.ytimg.com/vi/Bc_bgHNApZ8/hqdefault_live.jpg" alt="🔴Gualdo Tadino Live Webcam" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>🔴Gualdo Tadino Live Webcam</strong><span>Umbria Webcam</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=89d3tEaqImM" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/89d3tEaqImM/hqdefault_live.jpg" alt="REALVIEWCAM360 - ROME Live Cam - Italy - RAMSAT HQ  Vatican &amp; St. Peter’s Basilica Night View  24/7" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="89d3tEaqImM"><img src="https://i.ytimg.com/vi/89d3tEaqImM/hqdefault_live.jpg" alt="REALVIEWCAM360 - ROME Live Cam - Italy - RAMSAT HQ  Vatican &amp; St. Peter’s Basilica Night View  24/7" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>REALVIEWCAM360 - ROME Live Cam - Italy - RAMSAT HQ  Vatican &amp; St. Peter’s Basilica Night View  24/7</strong><span>RMS - RAMSAT Multimedia </span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=8TZ8YRt9nYc" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/8TZ8YRt9nYc/hqdefault_live.jpg" alt="🔴Perugia Live Webcam" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="8TZ8YRt9nYc"><img src="https://i.ytimg.com/vi/8TZ8YRt9nYc/hqdefault_live.jpg" alt="🔴Perugia Live Webcam" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>🔴Perugia Live Webcam</strong><span>Umbria Webcam</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=_QnRnQEKGnU" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/_QnRnQEKGnU/hqdefault_live.jpg" alt="Sestriere Live Cam - Grangesises, Sauze di Cesana" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="_QnRnQEKGnU"><img src="https://i.ytimg.com/vi/_QnRnQEKGnU/hqdefault_live.jpg" alt="Sestriere Live Cam - Grangesises, Sauze di Cesana" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Sestriere Live Cam - Grangesises, Sauze di Cesana</strong><span>Live Cam Italia</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=SNcuhXFKByU" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/SNcuhXFKByU/hqdefault_live.jpg" alt="Trento live cam - centro città (Piazza Duomo)" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="SNcuhXFKByU"><img src="https://i.ytimg.com/vi/SNcuhXFKByU/hqdefault_live.jpg" alt="Trento live cam - centro città (Piazza Duomo)" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Trento live cam - centro città (Piazza Duomo)</strong><span>Live Trento H24 - Piazza Duomo</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=4e1YngH-Vn0" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/4e1YngH-Vn0/hqdefault_live.jpg" alt="Webcam Live Rieti 4K – Diretta dal Centro Storico | Meteo, Notizie e Panorama in Tempo Reale" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="4e1YngH-Vn0"><img src="https://i.ytimg.com/vi/4e1YngH-Vn0/hqdefault_live.jpg" alt="Webcam Live Rieti 4K – Diretta dal Centro Storico | Meteo, Notizie e Panorama in Tempo Reale" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Webcam Live Rieti 4K – Diretta dal Centro Storico | Meteo, Notizie e Panorama in Tempo Reale</strong><span>Luca Volpone</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=d6IstgeKiiU" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/d6IstgeKiiU/hqdefault_live.jpg" alt="Webcam Live Siena (SI) - Piazza del Campo" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="d6IstgeKiiU"><img src="https://i.ytimg.com/vi/d6IstgeKiiU/hqdefault_live.jpg" alt="Webcam Live Siena (SI) - Piazza del Campo" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Webcam Live Siena (SI) - Piazza del Campo</strong><span>Paesaggi Digitali</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=wWNriS9CSFE" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/wWNriS9CSFE/hqdefault_live.jpg" alt="Gallipoli Live Cam - Spiaggia della Purità" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="wWNriS9CSFE"><img src="https://i.ytimg.com/vi/wWNriS9CSFE/hqdefault_live.jpg" alt="Gallipoli Live Cam - Spiaggia della Purità" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Gallipoli Live Cam - Spiaggia della Purità</strong><span>Webcam Italia</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=LO2Fvujwc8M" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/LO2Fvujwc8M/hqdefault_live.jpg" alt="Webcam Live Golfo di Napoli (NA)" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="LO2Fvujwc8M"><img src="https://i.ytimg.com/vi/LO2Fvujwc8M/hqdefault_live.jpg" alt="Webcam Live Golfo di Napoli (NA)" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Webcam Live Golfo di Napoli (NA)</strong><span>Paesaggi Digitali</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=NJ5hYg9Ii2I" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/NJ5hYg9Ii2I/hqdefault_live.jpg" alt="Lampedusa Webcam Live - Porto Nuovo" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="NJ5hYg9Ii2I"><img src="https://i.ytimg.com/vi/NJ5hYg9Ii2I/hqdefault_live.jpg" alt="Lampedusa Webcam Live - Porto Nuovo" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Lampedusa Webcam Live - Porto Nuovo</strong><span>Webcam Italia</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=gXm3PGF4z0s" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/gXm3PGF4z0s/hqdefault_live.jpg" alt="Roma Live Cam - Rione Prati, Cupola di San Pietro" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="gXm3PGF4z0s"><img src="https://i.ytimg.com/vi/gXm3PGF4z0s/hqdefault_live.jpg" alt="Roma Live Cam - Rione Prati, Cupola di San Pietro" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Roma Live Cam - Rione Prati, Cupola di San Pietro</strong><span>Webcam Italia</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=3IgiNLzSS2w" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/3IgiNLzSS2w/hqdefault_live.jpg" alt="Brescia Live Cam - Castello, Colle Cidneo" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="3IgiNLzSS2w"><img src="https://i.ytimg.com/vi/3IgiNLzSS2w/hqdefault_live.jpg" alt="Brescia Live Cam - Castello, Colle Cidneo" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Brescia Live Cam - Castello, Colle Cidneo</strong><span>Live Cam Italia</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=ZZrEQ2Y5kec" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/ZZrEQ2Y5kec/hqdefault_live.jpg" alt="Rimini Live Cam - Torre Pedrera" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="ZZrEQ2Y5kec"><img src="https://i.ytimg.com/vi/ZZrEQ2Y5kec/hqdefault_live.jpg" alt="Rimini Live Cam - Torre Pedrera" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Rimini Live Cam - Torre Pedrera</strong><span>Live Cam Italia</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=5QVUohwo8ss" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/5QVUohwo8ss/hqdefault_live.jpg" alt="Webcam Live Cattolica (RN)" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="5QVUohwo8ss"><img src="https://i.ytimg.com/vi/5QVUohwo8ss/hqdefault_live.jpg" alt="Webcam Live Cattolica (RN)" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Webcam Live Cattolica (RN)</strong><span>Paesaggi Digitali</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=h5chI0fu32w" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/h5chI0fu32w/hqdefault_live.jpg" alt="Mondovì Live Webcam - Alpi del Mare &amp; Mondolé" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="h5chI0fu32w"><img src="https://i.ytimg.com/vi/h5chI0fu32w/hqdefault_live.jpg" alt="Mondovì Live Webcam - Alpi del Mare &amp; Mondolé" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Mondovì Live Webcam - Alpi del Mare &amp; Mondolé</strong><span>Live Cam Italia</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=ASqGNET31VY" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/ASqGNET31VY/hqdefault_live.jpg" alt="🔴 Venice Live Cam - San Marco Basin in Live Streaming - Webcam en direct ベネチア ライブ" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="ASqGNET31VY"><img src="https://i.ytimg.com/vi/ASqGNET31VY/hqdefault_live.jpg" alt="🔴 Venice Live Cam - San Marco Basin in Live Streaming - Webcam en direct ベネチア ライブ" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>🔴 Venice Live Cam - San Marco Basin in Live Streaming - Webcam en direct ベネチア ライブ</strong><span>I Love You Venice</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=1Ho6SNEiOlk" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/1Ho6SNEiOlk/hqdefault_live.jpg" alt="🔴Assisi Live Webcam Città" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="1Ho6SNEiOlk"><img src="https://i.ytimg.com/vi/1Ho6SNEiOlk/hqdefault_live.jpg" alt="🔴Assisi Live Webcam Città" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>🔴Assisi Live Webcam Città</strong><span>Umbria Webcam</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=5ka3YhVZgME" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/5ka3YhVZgME/hqdefault_live.jpg" alt="🔴Assisi Live Webcam Basilica di San Francesco" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="5ka3YhVZgME"><img src="https://i.ytimg.com/vi/5ka3YhVZgME/hqdefault_live.jpg" alt="🔴Assisi Live Webcam Basilica di San Francesco" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>🔴Assisi Live Webcam Basilica di San Francesco</strong><span>Umbria Webcam</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=y7QcpQwxHrA" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/y7QcpQwxHrA/hqdefault_live.jpg" alt="🔴Orvieto Live Webcam" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="y7QcpQwxHrA"><img src="https://i.ytimg.com/vi/y7QcpQwxHrA/hqdefault_live.jpg" alt="🔴Orvieto Live Webcam" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>🔴Orvieto Live Webcam</strong><span>Umbria Webcam</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=mBs2lOPdkMo" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/mBs2lOPdkMo/hqdefault_live.jpg" alt="🔴Montefalco Live Webcam" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="mBs2lOPdkMo"><img src="https://i.ytimg.com/vi/mBs2lOPdkMo/hqdefault_live.jpg" alt="🔴Montefalco Live Webcam" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>🔴Montefalco Live Webcam</strong><span>Umbria Webcam</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=Nrbz5ZkFL6U" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/Nrbz5ZkFL6U/hqdefault_live.jpg" alt="🔴Todi Live Webcam" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="Nrbz5ZkFL6U"><img src="https://i.ytimg.com/vi/Nrbz5ZkFL6U/hqdefault_live.jpg" alt="🔴Todi Live Webcam" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>🔴Todi Live Webcam</strong><span>Umbria Webcam</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=PfBPe5Jfzxo" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/PfBPe5Jfzxo/hqdefault_live.jpg" alt="🔴Bevagna Live Webcam" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="PfBPe5Jfzxo"><img src="https://i.ytimg.com/vi/PfBPe5Jfzxo/hqdefault_live.jpg" alt="🔴Bevagna Live Webcam" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>🔴Bevagna Live Webcam</strong><span>Umbria Webcam</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=4cqPDoX6uws" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/4cqPDoX6uws/hqdefault_live.jpg" alt="🔴Assisi Live Webcam Piazza San Rufino" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="4cqPDoX6uws"><img src="https://i.ytimg.com/vi/4cqPDoX6uws/hqdefault_live.jpg" alt="🔴Assisi Live Webcam Piazza San Rufino" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>🔴Assisi Live Webcam Piazza San Rufino</strong><span>Umbria Webcam</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=tUPmbZqrC6I" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/tUPmbZqrC6I/hqdefault_live.jpg" alt="🔴Gubbio Live Webcam" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="tUPmbZqrC6I"><img src="https://i.ytimg.com/vi/tUPmbZqrC6I/hqdefault_live.jpg" alt="🔴Gubbio Live Webcam" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>🔴Gubbio Live Webcam</strong><span>Umbria Webcam</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=FeAZyuvghVY" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/FeAZyuvghVY/hqdefault_live.jpg" alt="🔴Lago di Piediluco Live Webcam" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="FeAZyuvghVY"><img src="https://i.ytimg.com/vi/FeAZyuvghVY/hqdefault_live.jpg" alt="🔴Lago di Piediluco Live Webcam" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>🔴Lago di Piediluco Live Webcam</strong><span>Umbria Webcam</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=R2jNOtYEwdI" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/R2jNOtYEwdI/hqdefault_live.jpg" alt="New York Live Webcam - Manhattan Upper East Side" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="R2jNOtYEwdI"><img src="https://i.ytimg.com/vi/R2jNOtYEwdI/hqdefault_live.jpg" alt="New York Live Webcam - Manhattan Upper East Side" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>New York Live Webcam - Manhattan Upper East Side</strong><span>Tripwebcam</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=_eS7q-G9Zqs" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/_eS7q-G9Zqs/hqdefault_live.jpg" alt="🔴 TOP LIVE CAMS USA - UK - CANADA with relaxing music 🎵 | SkylineWebcams" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="_eS7q-G9Zqs"><img src="https://i.ytimg.com/vi/_eS7q-G9Zqs/hqdefault_live.jpg" alt="🔴 TOP LIVE CAMS USA - UK - CANADA with relaxing music 🎵 | SkylineWebcams" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>🔴 TOP LIVE CAMS USA - UK - CANADA with relaxing music 🎵 | SkylineWebcams</strong><span>SkylineWebcams</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=kUfuwa8mDrA" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/kUfuwa8mDrA/hqdefault_live.jpg" alt="🔴 200 TOP LIVE CAMS from Spain with Music 🎧 and Map | SkylineWebcams" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="kUfuwa8mDrA"><img src="https://i.ytimg.com/vi/kUfuwa8mDrA/hqdefault_live.jpg" alt="🔴 200 TOP LIVE CAMS from Spain with Music 🎧 and Map | SkylineWebcams" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>🔴 200 TOP LIVE CAMS from Spain with Music 🎧 and Map | SkylineWebcams</strong><span>SkylineWebcams</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=a1mcaV3Sf9U" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/a1mcaV3Sf9U/hqdefault_live.jpg" alt="🔴 LIVE 24/7  Rolling Cam Venice - Live Cam in Venice Italy - Livecam en direct #venice" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="a1mcaV3Sf9U"><img src="https://i.ytimg.com/vi/a1mcaV3Sf9U/hqdefault_live.jpg" alt="🔴 LIVE 24/7  Rolling Cam Venice - Live Cam in Venice Italy - Livecam en direct #venice" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>🔴 LIVE 24/7  Rolling Cam Venice - Live Cam in Venice Italy - Livecam en direct #venice</strong><span>I Love You Venice</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=i10aOLMK76k" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/i10aOLMK76k/hqdefault_live.jpg" alt="🔴 Live Cam around the World - Rolling Cam with Chill &amp; Lounge Music" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="i10aOLMK76k"><img src="https://i.ytimg.com/vi/i10aOLMK76k/hqdefault_live.jpg" alt="🔴 Live Cam around the World - Rolling Cam with Chill &amp; Lounge Music" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>🔴 Live Cam around the World - Rolling Cam with Chill &amp; Lounge Music</strong><span>I Love You Venice</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=Kmf_wiTFuXY" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/Kmf_wiTFuXY/hqdefault_live.jpg" alt="🔴 4k Venice Italy Live Cam - Rialto Bridge Live Streaming from Palazzo Bembo - Live Webcam - ライブカメラ" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="Kmf_wiTFuXY"><img src="https://i.ytimg.com/vi/Kmf_wiTFuXY/hqdefault_live.jpg" alt="🔴 4k Venice Italy Live Cam - Rialto Bridge Live Streaming from Palazzo Bembo - Live Webcam - ライブカメラ" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>🔴 4k Venice Italy Live Cam - Rialto Bridge Live Streaming from Palazzo Bembo - Live Webcam - ライブカメラ</strong><span>I Love You Venice</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=mt7uE-n0YPI" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/mt7uE-n0YPI/hqdefault_live.jpg" alt="🔴 4K Live Cam of Ponte delle Guglie Venice - View from Hotel Leone Venezia  - Live stream ライブカメラ" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="mt7uE-n0YPI"><img src="https://i.ytimg.com/vi/mt7uE-n0YPI/hqdefault_live.jpg" alt="🔴 4K Live Cam of Ponte delle Guglie Venice - View from Hotel Leone Venezia  - Live stream ライブカメラ" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>🔴 4K Live Cam of Ponte delle Guglie Venice - View from Hotel Leone Venezia  - Live stream ライブカメラ</strong><span>I Love You Venice</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=_iZ-vMCeH9U" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/_iZ-vMCeH9U/hqdefault.jpg" alt="Paris, France 🇫🇷 | 4K Drone Footage (With Subtitles)" loading="lazy" width="320" height="180"><span class="badge">4:38</span></div>
+      <div class="thumb" data-vid="_iZ-vMCeH9U"><img src="https://i.ytimg.com/vi/_iZ-vMCeH9U/hqdefault.jpg" alt="Paris, France 🇫🇷 | 4K Drone Footage (With Subtitles)" loading="lazy" width="320" height="180"><span class="badge">4:38</span></div>
       <div class="entry-body"><strong>Paris, France 🇫🇷 | 4K Drone Footage (With Subtitles)</strong><span>MTI Aerials</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=FGRvP8eoPdw" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/FGRvP8eoPdw/hqdefault.jpg" alt="Barcelona, Spain 🇪🇸 | 4K Drone Footage (With Subtitles)" loading="lazy" width="320" height="180"><span class="badge">8:29</span></div>
+      <div class="thumb" data-vid="FGRvP8eoPdw"><img src="https://i.ytimg.com/vi/FGRvP8eoPdw/hqdefault.jpg" alt="Barcelona, Spain 🇪🇸 | 4K Drone Footage (With Subtitles)" loading="lazy" width="320" height="180"><span class="badge">8:29</span></div>
       <div class="entry-body"><strong>Barcelona, Spain 🇪🇸 | 4K Drone Footage (With Subtitles)</strong><span>MTI Aerials</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=2GP7gDmy_Qc" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/2GP7gDmy_Qc/hqdefault.jpg" alt="🇱🇺 Luxembourg City Walking Tour 4K 60FPS – Capital of the World’s Richest Country" loading="lazy" width="320" height="180"><span class="badge">50:44</span></div>
+      <div class="thumb" data-vid="2GP7gDmy_Qc"><img src="https://i.ytimg.com/vi/2GP7gDmy_Qc/hqdefault.jpg" alt="🇱🇺 Luxembourg City Walking Tour 4K 60FPS – Capital of the World’s Richest Country" loading="lazy" width="320" height="180"><span class="badge">50:44</span></div>
       <div class="entry-body"><strong>🇱🇺 Luxembourg City Walking Tour 4K 60FPS – Capital of the World’s Richest Country</strong><span>Peaceful Walking Tours</span></div>
     </a></div>
+      <script>
+        (function () {
+          var KEY = 'staticPreviewMode';
+          var mode = localStorage.getItem(KEY) || 'auto';
+          var thumbs = [].slice.call(document.querySelectorAll('.thumb[data-vid]'));
+          var io = null;
+          function play(t) {
+            if (t.querySelector('iframe')) return;
+            var f = document.createElement('iframe');
+            f.src = 'https://www.youtube.com/embed/' + t.dataset.vid + '?autoplay=1&mute=1&playsinline=1&rel=0';
+            f.allow = 'autoplay; encrypted-media';
+            t.appendChild(f);
+          }
+          function stop(t) { var f = t.querySelector('iframe'); if (f) f.remove(); }
+          function apply() {
+            thumbs.forEach(stop);
+            if (io) { io.disconnect(); io = null; }
+            document.querySelectorAll('.preview-toggle button').forEach(function (b) {
+              b.classList.toggle('active', b.dataset.mode === mode);
+            });
+            if (mode === 'auto') {
+              io = new IntersectionObserver(function (es) {
+                es.forEach(function (e) { e.isIntersecting ? play(e.target) : stop(e.target); });
+              }, { rootMargin: '50px' });
+              thumbs.forEach(function (t) { io.observe(t); });
+            }
+          }
+          thumbs.forEach(function (t) {
+            t.addEventListener('mouseenter', function () { if (mode === 'hover') play(t); });
+            t.addEventListener('mouseleave', function () { if (mode === 'hover') stop(t); });
+          });
+          document.querySelectorAll('.preview-toggle button').forEach(function (b) {
+            b.addEventListener('click', function (e) {
+              e.preventDefault();
+              mode = b.dataset.mode;
+              localStorage.setItem(KEY, mode);
+              apply();
+            });
+          });
+          apply();
+        })();
+      </script>
 </main>
 <footer>
   <a href="/">Home</a><a href="/browse.html">Browse all</a><a href="/about.html">About</a><a href="/privacy.html">Privacy</a><a href="/terms.html">Terms</a>

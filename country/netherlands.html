@@ -42,7 +42,13 @@
   .map-wrap path[data-href] { cursor: pointer; }
   .map-wrap path:hover { filter: brightness(1.6); stroke: #ffffff; }
   .map-tip { position: fixed; z-index: 10; background: rgba(0,0,0,.85); border: 1px solid #2a2f3a; color: #fff; padding: 5px 10px; border-radius: 6px; font-size: 0.85rem; pointer-events: none; white-space: nowrap; }
-  .map-note { color: #9aa4b2; font-size: 0.8rem; margin-bottom: 16px; }
+  .map-note { color: #9aa4b2; font-size: 0.8rem; margin-bottom: 4px; }
+  .map-legend { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; color: #9aa4b2; font-size: 0.8rem; margin-bottom: 18px; }
+  .map-legend .sw { display: inline-block; width: 14px; height: 14px; border-radius: 3px; margin-right: 5px; vertical-align: -2px; }
+  .thumb iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+  .preview-toggle { margin: 4px 0 14px; color: #9aa4b2; font-size: 0.85rem; display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+  .preview-toggle button { background: #161b22; color: #9aa4b2; border: 1px solid #2a2f3a; border-radius: 999px; padding: 4px 12px; cursor: pointer; font-size: 0.8rem; }
+  .preview-toggle button.active { color: #fff; border-color: #ff3b3b; }
   h2 { font-size: 1.15rem; margin: 28px 0 12px; }
   .cta { display: inline-block; margin: 20px 0; background: #ff3b3b; color: #fff; padding: 10px 18px; border-radius: 8px; text-decoration: none; font-weight: 600; }
   footer { border-top: 1px solid #2a2f3a; margin-top: 40px; padding: 20px 24px; color: #9aa4b2; font-size: 0.85rem; }
@@ -59,99 +65,146 @@
   <h1>Live Cams &amp; Footage in Netherlands</h1>
   <p class="intro">20 live cams and 3 videos from Netherlands, re-verified daily. Click any card to watch on YouTube. Updated 2026-07-17.</p>
   <a class="cta" href="/?country=NL">Open in interactive viewer →</a>
-  <div class="grid">
+  
+      <div class="preview-toggle">Preview:
+        <button type="button" data-mode="auto">▶ Auto</button>
+        <button type="button" data-mode="hover">🖱 Hover</button>
+        <button type="button" data-mode="off">Off</button>
+      </div><div class="grid">
     <a class="entry" href="https://www.youtube.com/watch?v=-oiR7FxcwYU" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/-oiR7FxcwYU/hqdefault_live.jpg" alt="🏨 Avila Beach Hotel | Curacao 🌴☀️ | LIVE Cam 1" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="-oiR7FxcwYU"><img src="https://i.ytimg.com/vi/-oiR7FxcwYU/hqdefault_live.jpg" alt="🏨 Avila Beach Hotel | Curacao 🌴☀️ | LIVE Cam 1" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>🏨 Avila Beach Hotel | Curacao 🌴☀️ | LIVE Cam 1</strong><span>SHOWME Caribbean</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=Gd9d4q6WvUY" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/Gd9d4q6WvUY/hqdefault_live.jpg" alt="Now4Rent.NL | Amsterdam De Dam | Pan Tilt Zoom Camera | Ultra HD (4K)" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="Gd9d4q6WvUY"><img src="https://i.ytimg.com/vi/Gd9d4q6WvUY/hqdefault_live.jpg" alt="Now4Rent.NL | Amsterdam De Dam | Pan Tilt Zoom Camera | Ultra HD (4K)" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Now4Rent.NL | Amsterdam De Dam | Pan Tilt Zoom Camera | Ultra HD (4K)</strong><span>Now4Rent</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=ZMgVXcPwxtQ" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/ZMgVXcPwxtQ/hqdefault_live.jpg" alt="Renesse aan Zee" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="ZMgVXcPwxtQ"><img src="https://i.ytimg.com/vi/ZMgVXcPwxtQ/hqdefault_live.jpg" alt="Renesse aan Zee" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Renesse aan Zee</strong><span>Hage Hosting</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=Jy1Y9f8NEY0" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/Jy1Y9f8NEY0/hqdefault_live.jpg" alt="Live Camera AXIS Q1808-LE Bullet Camera" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="Jy1Y9f8NEY0"><img src="https://i.ytimg.com/vi/Jy1Y9f8NEY0/hqdefault_live.jpg" alt="Live Camera AXIS Q1808-LE Bullet Camera" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Live Camera AXIS Q1808-LE Bullet Camera</strong><span>Axis Experience Center The Netherlands</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=SSX2NDB2snQ" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/SSX2NDB2snQ/hqdefault_live.jpg" alt="✈️ LIVE July 13 | Maho Beach Plane Spotting | SXM Airport St. Maarten (with ATC)" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="SSX2NDB2snQ"><img src="https://i.ytimg.com/vi/SSX2NDB2snQ/hqdefault_live.jpg" alt="✈️ LIVE July 13 | Maho Beach Plane Spotting | SXM Airport St. Maarten (with ATC)" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>✈️ LIVE July 13 | Maho Beach Plane Spotting | SXM Airport St. Maarten (with ATC)</strong><span>SHOWME Caribbean</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=H9Kruj_mHp8" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/H9Kruj_mHp8/hqdefault_live.jpg" alt="WebCam.NL | befairtennis.nl | HD Pan Tilt Zoom camera." loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="H9Kruj_mHp8"><img src="https://i.ytimg.com/vi/H9Kruj_mHp8/hqdefault_live.jpg" alt="WebCam.NL | befairtennis.nl | HD Pan Tilt Zoom camera." loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>WebCam.NL | befairtennis.nl | HD Pan Tilt Zoom camera.</strong><span>WebCam NL</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=OXfVcE-3uq4" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/OXfVcE-3uq4/hqdefault_live.jpg" alt="WebCam.NL | hermesdvs.nl | live FULL HD camera." loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="OXfVcE-3uq4"><img src="https://i.ytimg.com/vi/OXfVcE-3uq4/hqdefault_live.jpg" alt="WebCam.NL | hermesdvs.nl | live FULL HD camera." loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>WebCam.NL | hermesdvs.nl | live FULL HD camera.</strong><span>WebCam NL</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=fBvBzM1dfuY" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/fBvBzM1dfuY/hqdefault_live.jpg" alt="WebCam.NL | FortPannerden.EU | live FULLHD PTZ camera Doornenburg." loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="fBvBzM1dfuY"><img src="https://i.ytimg.com/vi/fBvBzM1dfuY/hqdefault_live.jpg" alt="WebCam.NL | FortPannerden.EU | live FULLHD PTZ camera Doornenburg." loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>WebCam.NL | FortPannerden.EU | live FULLHD PTZ camera Doornenburg.</strong><span>WebCam NL</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=3gTHiUWrCAE" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/3gTHiUWrCAE/hqdefault_live.jpg" alt="WebCam.NL | Sixhaven.NL | live camera. (1440p)" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="3gTHiUWrCAE"><img src="https://i.ytimg.com/vi/3gTHiUWrCAE/hqdefault_live.jpg" alt="WebCam.NL | Sixhaven.NL | live camera. (1440p)" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>WebCam.NL | Sixhaven.NL | live camera. (1440p)</strong><span>WebCam NL</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=UZzDO7gQuNk" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/UZzDO7gQuNk/hqdefault_live.jpg" alt="WebCam.NL | sjoerd-ameland.nl/webcam | live ultraHD camera Ameland. (4K)" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="UZzDO7gQuNk"><img src="https://i.ytimg.com/vi/UZzDO7gQuNk/hqdefault_live.jpg" alt="WebCam.NL | sjoerd-ameland.nl/webcam | live ultraHD camera Ameland. (4K)" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>WebCam.NL | sjoerd-ameland.nl/webcam | live ultraHD camera Ameland. (4K)</strong><span>WebCam NL</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=34tOlrk7z4M" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/34tOlrk7z4M/hqdefault_live.jpg" alt="WebCam.NL | www.badhuys.com | live HD camera Vlieland." loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="34tOlrk7z4M"><img src="https://i.ytimg.com/vi/34tOlrk7z4M/hqdefault_live.jpg" alt="WebCam.NL | www.badhuys.com | live HD camera Vlieland." loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>WebCam.NL | www.badhuys.com | live HD camera Vlieland.</strong><span>WebCam NL</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=qhFgy074QOM" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/qhFgy074QOM/hqdefault_live.jpg" alt="WebCam.NL | Waalstrand.NL/nl/webcam | HD PTZ camera camping Waalstrand, Gendt." loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="qhFgy074QOM"><img src="https://i.ytimg.com/vi/qhFgy074QOM/hqdefault_live.jpg" alt="WebCam.NL | Waalstrand.NL/nl/webcam | HD PTZ camera camping Waalstrand, Gendt." loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>WebCam.NL | Waalstrand.NL/nl/webcam | HD PTZ camera camping Waalstrand, Gendt.</strong><span>WebCam NL</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=naVWFv9HIho" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/naVWFv9HIho/hqdefault_live.jpg" alt="WebCam.NL | vinkmotorsport.com | live FULL HD camera." loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="naVWFv9HIho"><img src="https://i.ytimg.com/vi/naVWFv9HIho/hqdefault_live.jpg" alt="WebCam.NL | vinkmotorsport.com | live FULL HD camera." loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>WebCam.NL | vinkmotorsport.com | live FULL HD camera.</strong><span>WebCam NL</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=pOL0u6K4wLI" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/pOL0u6K4wLI/hqdefault_live.jpg" alt="WebCam.NL | Charme.NL | live ultraHD camera. (4K)" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="pOL0u6K4wLI"><img src="https://i.ytimg.com/vi/pOL0u6K4wLI/hqdefault_live.jpg" alt="WebCam.NL | Charme.NL | live ultraHD camera. (4K)" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>WebCam.NL | Charme.NL | live ultraHD camera. (4K)</strong><span>WebCam NL</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=loHbMM9JfCs" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/loHbMM9JfCs/hqdefault_live.jpg" alt="🌴 LionsDive Beach Resort | Mambo Beach | Curaçao | LIVE Cam" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="loHbMM9JfCs"><img src="https://i.ytimg.com/vi/loHbMM9JfCs/hqdefault_live.jpg" alt="🌴 LionsDive Beach Resort | Mambo Beach | Curaçao | LIVE Cam" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>🌴 LionsDive Beach Resort | Mambo Beach | Curaçao | LIVE Cam</strong><span>SHOWME Caribbean</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=vxHKAImxUHk" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/vxHKAImxUHk/hqdefault_live.jpg" alt="🌴 Simpson Bay Beach Resort | Saint Martin | LIVE Cam" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="vxHKAImxUHk"><img src="https://i.ytimg.com/vi/vxHKAImxUHk/hqdefault_live.jpg" alt="🌴 Simpson Bay Beach Resort | Saint Martin | LIVE Cam" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>🌴 Simpson Bay Beach Resort | Saint Martin | LIVE Cam</strong><span>SHOWME Caribbean</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=N5Mb2bjYwZo" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/N5Mb2bjYwZo/hqdefault_live.jpg" alt="🚢  Boardwalk | Great Bay Beach | Philipsburg | Saint Martin | LIVE Cam" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="N5Mb2bjYwZo"><img src="https://i.ytimg.com/vi/N5Mb2bjYwZo/hqdefault_live.jpg" alt="🚢  Boardwalk | Great Bay Beach | Philipsburg | Saint Martin | LIVE Cam" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>🚢  Boardwalk | Great Bay Beach | Philipsburg | Saint Martin | LIVE Cam</strong><span>SHOWME Caribbean</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=M09NaBVPjAI" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/M09NaBVPjAI/hqdefault_live.jpg" alt="Live stream | Amazonehaven west" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="M09NaBVPjAI"><img src="https://i.ytimg.com/vi/M09NaBVPjAI/hqdefault_live.jpg" alt="Live stream | Amazonehaven west" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Live stream | Amazonehaven west</strong><span>Port of Rotterdam</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=_ZXMjk5K0_s" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/_ZXMjk5K0_s/hqdefault_live.jpg" alt="🌴 Eagle Beach | Costa Linda Beach Resort | Aruba | LIVE Cam" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="_ZXMjk5K0_s"><img src="https://i.ytimg.com/vi/_ZXMjk5K0_s/hqdefault_live.jpg" alt="🌴 Eagle Beach | Costa Linda Beach Resort | Aruba | LIVE Cam" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>🌴 Eagle Beach | Costa Linda Beach Resort | Aruba | LIVE Cam</strong><span>SHOWME Caribbean</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=iSeH45R-8R0" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/iSeH45R-8R0/hqdefault_live.jpg" alt="✈️  Maho Beach Saint Martin | Princess Juliana Airport Beach 24/7 | LIVE Cam" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="iSeH45R-8R0"><img src="https://i.ytimg.com/vi/iSeH45R-8R0/hqdefault_live.jpg" alt="✈️  Maho Beach Saint Martin | Princess Juliana Airport Beach 24/7 | LIVE Cam" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>✈️  Maho Beach Saint Martin | Princess Juliana Airport Beach 24/7 | LIVE Cam</strong><span>SHOWME Caribbean</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=WHNNHAoaZD4" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/WHNNHAoaZD4/hqdefault.jpg" alt="[4K] PARIS 2025 🇫🇷 1 Hour Aerial Drone Relaxation Film UHD | FRANCE" loading="lazy" width="320" height="180"><span class="badge">1:01:07</span></div>
+      <div class="thumb" data-vid="WHNNHAoaZD4"><img src="https://i.ytimg.com/vi/WHNNHAoaZD4/hqdefault.jpg" alt="[4K] PARIS 2025 🇫🇷 1 Hour Aerial Drone Relaxation Film UHD | FRANCE" loading="lazy" width="320" height="180"><span class="badge">1:01:07</span></div>
       <div class="entry-body"><strong>[4K] PARIS 2025 🇫🇷 1 Hour Aerial Drone Relaxation Film UHD | FRANCE</strong><span>Polychronis Film</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=fIZke_A9Md4" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/fIZke_A9Md4/hqdefault.jpg" alt="[4K] SAN FRANCISCO 2026 🇺🇸 4 Hour Drone Aerial Relaxation Film | California CA USA United States" loading="lazy" width="320" height="180"><span class="badge">4:02:47</span></div>
+      <div class="thumb" data-vid="fIZke_A9Md4"><img src="https://i.ytimg.com/vi/fIZke_A9Md4/hqdefault.jpg" alt="[4K] SAN FRANCISCO 2026 🇺🇸 4 Hour Drone Aerial Relaxation Film | California CA USA United States" loading="lazy" width="320" height="180"><span class="badge">4:02:47</span></div>
       <div class="entry-body"><strong>[4K] SAN FRANCISCO 2026 🇺🇸 4 Hour Drone Aerial Relaxation Film | California CA USA United States</strong><span>Polychronis Film</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=4KBjBvxgwSU" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/4KBjBvxgwSU/hqdefault.jpg" alt="[4K] MEXICO CITY 2026 🇲🇽 1 Hour Aerial Drone Relaxation Film UHD | Ciudad de México CDMX" loading="lazy" width="320" height="180"><span class="badge">1:05:34</span></div>
+      <div class="thumb" data-vid="4KBjBvxgwSU"><img src="https://i.ytimg.com/vi/4KBjBvxgwSU/hqdefault.jpg" alt="[4K] MEXICO CITY 2026 🇲🇽 1 Hour Aerial Drone Relaxation Film UHD | Ciudad de México CDMX" loading="lazy" width="320" height="180"><span class="badge">1:05:34</span></div>
       <div class="entry-body"><strong>[4K] MEXICO CITY 2026 🇲🇽 1 Hour Aerial Drone Relaxation Film UHD | Ciudad de México CDMX</strong><span>Polychronis Film</span></div>
     </a></div>
+      <script>
+        (function () {
+          var KEY = 'staticPreviewMode';
+          var mode = localStorage.getItem(KEY) || 'auto';
+          var thumbs = [].slice.call(document.querySelectorAll('.thumb[data-vid]'));
+          var io = null;
+          function play(t) {
+            if (t.querySelector('iframe')) return;
+            var f = document.createElement('iframe');
+            f.src = 'https://www.youtube.com/embed/' + t.dataset.vid + '?autoplay=1&mute=1&playsinline=1&rel=0';
+            f.allow = 'autoplay; encrypted-media';
+            t.appendChild(f);
+          }
+          function stop(t) { var f = t.querySelector('iframe'); if (f) f.remove(); }
+          function apply() {
+            thumbs.forEach(stop);
+            if (io) { io.disconnect(); io = null; }
+            document.querySelectorAll('.preview-toggle button').forEach(function (b) {
+              b.classList.toggle('active', b.dataset.mode === mode);
+            });
+            if (mode === 'auto') {
+              io = new IntersectionObserver(function (es) {
+                es.forEach(function (e) { e.isIntersecting ? play(e.target) : stop(e.target); });
+              }, { rootMargin: '50px' });
+              thumbs.forEach(function (t) { io.observe(t); });
+            }
+          }
+          thumbs.forEach(function (t) {
+            t.addEventListener('mouseenter', function () { if (mode === 'hover') play(t); });
+            t.addEventListener('mouseleave', function () { if (mode === 'hover') stop(t); });
+          });
+          document.querySelectorAll('.preview-toggle button').forEach(function (b) {
+            b.addEventListener('click', function (e) {
+              e.preventDefault();
+              mode = b.dataset.mode;
+              localStorage.setItem(KEY, mode);
+              apply();
+            });
+          });
+          apply();
+        })();
+      </script>
 </main>
 <footer>
   <a href="/">Home</a><a href="/browse.html">Browse all</a><a href="/about.html">About</a><a href="/privacy.html">Privacy</a><a href="/terms.html">Terms</a>

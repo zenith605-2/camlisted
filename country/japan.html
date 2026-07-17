@@ -42,7 +42,13 @@
   .map-wrap path[data-href] { cursor: pointer; }
   .map-wrap path:hover { filter: brightness(1.6); stroke: #ffffff; }
   .map-tip { position: fixed; z-index: 10; background: rgba(0,0,0,.85); border: 1px solid #2a2f3a; color: #fff; padding: 5px 10px; border-radius: 6px; font-size: 0.85rem; pointer-events: none; white-space: nowrap; }
-  .map-note { color: #9aa4b2; font-size: 0.8rem; margin-bottom: 16px; }
+  .map-note { color: #9aa4b2; font-size: 0.8rem; margin-bottom: 4px; }
+  .map-legend { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; color: #9aa4b2; font-size: 0.8rem; margin-bottom: 18px; }
+  .map-legend .sw { display: inline-block; width: 14px; height: 14px; border-radius: 3px; margin-right: 5px; vertical-align: -2px; }
+  .thumb iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+  .preview-toggle { margin: 4px 0 14px; color: #9aa4b2; font-size: 0.85rem; display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+  .preview-toggle button { background: #161b22; color: #9aa4b2; border: 1px solid #2a2f3a; border-radius: 999px; padding: 4px 12px; cursor: pointer; font-size: 0.8rem; }
+  .preview-toggle button.active { color: #fff; border-color: #ff3b3b; }
   h2 { font-size: 1.15rem; margin: 28px 0 12px; }
   .cta { display: inline-block; margin: 20px 0; background: #ff3b3b; color: #fff; padding: 10px 18px; border-radius: 8px; text-decoration: none; font-weight: 600; }
   footer { border-top: 1px solid #2a2f3a; margin-top: 40px; padding: 20px 24px; color: #9aa4b2; font-size: 0.85rem; }
@@ -59,607 +65,654 @@
   <h1>Live Cams &amp; Footage in Japan</h1>
   <p class="intro">195 live cams and 47 videos from Japan, re-verified daily. Click any card to watch on YouTube. Updated 2026-07-17.</p>
   <a class="cta" href="/?country=JP">Open in interactive viewer →</a>
-  <div class="grid">
+  
+      <div class="preview-toggle">Preview:
+        <button type="button" data-mode="auto">▶ Auto</button>
+        <button type="button" data-mode="hover">🖱 Hover</button>
+        <button type="button" data-mode="off">Off</button>
+      </div><div class="grid">
     <a class="entry" href="https://www.youtube.com/watch?v=KWJj9huNXIQ" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/KWJj9huNXIQ/hqdefault_live.jpg" alt="Sapporo Streetcar—Since 1918 Live 24/7 Japan Railcam | 🚋 路面電車 札幌市電 1918- | lofi beats" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="KWJj9huNXIQ"><img src="https://i.ytimg.com/vi/KWJj9huNXIQ/hqdefault_live.jpg" alt="Sapporo Streetcar—Since 1918 Live 24/7 Japan Railcam | 🚋 路面電車 札幌市電 1918- | lofi beats" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Sapporo Streetcar—Since 1918 Live 24/7 Japan Railcam | 🚋 路面電車 札幌市電 1918- | lofi beats</strong><span>Hokkaido Kurashi no Yomimono</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=Kozl3hd56Y0" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/Kozl3hd56Y0/hqdefault_live.jpg" alt="LIVE Tokyo Bay 🇯🇵 | 首都高速湾岸線 東雲JCT付近 東京ライブカメラ | Expressway Traffic | 24/7 Japan Livestream" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="Kozl3hd56Y0"><img src="https://i.ytimg.com/vi/Kozl3hd56Y0/hqdefault_live.jpg" alt="LIVE Tokyo Bay 🇯🇵 | 首都高速湾岸線 東雲JCT付近 東京ライブカメラ | Expressway Traffic | 24/7 Japan Livestream" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>LIVE Tokyo Bay 🇯🇵 | 首都高速湾岸線 東雲JCT付近 東京ライブカメラ | Expressway Traffic | 24/7 Japan Livestream</strong><span>HMTV | Tokyo Bay Live &amp; Archive</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=9UYFGM8CGt0" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/9UYFGM8CGt0/hqdefault_live.jpg" alt="大阪ライブカメラ【LIVE】Ｆ.Ｓ.Ｔ.ＮＥＴ 提供✨ 超高感度ライブカメラ 　門真市コストコ　三井アウトレット前" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="9UYFGM8CGt0"><img src="https://i.ytimg.com/vi/9UYFGM8CGt0/hqdefault_live.jpg" alt="大阪ライブカメラ【LIVE】Ｆ.Ｓ.Ｔ.ＮＥＴ 提供✨ 超高感度ライブカメラ 　門真市コストコ　三井アウトレット前" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>大阪ライブカメラ【LIVE】Ｆ.Ｓ.Ｔ.ＮＥＴ 提供✨ 超高感度ライブカメラ 　門真市コストコ　三井アウトレット前</strong><span>F.S.T. NET</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=sDi4kIajaFE" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/sDi4kIajaFE/hqdefault_live.jpg" alt="【コガタペンギンの赤ちゃん 24時間見守りカメラ】" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="sDi4kIajaFE"><img src="https://i.ytimg.com/vi/sDi4kIajaFE/hqdefault_live.jpg" alt="【コガタペンギンの赤ちゃん 24時間見守りカメラ】" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>【コガタペンギンの赤ちゃん 24時間見守りカメラ】</strong><span>アドベンチャーワールド公式</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=Ezflnn6jfxc" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/Ezflnn6jfxc/hqdefault_live.jpg" alt="Tokyo Bay Live Cam ｜ 東京 東雲 ライブカメラ ｜ 首都高速湾岸線・りんかい線・東雲駅 ｜ Study / Work" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="Ezflnn6jfxc"><img src="https://i.ytimg.com/vi/Ezflnn6jfxc/hqdefault_live.jpg" alt="Tokyo Bay Live Cam ｜ 東京 東雲 ライブカメラ ｜ 首都高速湾岸線・りんかい線・東雲駅 ｜ Study / Work" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Tokyo Bay Live Cam ｜ 東京 東雲 ライブカメラ ｜ 首都高速湾岸線・りんかい線・東雲駅 ｜ Study / Work</strong><span>BAYSHORE</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=m1qnYXnHQMU" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/m1qnYXnHQMU/hqdefault_live.jpg" alt="【LIVE】多頭飼いロボロフスキーハムスター 24Hライブカメラ生配信　Robo house 4" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="m1qnYXnHQMU"><img src="https://i.ytimg.com/vi/m1qnYXnHQMU/hqdefault_live.jpg" alt="【LIVE】多頭飼いロボロフスキーハムスター 24Hライブカメラ生配信　Robo house 4" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>【LIVE】多頭飼いロボロフスキーハムスター 24Hライブカメラ生配信　Robo house 4</strong><span>dakeのハムスター</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=wT59DZpcb78" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/wT59DZpcb78/hqdefault_live.jpg" alt="じゃがいも街道 市街側 暴風雪監視カメラ | &quot;Jagaimo Road&quot;, City Side: Blizzard Monitoring Camera" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="wT59DZpcb78"><img src="https://i.ytimg.com/vi/wT59DZpcb78/hqdefault_live.jpg" alt="じゃがいも街道 市街側 暴風雪監視カメラ | &quot;Jagaimo Road&quot;, City Side: Blizzard Monitoring Camera" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>じゃがいも街道 市街側 暴風雪監視カメラ | &quot;Jagaimo Road&quot;, City Side: Blizzard Monitoring Camera</strong><span>小清水町役場ライブカメラ</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=TdFx28Dj0Ls" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/TdFx28Dj0Ls/hqdefault_live.jpg" alt="止別川 トリム公園付近 河川監視用カメラ | River monitoring camera near Yamubetsu River Trim Park" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="TdFx28Dj0Ls"><img src="https://i.ytimg.com/vi/TdFx28Dj0Ls/hqdefault_live.jpg" alt="止別川 トリム公園付近 河川監視用カメラ | River monitoring camera near Yamubetsu River Trim Park" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>止別川 トリム公園付近 河川監視用カメラ | River monitoring camera near Yamubetsu River Trim Park</strong><span>小清水町役場ライブカメラ</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=EJ4pPEGWsWQ" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/EJ4pPEGWsWQ/hqdefault_live.jpg" alt="小清水町共和西基幹道路ライブカメラ | Koshimizu Town Kyowa-Nishi Trunk Road Live Camera" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="EJ4pPEGWsWQ"><img src="https://i.ytimg.com/vi/EJ4pPEGWsWQ/hqdefault_live.jpg" alt="小清水町共和西基幹道路ライブカメラ | Koshimizu Town Kyowa-Nishi Trunk Road Live Camera" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>小清水町共和西基幹道路ライブカメラ | Koshimizu Town Kyowa-Nishi Trunk Road Live Camera</strong><span>小清水町役場ライブカメラ</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=lqMJiYIPUcg" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/lqMJiYIPUcg/hqdefault_live.jpg" alt="ハイランド小清水725 ライブカメラ | Highland Koshimizu 725 Live Camera" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="lqMJiYIPUcg"><img src="https://i.ytimg.com/vi/lqMJiYIPUcg/hqdefault_live.jpg" alt="ハイランド小清水725 ライブカメラ | Highland Koshimizu 725 Live Camera" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>ハイランド小清水725 ライブカメラ | Highland Koshimizu 725 Live Camera</strong><span>小清水町役場ライブカメラ</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=pGiTbBOXgXM" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/pGiTbBOXgXM/hqdefault_live.jpg" alt="じゃがいも街道 南3号交差点 暴風雪用カメラ | &quot;Jagaimo Road&quot;, South 3rd Intersection: Blizzard-proof camera" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="pGiTbBOXgXM"><img src="https://i.ytimg.com/vi/pGiTbBOXgXM/hqdefault_live.jpg" alt="じゃがいも街道 南3号交差点 暴風雪用カメラ | &quot;Jagaimo Road&quot;, South 3rd Intersection: Blizzard-proof camera" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>じゃがいも街道 南3号交差点 暴風雪用カメラ | &quot;Jagaimo Road&quot;, South 3rd Intersection: Blizzard-proof camera</strong><span>小清水町役場ライブカメラ</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=MDL-KnbBKyc" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/MDL-KnbBKyc/hqdefault_live.jpg" alt="道の駅はなやか 海側 | Hanayaka Roadside Station, Seaside" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="MDL-KnbBKyc"><img src="https://i.ytimg.com/vi/MDL-KnbBKyc/hqdefault_live.jpg" alt="道の駅はなやか 海側 | Hanayaka Roadside Station, Seaside" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>道の駅はなやか 海側 | Hanayaka Roadside Station, Seaside</strong><span>小清水町役場ライブカメラ</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=XyMRbMYO7vA" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/XyMRbMYO7vA/hqdefault_live.jpg" alt="小清水町役場屋上カメラ | Koshimizu Town Hall Rooftop Camera" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="XyMRbMYO7vA"><img src="https://i.ytimg.com/vi/XyMRbMYO7vA/hqdefault_live.jpg" alt="小清水町役場屋上カメラ | Koshimizu Town Hall Rooftop Camera" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>小清水町役場屋上カメラ | Koshimizu Town Hall Rooftop Camera</strong><span>小清水町役場ライブカメラ</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=x0L-kxjjBI0" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/x0L-kxjjBI0/hqdefault_live.jpg" alt="南3号基幹道路 暴風雪監視用カメラ | Camera for monitoring blizzards on South Route 3 main road" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="x0L-kxjjBI0"><img src="https://i.ytimg.com/vi/x0L-kxjjBI0/hqdefault_live.jpg" alt="南3号基幹道路 暴風雪監視用カメラ | Camera for monitoring blizzards on South Route 3 main road" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>南3号基幹道路 暴風雪監視用カメラ | Camera for monitoring blizzards on South Route 3 main road</strong><span>小清水町役場ライブカメラ</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=iLfmRhMarWM" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/iLfmRhMarWM/hqdefault_live.jpg" alt="旧軽井沢ロータリーライブカメラ" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="iLfmRhMarWM"><img src="https://i.ytimg.com/vi/iLfmRhMarWM/hqdefault_live.jpg" alt="旧軽井沢ロータリーライブカメラ" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>旧軽井沢ロータリーライブカメラ</strong><span>長野県軽井沢町</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=_hi7d0TkKwU" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/_hi7d0TkKwU/hqdefault_live.jpg" alt="ポン止別川 小清水市街西第2仲通り 河川監視カメラ | Pon-Yamubetsu River camera near West 2nd Central St." loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="_hi7d0TkKwU"><img src="https://i.ytimg.com/vi/_hi7d0TkKwU/hqdefault_live.jpg" alt="ポン止別川 小清水市街西第2仲通り 河川監視カメラ | Pon-Yamubetsu River camera near West 2nd Central St." loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>ポン止別川 小清水市街西第2仲通り 河川監視カメラ | Pon-Yamubetsu River camera near West 2nd Central St.</strong><span>小清水町役場ライブカメラ</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=y2xaFSo83aM" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/y2xaFSo83aM/hqdefault_live.jpg" alt="軽井沢中学校付近ライブカメラ" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="y2xaFSo83aM"><img src="https://i.ytimg.com/vi/y2xaFSo83aM/hqdefault_live.jpg" alt="軽井沢中学校付近ライブカメラ" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>軽井沢中学校付近ライブカメラ</strong><span>長野県軽井沢町</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=0Hjtz4Kw62s" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/0Hjtz4Kw62s/hqdefault_live.jpg" alt="雲場池ライブカメラ" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="0Hjtz4Kw62s"><img src="https://i.ytimg.com/vi/0Hjtz4Kw62s/hqdefault_live.jpg" alt="雲場池ライブカメラ" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>雲場池ライブカメラ</strong><span>長野県軽井沢町</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=8VbOUB-dplM" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/8VbOUB-dplM/hqdefault_live.jpg" alt="プリンス通り付近ライブカメラ" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="8VbOUB-dplM"><img src="https://i.ytimg.com/vi/8VbOUB-dplM/hqdefault_live.jpg" alt="プリンス通り付近ライブカメラ" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>プリンス通り付近ライブカメラ</strong><span>長野県軽井沢町</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=3xj_z7AJ6Vw" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/3xj_z7AJ6Vw/hqdefault_live.jpg" alt="東幹川 国道244付近 河川監視用カメラ | Higashikansen River Monitoring Camera near National Route 244" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="3xj_z7AJ6Vw"><img src="https://i.ytimg.com/vi/3xj_z7AJ6Vw/hqdefault_live.jpg" alt="東幹川 国道244付近 河川監視用カメラ | Higashikansen River Monitoring Camera near National Route 244" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>東幹川 国道244付近 河川監視用カメラ | Higashikansen River Monitoring Camera near National Route 244</strong><span>小清水町役場ライブカメラ</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=WKtAv5OepmU" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/WKtAv5OepmU/hqdefault_live.jpg" alt="るるぱる（子育て支援センター）付近ライブカメラ" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="WKtAv5OepmU"><img src="https://i.ytimg.com/vi/WKtAv5OepmU/hqdefault_live.jpg" alt="るるぱる（子育て支援センター）付近ライブカメラ" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>るるぱる（子育て支援センター）付近ライブカメラ</strong><span>長野県軽井沢町</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=Arw1omQUnr4" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/Arw1omQUnr4/hqdefault_live.jpg" alt="現在の浅間山の様子" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="Arw1omQUnr4"><img src="https://i.ytimg.com/vi/Arw1omQUnr4/hqdefault_live.jpg" alt="現在の浅間山の様子" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>現在の浅間山の様子</strong><span>長野県軽井沢町</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=Y4KAMd2eGuU" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/Y4KAMd2eGuU/hqdefault_live.jpg" alt="国道18号追分付近ライブカメラ" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="Y4KAMd2eGuU"><img src="https://i.ytimg.com/vi/Y4KAMd2eGuU/hqdefault_live.jpg" alt="国道18号追分付近ライブカメラ" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>国道18号追分付近ライブカメラ</strong><span>長野県軽井沢町</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=GkoIAnOeazM" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/GkoIAnOeazM/hqdefault_live.jpg" alt="新軽井沢西交差点付近ライブカメラ" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="GkoIAnOeazM"><img src="https://i.ytimg.com/vi/GkoIAnOeazM/hqdefault_live.jpg" alt="新軽井沢西交差点付近ライブカメラ" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>新軽井沢西交差点付近ライブカメラ</strong><span>長野県軽井沢町</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=2IP5umloFrE" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/2IP5umloFrE/hqdefault_live.jpg" alt="【甲府盆地の街並み】山梨県立科学館　屋上ライブカメラ（提供：テレビ山梨）【Kofu basin Live Cam in Japan】" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="2IP5umloFrE"><img src="https://i.ytimg.com/vi/2IP5umloFrE/hqdefault_live.jpg" alt="【甲府盆地の街並み】山梨県立科学館　屋上ライブカメラ（提供：テレビ山梨）【Kofu basin Live Cam in Japan】" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>【甲府盆地の街並み】山梨県立科学館　屋上ライブカメラ（提供：テレビ山梨）【Kofu basin Live Cam in Japan】</strong><span>UTYテレビ山梨公式チャンネル</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=PW6zhYOkunI" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/PW6zhYOkunI/hqdefault_live.jpg" alt="【Kawaguchiko Station Live Camera in Japan】富士急行線河口湖駅前　富士観光開発(株) 本社ライブカメラ　提供：UTYテレビ山梨" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="PW6zhYOkunI"><img src="https://i.ytimg.com/vi/PW6zhYOkunI/hqdefault_live.jpg" alt="【Kawaguchiko Station Live Camera in Japan】富士急行線河口湖駅前　富士観光開発(株) 本社ライブカメラ　提供：UTYテレビ山梨" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>【Kawaguchiko Station Live Camera in Japan】富士急行線河口湖駅前　富士観光開発(株) 本社ライブカメラ　提供：UTYテレビ山梨</strong><span>UTYテレビ山梨公式チャンネル</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=p326sZfmwHM" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/p326sZfmwHM/hqdefault_live.jpg" alt="TNC テレビ西日本　LIVE配信" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="p326sZfmwHM"><img src="https://i.ytimg.com/vi/p326sZfmwHM/hqdefault_live.jpg" alt="TNC テレビ西日本　LIVE配信" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>TNC テレビ西日本　LIVE配信</strong><span>福岡TNC ニュース</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=NokinTfqIaM" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/NokinTfqIaM/hqdefault_live.jpg" alt="【ライブカメラ】山口宇部空港ライブカメラ(Yamaguchi Ube Airport Live) テレビ西日本　Live配信" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="NokinTfqIaM"><img src="https://i.ytimg.com/vi/NokinTfqIaM/hqdefault_live.jpg" alt="【ライブカメラ】山口宇部空港ライブカメラ(Yamaguchi Ube Airport Live) テレビ西日本　Live配信" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>【ライブカメラ】山口宇部空港ライブカメラ(Yamaguchi Ube Airport Live) テレビ西日本　Live配信</strong><span>福岡TNC ニュース</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=mU095dvAvDE" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/mU095dvAvDE/hqdefault_live.jpg" alt="【LIVE】キンクマハムスター 茶太郎  又は むさし ライブカメラ生配信 kink bear hamster Chataro or Musashi 24 hours live streaming" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="mU095dvAvDE"><img src="https://i.ytimg.com/vi/mU095dvAvDE/hqdefault_live.jpg" alt="【LIVE】キンクマハムスター 茶太郎  又は むさし ライブカメラ生配信 kink bear hamster Chataro or Musashi 24 hours live streaming" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>【LIVE】キンクマハムスター 茶太郎  又は むさし ライブカメラ生配信 kink bear hamster Chataro or Musashi 24 hours live streaming</strong><span>dakeのハムスター</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=Mfq8V8uE0SU" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/Mfq8V8uE0SU/hqdefault_live.jpg" alt="【LIVE】桜島 ライブカメラＣ【火口】鹿児島県 垂水市 / Live Streaming Sakurajima Crater Kagoshima, JAPAN&#39;" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="Mfq8V8uE0SU"><img src="https://i.ytimg.com/vi/Mfq8V8uE0SU/hqdefault_live.jpg" alt="【LIVE】桜島 ライブカメラＣ【火口】鹿児島県 垂水市 / Live Streaming Sakurajima Crater Kagoshima, JAPAN&#39;" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>【LIVE】桜島 ライブカメラＣ【火口】鹿児島県 垂水市 / Live Streaming Sakurajima Crater Kagoshima, JAPAN&#39;</strong><span>財宝公式チャンネル</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=fR7pe9kbFZQ" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/fR7pe9kbFZQ/hqdefault_live.jpg" alt="[2026-07-15 Sunset &amp; Night] LIVE Tokyo Bay | 都営バス 深川車庫 | Toei Bus Depot | 時刻表なし版 | 17:00-05:00 JST" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="fR7pe9kbFZQ"><img src="https://i.ytimg.com/vi/fR7pe9kbFZQ/hqdefault_live.jpg" alt="[2026-07-15 Sunset &amp; Night] LIVE Tokyo Bay | 都営バス 深川車庫 | Toei Bus Depot | 時刻表なし版 | 17:00-05:00 JST" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>[2026-07-15 Sunset &amp; Night] LIVE Tokyo Bay | 都営バス 深川車庫 | Toei Bus Depot | 時刻表なし版 | 17:00-05:00 JST</strong><span>HMTV | Tokyo Bay Live &amp; Archive</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=eF9PohrRP_o" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/eF9PohrRP_o/hqdefault_live.jpg" alt="【LIVE】桜島 ライブカメラA【遠景】鹿児島県 垂水市 フェリー/ Sakurajima, an active volcano live cam JAPAN&quot;" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="eF9PohrRP_o"><img src="https://i.ytimg.com/vi/eF9PohrRP_o/hqdefault_live.jpg" alt="【LIVE】桜島 ライブカメラA【遠景】鹿児島県 垂水市 フェリー/ Sakurajima, an active volcano live cam JAPAN&quot;" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>【LIVE】桜島 ライブカメラA【遠景】鹿児島県 垂水市 フェリー/ Sakurajima, an active volcano live cam JAPAN&quot;</strong><span>財宝公式チャンネル</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=_22U9YrjDu0" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/_22U9YrjDu0/hqdefault_live.jpg" alt="Tokyo Shinonome Live Camera ｜ 東京 東雲 ライブカメラ ｜ 都営バス・深川車庫・晴海通り" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="_22U9YrjDu0"><img src="https://i.ytimg.com/vi/_22U9YrjDu0/hqdefault_live.jpg" alt="Tokyo Shinonome Live Camera ｜ 東京 東雲 ライブカメラ ｜ 都営バス・深川車庫・晴海通り" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Tokyo Shinonome Live Camera ｜ 東京 東雲 ライブカメラ ｜ 都営バス・深川車庫・晴海通り</strong><span>BAYSHORE</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=PeElJClXtzE" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/PeElJClXtzE/hqdefault_live.jpg" alt="【2K LIVE】桜島 ライブカメラB【近景】鹿児島県 垂水市 / Sakurajima, an active volcano live cam (Close-up view) JAPAN&#39;" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="PeElJClXtzE"><img src="https://i.ytimg.com/vi/PeElJClXtzE/hqdefault_live.jpg" alt="【2K LIVE】桜島 ライブカメラB【近景】鹿児島県 垂水市 / Sakurajima, an active volcano live cam (Close-up view) JAPAN&#39;" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>【2K LIVE】桜島 ライブカメラB【近景】鹿児島県 垂水市 / Sakurajima, an active volcano live cam (Close-up view) JAPAN&#39;</strong><span>財宝公式チャンネル</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=eU8A7QQOcso" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/eU8A7QQOcso/hqdefault_live.jpg" alt="【富士山ライブカメラ】～河口湖～富士山パノラマロープウェイ展望台　提供：UTYテレビ山梨【Mt.Fuji Live Cam in Japan】" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="eU8A7QQOcso"><img src="https://i.ytimg.com/vi/eU8A7QQOcso/hqdefault_live.jpg" alt="【富士山ライブカメラ】～河口湖～富士山パノラマロープウェイ展望台　提供：UTYテレビ山梨【Mt.Fuji Live Cam in Japan】" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>【富士山ライブカメラ】～河口湖～富士山パノラマロープウェイ展望台　提供：UTYテレビ山梨【Mt.Fuji Live Cam in Japan】</strong><span>UTYテレビ山梨公式チャンネル</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=uCbr0YLxsac" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/uCbr0YLxsac/hqdefault_live.jpg" alt="【LIVE】 桜島 ライブカメラ D 【鹿児島市】/ Sakurajima, an active volcano live cam (Kagoshima City) JAPAN" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="uCbr0YLxsac"><img src="https://i.ytimg.com/vi/uCbr0YLxsac/hqdefault_live.jpg" alt="【LIVE】 桜島 ライブカメラ D 【鹿児島市】/ Sakurajima, an active volcano live cam (Kagoshima City) JAPAN" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>【LIVE】 桜島 ライブカメラ D 【鹿児島市】/ Sakurajima, an active volcano live cam (Kagoshima City) JAPAN</strong><span>財宝公式チャンネル</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=gaNLXSEUVRw" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/gaNLXSEUVRw/hqdefault_live.jpg" alt="いまのJR札幌駅／Live streaming from JR Sapporo Station 北海道ｏｎ天気カメラ" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="gaNLXSEUVRw"><img src="https://i.ytimg.com/vi/gaNLXSEUVRw/hqdefault_live.jpg" alt="いまのJR札幌駅／Live streaming from JR Sapporo Station 北海道ｏｎ天気カメラ" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>いまのJR札幌駅／Live streaming from JR Sapporo Station 北海道ｏｎ天気カメラ</strong><span>HTB北海道テレビ</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=3-QV-UfQOjQ" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/3-QV-UfQOjQ/hqdefault_live.jpg" alt="じゃがいも街道 浜小清水側 暴風雪用カメラ | &quot;Jagaimo Road&quot;, Hamakoshimizu side: Blizzard-resistant camera" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="3-QV-UfQOjQ"><img src="https://i.ytimg.com/vi/3-QV-UfQOjQ/hqdefault_live.jpg" alt="じゃがいも街道 浜小清水側 暴風雪用カメラ | &quot;Jagaimo Road&quot;, Hamakoshimizu side: Blizzard-resistant camera" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>じゃがいも街道 浜小清水側 暴風雪用カメラ | &quot;Jagaimo Road&quot;, Hamakoshimizu side: Blizzard-resistant camera</strong><span>小清水町役場ライブカメラ</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=v3XsDZLM7TY" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/v3XsDZLM7TY/hqdefault_live.jpg" alt="止別川 南6号基幹道路付近 河川監視用カメラ | River monitoring camera near Minami No. 6 Trunk Road on the Yamubetsu River" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="v3XsDZLM7TY"><img src="https://i.ytimg.com/vi/v3XsDZLM7TY/hqdefault_live.jpg" alt="止別川 南6号基幹道路付近 河川監視用カメラ | River monitoring camera near Minami No. 6 Trunk Road on the Yamubetsu River" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>止別川 南6号基幹道路付近 河川監視用カメラ | River monitoring camera near Minami No. 6 Trunk Road on the Yamubetsu River</strong><span>小清水町役場ライブカメラ</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=YiUnKdAq424" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/YiUnKdAq424/hqdefault_live.jpg" alt="国道18号バイパス（軽井沢グリーンライン）消防署付近" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="YiUnKdAq424"><img src="https://i.ytimg.com/vi/YiUnKdAq424/hqdefault_live.jpg" alt="国道18号バイパス（軽井沢グリーンライン）消防署付近" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>国道18号バイパス（軽井沢グリーンライン）消防署付近</strong><span>長野県軽井沢町</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=FbAaCT9ykC4" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/FbAaCT9ykC4/hqdefault_live.jpg" alt="立石公園道路状況ライブカメラ" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="FbAaCT9ykC4"><img src="https://i.ytimg.com/vi/FbAaCT9ykC4/hqdefault_live.jpg" alt="立石公園道路状況ライブカメラ" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>立石公園道路状況ライブカメラ</strong><span>諏訪市公式チャンネル</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=3e_uPkJCTNo" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/3e_uPkJCTNo/hqdefault_live.jpg" alt="🔴【LIVE】那覇空港・瀬長島・沖縄ライブカメラ【海と飛行機の見えるステーキ専門店 ヨナーズガーデン】Okinawa Naha Airport Yonars Garden" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="3e_uPkJCTNo"><img src="https://i.ytimg.com/vi/3e_uPkJCTNo/hqdefault_live.jpg" alt="🔴【LIVE】那覇空港・瀬長島・沖縄ライブカメラ【海と飛行機の見えるステーキ専門店 ヨナーズガーデン】Okinawa Naha Airport Yonars Garden" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>🔴【LIVE】那覇空港・瀬長島・沖縄ライブカメラ【海と飛行機の見えるステーキ専門店 ヨナーズガーデン】Okinawa Naha Airport Yonars Garden</strong><span>BANKSY GINOWAN</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=cTD7nITGhE0" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/cTD7nITGhE0/hqdefault_live.jpg" alt="【LIVE】✈️福岡空港ライブカメラ Fukuoka Airport Live Camera 24/7" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="cTD7nITGhE0"><img src="https://i.ytimg.com/vi/cTD7nITGhE0/hqdefault_live.jpg" alt="【LIVE】✈️福岡空港ライブカメラ Fukuoka Airport Live Camera 24/7" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>【LIVE】✈️福岡空港ライブカメラ Fukuoka Airport Live Camera 24/7</strong><span>福岡空港ライブカメラ</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=8tYaLQhojZk" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/8tYaLQhojZk/hqdefault_live.jpg" alt="【LIVE】広島空港ライブカメラ Live Camera @Hiroshima Airport HIJ/RJOA【RCC NEWS DIG】" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="8tYaLQhojZk"><img src="https://i.ytimg.com/vi/8tYaLQhojZk/hqdefault_live.jpg" alt="【LIVE】広島空港ライブカメラ Live Camera @Hiroshima Airport HIJ/RJOA【RCC NEWS DIG】" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>【LIVE】広島空港ライブカメラ Live Camera @Hiroshima Airport HIJ/RJOA【RCC NEWS DIG】</strong><span>RCC NEWS DIG Powered by JNN</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=G-BnuwxaAmQ" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/G-BnuwxaAmQ/hqdefault_live.jpg" alt="🇯🇵🛬 ITM SKY CAM🛫 (大阪・伊丹空港✈️航空ライブカメラ) OSAKA AIRPORT LIVE CAM🎥" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="G-BnuwxaAmQ"><img src="https://i.ytimg.com/vi/G-BnuwxaAmQ/hqdefault_live.jpg" alt="🇯🇵🛬 ITM SKY CAM🛫 (大阪・伊丹空港✈️航空ライブカメラ) OSAKA AIRPORT LIVE CAM🎥" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>🇯🇵🛬 ITM SKY CAM🛫 (大阪・伊丹空港✈️航空ライブカメラ) OSAKA AIRPORT LIVE CAM🎥</strong><span>ITM SKY CAM</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=CNIT7lJ36x8" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/CNIT7lJ36x8/hqdefault_live.jpg" alt="【24時間配信中】現在の山形空港" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="CNIT7lJ36x8"><img src="https://i.ytimg.com/vi/CNIT7lJ36x8/hqdefault_live.jpg" alt="【24時間配信中】現在の山形空港" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>【24時間配信中】現在の山形空港</strong><span>YBC NEWS</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=q8CKL80CHsk" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/q8CKL80CHsk/hqdefault_live.jpg" alt="【有明ライブカメラ】陸海空を望む景色を24時間ライブ配信中 / Live cam" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="q8CKL80CHsk"><img src="https://i.ytimg.com/vi/q8CKL80CHsk/hqdefault_live.jpg" alt="【有明ライブカメラ】陸海空を望む景色を24時間ライブ配信中 / Live cam" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>【有明ライブカメラ】陸海空を望む景色を24時間ライブ配信中 / Live cam</strong><span>EN DAIBA</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=KOZD88I7h48" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/KOZD88I7h48/hqdefault_live.jpg" alt="【LIVE】TOKYO JAPAN 東京都足立区日暮里舎人ライナー側ライブカメラ webcam livestream live camera" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="KOZD88I7h48"><img src="https://i.ytimg.com/vi/KOZD88I7h48/hqdefault_live.jpg" alt="【LIVE】TOKYO JAPAN 東京都足立区日暮里舎人ライナー側ライブカメラ webcam livestream live camera" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>【LIVE】TOKYO JAPAN 東京都足立区日暮里舎人ライナー側ライブカメラ webcam livestream live camera</strong><span>夜光電気</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=bMhaK0-DVMg" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/bMhaK0-DVMg/hqdefault_live.jpg" alt="【LIVE】JAPAN 東京都足立区交差点ライブカメラ＋温度計 tokyo livecamera webcam livestream" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="bMhaK0-DVMg"><img src="https://i.ytimg.com/vi/bMhaK0-DVMg/hqdefault_live.jpg" alt="【LIVE】JAPAN 東京都足立区交差点ライブカメラ＋温度計 tokyo livecamera webcam livestream" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>【LIVE】JAPAN 東京都足立区交差点ライブカメラ＋温度計 tokyo livecamera webcam livestream</strong><span>夜光電気</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=qg7JOZt9K7Q" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/qg7JOZt9K7Q/hqdefault_live.jpg" alt="【 LIVE 】JAPAN 東京都足立区 みだまえ公園側防犯カメラ02 ライブカメラ TOKYO ADACHI-KU LIVECAMERA" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="qg7JOZt9K7Q"><img src="https://i.ytimg.com/vi/qg7JOZt9K7Q/hqdefault_live.jpg" alt="【 LIVE 】JAPAN 東京都足立区 みだまえ公園側防犯カメラ02 ライブカメラ TOKYO ADACHI-KU LIVECAMERA" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>【 LIVE 】JAPAN 東京都足立区 みだまえ公園側防犯カメラ02 ライブカメラ TOKYO ADACHI-KU LIVECAMERA</strong><span>夜光電気</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=-gs2SXjHPYA" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/-gs2SXjHPYA/hqdefault_live.jpg" alt="【LIVE】JAPAN 東京都足立区 みだまえ公園側防犯カメラ01　ライブカメラ TOKYO LIVECAMERA" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="-gs2SXjHPYA"><img src="https://i.ytimg.com/vi/-gs2SXjHPYA/hqdefault_live.jpg" alt="【LIVE】JAPAN 東京都足立区 みだまえ公園側防犯カメラ01　ライブカメラ TOKYO LIVECAMERA" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>【LIVE】JAPAN 東京都足立区 みだまえ公園側防犯カメラ01　ライブカメラ TOKYO LIVECAMERA</strong><span>夜光電気</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=Hz3GKL4yDcw" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/Hz3GKL4yDcw/hqdefault_live.jpg" alt="[4K] 上高地バスターミナルライブカメラ KAMIKOCHI BUS TERMINAL LIVE CAMERA" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="Hz3GKL4yDcw"><img src="https://i.ytimg.com/vi/Hz3GKL4yDcw/hqdefault_live.jpg" alt="[4K] 上高地バスターミナルライブカメラ KAMIKOCHI BUS TERMINAL LIVE CAMERA" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>[4K] 上高地バスターミナルライブカメラ KAMIKOCHI BUS TERMINAL LIVE CAMERA</strong><span>自然公園財団 上高地支部</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=sPOq_two14k" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/sPOq_two14k/hqdefault_live.jpg" alt="長崎空港駐車場　リアルタイム　ライブカメラ　混雑状況がすぐわかる" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="sPOq_two14k"><img src="https://i.ytimg.com/vi/sPOq_two14k/hqdefault_live.jpg" alt="長崎空港駐車場　リアルタイム　ライブカメラ　混雑状況がすぐわかる" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>長崎空港駐車場　リアルタイム　ライブカメラ　混雑状況がすぐわかる</strong><span>アナザーレンタカー 長崎空港店</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=6kJPx0WSLdk" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/6kJPx0WSLdk/hqdefault_live.jpg" alt="立石公園駐車場ライブカメラ" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="6kJPx0WSLdk"><img src="https://i.ytimg.com/vi/6kJPx0WSLdk/hqdefault_live.jpg" alt="立石公園駐車場ライブカメラ" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>立石公園駐車場ライブカメラ</strong><span>諏訪市公式チャンネル</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=glvKuLo5em0" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/glvKuLo5em0/hqdefault_live.jpg" alt="道の駅日光駐車場ライブカメラ/ニコニコ本陣" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="glvKuLo5em0"><img src="https://i.ytimg.com/vi/glvKuLo5em0/hqdefault_live.jpg" alt="道の駅日光駐車場ライブカメラ/ニコニコ本陣" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>道の駅日光駐車場ライブカメラ/ニコニコ本陣</strong><span>道の駅日光 日光街道ニコニコ本陣</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=6a8XvKfhc4Y" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/6a8XvKfhc4Y/hqdefault_live.jpg" alt="河内長野市観光ライブカメラ（道の駅奥河内くろまろの郷駐車場入り口）" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="6a8XvKfhc4Y"><img src="https://i.ytimg.com/vi/6a8XvKfhc4Y/hqdefault_live.jpg" alt="河内長野市観光ライブカメラ（道の駅奥河内くろまろの郷駐車場入り口）" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>河内長野市観光ライブカメラ（道の駅奥河内くろまろの郷駐車場入り口）</strong><span>河内長野市役所</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=PuXIJ9qxS2A" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/PuXIJ9qxS2A/hqdefault_live.jpg" alt="【美ケ原】ライブカメラ｜天気や駐車場の混雑具合の確認に便利｜" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="PuXIJ9qxS2A"><img src="https://i.ytimg.com/vi/PuXIJ9qxS2A/hqdefault_live.jpg" alt="【美ケ原】ライブカメラ｜天気や駐車場の混雑具合の確認に便利｜" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>【美ケ原】ライブカメラ｜天気や駐車場の混雑具合の確認に便利｜</strong><span>松本のシンカ【松本市公式チャンネル】 / Matsumoto City official</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=YodyWQUs24I" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/YodyWQUs24I/hqdefault_live.jpg" alt="道の駅はなやか 駐車場側 | Hanayaka Roadside Station, Parking Lot Side" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="YodyWQUs24I"><img src="https://i.ytimg.com/vi/YodyWQUs24I/hqdefault_live.jpg" alt="道の駅はなやか 駐車場側 | Hanayaka Roadside Station, Parking Lot Side" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>道の駅はなやか 駐車場側 | Hanayaka Roadside Station, Parking Lot Side</strong><span>小清水町役場ライブカメラ</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=yyiTfzthHIw" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/yyiTfzthHIw/hqdefault_live.jpg" alt="廻り目平観光施設駐車場　ライブ配信（長野県川上村）" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="yyiTfzthHIw"><img src="https://i.ytimg.com/vi/yyiTfzthHIw/hqdefault_live.jpg" alt="廻り目平観光施設駐車場　ライブ配信（長野県川上村）" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>廻り目平観光施設駐車場　ライブ配信（長野県川上村）</strong><span>川上村 YouTubeチャンネル ［公式］</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=vj50bgIkBFI" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/vj50bgIkBFI/hqdefault_live.jpg" alt="🔴Girl’s Tokyo Walk 24/7🐶Shibuya, Nakano, Ikebukuro, etc.💖" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="vj50bgIkBFI"><img src="https://i.ytimg.com/vi/vj50bgIkBFI/hqdefault_live.jpg" alt="🔴Girl’s Tokyo Walk 24/7🐶Shibuya, Nakano, Ikebukuro, etc.💖" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>🔴Girl’s Tokyo Walk 24/7🐶Shibuya, Nakano, Ikebukuro, etc.💖</strong><span>Japan Walk </span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=fic_lTH_4KY" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/fic_lTH_4KY/hqdefault_live.jpg" alt="役場前湯川ふるさと公園駐車場付近ライブカメラ" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="fic_lTH_4KY"><img src="https://i.ytimg.com/vi/fic_lTH_4KY/hqdefault_live.jpg" alt="役場前湯川ふるさと公園駐車場付近ライブカメラ" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>役場前湯川ふるさと公園駐車場付近ライブカメラ</strong><span>長野県軽井沢町</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=gr5mvUyFKD4" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/gr5mvUyFKD4/hqdefault_live.jpg" alt="竹田綜合病院　A,B駐車場　ライブカメラ（福島県　会津若松市）" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="gr5mvUyFKD4"><img src="https://i.ytimg.com/vi/gr5mvUyFKD4/hqdefault_live.jpg" alt="竹田綜合病院　A,B駐車場　ライブカメラ（福島県　会津若松市）" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>竹田綜合病院　A,B駐車場　ライブカメラ（福島県　会津若松市）</strong><span>竹田健康財団</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=slOgQojt8w8" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/slOgQojt8w8/hqdefault_live.jpg" alt="【上野原ライブカメラ】中央自動車道 上野原インターチェンジ 提供:UTYテレビ山梨" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="slOgQojt8w8"><img src="https://i.ytimg.com/vi/slOgQojt8w8/hqdefault_live.jpg" alt="【上野原ライブカメラ】中央自動車道 上野原インターチェンジ 提供:UTYテレビ山梨" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>【上野原ライブカメラ】中央自動車道 上野原インターチェンジ 提供:UTYテレビ山梨</strong><span>UTYテレビ山梨公式チャンネル</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=CzgSFUAbE9s" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/CzgSFUAbE9s/hqdefault_live.jpg" alt="【ライブカメラ】福岡空港ライブカメラ/山口宇部空港ライブカメラ(Fukuoka Airport Live/Yamaguchi Ube Airport Live) テレビ西日本　Live配信" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="CzgSFUAbE9s"><img src="https://i.ytimg.com/vi/CzgSFUAbE9s/hqdefault_live.jpg" alt="【ライブカメラ】福岡空港ライブカメラ/山口宇部空港ライブカメラ(Fukuoka Airport Live/Yamaguchi Ube Airport Live) テレビ西日本　Live配信" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>【ライブカメラ】福岡空港ライブカメラ/山口宇部空港ライブカメラ(Fukuoka Airport Live/Yamaguchi Ube Airport Live) テレビ西日本　Live配信</strong><span>福岡TNC ニュース</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=Azbdr5jbN6o" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/Azbdr5jbN6o/hqdefault_live.jpg" alt="【LIVE】いまの新千歳空港／Live streaming from Hokkaido　 New Chitose Airport　北海道ｏｎ天気カメラ" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="Azbdr5jbN6o"><img src="https://i.ytimg.com/vi/Azbdr5jbN6o/hqdefault_live.jpg" alt="【LIVE】いまの新千歳空港／Live streaming from Hokkaido　 New Chitose Airport　北海道ｏｎ天気カメラ" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>【LIVE】いまの新千歳空港／Live streaming from Hokkaido　 New Chitose Airport　北海道ｏｎ天気カメラ</strong><span>HTB北海道テレビ</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=AHZ7x4YlXC4" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/AHZ7x4YlXC4/hqdefault_live.jpg" alt="Japan Street &amp; Cityscape Live 24/7 | ambient relax radio, study with me | 🚋 札幌市電 中央区役所前停留場 SC03" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="AHZ7x4YlXC4"><img src="https://i.ytimg.com/vi/AHZ7x4YlXC4/hqdefault_live.jpg" alt="Japan Street &amp; Cityscape Live 24/7 | ambient relax radio, study with me | 🚋 札幌市電 中央区役所前停留場 SC03" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Japan Street &amp; Cityscape Live 24/7 | ambient relax radio, study with me | 🚋 札幌市電 中央区役所前停留場 SC03</strong><span>Hokkaido Kurashi no Yomimono</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=T95GNcqeKdE" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/T95GNcqeKdE/hqdefault_live.jpg" alt="Sapporo Mt. Moiwa 24/7 Live | 🚡 藻岩山ロープウェイ | lofi, beats to relax, chill" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="T95GNcqeKdE"><img src="https://i.ytimg.com/vi/T95GNcqeKdE/hqdefault_live.jpg" alt="Sapporo Mt. Moiwa 24/7 Live | 🚡 藻岩山ロープウェイ | lofi, beats to relax, chill" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Sapporo Mt. Moiwa 24/7 Live | 🚡 藻岩山ロープウェイ | lofi, beats to relax, chill</strong><span>Hokkaido Kurashi no Yomimono</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=yDofSmE4sb8" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/yDofSmE4sb8/hqdefault_live.jpg" alt="Sapporo in Summer, lofi radio 24 hours | July 12, 2026 | 札幌市中央区交差点" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="yDofSmE4sb8"><img src="https://i.ytimg.com/vi/yDofSmE4sb8/hqdefault_live.jpg" alt="Sapporo in Summer, lofi radio 24 hours | July 12, 2026 | 札幌市中央区交差点" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Sapporo in Summer, lofi radio 24 hours | July 12, 2026 | 札幌市中央区交差点</strong><span>Hokkaido Kurashi no Yomimono</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=YZMZSqz9fx8" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/YZMZSqz9fx8/hqdefault_live.jpg" alt="大阪ライブカメラ　【LIVE】大阪 心斎橋 ユニクロ前 24時間ライブカメラ｜高感度屋外IPカメラ配信｜FST.NET" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="YZMZSqz9fx8"><img src="https://i.ytimg.com/vi/YZMZSqz9fx8/hqdefault_live.jpg" alt="大阪ライブカメラ　【LIVE】大阪 心斎橋 ユニクロ前 24時間ライブカメラ｜高感度屋外IPカメラ配信｜FST.NET" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>大阪ライブカメラ　【LIVE】大阪 心斎橋 ユニクロ前 24時間ライブカメラ｜高感度屋外IPカメラ配信｜FST.NET</strong><span>F.S.T. NET</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=qMs_uynkM54" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/qMs_uynkM54/hqdefault_live.jpg" alt="青森駅前ライブ配信　Live Camera at Aomori Station" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="qMs_uynkM54"><img src="https://i.ytimg.com/vi/qMs_uynkM54/hqdefault_live.jpg" alt="青森駅前ライブ配信　Live Camera at Aomori Station" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>青森駅前ライブ配信　Live Camera at Aomori Station</strong><span>ABA青森朝日放送</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=i2PpmC1IeKk" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/i2PpmC1IeKk/hqdefault_live.jpg" alt="【LIVE】大阪 道頓堀 ライブカメラ　osaka Dotonbori LiveCamera" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="i2PpmC1IeKk"><img src="https://i.ytimg.com/vi/i2PpmC1IeKk/hqdefault_live.jpg" alt="【LIVE】大阪 道頓堀 ライブカメラ　osaka Dotonbori LiveCamera" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>【LIVE】大阪 道頓堀 ライブカメラ　osaka Dotonbori LiveCamera</strong><span>ラジカルビデオジョッキー RVJJP</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=TObte08ESr0" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/TObte08ESr0/hqdefault_live.jpg" alt="新宿 歌舞伎町LIVE 東京 Tokyo Kabukicho Shinjuku Japan 24時間ライブ" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="TObte08ESr0"><img src="https://i.ytimg.com/vi/TObte08ESr0/hqdefault_live.jpg" alt="新宿 歌舞伎町LIVE 東京 Tokyo Kabukicho Shinjuku Japan 24時間ライブ" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>新宿 歌舞伎町LIVE 東京 Tokyo Kabukicho Shinjuku Japan 24時間ライブ</strong><span>歌舞伎町ゴジラ前ライブ</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=Zhmmh7l6KEw" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/Zhmmh7l6KEw/hqdefault_live.jpg" alt="【LIVE】新宿猫の目線（新宿駅東口） ライブカメラ" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="Zhmmh7l6KEw"><img src="https://i.ytimg.com/vi/Zhmmh7l6KEw/hqdefault_live.jpg" alt="【LIVE】新宿猫の目線（新宿駅東口） ライブカメラ" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>【LIVE】新宿猫の目線（新宿駅東口） ライブカメラ</strong><span>【公式】クロス新宿ビジョン</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=I1kJB1jdGo0" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/I1kJB1jdGo0/hqdefault_live.jpg" alt="ライブカメラ ＪＲ札幌駅 (ＳＴＶ札幌テレビ放送)  Live Camera Sapporo Station , Hokkaido" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="I1kJB1jdGo0"><img src="https://i.ytimg.com/vi/I1kJB1jdGo0/hqdefault_live.jpg" alt="ライブカメラ ＪＲ札幌駅 (ＳＴＶ札幌テレビ放送)  Live Camera Sapporo Station , Hokkaido" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>ライブカメラ ＪＲ札幌駅 (ＳＴＶ札幌テレビ放送)  Live Camera Sapporo Station , Hokkaido</strong><span>STV札幌テレビ放送 公式</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=XpIILFB9iS0" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/XpIILFB9iS0/hqdefault_live.jpg" alt="東京ライブカメラ Tokyo live camera｜両国・相撲の街｜伝統ある下町風景｜24時間" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="XpIILFB9iS0"><img src="https://i.ytimg.com/vi/XpIILFB9iS0/hqdefault_live.jpg" alt="東京ライブカメラ Tokyo live camera｜両国・相撲の街｜伝統ある下町風景｜24時間" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>東京ライブカメラ Tokyo live camera｜両国・相撲の街｜伝統ある下町風景｜24時間</strong><span>東京ライブカメラ | Tokyo Live Cam</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=yETDDgrE2E4" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/yETDDgrE2E4/hqdefault_live.jpg" alt="【LIVE】福岡・博多駅前ライブカメラ　Hakata station in Fukuoka, Kyushu 하카타 역 라이브" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="yETDDgrE2E4"><img src="https://i.ytimg.com/vi/yETDDgrE2E4/hqdefault_live.jpg" alt="【LIVE】福岡・博多駅前ライブカメラ　Hakata station in Fukuoka, Kyushu 하카타 역 라이브" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>【LIVE】福岡・博多駅前ライブカメラ　Hakata station in Fukuoka, Kyushu 하카타 역 라이브</strong><span>朝日新聞LIVE</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=68DhvzKCVOc" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/68DhvzKCVOc/hqdefault_live.jpg" alt="オノデンch【秋葉原ライブカメラ　Akihabara live camera】" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="68DhvzKCVOc"><img src="https://i.ytimg.com/vi/68DhvzKCVOc/hqdefault_live.jpg" alt="オノデンch【秋葉原ライブカメラ　Akihabara live camera】" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>オノデンch【秋葉原ライブカメラ　Akihabara live camera】</strong><span>オノデンch</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=uvNVpMKG8rw" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/uvNVpMKG8rw/hqdefault_live.jpg" alt="ライブカメラ 新千歳空港ターミナル(ＳＴＶ札幌テレビ放送)/ Live Camera New Chitose Airport Terminal" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="uvNVpMKG8rw"><img src="https://i.ytimg.com/vi/uvNVpMKG8rw/hqdefault_live.jpg" alt="ライブカメラ 新千歳空港ターミナル(ＳＴＶ札幌テレビ放送)/ Live Camera New Chitose Airport Terminal" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>ライブカメラ 新千歳空港ターミナル(ＳＴＶ札幌テレビ放送)/ Live Camera New Chitose Airport Terminal</strong><span>STV札幌テレビ放送 公式</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=B_Sc1v1qR-g" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/B_Sc1v1qR-g/hqdefault_live.jpg" alt="「LIVECAMERA」草津温泉「湯畑」（移動式ライブカメラ）" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="B_Sc1v1qR-g"><img src="https://i.ytimg.com/vi/B_Sc1v1qR-g/hqdefault_live.jpg" alt="「LIVECAMERA」草津温泉「湯畑」（移動式ライブカメラ）" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>「LIVECAMERA」草津温泉「湯畑」（移動式ライブカメラ）</strong><span>草津町公式YouTubeチャンネル</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=Iv2VUE_UhRQ" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/Iv2VUE_UhRQ/hqdefault_live.jpg" alt="[4K] 上高地河童橋ライブカメラ KAMIKOCHI KAPPA-BASHI LIVE CAMERA" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="Iv2VUE_UhRQ"><img src="https://i.ytimg.com/vi/Iv2VUE_UhRQ/hqdefault_live.jpg" alt="[4K] 上高地河童橋ライブカメラ KAMIKOCHI KAPPA-BASHI LIVE CAMERA" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>[4K] 上高地河童橋ライブカメラ KAMIKOCHI KAPPA-BASHI LIVE CAMERA</strong><span>五千尺ホテル上高地</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=7XzfKy8CzdY" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/7XzfKy8CzdY/hqdefault_live.jpg" alt="【LIVE】東京ドームシティ公式ライブカメラ  Tokyo Dome City, Japan - Live Camera 24/7" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="7XzfKy8CzdY"><img src="https://i.ytimg.com/vi/7XzfKy8CzdY/hqdefault_live.jpg" alt="【LIVE】東京ドームシティ公式ライブカメラ  Tokyo Dome City, Japan - Live Camera 24/7" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>【LIVE】東京ドームシティ公式ライブカメラ  Tokyo Dome City, Japan - Live Camera 24/7</strong><span>東京ドームシティ</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=rPNHFcaZSp8" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/rPNHFcaZSp8/hqdefault_live.jpg" alt="鍛冶町通りライブカメラ［ザザシティ浜松］PTZ（パン/チルト/ズーム）" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="rPNHFcaZSp8"><img src="https://i.ytimg.com/vi/rPNHFcaZSp8/hqdefault_live.jpg" alt="鍛冶町通りライブカメラ［ザザシティ浜松］PTZ（パン/チルト/ズーム）" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>鍛冶町通りライブカメラ［ザザシティ浜松］PTZ（パン/チルト/ズーム）</strong><span>ZAZAマガジンチャンネル</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=lA6TaaMGgDo" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/lA6TaaMGgDo/hqdefault_live.jpg" alt="【 LIVE 】東京都 新宿 24時間 ライブカメラ / 西武新宿駅 pepe前広場 交差点 （YUNIKA VISION前） Tokyo Shinjuku Live camera" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="lA6TaaMGgDo"><img src="https://i.ytimg.com/vi/lA6TaaMGgDo/hqdefault_live.jpg" alt="【 LIVE 】東京都 新宿 24時間 ライブカメラ / 西武新宿駅 pepe前広場 交差点 （YUNIKA VISION前） Tokyo Shinjuku Live camera" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>【 LIVE 】東京都 新宿 24時間 ライブカメラ / 西武新宿駅 pepe前広場 交差点 （YUNIKA VISION前） Tokyo Shinjuku Live camera</strong><span>インフォ新宿 channel</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=6h36HYcO4k4" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/6h36HYcO4k4/hqdefault_live.jpg" alt="道路カメラ_荒島交差点(荒島町)" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="6h36HYcO4k4"><img src="https://i.ytimg.com/vi/6h36HYcO4k4/hqdefault_live.jpg" alt="道路カメラ_荒島交差点(荒島町)" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>道路カメラ_荒島交差点(荒島町)</strong><span>山陰ケーブルビジョン株式会社</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=ErHJBXTmm2Q" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/ErHJBXTmm2Q/hqdefault_live.jpg" alt="【24Ｈ：LIVE】東京 新宿 歌舞伎町 交差点 ライブカメラ  / Tokyo  Shinjuku Kabukicho Live Camera【テイケイ屋上カメラ】　#靖国通り #４K #歌舞伎町" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="ErHJBXTmm2Q"><img src="https://i.ytimg.com/vi/ErHJBXTmm2Q/hqdefault_live.jpg" alt="【24Ｈ：LIVE】東京 新宿 歌舞伎町 交差点 ライブカメラ  / Tokyo  Shinjuku Kabukicho Live Camera【テイケイ屋上カメラ】　#靖国通り #４K #歌舞伎町" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>【24Ｈ：LIVE】東京 新宿 歌舞伎町 交差点 ライブカメラ  / Tokyo  Shinjuku Kabukicho Live Camera【テイケイ屋上カメラ】　#靖国通り #４K #歌舞伎町</strong><span>テイケイ公式チャンネル</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=UjRGL3FPRko" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/UjRGL3FPRko/hqdefault_live.jpg" alt="道路カメラ_安来駅前(安来町)" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="UjRGL3FPRko"><img src="https://i.ytimg.com/vi/UjRGL3FPRko/hqdefault_live.jpg" alt="道路カメラ_安来駅前(安来町)" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>道路カメラ_安来駅前(安来町)</strong><span>山陰ケーブルビジョン株式会社</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=GrEEoEmmrKs" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/GrEEoEmmrKs/hqdefault_live.jpg" alt="「LIVECAMERA」　草津温泉「湯畑」湯滝前" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="GrEEoEmmrKs"><img src="https://i.ytimg.com/vi/GrEEoEmmrKs/hqdefault_live.jpg" alt="「LIVECAMERA」　草津温泉「湯畑」湯滝前" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>「LIVECAMERA」　草津温泉「湯畑」湯滝前</strong><span>草津町公式YouTubeチャンネル</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=VM18f-IIUTw" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/VM18f-IIUTw/hqdefault_live.jpg" alt="[4K Live] 東京・汐留 ライブカメラ live stream of Shimbashi,Tokyo" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="VM18f-IIUTw"><img src="https://i.ytimg.com/vi/VM18f-IIUTw/hqdefault_live.jpg" alt="[4K Live] 東京・汐留 ライブカメラ live stream of Shimbashi,Tokyo" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>[4K Live] 東京・汐留 ライブカメラ live stream of Shimbashi,Tokyo</strong><span>共同通信LiveCamera</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=KLZyYflpfjQ" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/KLZyYflpfjQ/hqdefault_live.jpg" alt="【Live-Japan】函館駅前ライブカメラ① #函館 #HAKODATE #函館湾 #JR函館駅" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="KLZyYflpfjQ"><img src="https://i.ytimg.com/vi/KLZyYflpfjQ/hqdefault_live.jpg" alt="【Live-Japan】函館駅前ライブカメラ① #函館 #HAKODATE #函館湾 #JR函館駅" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>【Live-Japan】函館駅前ライブカメラ① #函館 #HAKODATE #函館湾 #JR函館駅</strong><span>HAKODATE LIVE CAMERA</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=JDkT6KCBwmw" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/JDkT6KCBwmw/hqdefault_live.jpg" alt="【GoPro13高画質】首都圏移動ライブカメラ｜東京のリアルな道路状況をライブ配信7/13" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="JDkT6KCBwmw"><img src="https://i.ytimg.com/vi/JDkT6KCBwmw/hqdefault_live.jpg" alt="【GoPro13高画質】首都圏移動ライブカメラ｜東京のリアルな道路状況をライブ配信7/13" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>【GoPro13高画質】首都圏移動ライブカメラ｜東京のリアルな道路状況をライブ配信7/13</strong><span>日本の道路移動LiveCam WORLDWIDE LIVE CAM</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=AADZvNj8db4" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/AADZvNj8db4/hqdefault_live.jpg" alt="【iTSCOMライブ配信】用賀 ライブカメラ LIVE Camera/ Tokyo Metropolitan Expressway Yoga Tollgate" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="AADZvNj8db4"><img src="https://i.ytimg.com/vi/AADZvNj8db4/hqdefault_live.jpg" alt="【iTSCOMライブ配信】用賀 ライブカメラ LIVE Camera/ Tokyo Metropolitan Expressway Yoga Tollgate" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>【iTSCOMライブ配信】用賀 ライブカメラ LIVE Camera/ Tokyo Metropolitan Expressway Yoga Tollgate</strong><span>iTSCOM</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=WRfOLF9plnU" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/WRfOLF9plnU/hqdefault_live.jpg" alt="【ライブ】羽田空港第2ターミナルを24時間配信中！  HANEDA,Tokyo International Airport Terminal2【LIVE】ANN/テレ朝" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="WRfOLF9plnU"><img src="https://i.ytimg.com/vi/WRfOLF9plnU/hqdefault_live.jpg" alt="【ライブ】羽田空港第2ターミナルを24時間配信中！  HANEDA,Tokyo International Airport Terminal2【LIVE】ANN/テレ朝" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>【ライブ】羽田空港第2ターミナルを24時間配信中！  HANEDA,Tokyo International Airport Terminal2【LIVE】ANN/テレ朝</strong><span>ANNnewsCH</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=vuP9iwdyyFM" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/vuP9iwdyyFM/hqdefault_live.jpg" alt="【24Ｈ：LIVE】東京 新宿 歌舞伎町 第２（区役所交差点）ライブカメラ  / Tokyo  Shinjuku Kabukicho Live Camera【テイケイ屋上カメラ】　 #４K #歌舞伎町" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="vuP9iwdyyFM"><img src="https://i.ytimg.com/vi/vuP9iwdyyFM/hqdefault_live.jpg" alt="【24Ｈ：LIVE】東京 新宿 歌舞伎町 第２（区役所交差点）ライブカメラ  / Tokyo  Shinjuku Kabukicho Live Camera【テイケイ屋上カメラ】　 #４K #歌舞伎町" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>【24Ｈ：LIVE】東京 新宿 歌舞伎町 第２（区役所交差点）ライブカメラ  / Tokyo  Shinjuku Kabukicho Live Camera【テイケイ屋上カメラ】　 #４K #歌舞伎町</strong><span>テイケイ公式チャンネル</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=7T3SV0zMQVI" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/7T3SV0zMQVI/hqdefault_live.jpg" alt="【LIVE】鳥取砂丘ライブカメラ Tottori Sand Dunes" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="7T3SV0zMQVI"><img src="https://i.ytimg.com/vi/7T3SV0zMQVI/hqdefault_live.jpg" alt="【LIVE】鳥取砂丘ライブカメラ Tottori Sand Dunes" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>【LIVE】鳥取砂丘ライブカメラ Tottori Sand Dunes</strong><span>鳥取砂丘チャンネル</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=DuRhA9rgqdQ" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/DuRhA9rgqdQ/hqdefault_live.jpg" alt="4k 東京ライブカメラ  @tokyo  live camera  ドコモタワー #国立競技場・新宿御苑・新宿・渋谷 ＠国立競技場 ＠東京ライブカメラ #tokyo#東京ライブカメラ" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="DuRhA9rgqdQ"><img src="https://i.ytimg.com/vi/DuRhA9rgqdQ/hqdefault_live.jpg" alt="4k 東京ライブカメラ  @tokyo  live camera  ドコモタワー #国立競技場・新宿御苑・新宿・渋谷 ＠国立競技場 ＠東京ライブカメラ #tokyo#東京ライブカメラ" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>4k 東京ライブカメラ  @tokyo  live camera  ドコモタワー #国立競技場・新宿御苑・新宿・渋谷 ＠国立競技場 ＠東京ライブカメラ #tokyo#東京ライブカメラ</strong><span>Venus117</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=BePkAsZnDjM" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/BePkAsZnDjM/hqdefault_live.jpg" alt="【LIVE】新宿駅前のライブカメラ 現在の様子は？ Shinjuku, Tokyo JAPAN | TBS NEWS DIG" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="BePkAsZnDjM"><img src="https://i.ytimg.com/vi/BePkAsZnDjM/hqdefault_live.jpg" alt="【LIVE】新宿駅前のライブカメラ 現在の様子は？ Shinjuku, Tokyo JAPAN | TBS NEWS DIG" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>【LIVE】新宿駅前のライブカメラ 現在の様子は？ Shinjuku, Tokyo JAPAN | TBS NEWS DIG</strong><span>TBS NEWS DIG Powered by JNN</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=fndY3LREfdE" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/fndY3LREfdE/hqdefault_live.jpg" alt="【iTSCOMライブ配信】二子玉川 ライブカメラ LIVE Camera/ Tokyo Futako Tamagawa" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="fndY3LREfdE"><img src="https://i.ytimg.com/vi/fndY3LREfdE/hqdefault_live.jpg" alt="【iTSCOMライブ配信】二子玉川 ライブカメラ LIVE Camera/ Tokyo Futako Tamagawa" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>【iTSCOMライブ配信】二子玉川 ライブカメラ LIVE Camera/ Tokyo Futako Tamagawa</strong><span>iTSCOM</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=hlbh4P0Mz8M" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/hlbh4P0Mz8M/hqdefault_live.jpg" alt="Tokyo Odaiba Live Camera  お台場ライブカメラ｜レインボーブリッジと東京の景色 勉強・作業用Lofi BGM" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="hlbh4P0Mz8M"><img src="https://i.ytimg.com/vi/hlbh4P0Mz8M/hqdefault_live.jpg" alt="Tokyo Odaiba Live Camera  お台場ライブカメラ｜レインボーブリッジと東京の景色 勉強・作業用Lofi BGM" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Tokyo Odaiba Live Camera  お台場ライブカメラ｜レインボーブリッジと東京の景色 勉強・作業用Lofi BGM</strong><span>ODAIBA TOKYO LIVE</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=79ZymEtzBjE" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/79ZymEtzBjE/hqdefault_live.jpg" alt="【フリー動画】さいたま市鉄道ライブカメラ（JR上野東京ライン・京浜東北線・湘南新宿ライン・東北本線の運行情報）" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="79ZymEtzBjE"><img src="https://i.ytimg.com/vi/79ZymEtzBjE/hqdefault_live.jpg" alt="【フリー動画】さいたま市鉄道ライブカメラ（JR上野東京ライン・京浜東北線・湘南新宿ライン・東北本線の運行情報）" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>【フリー動画】さいたま市鉄道ライブカメラ（JR上野東京ライン・京浜東北線・湘南新宿ライン・東北本線の運行情報）</strong><span>フリー動画集・自由にダウンロードして商用利用可能</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=66w-y4i91hE" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/66w-y4i91hE/hqdefault_live.jpg" alt="東京ライブカメラ Tokyo live camera｜港区・築地｜夕焼けと都心の景色｜24時間配信" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="66w-y4i91hE"><img src="https://i.ytimg.com/vi/66w-y4i91hE/hqdefault_live.jpg" alt="東京ライブカメラ Tokyo live camera｜港区・築地｜夕焼けと都心の景色｜24時間配信" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>東京ライブカメラ Tokyo live camera｜港区・築地｜夕焼けと都心の景色｜24時間配信</strong><span>東京ライブカメラ | Tokyo Live Cam</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=ZN4gh5IOowM" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/ZN4gh5IOowM/hqdefault_live.jpg" alt="東京駅丸の内口ライブカメラ" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="ZN4gh5IOowM"><img src="https://i.ytimg.com/vi/ZN4gh5IOowM/hqdefault_live.jpg" alt="東京駅丸の内口ライブカメラ" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>東京駅丸の内口ライブカメラ</strong><span>大丸有協議会</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=CVp0bl7ROSM" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/CVp0bl7ROSM/hqdefault_live.jpg" alt="【福島空港24時間ライブカメラ】KFB福島放送 情報カメラ/Live streaming from Fukushima Airport" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="CVp0bl7ROSM"><img src="https://i.ytimg.com/vi/CVp0bl7ROSM/hqdefault_live.jpg" alt="【福島空港24時間ライブカメラ】KFB福島放送 情報カメラ/Live streaming from Fukushima Airport" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>【福島空港24時間ライブカメラ】KFB福島放送 情報カメラ/Live streaming from Fukushima Airport</strong><span>【福島放送公式】 ときまるTV</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=W0V8-6WrgBY" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/W0V8-6WrgBY/hqdefault_live.jpg" alt="[Live] 東京・浜松町駅 ライブカメラ  Live Stream of Hamamatsu-cho  railway tracks Tokyo" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="W0V8-6WrgBY"><img src="https://i.ytimg.com/vi/W0V8-6WrgBY/hqdefault_live.jpg" alt="[Live] 東京・浜松町駅 ライブカメラ  Live Stream of Hamamatsu-cho  railway tracks Tokyo" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>[Live] 東京・浜松町駅 ライブカメラ  Live Stream of Hamamatsu-cho  railway tracks Tokyo</strong><span>共同通信LiveCamera</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=_r-g8wU-0o8" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/_r-g8wU-0o8/hqdefault_live.jpg" alt="関門海峡【LIVE CAMERA】癒しの空間、関門海峡を（門司港から）ライブ配信中！ 船の汽笛が聴けるように生音での配信中！※チャット参加の方は概要欄一読を🙏" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="_r-g8wU-0o8"><img src="https://i.ytimg.com/vi/_r-g8wU-0o8/hqdefault_live.jpg" alt="関門海峡【LIVE CAMERA】癒しの空間、関門海峡を（門司港から）ライブ配信中！ 船の汽笛が聴けるように生音での配信中！※チャット参加の方は概要欄一読を🙏" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>関門海峡【LIVE CAMERA】癒しの空間、関門海峡を（門司港から）ライブ配信中！ 船の汽笛が聴けるように生音での配信中！※チャット参加の方は概要欄一読を🙏</strong><span>SEA &amp; SKY ch</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=KR7qSzE1j_w" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/KR7qSzE1j_w/hqdefault_live.jpg" alt="【ライブ】お台場・レインボーブリッジ - 首都高　ライブカメラ　Rainbow Bridge - Tokyo, Japan　 Live Cam" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="KR7qSzE1j_w"><img src="https://i.ytimg.com/vi/KR7qSzE1j_w/hqdefault_live.jpg" alt="【ライブ】お台場・レインボーブリッジ - 首都高　ライブカメラ　Rainbow Bridge - Tokyo, Japan　 Live Cam" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>【ライブ】お台場・レインボーブリッジ - 首都高　ライブカメラ　Rainbow Bridge - Tokyo, Japan　 Live Cam</strong><span>FNNプライムオンライン</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=IqnTjRGTLb4" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/IqnTjRGTLb4/hqdefault_live.jpg" alt="道路カメラ_春日北交差点" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="IqnTjRGTLb4"><img src="https://i.ytimg.com/vi/IqnTjRGTLb4/hqdefault_live.jpg" alt="道路カメラ_春日北交差点" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>道路カメラ_春日北交差点</strong><span>山陰ケーブルビジョン株式会社</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=u0zZ27ba_ag" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/u0zZ27ba_ag/hqdefault_live.jpg" alt="Sapporo Streetcar—Since 1918 Live 24/7 | 🚋 路面電車 札幌市電 1918- | ambient beats" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="u0zZ27ba_ag"><img src="https://i.ytimg.com/vi/u0zZ27ba_ag/hqdefault_live.jpg" alt="Sapporo Streetcar—Since 1918 Live 24/7 | 🚋 路面電車 札幌市電 1918- | ambient beats" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Sapporo Streetcar—Since 1918 Live 24/7 | 🚋 路面電車 札幌市電 1918- | ambient beats</strong><span>Hokkaido Kurashi no Yomimono</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=lsxYH2XQQCg" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/lsxYH2XQQCg/hqdefault_live.jpg" alt="淡路島モンキーセンター" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="lsxYH2XQQCg"><img src="https://i.ytimg.com/vi/lsxYH2XQQCg/hqdefault_live.jpg" alt="淡路島モンキーセンター" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>淡路島モンキーセンター</strong><span>淡路ザル</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=-PIM7Sc7uE4" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/-PIM7Sc7uE4/hqdefault_live.jpg" alt="歌舞伎町一番街LIVEカメラ" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="-PIM7Sc7uE4"><img src="https://i.ytimg.com/vi/-PIM7Sc7uE4/hqdefault_live.jpg" alt="歌舞伎町一番街LIVEカメラ" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>歌舞伎町一番街LIVEカメラ</strong><span>歌舞伎町ゴジラ前ライブ</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=0GVPhWWUStc" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/0GVPhWWUStc/hqdefault_live.jpg" alt="東京新聞ライブカメラ_霞が関" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="0GVPhWWUStc"><img src="https://i.ytimg.com/vi/0GVPhWWUStc/hqdefault_live.jpg" alt="東京新聞ライブカメラ_霞が関" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>東京新聞ライブカメラ_霞が関</strong><span>東京新聞チャンネル</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=lxtB5GiLQtk" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/lxtB5GiLQtk/hqdefault_live.jpg" alt="須川ライブカメラ（飯塚橋）" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="lxtB5GiLQtk"><img src="https://i.ytimg.com/vi/lxtB5GiLQtk/hqdefault_live.jpg" alt="須川ライブカメラ（飯塚橋）" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>須川ライブカメラ（飯塚橋）</strong><span>株式会社クリーンシステム</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=vdj5kp3LLns" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/vdj5kp3LLns/hqdefault_live.jpg" alt="🔴 Livecamera Tokyo skytree &amp; Tsukiji stadium 2030 - Live of Tokyo in 4K ✨ 東京ライブカメラ 24/7" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="vdj5kp3LLns"><img src="https://i.ytimg.com/vi/vdj5kp3LLns/hqdefault_live.jpg" alt="🔴 Livecamera Tokyo skytree &amp; Tsukiji stadium 2030 - Live of Tokyo in 4K ✨ 東京ライブカメラ 24/7" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>🔴 Livecamera Tokyo skytree &amp; Tsukiji stadium 2030 - Live of Tokyo in 4K ✨ 東京ライブカメラ 24/7</strong><span>🗼 TOKYO LIVE 4K 🌸</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=kwUAeYZKjLM" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/kwUAeYZKjLM/hqdefault_live.jpg" alt="【テスト配信】道頓堀ライブカメラ ２" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="kwUAeYZKjLM"><img src="https://i.ytimg.com/vi/kwUAeYZKjLM/hqdefault_live.jpg" alt="【テスト配信】道頓堀ライブカメラ ２" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>【テスト配信】道頓堀ライブカメラ ２</strong><span>ラジカルビデオジョッキー RVJJP</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=LPcDAtkX0-Q" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/LPcDAtkX0-Q/hqdefault_live.jpg" alt="【LIVE】大阪・中之島ライブカメラ＠朝日新聞大阪本社" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="LPcDAtkX0-Q"><img src="https://i.ytimg.com/vi/LPcDAtkX0-Q/hqdefault_live.jpg" alt="【LIVE】大阪・中之島ライブカメラ＠朝日新聞大阪本社" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>【LIVE】大阪・中之島ライブカメラ＠朝日新聞大阪本社</strong><span>朝日新聞LIVE</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=qwKh-LOkomQ" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/qwKh-LOkomQ/hqdefault_live.jpg" alt="【LIVE】大阪国際空港（伊丹空港）ライブカメラ　＠朝日新聞社格納庫" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="qwKh-LOkomQ"><img src="https://i.ytimg.com/vi/qwKh-LOkomQ/hqdefault_live.jpg" alt="【LIVE】大阪国際空港（伊丹空港）ライブカメラ　＠朝日新聞社格納庫" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>【LIVE】大阪国際空港（伊丹空港）ライブカメラ　＠朝日新聞社格納庫</strong><span>朝日新聞LIVE</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=bKVGdsMVuMA" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/bKVGdsMVuMA/hqdefault_live.jpg" alt="【LIVE】東京・築地ライブカメラ　湾岸やレインボーブリッジのある風景　 at Tsukiji, view of Tokyo waterfront and Rainbow bridge" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="bKVGdsMVuMA"><img src="https://i.ytimg.com/vi/bKVGdsMVuMA/hqdefault_live.jpg" alt="【LIVE】東京・築地ライブカメラ　湾岸やレインボーブリッジのある風景　 at Tsukiji, view of Tokyo waterfront and Rainbow bridge" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>【LIVE】東京・築地ライブカメラ　湾岸やレインボーブリッジのある風景　 at Tsukiji, view of Tokyo waterfront and Rainbow bridge</strong><span>朝日新聞LIVE</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=_o2Ejpmets8" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/_o2Ejpmets8/hqdefault_live.jpg" alt="【LIVE】東京国際空港（羽田空港）ライブカメラ＠朝日新聞社格納庫" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="_o2Ejpmets8"><img src="https://i.ytimg.com/vi/_o2Ejpmets8/hqdefault_live.jpg" alt="【LIVE】東京国際空港（羽田空港）ライブカメラ＠朝日新聞社格納庫" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>【LIVE】東京国際空港（羽田空港）ライブカメラ＠朝日新聞社格納庫</strong><span>朝日新聞LIVE</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=G7djnZQ-OPc" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/G7djnZQ-OPc/hqdefault_live.jpg" alt="【LIVE】東京国際空港（羽田空港）ライブカメラ＠朝日新聞社格納庫　第２" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="G7djnZQ-OPc"><img src="https://i.ytimg.com/vi/G7djnZQ-OPc/hqdefault_live.jpg" alt="【LIVE】東京国際空港（羽田空港）ライブカメラ＠朝日新聞社格納庫　第２" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>【LIVE】東京国際空港（羽田空港）ライブカメラ＠朝日新聞社格納庫　第２</strong><span>朝日新聞LIVE</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=0ytmbJ6mn70" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/0ytmbJ6mn70/hqdefault_live.jpg" alt="【LIVE】東京国際空港（羽田空港）ライブカメラ＠朝日新聞社格納庫　第3" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="0ytmbJ6mn70"><img src="https://i.ytimg.com/vi/0ytmbJ6mn70/hqdefault_live.jpg" alt="【LIVE】東京国際空港（羽田空港）ライブカメラ＠朝日新聞社格納庫　第3" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>【LIVE】東京国際空港（羽田空港）ライブカメラ＠朝日新聞社格納庫　第3</strong><span>朝日新聞LIVE</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=OuCbntsMsWY" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/OuCbntsMsWY/hqdefault_live.jpg" alt="【LIVE】成田空港ライブカメラ　A滑走路(南側）＠朝日新聞成田支局  LIVE at Narita International airport" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="OuCbntsMsWY"><img src="https://i.ytimg.com/vi/OuCbntsMsWY/hqdefault_live.jpg" alt="【LIVE】成田空港ライブカメラ　A滑走路(南側）＠朝日新聞成田支局  LIVE at Narita International airport" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>【LIVE】成田空港ライブカメラ　A滑走路(南側）＠朝日新聞成田支局  LIVE at Narita International airport</strong><span>朝日新聞LIVE</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=ZIHxOzhFFUc" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/ZIHxOzhFFUc/hqdefault_live.jpg" alt="【LIVE】成田空港ライブカメラ　A滑走路（中央）＠朝日新聞成田支局  LIVE at Narita International airport" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="ZIHxOzhFFUc"><img src="https://i.ytimg.com/vi/ZIHxOzhFFUc/hqdefault_live.jpg" alt="【LIVE】成田空港ライブカメラ　A滑走路（中央）＠朝日新聞成田支局  LIVE at Narita International airport" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>【LIVE】成田空港ライブカメラ　A滑走路（中央）＠朝日新聞成田支局  LIVE at Narita International airport</strong><span>朝日新聞LIVE</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=1Xm5bjdI5hU" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/1Xm5bjdI5hU/hqdefault_live.jpg" alt="【LIVE】銀座ライブカメラ　数寄屋橋スクランブル交差点 Sukiyabashi crossing in Ginza, Tokyo 스키야바시 긴자" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="1Xm5bjdI5hU"><img src="https://i.ytimg.com/vi/1Xm5bjdI5hU/hqdefault_live.jpg" alt="【LIVE】銀座ライブカメラ　数寄屋橋スクランブル交差点 Sukiyabashi crossing in Ginza, Tokyo 스키야바시 긴자" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>【LIVE】銀座ライブカメラ　数寄屋橋スクランブル交差点 Sukiyabashi crossing in Ginza, Tokyo 스키야바시 긴자</strong><span>朝日新聞LIVE</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=RBHsITnIoI0" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/RBHsITnIoI0/hqdefault_live.jpg" alt="【LIVE】札幌ライブカメラ＠さっぽろ創世スクエア　Sapporo Odori Park in Hokkaido　삿포로 라이브　札幌LIVE" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="RBHsITnIoI0"><img src="https://i.ytimg.com/vi/RBHsITnIoI0/hqdefault_live.jpg" alt="【LIVE】札幌ライブカメラ＠さっぽろ創世スクエア　Sapporo Odori Park in Hokkaido　삿포로 라이브　札幌LIVE" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>【LIVE】札幌ライブカメラ＠さっぽろ創世スクエア　Sapporo Odori Park in Hokkaido　삿포로 라이브　札幌LIVE</strong><span>朝日新聞LIVE</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=vaifJWjqu0k" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/vaifJWjqu0k/hqdefault_live.jpg" alt="【LIVE】千葉県ライブカメラ　千葉市内の現在の様子　Chiba 지바" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="vaifJWjqu0k"><img src="https://i.ytimg.com/vi/vaifJWjqu0k/hqdefault_live.jpg" alt="【LIVE】千葉県ライブカメラ　千葉市内の現在の様子　Chiba 지바" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>【LIVE】千葉県ライブカメラ　千葉市内の現在の様子　Chiba 지바</strong><span>朝日新聞LIVE</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=6HYjCFkmDPA" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/6HYjCFkmDPA/hqdefault_live.jpg" alt="【LIVE】沖縄ライブカメラ　那覇市内の現在の様子　眼下には「ゆいレール」　Okinawa, Naha　 오키나와、 나하" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="6HYjCFkmDPA"><img src="https://i.ytimg.com/vi/6HYjCFkmDPA/hqdefault_live.jpg" alt="【LIVE】沖縄ライブカメラ　那覇市内の現在の様子　眼下には「ゆいレール」　Okinawa, Naha　 오키나와、 나하" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>【LIVE】沖縄ライブカメラ　那覇市内の現在の様子　眼下には「ゆいレール」　Okinawa, Naha　 오키나와、 나하</strong><span>朝日新聞LIVE</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=Xr781EeLdqs" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/Xr781EeLdqs/hqdefault_live.jpg" alt="「LIVE CAMERA」草津温泉・温泉門" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="Xr781EeLdqs"><img src="https://i.ytimg.com/vi/Xr781EeLdqs/hqdefault_live.jpg" alt="「LIVE CAMERA」草津温泉・温泉門" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>「LIVE CAMERA」草津温泉・温泉門</strong><span>草津町公式YouTubeチャンネル</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=J3zIOmIrSzM" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/J3zIOmIrSzM/hqdefault_live.jpg" alt="「LIVECAMERA」草津運動茶屋公園 道の駅" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="J3zIOmIrSzM"><img src="https://i.ytimg.com/vi/J3zIOmIrSzM/hqdefault_live.jpg" alt="「LIVECAMERA」草津運動茶屋公園 道の駅" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>「LIVECAMERA」草津運動茶屋公園 道の駅</strong><span>草津町公式YouTubeチャンネル</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=WB4jllqVRCc" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/WB4jllqVRCc/hqdefault_live.jpg" alt="「LIVECAMERA」国道292号 草津前口" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="WB4jllqVRCc"><img src="https://i.ytimg.com/vi/WB4jllqVRCc/hqdefault_live.jpg" alt="「LIVECAMERA」国道292号 草津前口" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>「LIVECAMERA」国道292号 草津前口</strong><span>草津町公式YouTubeチャンネル</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=z3OUPSoABJk" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/z3OUPSoABJk/hqdefault_live.jpg" alt="いまの札幌 ライブカメラ（STV札幌テレビ放送）北海道札幌市中央区 /Live Camera Sapporo , Hokkaido" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="z3OUPSoABJk"><img src="https://i.ytimg.com/vi/z3OUPSoABJk/hqdefault_live.jpg" alt="いまの札幌 ライブカメラ（STV札幌テレビ放送）北海道札幌市中央区 /Live Camera Sapporo , Hokkaido" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>いまの札幌 ライブカメラ（STV札幌テレビ放送）北海道札幌市中央区 /Live Camera Sapporo , Hokkaido</strong><span>STV札幌テレビ放送 公式</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=0ACRdNv3D9w" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/0ACRdNv3D9w/hqdefault_live.jpg" alt="「LIVECAMERA」裏草津地蔵 漫画堂 カフェ月の貌" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="0ACRdNv3D9w"><img src="https://i.ytimg.com/vi/0ACRdNv3D9w/hqdefault_live.jpg" alt="「LIVECAMERA」裏草津地蔵 漫画堂 カフェ月の貌" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>「LIVECAMERA」裏草津地蔵 漫画堂 カフェ月の貌</strong><span>草津町公式YouTubeチャンネル</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=nbtzTBRBuzM" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/nbtzTBRBuzM/hqdefault_live.jpg" alt="ライブカメラ 北広島市（STV札幌テレビ放送）北海道北広島市／Live Camera Kitahirosima City, Hokkaido" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="nbtzTBRBuzM"><img src="https://i.ytimg.com/vi/nbtzTBRBuzM/hqdefault_live.jpg" alt="ライブカメラ 北広島市（STV札幌テレビ放送）北海道北広島市／Live Camera Kitahirosima City, Hokkaido" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>ライブカメラ 北広島市（STV札幌テレビ放送）北海道北広島市／Live Camera Kitahirosima City, Hokkaido</strong><span>STV札幌テレビ放送 公式</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=ViHMZfmURiw" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/ViHMZfmURiw/hqdefault_live.jpg" alt="[4K Live] 富士山 ライブカメラ 静岡県富士市から  Mt.Fuji Live Camera" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="ViHMZfmURiw"><img src="https://i.ytimg.com/vi/ViHMZfmURiw/hqdefault_live.jpg" alt="[4K Live] 富士山 ライブカメラ 静岡県富士市から  Mt.Fuji Live Camera" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>[4K Live] 富士山 ライブカメラ 静岡県富士市から  Mt.Fuji Live Camera</strong><span>共同通信LiveCamera</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=_1PfF1v9GJc" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/_1PfF1v9GJc/hqdefault_live.jpg" alt="「LIVECAMERA 」草津温泉・温泉門無料駐車場" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="_1PfF1v9GJc"><img src="https://i.ytimg.com/vi/_1PfF1v9GJc/hqdefault_live.jpg" alt="「LIVECAMERA 」草津温泉・温泉門無料駐車場" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>「LIVECAMERA 」草津温泉・温泉門無料駐車場</strong><span>草津町公式YouTubeチャンネル</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=hN8mxz3-1pg" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/hN8mxz3-1pg/hqdefault_live.jpg" alt="「LIVE CAMERA」草津温泉スキー場　天狗山山頂エリア" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="hN8mxz3-1pg"><img src="https://i.ytimg.com/vi/hN8mxz3-1pg/hqdefault_live.jpg" alt="「LIVE CAMERA」草津温泉スキー場　天狗山山頂エリア" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>「LIVE CAMERA」草津温泉スキー場　天狗山山頂エリア</strong><span>草津町公式YouTubeチャンネル</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=gL7YgPM0Jvk" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/gL7YgPM0Jvk/hqdefault_live.jpg" alt="「LIVECAMERA 」草津温泉・白根山ライブカメラ（固定式）" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="gL7YgPM0Jvk"><img src="https://i.ytimg.com/vi/gL7YgPM0Jvk/hqdefault_live.jpg" alt="「LIVECAMERA 」草津温泉・白根山ライブカメラ（固定式）" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>「LIVECAMERA 」草津温泉・白根山ライブカメラ（固定式）</strong><span>草津町公式YouTubeチャンネル</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=yMm2Q3zLXKI" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/yMm2Q3zLXKI/hqdefault_live.jpg" alt="「LIVECAMERA 」草津温泉・白根山ライブカメラ（移動式）" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="yMm2Q3zLXKI"><img src="https://i.ytimg.com/vi/yMm2Q3zLXKI/hqdefault_live.jpg" alt="「LIVECAMERA 」草津温泉・白根山ライブカメラ（移動式）" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>「LIVECAMERA 」草津温泉・白根山ライブカメラ（移動式）</strong><span>草津町公式YouTubeチャンネル</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=VZ7UthXFfTw" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/VZ7UthXFfTw/hqdefault_live.jpg" alt="「LIVECAMERA 」草津温泉・本白根山ライブカメラ（固定式）" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="VZ7UthXFfTw"><img src="https://i.ytimg.com/vi/VZ7UthXFfTw/hqdefault_live.jpg" alt="「LIVECAMERA 」草津温泉・本白根山ライブカメラ（固定式）" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>「LIVECAMERA 」草津温泉・本白根山ライブカメラ（固定式）</strong><span>草津町公式YouTubeチャンネル</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=UdOAbyzxKto" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/UdOAbyzxKto/hqdefault_live.jpg" alt="「LIVECAMERA 」草津温泉・西の河原公園駐車場" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="UdOAbyzxKto"><img src="https://i.ytimg.com/vi/UdOAbyzxKto/hqdefault_live.jpg" alt="「LIVECAMERA 」草津温泉・西の河原公園駐車場" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>「LIVECAMERA 」草津温泉・西の河原公園駐車場</strong><span>草津町公式YouTubeチャンネル</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=ZFhzy9-sy3U" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/ZFhzy9-sy3U/hqdefault_live.jpg" alt="「LIVECAMERA 」草津温泉・温泉門観光バス専用駐車場" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="ZFhzy9-sy3U"><img src="https://i.ytimg.com/vi/ZFhzy9-sy3U/hqdefault_live.jpg" alt="「LIVECAMERA 」草津温泉・温泉門観光バス専用駐車場" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>「LIVECAMERA 」草津温泉・温泉門観光バス専用駐車場</strong><span>草津町公式YouTubeチャンネル</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=VnRb8aFDK2M" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/VnRb8aFDK2M/hqdefault_live.jpg" alt="「LIVECAMERA」天狗山 第一駐車場" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="VnRb8aFDK2M"><img src="https://i.ytimg.com/vi/VnRb8aFDK2M/hqdefault_live.jpg" alt="「LIVECAMERA」天狗山 第一駐車場" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>「LIVECAMERA」天狗山 第一駐車場</strong><span>草津町公式YouTubeチャンネル</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=bcW3LznxSyA" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/bcW3LznxSyA/hqdefault_live.jpg" alt="【 Archive 】2026-07-13『06:00』 東京都 新宿 24時間 ライブカメラ" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="bcW3LznxSyA"><img src="https://i.ytimg.com/vi/bcW3LznxSyA/hqdefault_live.jpg" alt="【 Archive 】2026-07-13『06:00』 東京都 新宿 24時間 ライブカメラ" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>【 Archive 】2026-07-13『06:00』 東京都 新宿 24時間 ライブカメラ</strong><span>インフォ新宿 channel</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=_Z1UzjJ6o2E" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/_Z1UzjJ6o2E/hqdefault_live.jpg" alt="「LIVECAMERA」草津温泉・本白根山ライブカメラ（移動式）" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="_Z1UzjJ6o2E"><img src="https://i.ytimg.com/vi/_Z1UzjJ6o2E/hqdefault_live.jpg" alt="「LIVECAMERA」草津温泉・本白根山ライブカメラ（移動式）" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>「LIVECAMERA」草津温泉・本白根山ライブカメラ（移動式）</strong><span>草津町公式YouTubeチャンネル</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=ybOa_LRzp_I" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/ybOa_LRzp_I/hqdefault_live.jpg" alt="「LIVECAMERA」裏草津地蔵 源泉広場" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="ybOa_LRzp_I"><img src="https://i.ytimg.com/vi/ybOa_LRzp_I/hqdefault_live.jpg" alt="「LIVECAMERA」裏草津地蔵 源泉広場" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>「LIVECAMERA」裏草津地蔵 源泉広場</strong><span>草津町公式YouTubeチャンネル</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=eX7vAL4Jtfk" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/eX7vAL4Jtfk/hqdefault_live.jpg" alt="「LIVECAMERA」草津温泉スキー場　天狗山山麓エリア" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="eX7vAL4Jtfk"><img src="https://i.ytimg.com/vi/eX7vAL4Jtfk/hqdefault_live.jpg" alt="「LIVECAMERA」草津温泉スキー場　天狗山山麓エリア" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>「LIVECAMERA」草津温泉スキー場　天狗山山麓エリア</strong><span>草津町公式YouTubeチャンネル</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=pFlwpTTEuq0" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/pFlwpTTEuq0/hqdefault_live.jpg" alt="掛川城天守閣24hライブカメラ" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="pFlwpTTEuq0"><img src="https://i.ytimg.com/vi/pFlwpTTEuq0/hqdefault_live.jpg" alt="掛川城天守閣24hライブカメラ" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>掛川城天守閣24hライブカメラ</strong><span>ZAZAマガジンチャンネル</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=rHuoK_TWOnA" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/rHuoK_TWOnA/hqdefault_live.jpg" alt="「LIVECAMERA」国道292号 草津温泉入口" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="rHuoK_TWOnA"><img src="https://i.ytimg.com/vi/rHuoK_TWOnA/hqdefault_live.jpg" alt="「LIVECAMERA」国道292号 草津温泉入口" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>「LIVECAMERA」国道292号 草津温泉入口</strong><span>草津町公式YouTubeチャンネル</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=pcA1VW0n7JU" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/pcA1VW0n7JU/hqdefault_live.jpg" alt="青森空港 ライブ配信" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="pcA1VW0n7JU"><img src="https://i.ytimg.com/vi/pcA1VW0n7JU/hqdefault_live.jpg" alt="青森空港 ライブ配信" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>青森空港 ライブ配信</strong><span>ABA青森朝日放送</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=jJ4Juhl8Iq0" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/jJ4Juhl8Iq0/hqdefault_live.jpg" alt="御前崎灯台24hライブカメラ　岬の宿「八潮」より配信" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="jJ4Juhl8Iq0"><img src="https://i.ytimg.com/vi/jJ4Juhl8Iq0/hqdefault_live.jpg" alt="御前崎灯台24hライブカメラ　岬の宿「八潮」より配信" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>御前崎灯台24hライブカメラ　岬の宿「八潮」より配信</strong><span>ZAZAマガジンチャンネル</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=RT_yg_qsK_M" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/RT_yg_qsK_M/hqdefault_live.jpg" alt="「LIVECAMERA」草津温泉 西の河原・湯川LIVE" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="RT_yg_qsK_M"><img src="https://i.ytimg.com/vi/RT_yg_qsK_M/hqdefault_live.jpg" alt="「LIVECAMERA」草津温泉 西の河原・湯川LIVE" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>「LIVECAMERA」草津温泉 西の河原・湯川LIVE</strong><span>草津町公式YouTubeチャンネル</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=fHG-8RlsR8c" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/fHG-8RlsR8c/hqdefault_live.jpg" alt="気田川（けたがわ）24hライブカメラ｜気田川漁業協同組合より配信（音声付）春野町・鮎の故郷・すみれの花咲く頃　　（防災カメラとしてもお役立て下さい）" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="fHG-8RlsR8c"><img src="https://i.ytimg.com/vi/fHG-8RlsR8c/hqdefault_live.jpg" alt="気田川（けたがわ）24hライブカメラ｜気田川漁業協同組合より配信（音声付）春野町・鮎の故郷・すみれの花咲く頃　　（防災カメラとしてもお役立て下さい）" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>気田川（けたがわ）24hライブカメラ｜気田川漁業協同組合より配信（音声付）春野町・鮎の故郷・すみれの花咲く頃　　（防災カメラとしてもお役立て下さい）</strong><span>ZAZAマガジンチャンネル</span></div>
     </a></div>
+      <script>
+        (function () {
+          var KEY = 'staticPreviewMode';
+          var mode = localStorage.getItem(KEY) || 'auto';
+          var thumbs = [].slice.call(document.querySelectorAll('.thumb[data-vid]'));
+          var io = null;
+          function play(t) {
+            if (t.querySelector('iframe')) return;
+            var f = document.createElement('iframe');
+            f.src = 'https://www.youtube.com/embed/' + t.dataset.vid + '?autoplay=1&mute=1&playsinline=1&rel=0';
+            f.allow = 'autoplay; encrypted-media';
+            t.appendChild(f);
+          }
+          function stop(t) { var f = t.querySelector('iframe'); if (f) f.remove(); }
+          function apply() {
+            thumbs.forEach(stop);
+            if (io) { io.disconnect(); io = null; }
+            document.querySelectorAll('.preview-toggle button').forEach(function (b) {
+              b.classList.toggle('active', b.dataset.mode === mode);
+            });
+            if (mode === 'auto') {
+              io = new IntersectionObserver(function (es) {
+                es.forEach(function (e) { e.isIntersecting ? play(e.target) : stop(e.target); });
+              }, { rootMargin: '50px' });
+              thumbs.forEach(function (t) { io.observe(t); });
+            }
+          }
+          thumbs.forEach(function (t) {
+            t.addEventListener('mouseenter', function () { if (mode === 'hover') play(t); });
+            t.addEventListener('mouseleave', function () { if (mode === 'hover') stop(t); });
+          });
+          document.querySelectorAll('.preview-toggle button').forEach(function (b) {
+            b.addEventListener('click', function (e) {
+              e.preventDefault();
+              mode = b.dataset.mode;
+              localStorage.setItem(KEY, mode);
+              apply();
+            });
+          });
+          apply();
+        })();
+      </script>
 </main>
 <footer>
   <a href="/">Home</a><a href="/browse.html">Browse all</a><a href="/about.html">About</a><a href="/privacy.html">Privacy</a><a href="/terms.html">Terms</a>

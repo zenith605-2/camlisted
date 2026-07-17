@@ -42,7 +42,13 @@
   .map-wrap path[data-href] { cursor: pointer; }
   .map-wrap path:hover { filter: brightness(1.6); stroke: #ffffff; }
   .map-tip { position: fixed; z-index: 10; background: rgba(0,0,0,.85); border: 1px solid #2a2f3a; color: #fff; padding: 5px 10px; border-radius: 6px; font-size: 0.85rem; pointer-events: none; white-space: nowrap; }
-  .map-note { color: #9aa4b2; font-size: 0.8rem; margin-bottom: 16px; }
+  .map-note { color: #9aa4b2; font-size: 0.8rem; margin-bottom: 4px; }
+  .map-legend { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; color: #9aa4b2; font-size: 0.8rem; margin-bottom: 18px; }
+  .map-legend .sw { display: inline-block; width: 14px; height: 14px; border-radius: 3px; margin-right: 5px; vertical-align: -2px; }
+  .thumb iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+  .preview-toggle { margin: 4px 0 14px; color: #9aa4b2; font-size: 0.85rem; display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+  .preview-toggle button { background: #161b22; color: #9aa4b2; border: 1px solid #2a2f3a; border-radius: 999px; padding: 4px 12px; cursor: pointer; font-size: 0.8rem; }
+  .preview-toggle button.active { color: #fff; border-color: #ff3b3b; }
   h2 { font-size: 1.15rem; margin: 28px 0 12px; }
   .cta { display: inline-block; margin: 20px 0; background: #ff3b3b; color: #fff; padding: 10px 18px; border-radius: 8px; text-decoration: none; font-weight: 600; }
   footer { border-top: 1px solid #2a2f3a; margin-top: 40px; padding: 20px 24px; color: #9aa4b2; font-size: 0.85rem; }
@@ -59,27 +65,74 @@
   <h1>🏨 Resort / Hotel Live Cams &amp; Videos</h1>
   <p class="intro">5 live cams and 0 videos in the Resort / Hotel category, re-verified daily. Click any card to watch on YouTube. Updated 2026-07-17.</p>
   <a class="cta" href="/?category=resort">Open in interactive viewer →</a>
-  <div class="grid">
+  
+      <div class="preview-toggle">Preview:
+        <button type="button" data-mode="auto">▶ Auto</button>
+        <button type="button" data-mode="hover">🖱 Hover</button>
+        <button type="button" data-mode="off">Off</button>
+      </div><div class="grid">
     <a class="entry" href="https://www.youtube.com/watch?v=kInklmrZEBc" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/kInklmrZEBc/hqdefault_live.jpg" alt="Hotel Xcaret México en Vivo" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="kInklmrZEBc"><img src="https://i.ytimg.com/vi/kInklmrZEBc/hqdefault_live.jpg" alt="Hotel Xcaret México en Vivo" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Hotel Xcaret México en Vivo</strong><span>Webcams de México TV / Canal 7</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=NqWd_-hB5ZA" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/NqWd_-hB5ZA/hqdefault_live.jpg" alt="🔴Alfagar Aparthotels - Algarve, Portugal - Live Cam" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="NqWd_-hB5ZA"><img src="https://i.ytimg.com/vi/NqWd_-hB5ZA/hqdefault_live.jpg" alt="🔴Alfagar Aparthotels - Algarve, Portugal - Live Cam" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>🔴Alfagar Aparthotels - Algarve, Portugal - Live Cam</strong><span>World Cams</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=GdFGN2pzoRM" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/GdFGN2pzoRM/hqdefault_live.jpg" alt="🔴Riva Del Sole Pool - Tuscany, Italy - Live Cam" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="GdFGN2pzoRM"><img src="https://i.ytimg.com/vi/GdFGN2pzoRM/hqdefault_live.jpg" alt="🔴Riva Del Sole Pool - Tuscany, Italy - Live Cam" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>🔴Riva Del Sole Pool - Tuscany, Italy - Live Cam</strong><span>World Cams</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=ZZGnUkyVQIY" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/ZZGnUkyVQIY/hqdefault_live.jpg" alt="🔴Village Rosapineta Sud - Rosolina Mare, Italy - Live Cam" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="ZZGnUkyVQIY"><img src="https://i.ytimg.com/vi/ZZGnUkyVQIY/hqdefault_live.jpg" alt="🔴Village Rosapineta Sud - Rosolina Mare, Italy - Live Cam" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>🔴Village Rosapineta Sud - Rosolina Mare, Italy - Live Cam</strong><span>World Cams</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=spyttB6YiaU" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/spyttB6YiaU/hqdefault_live.jpg" alt="Fins Up! Beach Club at Margaritaville Beach Resort Fort Myers Beach" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="thumb" data-vid="spyttB6YiaU"><img src="https://i.ytimg.com/vi/spyttB6YiaU/hqdefault_live.jpg" alt="Fins Up! Beach Club at Margaritaville Beach Resort Fort Myers Beach" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Fins Up! Beach Club at Margaritaville Beach Resort Fort Myers Beach</strong><span>Margaritaville Beach Resort Fort Myers Beach</span></div>
     </a></div>
+      <script>
+        (function () {
+          var KEY = 'staticPreviewMode';
+          var mode = localStorage.getItem(KEY) || 'auto';
+          var thumbs = [].slice.call(document.querySelectorAll('.thumb[data-vid]'));
+          var io = null;
+          function play(t) {
+            if (t.querySelector('iframe')) return;
+            var f = document.createElement('iframe');
+            f.src = 'https://www.youtube.com/embed/' + t.dataset.vid + '?autoplay=1&mute=1&playsinline=1&rel=0';
+            f.allow = 'autoplay; encrypted-media';
+            t.appendChild(f);
+          }
+          function stop(t) { var f = t.querySelector('iframe'); if (f) f.remove(); }
+          function apply() {
+            thumbs.forEach(stop);
+            if (io) { io.disconnect(); io = null; }
+            document.querySelectorAll('.preview-toggle button').forEach(function (b) {
+              b.classList.toggle('active', b.dataset.mode === mode);
+            });
+            if (mode === 'auto') {
+              io = new IntersectionObserver(function (es) {
+                es.forEach(function (e) { e.isIntersecting ? play(e.target) : stop(e.target); });
+              }, { rootMargin: '50px' });
+              thumbs.forEach(function (t) { io.observe(t); });
+            }
+          }
+          thumbs.forEach(function (t) {
+            t.addEventListener('mouseenter', function () { if (mode === 'hover') play(t); });
+            t.addEventListener('mouseleave', function () { if (mode === 'hover') stop(t); });
+          });
+          document.querySelectorAll('.preview-toggle button').forEach(function (b) {
+            b.addEventListener('click', function (e) {
+              e.preventDefault();
+              mode = b.dataset.mode;
+              localStorage.setItem(KEY, mode);
+              apply();
+            });
+          });
+          apply();
+        })();
+      </script>
 </main>
 <footer>
   <a href="/">Home</a><a href="/browse.html">Browse all</a><a href="/about.html">About</a><a href="/privacy.html">Privacy</a><a href="/terms.html">Terms</a>

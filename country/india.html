@@ -42,7 +42,13 @@
   .map-wrap path[data-href] { cursor: pointer; }
   .map-wrap path:hover { filter: brightness(1.6); stroke: #ffffff; }
   .map-tip { position: fixed; z-index: 10; background: rgba(0,0,0,.85); border: 1px solid #2a2f3a; color: #fff; padding: 5px 10px; border-radius: 6px; font-size: 0.85rem; pointer-events: none; white-space: nowrap; }
-  .map-note { color: #9aa4b2; font-size: 0.8rem; margin-bottom: 16px; }
+  .map-note { color: #9aa4b2; font-size: 0.8rem; margin-bottom: 4px; }
+  .map-legend { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; color: #9aa4b2; font-size: 0.8rem; margin-bottom: 18px; }
+  .map-legend .sw { display: inline-block; width: 14px; height: 14px; border-radius: 3px; margin-right: 5px; vertical-align: -2px; }
+  .thumb iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+  .preview-toggle { margin: 4px 0 14px; color: #9aa4b2; font-size: 0.85rem; display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+  .preview-toggle button { background: #161b22; color: #9aa4b2; border: 1px solid #2a2f3a; border-radius: 999px; padding: 4px 12px; cursor: pointer; font-size: 0.8rem; }
+  .preview-toggle button.active { color: #fff; border-color: #ff3b3b; }
   h2 { font-size: 1.15rem; margin: 28px 0 12px; }
   .cta { display: inline-block; margin: 20px 0; background: #ff3b3b; color: #fff; padding: 10px 18px; border-radius: 8px; text-decoration: none; font-weight: 600; }
   footer { border-top: 1px solid #2a2f3a; margin-top: 40px; padding: 20px 24px; color: #9aa4b2; font-size: 0.85rem; }
@@ -59,67 +65,114 @@
   <h1>Live Cams &amp; Footage in India</h1>
   <p class="intro">0 live cams and 15 videos from India, re-verified daily. Click any card to watch on YouTube. Updated 2026-07-17.</p>
   <a class="cta" href="/?country=IN">Open in interactive viewer →</a>
-  <div class="grid">
+  
+      <div class="preview-toggle">Preview:
+        <button type="button" data-mode="auto">▶ Auto</button>
+        <button type="button" data-mode="hover">🖱 Hover</button>
+        <button type="button" data-mode="off">Off</button>
+      </div><div class="grid">
     <a class="entry" href="https://www.youtube.com/watch?v=M33bI2ltkEs" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/M33bI2ltkEs/hqdefault.jpg" alt="SY 2M DHD - SYROTECH 2MP DOME HD CAMERAS - SAMPLE VIDEO FOOTAGE" loading="lazy" width="320" height="180"><span class="badge">0:29</span></div>
+      <div class="thumb" data-vid="M33bI2ltkEs"><img src="https://i.ytimg.com/vi/M33bI2ltkEs/hqdefault.jpg" alt="SY 2M DHD - SYROTECH 2MP DOME HD CAMERAS - SAMPLE VIDEO FOOTAGE" loading="lazy" width="320" height="180"><span class="badge">0:29</span></div>
       <div class="entry-body"><strong>SY 2M DHD - SYROTECH 2MP DOME HD CAMERAS - SAMPLE VIDEO FOOTAGE</strong><span>CCTV Camera Updates India</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=10NvkO1gpf0" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/10NvkO1gpf0/hqdefault.jpg" alt="SYROTECH 8MP BULLET IP CAMERA FULL COLOR WITH MIC CCTV Camera: Video Quality | Sample Video Footage" loading="lazy" width="320" height="180"><span class="badge">0:19</span></div>
+      <div class="thumb" data-vid="10NvkO1gpf0"><img src="https://i.ytimg.com/vi/10NvkO1gpf0/hqdefault.jpg" alt="SYROTECH 8MP BULLET IP CAMERA FULL COLOR WITH MIC CCTV Camera: Video Quality | Sample Video Footage" loading="lazy" width="320" height="180"><span class="badge">0:19</span></div>
       <div class="entry-body"><strong>SYROTECH 8MP BULLET IP CAMERA FULL COLOR WITH MIC CCTV Camera: Video Quality | Sample Video Footage</strong><span>CCTV Camera Updates India</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=dC8gk0sKk-g" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/dC8gk0sKk-g/hqdefault.jpg" alt="SY 2M BHDC | SYROTECH 2mp Night Vision HD Camera | Sample Video Footage" loading="lazy" width="320" height="180"><span class="badge">0:30</span></div>
+      <div class="thumb" data-vid="dC8gk0sKk-g"><img src="https://i.ytimg.com/vi/dC8gk0sKk-g/hqdefault.jpg" alt="SY 2M BHDC | SYROTECH 2mp Night Vision HD Camera | Sample Video Footage" loading="lazy" width="320" height="180"><span class="badge">0:30</span></div>
       <div class="entry-body"><strong>SY 2M BHDC | SYROTECH 2mp Night Vision HD Camera | Sample Video Footage</strong><span>CCTV Camera Updates India</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=V8ytQY4HwVs" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/V8ytQY4HwVs/hqdefault.jpg" alt="5mp SY-5M-BHDC DAY CCTV Camera: Video Quality | Sample Video Footage" loading="lazy" width="320" height="180"><span class="badge">0:26</span></div>
+      <div class="thumb" data-vid="V8ytQY4HwVs"><img src="https://i.ytimg.com/vi/V8ytQY4HwVs/hqdefault.jpg" alt="5mp SY-5M-BHDC DAY CCTV Camera: Video Quality | Sample Video Footage" loading="lazy" width="320" height="180"><span class="badge">0:26</span></div>
       <div class="entry-body"><strong>5mp SY-5M-BHDC DAY CCTV Camera: Video Quality | Sample Video Footage</strong><span>CCTV Camera Updates India</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=hZi9LAa5UFM" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/hZi9LAa5UFM/hqdefault.jpg" alt="SYROTECH 5MP HD CCTV Camera: SY 5M BHDC NIGHT Video Quality | Sample Video Footage" loading="lazy" width="320" height="180"><span class="badge">0:27</span></div>
+      <div class="thumb" data-vid="hZi9LAa5UFM"><img src="https://i.ytimg.com/vi/hZi9LAa5UFM/hqdefault.jpg" alt="SYROTECH 5MP HD CCTV Camera: SY 5M BHDC NIGHT Video Quality | Sample Video Footage" loading="lazy" width="320" height="180"><span class="badge">0:27</span></div>
       <div class="entry-body"><strong>SYROTECH 5MP HD CCTV Camera: SY 5M BHDC NIGHT Video Quality | Sample Video Footage</strong><span>CCTV Camera Updates India</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=wq2mGo1pAEY" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/wq2mGo1pAEY/hqdefault.jpg" alt="SYROTECH 2M-BH-IPC DAY | 2MP IP CCTV Camera: Video Quality | Sample Video Footage" loading="lazy" width="320" height="180"><span class="badge">0:20</span></div>
+      <div class="thumb" data-vid="wq2mGo1pAEY"><img src="https://i.ytimg.com/vi/wq2mGo1pAEY/hqdefault.jpg" alt="SYROTECH 2M-BH-IPC DAY | 2MP IP CCTV Camera: Video Quality | Sample Video Footage" loading="lazy" width="320" height="180"><span class="badge">0:20</span></div>
       <div class="entry-body"><strong>SYROTECH 2M-BH-IPC DAY | 2MP IP CCTV Camera: Video Quality | Sample Video Footage</strong><span>CCTV Camera Updates India</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=eENULxNrbek" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/eENULxNrbek/hqdefault.jpg" alt="SYROTECH 4MP IP CAMERA NIGHT VISION VIDEO FOOTAGE SAMPLE" loading="lazy" width="320" height="180"><span class="badge">0:36</span></div>
+      <div class="thumb" data-vid="eENULxNrbek"><img src="https://i.ytimg.com/vi/eENULxNrbek/hqdefault.jpg" alt="SYROTECH 4MP IP CAMERA NIGHT VISION VIDEO FOOTAGE SAMPLE" loading="lazy" width="320" height="180"><span class="badge">0:36</span></div>
       <div class="entry-body"><strong>SYROTECH 4MP IP CAMERA NIGHT VISION VIDEO FOOTAGE SAMPLE</strong><span>CCTV Camera Updates India</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=SVx0v5AKzDg" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/SVx0v5AKzDg/hqdefault.jpg" alt="SY-5M-BHDC 5MP HD Bullet Full Colour View Camera | CCTV Camera: Video Quality | Sample Video Footage" loading="lazy" width="320" height="180"><span class="badge">0:39</span></div>
+      <div class="thumb" data-vid="SVx0v5AKzDg"><img src="https://i.ytimg.com/vi/SVx0v5AKzDg/hqdefault.jpg" alt="SY-5M-BHDC 5MP HD Bullet Full Colour View Camera | CCTV Camera: Video Quality | Sample Video Footage" loading="lazy" width="320" height="180"><span class="badge">0:39</span></div>
       <div class="entry-body"><strong>SY-5M-BHDC 5MP HD Bullet Full Colour View Camera | CCTV Camera: Video Quality | Sample Video Footage</strong><span>CCTV Camera Updates India</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=EvgUed-Ku8I" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/EvgUed-Ku8I/hqdefault.jpg" alt="SY-5M-BHDC 5MP HD Bullet Full Colour View Camera | CCTV Camera: Video Quality | Sample Video Footage" loading="lazy" width="320" height="180"><span class="badge">0:40</span></div>
+      <div class="thumb" data-vid="EvgUed-Ku8I"><img src="https://i.ytimg.com/vi/EvgUed-Ku8I/hqdefault.jpg" alt="SY-5M-BHDC 5MP HD Bullet Full Colour View Camera | CCTV Camera: Video Quality | Sample Video Footage" loading="lazy" width="320" height="180"><span class="badge">0:40</span></div>
       <div class="entry-body"><strong>SY-5M-BHDC 5MP HD Bullet Full Colour View Camera | CCTV Camera: Video Quality | Sample Video Footage</strong><span>CCTV Camera Updates India</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=k9zmc7Usd-0" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/k9zmc7Usd-0/hqdefault.jpg" alt="Video Night vision syrotech Camera SYROTECH 8MP BULLET IP CAMERA FULL COLOR WITH MIC : Video Quality" loading="lazy" width="320" height="180"><span class="badge">0:32</span></div>
+      <div class="thumb" data-vid="k9zmc7Usd-0"><img src="https://i.ytimg.com/vi/k9zmc7Usd-0/hqdefault.jpg" alt="Video Night vision syrotech Camera SYROTECH 8MP BULLET IP CAMERA FULL COLOR WITH MIC : Video Quality" loading="lazy" width="320" height="180"><span class="badge">0:32</span></div>
       <div class="entry-body"><strong>Video Night vision syrotech Camera SYROTECH 8MP BULLET IP CAMERA FULL COLOR WITH MIC : Video Quality</strong><span>CCTV Camera Updates India</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=9tyWzoeD7IE" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/9tyWzoeD7IE/hqdefault.jpg" alt="SYROTECH 4MP IP CAMERA WITH MIC FULL COLOR DAY NIGHT CAMERA DAY TIME SAMPLE FOOTAGE" loading="lazy" width="320" height="180"><span class="badge">0:40</span></div>
+      <div class="thumb" data-vid="9tyWzoeD7IE"><img src="https://i.ytimg.com/vi/9tyWzoeD7IE/hqdefault.jpg" alt="SYROTECH 4MP IP CAMERA WITH MIC FULL COLOR DAY NIGHT CAMERA DAY TIME SAMPLE FOOTAGE" loading="lazy" width="320" height="180"><span class="badge">0:40</span></div>
       <div class="entry-body"><strong>SYROTECH 4MP IP CAMERA WITH MIC FULL COLOR DAY NIGHT CAMERA DAY TIME SAMPLE FOOTAGE</strong><span>CCTV Camera Updates India</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=3jud2XYaIrs" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/3jud2XYaIrs/hqdefault.jpg" alt="SYROTECH 2MP-IPC-NIGHT | 2MP IP CCTV Camera: Video Quality | Sample Video Footage" loading="lazy" width="320" height="180"><span class="badge">0:24</span></div>
+      <div class="thumb" data-vid="3jud2XYaIrs"><img src="https://i.ytimg.com/vi/3jud2XYaIrs/hqdefault.jpg" alt="SYROTECH 2MP-IPC-NIGHT | 2MP IP CCTV Camera: Video Quality | Sample Video Footage" loading="lazy" width="320" height="180"><span class="badge">0:24</span></div>
       <div class="entry-body"><strong>SYROTECH 2MP-IPC-NIGHT | 2MP IP CCTV Camera: Video Quality | Sample Video Footage</strong><span>CCTV Camera Updates India</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=1gi5qn1khVk" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/1gi5qn1khVk/hqdefault.jpg" alt="4MP PTZ Camera with Night Vision &amp; Motion Detection | CCTV Camera: Video | Sample Video Footage" loading="lazy" width="320" height="180"><span class="badge">0:16</span></div>
+      <div class="thumb" data-vid="1gi5qn1khVk"><img src="https://i.ytimg.com/vi/1gi5qn1khVk/hqdefault.jpg" alt="4MP PTZ Camera with Night Vision &amp; Motion Detection | CCTV Camera: Video | Sample Video Footage" loading="lazy" width="320" height="180"><span class="badge">0:16</span></div>
       <div class="entry-body"><strong>4MP PTZ Camera with Night Vision &amp; Motion Detection | CCTV Camera: Video | Sample Video Footage</strong><span>CCTV Camera Updates India</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=iX8VI_EKWXg" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/iX8VI_EKWXg/hqdefault.jpg" alt="People walking in a Market at Night | People | Night Market | Stock Footage | A2Z Clips" loading="lazy" width="320" height="180"><span class="badge">0:12</span></div>
+      <div class="thumb" data-vid="iX8VI_EKWXg"><img src="https://i.ytimg.com/vi/iX8VI_EKWXg/hqdefault.jpg" alt="People walking in a Market at Night | People | Night Market | Stock Footage | A2Z Clips" loading="lazy" width="320" height="180"><span class="badge">0:12</span></div>
       <div class="entry-body"><strong>People walking in a Market at Night | People | Night Market | Stock Footage | A2Z Clips</strong><span>A2Z Clips</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=GnshWG_3Lcg" target="_blank" rel="noopener">
-      <div class="thumb"><img src="https://i.ytimg.com/vi/GnshWG_3Lcg/hqdefault.jpg" alt="New Delhi 🇮🇳 – Busy Streets, Evening Crowd &amp; Market Life (4K Walking Tour 2026)" loading="lazy" width="320" height="180"><span class="badge">20:35</span></div>
+      <div class="thumb" data-vid="GnshWG_3Lcg"><img src="https://i.ytimg.com/vi/GnshWG_3Lcg/hqdefault.jpg" alt="New Delhi 🇮🇳 – Busy Streets, Evening Crowd &amp; Market Life (4K Walking Tour 2026)" loading="lazy" width="320" height="180"><span class="badge">20:35</span></div>
       <div class="entry-body"><strong>New Delhi 🇮🇳 – Busy Streets, Evening Crowd &amp; Market Life (4K Walking Tour 2026)</strong><span>Walking in India</span></div>
     </a></div>
+      <script>
+        (function () {
+          var KEY = 'staticPreviewMode';
+          var mode = localStorage.getItem(KEY) || 'auto';
+          var thumbs = [].slice.call(document.querySelectorAll('.thumb[data-vid]'));
+          var io = null;
+          function play(t) {
+            if (t.querySelector('iframe')) return;
+            var f = document.createElement('iframe');
+            f.src = 'https://www.youtube.com/embed/' + t.dataset.vid + '?autoplay=1&mute=1&playsinline=1&rel=0';
+            f.allow = 'autoplay; encrypted-media';
+            t.appendChild(f);
+          }
+          function stop(t) { var f = t.querySelector('iframe'); if (f) f.remove(); }
+          function apply() {
+            thumbs.forEach(stop);
+            if (io) { io.disconnect(); io = null; }
+            document.querySelectorAll('.preview-toggle button').forEach(function (b) {
+              b.classList.toggle('active', b.dataset.mode === mode);
+            });
+            if (mode === 'auto') {
+              io = new IntersectionObserver(function (es) {
+                es.forEach(function (e) { e.isIntersecting ? play(e.target) : stop(e.target); });
+              }, { rootMargin: '50px' });
+              thumbs.forEach(function (t) { io.observe(t); });
+            }
+          }
+          thumbs.forEach(function (t) {
+            t.addEventListener('mouseenter', function () { if (mode === 'hover') play(t); });
+            t.addEventListener('mouseleave', function () { if (mode === 'hover') stop(t); });
+          });
+          document.querySelectorAll('.preview-toggle button').forEach(function (b) {
+            b.addEventListener('click', function (e) {
+              e.preventDefault();
+              mode = b.dataset.mode;
+              localStorage.setItem(KEY, mode);
+              apply();
+            });
+          });
+          apply();
+        })();
+      </script>
 </main>
 <footer>
   <a href="/">Home</a><a href="/browse.html">Browse all</a><a href="/about.html">About</a><a href="/privacy.html">Privacy</a><a href="/terms.html">Terms</a>
