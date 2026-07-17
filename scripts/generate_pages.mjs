@@ -50,54 +50,31 @@ function slugify(name) {
   return name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
 }
 
-// 사이트 본체와 톤을 맞춘 자체 스타일 (style.css의 클래스는 JS 렌더링 전제라 재사용하지 않음)
+// browse 페이지는 본 사이트의 css/style.css + 공통 헤더(about/stats와 동일한 구조)를 그대로 사용해
+// 메인 페이지와 톤을 맞춘다. 아래는 지도/목록 전용 추가 스타일 (사이트 CSS 변수 사용).
 const PAGE_CSS = `
-  :root { color-scheme: dark; }
-  * { box-sizing: border-box; margin: 0; }
-  body { background: #0d1117; color: #e6e6e6; font-family: system-ui, -apple-system, sans-serif; line-height: 1.5; }
-  header { padding: 16px 24px; border-bottom: 1px solid #2a2f3a; display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
-  header a.logo { color: #ff3b3b; font-weight: 700; font-size: 1.1rem; text-decoration: none; }
-  header nav a { color: #9aa4b2; text-decoration: none; margin-right: 14px; font-size: 0.9rem; }
-  header nav a:hover { color: #e6e6e6; }
-  main { max-width: 1100px; margin: 0 auto; padding: 24px; }
-  h1 { font-size: 1.5rem; margin-bottom: 8px; }
-  p.intro { color: #9aa4b2; margin-bottom: 20px; }
-  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 16px; }
-  .entry { display: block; background: #161b22; border: 1px solid #2a2f3a; border-radius: 10px; overflow: hidden; text-decoration: none; color: inherit; }
-  .entry:hover { border-color: #ff3b3b; }
-  .thumb { position: relative; aspect-ratio: 16/9; background: #000; }
-  .thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
-  .badge { position: absolute; top: 8px; left: 8px; background: rgba(0,0,0,.75); color: #fff; font-size: 0.7rem; padding: 2px 7px; border-radius: 4px; }
-  .badge.live { background: #d21f3c; }
-  .entry-body { padding: 10px 12px; }
-  .entry-body strong { display: block; font-size: 0.88rem; font-weight: 600; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
-  .entry-body span { color: #9aa4b2; font-size: 0.78rem; }
-  .browse-list { columns: 3; column-gap: 32px; }
+  .browse-intro { color: var(--muted); margin-bottom: 16px; }
+  .browse-list { columns: 3; column-gap: 32px; padding: 0; }
   .browse-list li { list-style: none; margin-bottom: 6px; break-inside: avoid; }
-  .browse-list a { color: #e6e6e6; text-decoration: none; }
-  .browse-list a:hover { color: #ff3b3b; }
-  .browse-list .count { color: #9aa4b2; font-size: 0.85rem; }
+  .browse-list a { color: var(--text); text-decoration: none; }
+  .browse-list a:hover { color: var(--accent); }
+  .browse-list .count { color: var(--muted); font-size: 0.85rem; }
   .map-wrap { position: relative; margin: 8px 0 4px; }
   .map-wrap svg { width: 100%; height: auto; display: block; }
-  .map-wrap path { stroke: #0d1117; stroke-width: 0.5; }
+  .map-wrap path { stroke: var(--bg, #0d1117); stroke-width: 0.5; }
   .map-wrap path[data-href] { cursor: pointer; }
   .map-wrap path:hover { filter: brightness(1.6); stroke: #ffffff; }
-  .map-tip { position: fixed; z-index: 10; background: rgba(0,0,0,.85); border: 1px solid #2a2f3a; color: #fff; padding: 5px 10px; border-radius: 6px; font-size: 0.85rem; pointer-events: none; white-space: nowrap; }
-  .map-note { color: #9aa4b2; font-size: 0.8rem; margin-bottom: 4px; }
-  .map-legend { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; color: #9aa4b2; font-size: 0.8rem; margin-bottom: 18px; }
+  .map-tip { position: fixed; z-index: 10; background: rgba(0,0,0,.85); border: 1px solid var(--border); color: #fff; padding: 5px 10px; border-radius: 6px; font-size: 0.85rem; pointer-events: none; white-space: nowrap; }
+  .map-note { color: var(--muted); font-size: 0.8rem; margin-bottom: 4px; }
+  .map-legend { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; color: var(--muted); font-size: 0.8rem; margin-bottom: 18px; }
   .map-legend .sw { display: inline-block; width: 14px; height: 14px; border-radius: 3px; margin-right: 5px; vertical-align: -2px; }
-  .thumb iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
-  .preview-toggle { margin: 4px 0 14px; color: #9aa4b2; font-size: 0.85rem; display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
-  .preview-toggle button { background: #161b22; color: #9aa4b2; border: 1px solid #2a2f3a; border-radius: 999px; padding: 4px 12px; cursor: pointer; font-size: 0.8rem; }
-  .preview-toggle button.active { color: #fff; border-color: #ff3b3b; }
-  h2 { font-size: 1.15rem; margin: 28px 0 12px; }
-  .cta { display: inline-block; margin: 20px 0; background: #ff3b3b; color: #fff; padding: 10px 18px; border-radius: 8px; text-decoration: none; font-weight: 600; }
-  footer { border-top: 1px solid #2a2f3a; margin-top: 40px; padding: 20px 24px; color: #9aa4b2; font-size: 0.85rem; }
-  footer a { color: #9aa4b2; margin-right: 14px; }
+  .map-type-filter { margin: 4px 0 14px; color: var(--muted); font-size: 0.85rem; display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+  .map-type-filter button { background: var(--card-bg); color: var(--muted); border: 1px solid var(--border); border-radius: 999px; padding: 4px 12px; cursor: pointer; font-size: 0.8rem; }
+  .map-type-filter button.active { color: #fff; border-color: var(--accent); }
   @media (max-width: 700px) { .browse-list { columns: 2; } }
 `;
 
-function pageHtml({ title, description, canonicalPath, h1, intro, bodyHtml, ctaHref }) {
+function pageHtml({ title, description, canonicalPath, h1, intro, introData = '', bodyHtml }) {
   return `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -110,23 +87,20 @@ function pageHtml({ title, description, canonicalPath, h1, intro, bodyHtml, ctaH
 <meta property="og:title" content="${escapeHtml(title)}">
 <meta property="og:description" content="${escapeHtml(description)}">
 <meta property="og:url" content="${SITE}${canonicalPath}">
+<link rel="stylesheet" href="/css/style.css">
 <style>${PAGE_CSS}</style>
 </head>
 <body>
-<header>
-  <a class="logo" href="/">📹 Camlisted</a>
-  <nav><a href="/">Home</a><a href="/browse.html">Browse</a><a href="/about.html">About</a></nav>
+<header class="site-header">
+  <div class="header-actions">
+    <a href="/" class="auth-btn" id="backLink">← Back to site</a>
+  </div>
+  <h1 id="browseH1">${escapeHtml(h1)}</h1>
 </header>
-<main>
-  <h1>${escapeHtml(h1)}</h1>
-  <p class="intro">${escapeHtml(intro)}</p>
-  ${ctaHref ? `<a class="cta" href="${escapeHtml(ctaHref)}">Open in interactive viewer →</a>` : ''}
+<main class="policy-page stats-page">
+  <p class="browse-intro" ${introData}>${escapeHtml(intro)}</p>
   ${bodyHtml}
 </main>
-<footer>
-  <a href="/">Home</a><a href="/browse.html">Browse all</a><a href="/about.html">About</a><a href="/privacy.html">Privacy</a><a href="/terms.html">Terms</a>
-  <p>Camlisted is a curated directory of publicly available YouTube live cams and footage, re-verified daily. All videos play on YouTube.</p>
-</footer>
 </body>
 </html>
 `;
@@ -179,7 +153,7 @@ function sortForPage(list) {
 async function main() {
   const [streams, categoriesRes, indexTemplate] = await Promise.all([
     fetchAllRows('streams', 'video_id,title,channel_title,thumbnail,content_type,category,country,approval_status,duration_seconds,upvote_count,added_at'),
-    supabase.from('categories').select('key,label_en,icon,sort_order').order('sort_order'),
+    supabase.from('categories').select('key,label_en,label_ko,label_ja,label_zh,label_es,icon,sort_order').order('sort_order'),
     readFile(path.join(ROOT, 'index.html'), 'utf-8'),
   ]);
   if (categoriesRes.error) throw categoriesRes.error;
@@ -249,7 +223,10 @@ async function main() {
       staticGrid: entries.map(entryCard).join(''),
     });
     await writeFile(path.join(ROOT, 'c', `${cat.key}.html`), html);
-    categoryPages.push({ key: cat.key, label, icon: cat.icon, count: list.length });
+    categoryPages.push({
+      key: cat.key, label, icon: cat.icon, count: list.length,
+      labels: { ko: cat.label_ko, ja: cat.label_ja, zh: cat.label_zh, es: cat.label_es },
+    });
     sitemapUrls.push({ loc: `${SITE}/c/${cat.key}.html`, priority: '0.8', changefreq: 'daily' });
   }
   console.log(`카테고리 페이지 ${categoryPages.length}개 생성`);
@@ -277,10 +254,10 @@ async function main() {
     const c = countByCode.get(code) || { live: 0, video: 0 };
     const total = c.live + c.video;
     const href = slugByCode.has(code) ? `/country/${slugByCode.get(code)}.html` : (total ? `/?country=${code}` : '');
-    return `<path d="${v.path}" fill="${heatColor(total)}" data-name="${escapeHtml(countryNameOf(code) || v.name)}" data-live="${c.live}" data-video="${c.video}"${href ? ` data-href="${href}"` : ''}></path>`;
+    return `<path d="${v.path}" fill="${heatColor(total)}" data-code="${code}" data-name="${escapeHtml(countryNameOf(code) || v.name)}" data-live="${c.live}" data-video="${c.video}"${href ? ` data-href="${href}"` : ''}></path>`;
   }).join('');
   const mapSection = `
-      <div class="preview-toggle map-type-filter">Show:
+      <div class="map-type-filter">Show:
         <button type="button" data-type="all" class="active">All</button>
         <button type="button" data-type="live">🔴 Live</button>
         <button type="button" data-type="video">🎬 Videos</button>
@@ -291,7 +268,7 @@ async function main() {
       </div>
       <p class="map-note">Hover a country to see how many cams it has — click to browse them.</p>
       <div class="map-legend">
-        ${[...MAP_BUCKETS].reverse().map(b => `<span><span class="sw" style="background:${b.color}"></span>${b.label}</span>`).join('')}
+        ${[...MAP_BUCKETS].reverse().map(b => `<span><span class="sw" style="background:${b.color}"></span><span${b.min === 0 ? ' class="legend-none"' : ''}>${b.label}</span></span>`).join('')}
       </div>
       <script>
         (function () {
@@ -314,7 +291,8 @@ async function main() {
           }
           paths.forEach(function (p) {
             p.addEventListener('mousemove', function (e) {
-              tip.textContent = p.dataset.name + ' — Live: ' + p.dataset.live + ' · Videos: ' + p.dataset.video;
+              var W = window.__L || { live: 'Live', videos: 'Videos' };
+              tip.textContent = p.dataset.name + ' — ' + W.live + ': ' + p.dataset.live + ' · ' + W.videos + ': ' + p.dataset.video;
               tip.hidden = false;
               tip.style.left = (e.clientX + 14) + 'px';
               tip.style.top = (e.clientY + 14) + 'px';
@@ -341,17 +319,67 @@ async function main() {
     canonicalPath: '/browse.html',
     h1: 'Browse by Country & Category',
     intro: `${visible.length} live cams and videos, organized by where and what they show. Updated ${today}.`,
-    ctaHref: '/',
+    introData: `data-n="${visible.length}" data-d="${today}"`,
     bodyHtml: `
       ${mapSection}
-      <h2>By Category</h2>
+      <h2 id="hCat">By Category</h2>
       <ul class="browse-list">
-        ${categoryPages.map(c => `<li><a href="/c/${c.key}.html">${c.icon ? c.icon + ' ' : ''}${escapeHtml(c.label)}</a> <span class="count">(${c.count})</span></li>`).join('')}
+        ${categoryPages.map(c => `<li><a href="/c/${c.key}.html" data-cat data-icon="${c.icon || ''}" data-lko="${escapeHtml(c.labels.ko || c.label)}" data-lja="${escapeHtml(c.labels.ja || c.label)}" data-lzh="${escapeHtml(c.labels.zh || c.label)}" data-les="${escapeHtml(c.labels.es || c.label)}">${c.icon ? c.icon + ' ' : ''}${escapeHtml(c.label)}</a> <span class="count">(${c.count})</span></li>`).join('')}
       </ul>
-      <h2>By Country</h2>
+      <h2 id="hCountry">By Country</h2>
       <ul class="browse-list">
-        ${countryPages.map(c => `<li><a href="/country/${c.slug}.html">${escapeHtml(c.name)}</a> <span class="count">(${c.count})</span></li>`).join('')}
-      </ul>`,
+        ${countryPages.map(c => `<li><a href="/country/${c.slug}.html" data-code="${c.code}">${escapeHtml(c.name)}</a> <span class="count">(${c.count})</span></li>`).join('')}
+      </ul>
+      <script>
+        // 본 사이트의 언어 설정(localStorage 'lang')을 그대로 따라 페이지 문구를 바꾼다
+        (function () {
+          var dict = {
+            en: { back: '\\u2190 Back to site', h1: 'Browse by Country & Category', intro: '{n} live cams and videos, organized by where and what they show. Updated {d}.', byCategory: 'By Category', byCountry: 'By Country', mapNote: 'Hover a country to see how many cams it has \\u2014 click to browse them.', show: 'Show:', all: 'All', liveBtn: '\\ud83d\\udd34 Live', videosBtn: '\\ud83c\\udfac Videos', none: 'None', live: 'Live', videos: 'Videos', intl: 'International / Mixed' },
+            ko: { back: '\\u2190 사이트로 돌아가기', h1: '국가·카테고리별 둘러보기', intro: '{n}개의 라이브 캠과 영상을 장소·내용별로 정리했습니다. {d} 업데이트.', byCategory: '카테고리별', byCountry: '국가별', mapNote: '나라에 마우스를 올리면 캠 개수가 보이고, 클릭하면 해당 나라 영상으로 이동합니다.', show: '표시:', all: '전체', liveBtn: '\\ud83d\\udd34 라이브', videosBtn: '\\ud83c\\udfac 일반영상', none: '없음', live: '라이브', videos: '일반영상', intl: '국제/혼합' },
+            ja: { back: '\\u2190 サイトへ戻る', h1: '国・カテゴリ別に見る', intro: '{n}件のライブカメラと動画を場所と内容で整理。{d} 更新。', byCategory: 'カテゴリ別', byCountry: '国別', mapNote: '国にカーソルを合わせると台数が表示され、クリックでその国の映像へ移動します。', show: '表示:', all: 'すべて', liveBtn: '\\ud83d\\udd34 ライブ', videosBtn: '\\ud83c\\udfac 動画', none: 'なし', live: 'ライブ', videos: '動画', intl: '国際/混合' },
+            zh: { back: '\\u2190 返回网站', h1: '按国家和分类浏览', intro: '{n}个直播摄像头和视频，按地点和内容整理。{d} 更新。', byCategory: '按分类', byCountry: '按国家', mapNote: '将鼠标悬停在国家上可查看数量，点击进入该国视频。', show: '显示:', all: '全部', liveBtn: '\\ud83d\\udd34 直播', videosBtn: '\\ud83c\\udfac 视频', none: '无', live: '直播', videos: '视频', intl: '国际/混合' },
+            es: { back: '\\u2190 Volver al sitio', h1: 'Explorar por país y categoría', intro: '{n} cámaras en vivo y videos, organizados por lugar y contenido. Actualizado {d}.', byCategory: 'Por categoría', byCountry: 'Por país', mapNote: 'Pasa el cursor sobre un país para ver cuántas cámaras tiene; haz clic para explorarlas.', show: 'Mostrar:', all: 'Todo', liveBtn: '\\ud83d\\udd34 En vivo', videosBtn: '\\ud83c\\udfac Videos', none: 'Ninguno', live: 'En vivo', videos: 'Videos', intl: 'Internacional/Mixto' },
+          };
+          var lang = localStorage.getItem('lang') || (navigator.language || 'en').slice(0, 2);
+          if (!dict[lang]) lang = 'en';
+          var L = dict[lang];
+          window.__L = L;
+          if (lang === 'en') return;
+          document.getElementById('backLink').textContent = L.back;
+          document.getElementById('browseH1').textContent = L.h1;
+          var intro = document.querySelector('.browse-intro');
+          intro.textContent = L.intro.replace('{n}', intro.dataset.n).replace('{d}', intro.dataset.d);
+          document.getElementById('hCat').textContent = L.byCategory;
+          document.getElementById('hCountry').textContent = L.byCountry;
+          document.querySelector('.map-note').textContent = L.mapNote;
+          var mtf = document.querySelector('.map-type-filter');
+          mtf.childNodes[0].textContent = L.show + ' ';
+          mtf.querySelector('[data-type="all"]').textContent = L.all;
+          mtf.querySelector('[data-type="live"]').textContent = L.liveBtn;
+          mtf.querySelector('[data-type="video"]').textContent = L.videosBtn;
+          var none = document.querySelector('.legend-none');
+          if (none) none.textContent = L.none;
+          document.querySelectorAll('a[data-cat]').forEach(function (a) {
+            var label = a.dataset['l' + lang];
+            if (label) a.textContent = (a.dataset.icon ? a.dataset.icon + ' ' : '') + label;
+          });
+          var dn = null;
+          try { dn = new Intl.DisplayNames([lang], { type: 'region' }); } catch (e) {}
+          function localName(code) {
+            if (code === 'XX') return L.intl;
+            if (!dn) return null;
+            try { return dn.of(code); } catch (e) { return null; }
+          }
+          document.querySelectorAll('a[data-code]').forEach(function (a) {
+            var n = localName(a.dataset.code);
+            if (n) a.textContent = n;
+          });
+          document.querySelectorAll('.map-wrap path[data-code]').forEach(function (p) {
+            var n = localName(p.dataset.code);
+            if (n) p.dataset.name = n;
+          });
+        })();
+      </script>`,
   });
   await writeFile(path.join(ROOT, 'browse.html'), browseHtml);
 
