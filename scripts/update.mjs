@@ -85,6 +85,93 @@ function tagsFromTitle(title) {
   return tags;
 }
 
+// 제목 지명 → 국가 추정. 채널 국가는 "운영자의 나라"라 촬영지와 다를 수 있어서,
+// 제목에 명확한 도시/나라명이 있으면 그쪽을 우선한다 (모호한 지명은 넣지 않음).
+// 배열 순서가 우선순위: 'new mexico'(US)가 'mexico'(MX)보다, 'venice beach'(US)가 'venice'(IT)보다 먼저.
+const TITLE_COUNTRY_RULES = [
+  ['US', ['usa', 'new york', 'nyc', 'times square', 'new mexico', 'venice beach', 'los angeles', 'san francisco', 'chicago', 'miami', 'seattle', 'las vegas', 'hawaii', 'florida', 'california', 'texas', 'alaska', 'boston', 'new orleans', 'washington dc', '미국', 'ニューヨーク']],
+  ['KR', ['korea', 'seoul', 'busan', 'incheon', 'gangnam', 'jeju', '서울', '부산', '인천', '대구', '대전', '울산', '제주', '경기', '강원', '한국', '韓国', 'ソウル', '釜山']],
+  ['JP', ['japan', 'tokyo', 'osaka', 'kyoto', 'shibuya', 'shinjuku', 'nagoya', 'fukuoka', 'sapporo', 'okinawa', 'akihabara', '일본', '도쿄', '오사카', '日本', '東京', '大阪', '京都', '渋谷', '新宿', '沖縄', '札幌', '福岡']],
+  ['CN', ['beijing', 'shanghai', 'shenzhen', 'guangzhou', 'chongqing', '中国', '北京', '上海', '深圳', '广州', '중국']],
+  ['TW', ['taiwan', 'taipei', '台湾', '台北', '대만']],
+  ['HK', ['hong kong', '香港', '홍콩']],
+  ['TH', ['thailand', 'bangkok', 'pattaya', 'phuket', 'chiang mai', '태국', '방콕', 'タイ']],
+  ['VN', ['vietnam', 'hanoi', 'saigon', 'ho chi minh', 'da nang', '베트남', '하노이']],
+  ['PH', ['philippines', 'manila', 'cebu', '필리핀']],
+  ['ID', ['indonesia', 'jakarta', 'bali', '인도네시아', '발리']],
+  ['MY', ['malaysia', 'kuala lumpur', '말레이시아']],
+  ['SG', ['singapore', '싱가포르', 'シンガポール']],
+  ['IN', ['india', 'mumbai', 'delhi', 'bangalore', 'kolkata', '인도 ']],
+  ['PK', ['pakistan', 'karachi', 'lahore']],
+  ['BD', ['bangladesh', 'dhaka']],
+  ['LK', ['sri lanka', 'colombo']],
+  ['NP', ['nepal', 'kathmandu']],
+  ['KH', ['cambodia', 'phnom penh', 'angkor', '캄보디아']],
+  ['LA', ['laos', 'vientiane']],
+  ['MM', ['myanmar', 'yangon']],
+  ['GB', ['london', 'england', 'scotland', 'wales', 'manchester', 'liverpool', 'edinburgh', '영국', '런던', 'ロンドン']],
+  ['DE', ['germany', 'berlin', 'munich', 'hamburg', 'frankfurt', 'cologne', 'deutschland', 'münchen', '독일', '베를린']],
+  ['FR', ['france', 'paris', 'marseille', 'lyon', '프랑스', '파리', 'パリ']],
+  ['IT', ['italy', 'italia', 'rome', 'roma', 'venice', 'venezia', 'milan', 'milano', 'naples', 'napoli', '이탈리아', '로마', '베네치아']],
+  ['ES', ['spain', 'madrid', 'barcelona', 'sevilla', 'mallorca', 'tenerife', 'canary', 'espana', 'españa', '스페인', '바르셀로나']],
+  ['PT', ['portugal', 'lisbon', 'lisboa', '포르투갈']],
+  ['NL', ['netherlands', 'amsterdam', 'rotterdam', 'holland', '네덜란드']],
+  ['BE', ['belgium', 'brussels', '벨기에']],
+  ['CH', ['switzerland', 'zurich', 'geneva', '스위스']],
+  ['AT', ['austria', 'vienna', 'wien', '오스트리아']],
+  ['CZ', ['czech', 'prague', 'praha', '프라하']],
+  ['PL', ['poland', 'warsaw', 'krakow', '폴란드']],
+  ['HU', ['hungary', 'budapest', '헝가리', '부다페스트']],
+  ['GR', ['greece', 'athens', 'santorini', 'crete', '그리스', '산토리니']],
+  ['TR', ['turkey', 'türkiye', 'istanbul', 'antalya', '터키', '이스탄불']],
+  ['RU', ['russia', 'moscow', 'петербург', 'москва', '러시아', '모스크바']],
+  ['UA', ['ukraine', 'kyiv', 'kiev', 'odessa', '우크라이나']],
+  ['RO', ['romania', 'bucharest', '루마니아']],
+  ['HR', ['croatia', 'zagreb', 'dubrovnik', '크로아티아']],
+  ['RS', ['serbia', 'belgrade']],
+  ['NO', ['norway', 'oslo', '노르웨이']],
+  ['SE', ['sweden', 'stockholm', '스웨덴']],
+  ['FI', ['finland', 'helsinki', '핀란드']],
+  ['DK', ['denmark', 'copenhagen', '덴마크']],
+  ['IS', ['iceland', 'reykjavik', '아이슬란드']],
+  ['IE', ['ireland', 'dublin', '아일랜드']],
+  ['AE', ['dubai', 'abu dhabi', '두바이']],
+  ['SA', ['saudi', 'riyadh', 'mecca']],
+  ['IL', ['israel', 'tel aviv']],
+  ['EG', ['egypt', 'cairo', '이집트']],
+  ['MA', ['morocco', 'marrakech', '모로코']],
+  ['KE', ['kenya', 'nairobi', '케냐']],
+  ['NA', ['namibia', 'namib']],
+  ['ZA', ['south africa', 'cape town', 'johannesburg', '남아공']],
+  ['BR', ['brazil', 'brasil', 'rio de janeiro', 'sao paulo', 'copacabana', '브라질']],
+  ['AR', ['argentina', 'buenos aires', '아르헨티나']],
+  ['CL', ['chile', 'santiago', '칠레']],
+  ['PE', ['peru', 'lima', 'machu picchu', '페루']],
+  ['CO', ['colombia', 'bogota', 'medellin', '콜롬비아']],
+  ['CR', ['costa rica', '코스타리카']],
+  ['CU', ['cuba', 'havana', '쿠바']],
+  ['MX', ['mexico', 'cancun', 'guadalajara', '멕시코', '칸쿤']],
+  ['CA', ['canada', 'toronto', 'vancouver', 'montreal', 'niagara', '캐나다', '토론토', '나이아가라']],
+  ['AU', ['australia', 'sydney', 'melbourne', 'brisbane', 'gold coast', '호주', '시드니']],
+  ['NZ', ['new zealand', 'auckland', 'queenstown', '뉴질랜드']],
+];
+
+function inferCountryFromTitle(title) {
+  const lower = String(title || '').toLowerCase();
+  for (const [code, patterns] of TITLE_COUNTRY_RULES) {
+    for (const p of patterns) {
+      if (/^[a-z0-9 .'-]+$/.test(p)) {
+        // 라틴 문자 지명은 단어 경계로 검사 ('nice'류 오탐 방지를 위해 애초에 모호한 지명은 목록에서 제외)
+        const esc = p.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        if (new RegExp(`(^|[^a-z])${esc}([^a-z]|$)`).test(lower)) return code;
+      } else if (lower.includes(p.toLowerCase())) {
+        return code;
+      }
+    }
+  }
+  return null;
+}
+
 // 세로 영상(쇼츠 등) 판별 — videos.list의 player 파트에 maxHeight를 지정하면
 // 실제 영상 비율대로 embedWidth/embedHeight가 내려온다 (oEmbed는 쇼츠에도 16:9를 돌려줘서 못 씀)
 function isVerticalInfo(info) {
@@ -414,8 +501,26 @@ async function main() {
     console.log(`  -> 열람권 크레딧 적립: ${new Set(creditRecipients).size}명`);
   }
 
-  // 국가 정보가 비어있는 현재 유효한 행들에 한해 channels.list로 조회 후 채움
-  const rowsNeedingCountry = existingRows.filter(r => !r.country && isValidFor(r.content_type || 'live', infoMap.get(r.video_id)));
+  // (1차) 국가가 비어있는 행은 제목의 지명으로 먼저 추정 (유저가 수정한 값은 건드리지 않음)
+  const titleInferredIds = new Set();
+  const byInferredCountry = new Map();
+  for (const row of existingRows) {
+    if (row.country) continue;
+    const inferred = inferCountryFromTitle(row.title);
+    if (!inferred) continue;
+    if (!byInferredCountry.has(inferred)) byInferredCountry.set(inferred, []);
+    byInferredCountry.get(inferred).push(row.video_id);
+    titleInferredIds.add(row.video_id);
+  }
+  for (const [code, ids] of byInferredCountry) {
+    // .is('country', null) 가드: 그 사이 유저가 국가를 지정했다면 덮어쓰지 않는다
+    const { error } = await supabase.from('streams').update({ country: code }).in('video_id', ids).is('country', null);
+    if (error) console.error('제목 기반 국가 추정 실패:', code, error.message);
+  }
+  if (titleInferredIds.size) console.log(`제목 지명으로 국가 추정: ${titleInferredIds.size}건`);
+
+  // (2차) 여전히 비어있는 유효한 행들은 channels.list의 채널 국가로 채움
+  const rowsNeedingCountry = existingRows.filter(r => !r.country && !titleInferredIds.has(r.video_id) && isValidFor(r.content_type || 'live', infoMap.get(r.video_id)));
   const countryChannelIds = rowsNeedingCountry.map(r => infoMap.get(r.video_id).snippet.channelId);
   const countryMap = await getChannelCountries(countryChannelIds);
   for (const row of rowsNeedingCountry) {
@@ -625,7 +730,8 @@ async function main() {
       approval_status: 'pending',
       category: classifyCategory(c.title, c.channelTitle),
       category_source: 'keyword',
-      country: newCountryMap.get(c.channelId) || null,
+      // 제목의 지명이 채널 국가보다 촬영지에 가까우므로 우선한다 (여행 채널/모음집 채널 대응)
+      country: inferCountryFromTitle(c.title) || newCountryMap.get(c.channelId) || null,
       started_at: c.contentType === 'live' ? (info.liveStreamingDetails?.actualStartTime || null) : null,
       published_at: c.contentType === 'video' ? (info.snippet?.publishedAt || null) : null,
       duration_seconds: c.contentType === 'video' ? parseDurationSeconds(info.contentDetails?.duration) : null,
