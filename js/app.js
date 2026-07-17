@@ -246,11 +246,26 @@ let renderLastChannel;
 let renderGroupIndex = -1;
 let renderIsListView = false;
 
+// 스트림 수 표시 + 활성 국가 필터 칩 (국가 select는 숨겨져 있어서 여기서만 보인다)
+function updateResultCount(n) {
+  const chip = countryFilter.value
+    ? ` <button type="button" id="clearCountryChip" class="active-country-chip">🌍 ${escapeHtml(countryDisplayName(countryFilter.value))} ✕</button>`
+    : '';
+  resultCountEl.innerHTML = escapeHtml(t('total_count', { n })) + chip;
+}
+
+resultCountEl.addEventListener('click', (e) => {
+  if (!e.target.closest('#clearCountryChip')) return;
+  countryFilter.value = '';
+  syncUrlFromFilters();
+  render(currentFiltered());
+});
+
 function render(list) {
   clearHoverPreview();
   grid.innerHTML = '';
   emptyState.hidden = list.length > 0;
-  resultCountEl.textContent = t('total_count', { n: list.length });
+  updateResultCount(list.length);
 
   // 승인 대기 뷰에서 관리자에게 일괄 승인 버튼을 보여준다
   document.getElementById('approveAllBtn')?.remove();
@@ -448,7 +463,7 @@ function refreshCard(videoId) {
   // 삭제됐거나 현재 필터 조건에서 빠진 카드(예: 대기 뷰에서 승인됨)는 그 카드만 제거
   if (!s || !currentFiltered().some(x => x.videoId === videoId)) {
     card.remove();
-    resultCountEl.textContent = t('total_count', { n: currentFiltered().length });
+    updateResultCount(currentFiltered().length);
     return;
   }
 
