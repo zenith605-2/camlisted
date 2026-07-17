@@ -211,8 +211,11 @@ async function writeGlobePage(countByCode, slugByCode, visible, today) {
   .panel .player iframe { width: 100%; height: 100%; border: 0; }
   .panel ul { list-style: none; overflow-y: auto; flex: 1; }
   .panel li { margin-bottom: 6px; }
-  .panel li button { background: none; border: 0; color: #cdd6e0; text-align: left; cursor: pointer; font-size: 0.85rem; padding: 4px 0; }
-  .panel li button:hover { color: #ff3b3b; }
+  .panel li button { display: flex; gap: 8px; align-items: flex-start; width: 100%; background: none; border: 0; color: #cdd6e0; text-align: left; cursor: pointer; font-size: 0.82rem; padding: 4px; border-radius: 6px; }
+  .panel li button img { width: 96px; aspect-ratio: 16/9; object-fit: cover; border-radius: 4px; flex-shrink: 0; background: #000; }
+  .panel li button .meta { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+  .panel li button:hover { background: #1d232c; color: #fff; }
+  .panel li.active button { background: #241417; color: #fff; outline: 1px solid #ff3b3b; }
   .panel li .lv { color: #ff3b3b; font-weight: 700; font-size: 0.7rem; margin-right: 6px; }
   .panel a.browse-all { color: #ff3b3b; text-decoration: none; font-size: 0.9rem; }
 </style>
@@ -239,13 +242,14 @@ async function writeGlobePage(countByCode, slugByCode, visible, today) {
   var COUNTRIES = ${JSON.stringify(globeCountries)};
   var VIDS = ${JSON.stringify(vidsByCode)};
   var maxTotal = Math.max.apply(null, COUNTRIES.map(function (c) { return c.live + c.video; }));
+  var selectedCode = null;
 
   var globe = Globe()(document.getElementById('globe'))
     .globeImageUrl('https://unpkg.com/three-globe/example/img/earth-night.jpg')
     .backgroundImageUrl('https://unpkg.com/three-globe/example/img/night-sky.png')
     .pointsData(COUNTRIES)
     .pointLat('lat').pointLng('lng')
-    .pointColor(function () { return '#ff3b3b'; })
+    .pointColor(function (d) { return d.code === selectedCode ? '#ffd21f' : '#ff3b3b'; })
     .pointAltitude(function (d) { return 0.01 + 0.1 * Math.sqrt((d.live + d.video) / maxTotal); })
     .pointRadius(function (d) { return 0.4 + 1.1 * Math.sqrt((d.live + d.video) / maxTotal); })
     .pointLabel(function (d) { return d.name + ' — Live: ' + d.live + ' · Videos: ' + d.video; })
@@ -256,6 +260,9 @@ async function writeGlobePage(countByCode, slugByCode, visible, today) {
 
   var panel = document.getElementById('panel');
   function openPanel(d, autoplayRandom) {
+    selectedCode = d.code;
+    globe.pointsData(COUNTRIES); // 선택 핀 색상 갱신
+    globe.controls().autoRotate = false; // 보는 동안 회전 멈춤 (패널 닫으면 재개)
     panel.classList.add('open');
     document.getElementById('panelTitle').textContent = d.name;
     document.getElementById('panelSub').textContent = 'Live: ' + d.live + ' · Videos: ' + d.video;
@@ -263,16 +270,22 @@ async function writeGlobePage(countByCode, slugByCode, visible, today) {
     var vids = VIDS[d.code] || [];
     var list = document.getElementById('camList');
     list.innerHTML = '';
+    function markActive(li) {
+      [].forEach.call(list.querySelectorAll('li.active'), function (x) { x.classList.remove('active'); });
+      if (li) li.classList.add('active');
+    }
     vids.forEach(function (v) {
       var li = document.createElement('li');
       var b = document.createElement('button');
-      b.innerHTML = (v[2] ? '<span class="lv">LIVE</span>' : '') + v[1].replace(/</g, '&lt;');
-      b.addEventListener('click', function () { play(v[0]); });
+      b.innerHTML = '<img src="https://i.ytimg.com/vi/' + v[0] + '/mqdefault.jpg" loading="lazy" alt="">'
+        + '<span class="meta">' + (v[2] ? '<span class="lv">LIVE</span>' : '') + v[1].replace(/</g, '&lt;') + '</span>';
+      b.addEventListener('click', function () { markActive(li); play(v[0]); });
       li.appendChild(b);
       list.appendChild(li);
     });
     if (vids.length) {
       var idx = autoplayRandom ? Math.floor(Math.random() * vids.length) : 0;
+      markActive(list.children[idx]);
       play(vids[idx][0]);
     } else {
       document.getElementById('player').innerHTML = '';
@@ -286,6 +299,9 @@ async function writeGlobePage(countByCode, slugByCode, visible, today) {
   document.getElementById('panelClose').addEventListener('click', function () {
     panel.classList.remove('open');
     document.getElementById('player').innerHTML = '';
+    selectedCode = null;
+    globe.pointsData(COUNTRIES);
+    globe.controls().autoRotate = true; // 회전 재개
   });
   document.getElementById('randomBtn').addEventListener('click', function () {
     var pool = [];
