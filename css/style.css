@@ -71,6 +71,10 @@ body {
   color: var(--accent);
 }
 
+.sidebar-map-link {
+  text-decoration: none;
+}
+
 .sidebar-sublist {
   list-style: none;
   margin: 2px 0 10px;

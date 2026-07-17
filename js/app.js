@@ -1407,7 +1407,12 @@ function renderSidebar() {
       <button type="button" id="suggestTagBtn" class="sidebar-cat-btn suggest-category-btn">＋ ${escapeHtml(t('suggest_tag_button'))}</button>
     </div>
   ` : '';
-  sidebar.innerHTML = pendingHtml + suggestHtml + SIDEBAR_GROUPS.map(g => `
+  const mapLinkHtml = `
+    <div class="sidebar-section">
+      <a href="browse.html" class="sidebar-group-btn sidebar-map-link">🗺 ${escapeHtml(t('world_map_link'))}</a>
+    </div>
+  `;
+  sidebar.innerHTML = mapLinkHtml + pendingHtml + suggestHtml + SIDEBAR_GROUPS.map(g => `
     <div class="sidebar-section">
       <button type="button" class="sidebar-group-btn" data-content-type="${g.type}" data-category="">${g.icon} ${escapeHtml(t(g.labelKey))} <span class="sidebar-count">${sidebarCount(g.type, null)}</span></button>
       <ul class="sidebar-sublist">
