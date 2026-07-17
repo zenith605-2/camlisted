@@ -256,9 +256,11 @@ async function main() {
 
   // ===== 세계지도 (choropleth) — 영상 수에 따라 색이 진해지고, 호버 툴팁 + 클릭 이동 =====
   // 지도 경로 데이터: jsvectormap(MIT, Natural Earth 기반)에서 추출한 config/world_map_paths.json
-  const countByCode = new Map();
+  const countByCode = new Map(); // code -> { live, video }
   for (const s of visible) {
-    if (s.country) countByCode.set(s.country, (countByCode.get(s.country) || 0) + 1);
+    if (!s.country) continue;
+    if (!countByCode.has(s.country)) countByCode.set(s.country, { live: 0, video: 0 });
+    countByCode.get(s.country)[s.content_type === 'live' ? 'live' : 'video'] += 1;
   }
   // 뚜렷한 구간별 색상 (연속 그라데이션은 구분이 잘 안 보여서 단계형으로)
   const MAP_BUCKETS = [
@@ -272,11 +274,17 @@ async function main() {
   const slugByCode = new Map(countryPages.map(c => [c.code, c.slug]));
   const mapPaths = JSON.parse(await readFile(path.join(ROOT, 'config', 'world_map_paths.json'), 'utf-8'));
   const mapSvgPaths = Object.entries(mapPaths).map(([code, v]) => {
-    const count = countByCode.get(code) || 0;
-    const href = slugByCode.has(code) ? `/country/${slugByCode.get(code)}.html` : (count ? `/?country=${code}` : '');
-    return `<path d="${v.path}" fill="${heatColor(count)}" data-name="${escapeHtml(countryNameOf(code) || v.name)}" data-count="${count}"${href ? ` data-href="${href}"` : ''}></path>`;
+    const c = countByCode.get(code) || { live: 0, video: 0 };
+    const total = c.live + c.video;
+    const href = slugByCode.has(code) ? `/country/${slugByCode.get(code)}.html` : (total ? `/?country=${code}` : '');
+    return `<path d="${v.path}" fill="${heatColor(total)}" data-name="${escapeHtml(countryNameOf(code) || v.name)}" data-live="${c.live}" data-video="${c.video}"${href ? ` data-href="${href}"` : ''}></path>`;
   }).join('');
   const mapSection = `
+      <div class="preview-toggle map-type-filter">Show:
+        <button type="button" data-type="all" class="active">All</button>
+        <button type="button" data-type="live">🔴 Live</button>
+        <button type="button" data-type="video">🎬 Videos</button>
+      </div>
       <div class="map-wrap">
         <svg viewBox="0 0 900 441" role="img" aria-label="World map of available cams by country">${mapSvgPaths}</svg>
         <div id="mapTip" class="map-tip" hidden></div>
@@ -288,16 +296,40 @@ async function main() {
       <script>
         (function () {
           var tip = document.getElementById('mapTip');
-          document.querySelectorAll('.map-wrap path').forEach(function (p) {
+          var paths = [].slice.call(document.querySelectorAll('.map-wrap path'));
+          var mapType = 'all';
+          function bucketColor(n) {
+            if (!n) return '#232a35';
+            if (n >= 200) return '#ff3b3b';
+            if (n >= 50) return '#ff7a45';
+            if (n >= 10) return '#ffb020';
+            return '#f2e284';
+          }
+          function countOf(p) {
+            var live = Number(p.dataset.live), video = Number(p.dataset.video);
+            return mapType === 'live' ? live : mapType === 'video' ? video : live + video;
+          }
+          function repaint() {
+            paths.forEach(function (p) { p.setAttribute('fill', bucketColor(countOf(p))); });
+          }
+          paths.forEach(function (p) {
             p.addEventListener('mousemove', function (e) {
-              var n = Number(p.dataset.count);
-              tip.textContent = p.dataset.name + ' — ' + (n ? n + (n === 1 ? ' cam' : ' cams') : 'no cams yet');
+              tip.textContent = p.dataset.name + ' — Live: ' + p.dataset.live + ' · Videos: ' + p.dataset.video;
               tip.hidden = false;
               tip.style.left = (e.clientX + 14) + 'px';
               tip.style.top = (e.clientY + 14) + 'px';
             });
             p.addEventListener('mouseleave', function () { tip.hidden = true; });
             if (p.dataset.href) p.addEventListener('click', function () { location.href = p.dataset.href; });
+          });
+          document.querySelectorAll('.map-type-filter button').forEach(function (b) {
+            b.addEventListener('click', function () {
+              mapType = b.dataset.type;
+              document.querySelectorAll('.map-type-filter button').forEach(function (x) {
+                x.classList.toggle('active', x === b);
+              });
+              repaint();
+            });
           });
         })();
       </script>`;
