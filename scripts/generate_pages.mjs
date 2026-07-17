@@ -239,6 +239,11 @@ async function writeGlobePage(countByCode, slugByCode, visible, today) {
 <script src="https://unpkg.com/three@0.160.0/build/three.min.js"><\/script>
 <script src="https://unpkg.com/globe.gl@2.32.0/dist/globe.gl.min.js"><\/script>
 <script>
+  // browse.html 안에 iframe으로 임베드될 때는 상단의 뒤로가기/제목을 숨긴다
+  if (new URLSearchParams(location.search).has('embed')) {
+    document.querySelector('.topbar .back').style.display = 'none';
+    document.querySelector('.topbar h1').style.display = 'none';
+  }
   var COUNTRIES = ${JSON.stringify(globeCountries)};
   var VIDS = ${JSON.stringify(vidsByCode)};
   var maxTotal = Math.max.apply(null, COUNTRIES.map(function (c) { return c.live + c.video; }));
@@ -432,7 +437,6 @@ async function main() {
     return `<path d="${v.path}" fill="${heatColor(total)}" data-code="${code}" data-name="${escapeHtml(countryNameOf(code) || v.name)}" data-live="${c.live}" data-video="${c.video}"${href ? ` data-href="${href}"` : ''}></path>`;
   }).join('');
   const mapSection = `
-      <p style="margin-bottom:10px"><a href="/globe.html" style="color:var(--accent);text-decoration:none;font-weight:600">🌐 3D Globe →</a></p>
       <div class="map-type-filter">Show:
         <button type="button" data-type="all" class="active">All</button>
         <button type="button" data-type="live">🔴 Live</button>
@@ -500,7 +504,36 @@ async function main() {
     intro: `${visible.length} live cams and videos, organized by where and what they show. Updated ${today}.`,
     introData: `data-n="${visible.length}" data-d="${today}"`,
     bodyHtml: `
+      <div class="map-type-filter view-toggle">
+        <button type="button" id="btn2d" class="active">🗺 2D Map</button>
+        <button type="button" id="btn3d">🌐 3D Globe</button>
+        <a href="/globe.html" id="fullGlobe" style="color:var(--muted);font-size:0.8rem;text-decoration:none">⛶ Fullscreen</a>
+      </div>
+      <div id="view2d">
       ${mapSection}
+      </div>
+      <div id="view3d" style="display:none">
+        <iframe id="globeFrame" style="width:100%;height:72vh;border:1px solid var(--border);border-radius:10px;background:#000" allow="autoplay; encrypted-media; fullscreen"></iframe>
+      </div>
+      <script>
+        (function () {
+          var v2 = document.getElementById('view2d'), v3 = document.getElementById('view3d');
+          var b2 = document.getElementById('btn2d'), b3 = document.getElementById('btn3d');
+          var frame = document.getElementById('globeFrame');
+          function show3d() {
+            v2.style.display = 'none'; v3.style.display = 'block';
+            b2.classList.remove('active'); b3.classList.add('active');
+            if (!frame.src) frame.src = '/globe.html?embed=1'; // 처음 열 때만 로드 (three.js를 미리 안 받게)
+          }
+          function show2d() {
+            v3.style.display = 'none'; v2.style.display = 'block';
+            b3.classList.remove('active'); b2.classList.add('active');
+          }
+          b2.addEventListener('click', show2d);
+          b3.addEventListener('click', show3d);
+          if (location.hash === '#globe') show3d();
+        })();
+      </script>
       <h2 id="hCat">By Category</h2>
       <ul class="browse-list">
         ${categoryPages.map(c => `<li><a href="/c/${c.key}.html" data-cat data-icon="${c.icon || ''}" data-lko="${escapeHtml(c.labels.ko || c.label)}" data-lja="${escapeHtml(c.labels.ja || c.label)}" data-lzh="${escapeHtml(c.labels.zh || c.label)}" data-les="${escapeHtml(c.labels.es || c.label)}">${c.icon ? c.icon + ' ' : ''}${escapeHtml(c.label)}</a> <span class="count">(${c.count})</span></li>`).join('')}
@@ -513,11 +546,11 @@ async function main() {
         // 본 사이트의 언어 설정(localStorage 'lang')을 그대로 따라 페이지 문구를 바꾼다
         (function () {
           var dict = {
-            en: { back: '\\u2190 Back to site', h1: 'Browse by Country & Category', intro: '{n} live cams and videos, organized by where and what they show. Updated {d}.', byCategory: 'By Category', byCountry: 'By Country', mapNote: 'Hover a country to see how many cams it has \\u2014 click to browse them.', show: 'Show:', all: 'All', liveBtn: '\\ud83d\\udd34 Live', videosBtn: '\\ud83c\\udfac Videos', none: 'None', live: 'Live', videos: 'Videos', intl: 'International / Mixed' },
-            ko: { back: '\\u2190 사이트로 돌아가기', h1: '국가·카테고리별 둘러보기', intro: '{n}개의 라이브 캠과 영상을 장소·내용별로 정리했습니다. {d} 업데이트.', byCategory: '카테고리별', byCountry: '국가별', mapNote: '나라에 마우스를 올리면 캠 개수가 보이고, 클릭하면 해당 나라 영상으로 이동합니다.', show: '표시:', all: '전체', liveBtn: '\\ud83d\\udd34 라이브', videosBtn: '\\ud83c\\udfac 일반영상', none: '없음', live: '라이브', videos: '일반영상', intl: '국제/혼합' },
-            ja: { back: '\\u2190 サイトへ戻る', h1: '国・カテゴリ別に見る', intro: '{n}件のライブカメラと動画を場所と内容で整理。{d} 更新。', byCategory: 'カテゴリ別', byCountry: '国別', mapNote: '国にカーソルを合わせると台数が表示され、クリックでその国の映像へ移動します。', show: '表示:', all: 'すべて', liveBtn: '\\ud83d\\udd34 ライブ', videosBtn: '\\ud83c\\udfac 動画', none: 'なし', live: 'ライブ', videos: '動画', intl: '国際/混合' },
-            zh: { back: '\\u2190 返回网站', h1: '按国家和分类浏览', intro: '{n}个直播摄像头和视频，按地点和内容整理。{d} 更新。', byCategory: '按分类', byCountry: '按国家', mapNote: '将鼠标悬停在国家上可查看数量，点击进入该国视频。', show: '显示:', all: '全部', liveBtn: '\\ud83d\\udd34 直播', videosBtn: '\\ud83c\\udfac 视频', none: '无', live: '直播', videos: '视频', intl: '国际/混合' },
-            es: { back: '\\u2190 Volver al sitio', h1: 'Explorar por país y categoría', intro: '{n} cámaras en vivo y videos, organizados por lugar y contenido. Actualizado {d}.', byCategory: 'Por categoría', byCountry: 'Por país', mapNote: 'Pasa el cursor sobre un país para ver cuántas cámaras tiene; haz clic para explorarlas.', show: 'Mostrar:', all: 'Todo', liveBtn: '\\ud83d\\udd34 En vivo', videosBtn: '\\ud83c\\udfac Videos', none: 'Ninguno', live: 'En vivo', videos: 'Videos', intl: 'Internacional/Mixto' },
+            en: { back: '\\u2190 Back to site', h1: 'Browse by Country & Category', intro: '{n} live cams and videos, organized by where and what they show. Updated {d}.', byCategory: 'By Category', byCountry: 'By Country', mapNote: 'Hover a country to see how many cams it has \\u2014 click to browse them.', show: 'Show:', all: 'All', liveBtn: '\\ud83d\\udd34 Live', videosBtn: '\\ud83c\\udfac Videos', none: 'None', live: 'Live', videos: 'Videos', intl: 'International / Mixed', view2d: '\\ud83d\\uddfa 2D Map', view3d: '\\ud83c\\udf10 3D Globe' },
+            ko: { back: '\\u2190 사이트로 돌아가기', h1: '국가·카테고리별 둘러보기', intro: '{n}개의 라이브 캠과 영상을 장소·내용별로 정리했습니다. {d} 업데이트.', byCategory: '카테고리별', byCountry: '국가별', mapNote: '나라에 마우스를 올리면 캠 개수가 보이고, 클릭하면 해당 나라 영상으로 이동합니다.', show: '표시:', all: '전체', liveBtn: '\\ud83d\\udd34 라이브', videosBtn: '\\ud83c\\udfac 일반영상', none: '없음', live: '라이브', videos: '일반영상', intl: '국제/혼합', view2d: '\\ud83d\\uddfa 2D 지도', view3d: '\\ud83c\\udf10 3D 지구본' },
+            ja: { back: '\\u2190 サイトへ戻る', h1: '国・カテゴリ別に見る', intro: '{n}件のライブカメラと動画を場所と内容で整理。{d} 更新。', byCategory: 'カテゴリ別', byCountry: '国別', mapNote: '国にカーソルを合わせると台数が表示され、クリックでその国の映像へ移動します。', show: '表示:', all: 'すべて', liveBtn: '\\ud83d\\udd34 ライブ', videosBtn: '\\ud83c\\udfac 動画', none: 'なし', live: 'ライブ', videos: '動画', intl: '国際/混合', view2d: '\\ud83d\\uddfa 2D地図', view3d: '\\ud83c\\udf10 3D地球儀' },
+            zh: { back: '\\u2190 返回网站', h1: '按国家和分类浏览', intro: '{n}个直播摄像头和视频，按地点和内容整理。{d} 更新。', byCategory: '按分类', byCountry: '按国家', mapNote: '将鼠标悬停在国家上可查看数量，点击进入该国视频。', show: '显示:', all: '全部', liveBtn: '\\ud83d\\udd34 直播', videosBtn: '\\ud83c\\udfac 视频', none: '无', live: '直播', videos: '视频', intl: '国际/混合', view2d: '\\ud83d\\uddfa 2D地图', view3d: '\\ud83c\\udf10 3D地球' },
+            es: { back: '\\u2190 Volver al sitio', h1: 'Explorar por país y categoría', intro: '{n} cámaras en vivo y videos, organizados por lugar y contenido. Actualizado {d}.', byCategory: 'Por categoría', byCountry: 'Por país', mapNote: 'Pasa el cursor sobre un país para ver cuántas cámaras tiene; haz clic para explorarlas.', show: 'Mostrar:', all: 'Todo', liveBtn: '\\ud83d\\udd34 En vivo', videosBtn: '\\ud83c\\udfac Videos', none: 'Ninguno', live: 'En vivo', videos: 'Videos', intl: 'Internacional/Mixto', view2d: '\\ud83d\\uddfa Mapa 2D', view3d: '\\ud83c\\udf10 Globo 3D' },
           };
           var lang = localStorage.getItem('lang') || (navigator.language || 'en').slice(0, 2);
           if (!dict[lang]) lang = 'en';
@@ -531,7 +564,10 @@ async function main() {
           document.getElementById('hCat').textContent = L.byCategory;
           document.getElementById('hCountry').textContent = L.byCountry;
           document.querySelector('.map-note').textContent = L.mapNote;
-          var mtf = document.querySelector('.map-type-filter');
+          var vt = document.querySelector('.view-toggle');
+          vt.querySelector('#btn2d').textContent = L.view2d;
+          vt.querySelector('#btn3d').textContent = L.view3d;
+          var mtf = document.querySelector('.map-type-filter:not(.view-toggle)');
           mtf.childNodes[0].textContent = L.show + ' ';
           mtf.querySelector('[data-type="all"]').textContent = L.all;
           mtf.querySelector('[data-type="live"]').textContent = L.liveBtn;
