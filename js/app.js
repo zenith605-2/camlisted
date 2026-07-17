@@ -64,6 +64,7 @@ let showPendingOnly = false; // "대기중" 사이드바 항목을 눌렀을 때
 let CONDITION_TAGS = ['night', 'day', 'rain', 'heavy_rain', 'snow', 'heavy_snow', 'accident', 'fire', 'violence'];
 let conditionTagLabels = new Map(); // key -> DB 라벨 (i18n 번역이 없는 유저 제안 태그용)
 const activeTags = new Set();       // 현재 켜져 있는 태그 필터
+let pendingCountryFromUrl = '';     // 딥링크의 country 값 (옵션이 늦게 채워져서 보관 후 적용)
 
 function tagLabel(tag) {
   const key = `tag_${tag}`;
@@ -1092,6 +1093,7 @@ function syncUrlFromFilters() {
   const p = new URLSearchParams();
   if (contentTypeFilter.value) p.set('type', contentTypeFilter.value);
   if (categoryFilter.value) p.set('category', categoryFilter.value);
+  if (countryFilter.value) p.set('country', countryFilter.value);
   if (qualityFilter.value) p.set('quality', qualityFilter.value);
   if (addedFilter.value) p.set('added', addedFilter.value);
   if (sortSelect.value !== 'default') p.set('sort', sortSelect.value);
@@ -1108,6 +1110,8 @@ function applyFiltersFromUrl() {
   };
   setIfValid(contentTypeFilter, p.get('type'));
   setIfValid(categoryFilter, p.get('category'));
+  // 국가 옵션은 스트림 로드 후에 채워지므로 값을 보관했다가 populateCountryFilter에서 적용
+  pendingCountryFromUrl = p.get('country') || '';
   setIfValid(qualityFilter, p.get('quality'));
   setIfValid(addedFilter, p.get('added'));
   setIfValid(sortSelect, p.get('sort'));
@@ -1499,7 +1503,8 @@ async function refreshQuotaInfo() {
 
 function populateCountryFilter() {
   const countries = [...new Set(streams.map(s => s.country).filter(Boolean))].sort();
-  const current = countryFilter.value;
+  const current = countryFilter.value || pendingCountryFromUrl;
+  pendingCountryFromUrl = '';
   countryFilter.innerHTML = `<option value="">${t('filter_all')}</option>` +
     countries.map(c => `<option value="${c}">${escapeHtml(countryDisplayName(c))}</option>`).join('');
   countryFilter.value = countries.includes(current) ? current : '';

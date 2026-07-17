@@ -57,3 +57,17 @@ jobs:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
         run: python scripts/classify_thumbnails.py
+
+      # ---- 국가/카테고리별 정적 SEO 페이지 재생성 후 변경분만 커밋 ----
+      - name: Generate SEO pages
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+        run: node scripts/generate_pages.mjs
+
+      - name: Commit generated pages
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add country c browse.html sitemap.xml
+          git diff --cached --quiet || (git commit -m "Regenerate SEO pages" && git push)
