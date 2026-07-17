@@ -474,6 +474,44 @@ async function main() {
     }
   }
 
+  // ===== 부족 카테고리 부스트 검색 =====
+  // 카탈로그가 교통/도심 등 몇몇 카테고리로 쏠리는 것을 완화하기 위해,
+  // 현재 영상 수가 가장 적은 카테고리들의 키워드로 라이브 검색을 추가한다.
+  // (채널 스캔은 이미 있는 채널 위주라 쏠림을 강화하는 경향이 있어서, 그 전에 예산을 먼저 배정)
+  const BOOST_SEARCHES_PER_RUN = 12;
+  const BOOST_CATEGORY_COUNT = 6;
+  const categoryCounts = new Map(categoryRows.map(c => [c.key, 0]));
+  for (const row of existingRows) {
+    if (categoryCounts.has(row.category)) categoryCounts.set(row.category, categoryCounts.get(row.category) + 1);
+  }
+  const underfilled = [...categoryCounts.entries()].sort((a, b) => a[1] - b[1]).slice(0, BOOST_CATEGORY_COUNT);
+  console.log(`부족 카테고리 부스트: ${underfilled.map(([k, n]) => `${k}(${n})`).join(', ')}`);
+  const boostDayIndex = Math.floor(Date.now() / 86400000);
+  const perBoostCategory = Math.max(1, Math.floor(BOOST_SEARCHES_PER_RUN / BOOST_CATEGORY_COUNT));
+  for (const [catKey] of underfilled) {
+    const catKeywords = categoryRows.find(c => c.key === catKey)?.keywords || [];
+    if (!catKeywords.length) continue;
+    for (let i = 0; i < perBoostCategory; i++) {
+      const kw = catKeywords[(boostDayIndex + i) % catKeywords.length];
+      // 영문 키워드는 'cam'을 붙여 정확도를 높이고, 한/일/중 키워드는 그대로 검색 (eventType=live가 이미 라이브로 제한)
+      const query = /^[\x20-\x7e]+$/.test(kw) && !/cam|webcam/i.test(kw) ? `${kw} cam` : kw;
+      try {
+        const results = await searchLiveByKeyword(query);
+        searchCallsUsed += 1;
+        for (const r of results) {
+          if (knownIds.has(r.videoId) || candidateMap.has(r.videoId)) continue;
+          if (r.channelId && blockedChannelIds.has(r.channelId)) continue;
+          if (isExcluded(r.title, r.channelTitle)) continue;
+          candidateMap.set(r.videoId, r);
+        }
+        console.log(`  부스트 검색 [${catKey}] "${query}": ${results.length}건 조회`);
+      } catch (err) {
+        searchCallsUsed += 1;
+        console.error(`  부스트 검색 실패 [${catKey}] "${query}":`, err.message);
+      }
+    }
+  }
+
   // 시드 채널(구독 목록 등)의 일반 업로드 영상 수집: 채널당 1회, 최근 영상 25개.
   // 라이브만 찾는 일반 채널 스캔과 달리, 신뢰할 수 있는 시드 채널은 아카이브 영상도 가치가 있음.
   // 결과는 승인 대기로 들어가고 CLIP이 썸네일 기반으로 카테고리를 분류한다.
