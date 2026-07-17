@@ -56,11 +56,14 @@
     <input type="text" id="searchInput" data-i18n-placeholder="search_placeholder" placeholder="Search by title or channel...">
   </div>
   <div class="filter-bar">
-    <select id="contentTypeFilter" hidden>
-      <option value="" data-i18n="filter_all">All</option>
-      <option value="live" data-i18n="content_type_live">Live</option>
-      <option value="video" data-i18n="content_type_video">Video</option>
-    </select>
+    <div class="filter-group">
+      <span class="filter-label" data-i18n="filter_type">Type</span>
+      <select id="contentTypeFilter">
+        <option value="" data-i18n="filter_all">All</option>
+        <option value="live" data-i18n="content_type_live">Live</option>
+        <option value="video" data-i18n="content_type_video">Video</option>
+      </select>
+    </div>
     <select id="categoryFilter" hidden>
       <option value="">All</option>
     </select>
