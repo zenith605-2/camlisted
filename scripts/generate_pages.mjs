@@ -59,8 +59,10 @@ const PAGE_CSS = `
   .browse-list a { color: var(--text); text-decoration: none; }
   .browse-list a:hover { color: var(--accent); }
   .browse-list .count { color: var(--muted); font-size: 0.85rem; }
-  .map-wrap { position: relative; margin: 8px 0 4px; }
-  .map-wrap svg { width: 100%; height: auto; display: block; }
+  /* 지구본 박스(.globe-box)와 같은 크기의 카드로 맞춘다 — svg는 안에서 비율 유지하며 중앙 배치 */
+  .map-wrap { position: relative; margin: 0; height: 460px; border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
+  .map-wrap svg { width: 100%; height: 100%; display: block; }
+  @media (max-width: 900px) { .map-wrap { height: 320px; } }
   .map-wrap path { stroke: var(--bg, #0d1117); stroke-width: 0.5; }
   .map-wrap path[data-href] { cursor: pointer; }
   .map-wrap path:hover { filter: brightness(1.6); stroke: #ffffff; }
@@ -493,20 +495,22 @@ async function main() {
     return `<path d="${v.path}" fill="${heatColor(total)}" data-code="${code}" data-name="${escapeHtml(countryNameOf(code) || v.name)}" data-live="${c.live}" data-video="${c.video}"${href ? ` data-href="${href}"` : ''}></path>`;
   }).join('');
   const mapSection = `
-      <div class="map-type-filter">Show:
-        <button type="button" data-type="all" class="active">All</button>
-        <button type="button" data-type="live">🔴 Live</button>
-        <button type="button" data-type="video">🎬 Videos</button>
-      </div>
       <div class="map-wrap">
         <svg viewBox="0 0 900 441" role="img" aria-label="World map of available cams by country">${mapSvgPaths}</svg>
         <div id="mapTip" class="map-tip" hidden></div>
       </div>
+      <div class="globe-bar">
+        <div class="map-type-filter" style="margin:0">Show:
+          <button type="button" data-type="all" class="active">All</button>
+          <button type="button" data-type="live">🔴 Live</button>
+          <button type="button" data-type="video">🎬 Videos</button>
+        </div>
+        <div class="map-legend" style="margin:0">
+          ${[...MAP_BUCKETS].reverse().map(b => `<span><span class="sw" style="background:${b.color}"></span><span${b.min === 0 ? ' class="legend-none"' : ''}>${b.label}</span></span>`).join('')}
+        </div>
+      </div>
       <p class="map-note" id="mapSelNote" style="color:var(--accent);font-weight:600" hidden></p>
       <p class="map-note">Hover a country to see how many cams it has — click to browse them.</p>
-      <div class="map-legend">
-        ${[...MAP_BUCKETS].reverse().map(b => `<span><span class="sw" style="background:${b.color}"></span><span${b.min === 0 ? ' class="legend-none"' : ''}>${b.label}</span></span>`).join('')}
-      </div>
       <script>
         (function () {
           var tip = document.getElementById('mapTip');
