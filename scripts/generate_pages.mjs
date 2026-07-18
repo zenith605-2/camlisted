@@ -511,7 +511,7 @@ async function main() {
           ${[...MAP_BUCKETS].reverse().map(b => `<span><span class="sw" style="background:${b.color}"></span><span${b.min === 0 ? ' class="legend-none"' : ''}>${b.label}</span></span>`).join('')}
         </div>
       </div>
-      <p class="map-note">Hover a country to see how many cams it has — click to browse them.</p>
+      <p class="map-note" id="mapHoverNote">Hover a country to see how many cams it has — click to browse them.</p>
       <script>
         (function () {
           var tip = document.getElementById('mapTip');
@@ -786,7 +786,7 @@ async function main() {
           intro.textContent = L.intro.replace('{n}', intro.dataset.n).replace('{d}', intro.dataset.d);
           document.getElementById('hCat').textContent = L.byCategory;
           document.getElementById('hCountry').textContent = L.byCountry;
-          document.querySelector('.map-note').textContent = L.mapNote;
+          var mhn = document.getElementById('mapHoverNote'); if (mhn) mhn.textContent = L.mapNote;
           var gh = document.getElementById('globeHint'); if (gh) gh.textContent = L.ghint;
           var rb = document.getElementById('randomBtn'); if (rb) rb.textContent = L.random;
           var ba = document.getElementById('browseAll'); if (ba) ba.textContent = L.browseAll;
