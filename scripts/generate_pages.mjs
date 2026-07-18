@@ -102,6 +102,10 @@ const PAGE_CSS = `
   .panel li.active button { outline: 1px solid var(--accent); }
   .panel li .lv { color: var(--accent); font-weight: 700; font-size: 0.7rem; margin-right: 6px; }
   .panel a.browse-all { color: var(--accent); text-decoration: none; font-size: 0.9rem; }
+  .cam-meta { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+  .cam-meta:empty { display: none; }
+  .cam-badge { background: var(--card-bg); border: 1px solid var(--border); border-radius: 999px; padding: 2px 9px; font-size: 0.75rem; color: var(--muted); }
+  .cam-edit { margin-left: auto; color: var(--accent); text-decoration: none; font-size: 0.8rem; }
   .panel-filter { display: flex; gap: 8px; }
   .panel-filter button { background: var(--card-bg); color: var(--muted); border: 1px solid var(--border); border-radius: 999px; padding: 3px 10px; font-size: 0.75rem; cursor: pointer; }
   .panel-filter button.active { color: #fff; border-color: var(--accent); }
@@ -224,7 +228,7 @@ const MULTI_TZ_CODES = ['US', 'CA', 'MX', 'BR', 'RU', 'ID', 'AU'];
 
 // 3D 지구본 페이지: 나라 포인트를 클릭하면 그 나라의 라이브 캠이 옆 패널에서 바로 재생된다.
 // three.js + globe.gl(MIT, CDN)을 사용하는 별도 페이지 — 앱 본체와 독립적.
-async function writeGlobePage(countByCode, slugByCode, visible, today) {
+async function writeGlobePage(countByCode, slugByCode, visible, today, CAT_META_JSON) {
   const globeCountries = [];
   const vidsByCode = {};
   for (const [code, c] of countByCode) {
@@ -242,7 +246,7 @@ async function writeGlobePage(countByCode, slugByCode, visible, today) {
     const lives = list.filter(s => s.content_type === 'live');
     const nonLives = list.filter(s => s.content_type !== 'live');
     const pick = lives.slice(0, 25).concat(nonLives.slice(0, 15)); // 라이브 25 + 일반영상 15 (한쪽이 정원을 다 차지하지 않게)
-    vidsByCode[code] = pick.map(s => [s.video_id, s.title.slice(0, 70), s.content_type === 'live' ? 1 : 0]);
+    vidsByCode[code] = pick.map(s => [s.video_id, s.title.slice(0, 70), s.content_type === 'live' ? 1 : 0, s.category || '', (s.tags || []).join(',')]);
   }
 
   const html = `<!DOCTYPE html>
@@ -282,6 +286,10 @@ async function writeGlobePage(countByCode, slugByCode, visible, today) {
   .panel li.active button { background: #241417; color: #fff; outline: 1px solid #ff3b3b; }
   .panel li .lv { color: #ff3b3b; font-weight: 700; font-size: 0.7rem; margin-right: 6px; }
   .panel a.browse-all { color: #ff3b3b; text-decoration: none; font-size: 0.9rem; }
+  .cam-meta { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+  .cam-meta:empty { display: none; }
+  .cam-badge { background: #161b22; border: 1px solid #2a2f3a; border-radius: 999px; padding: 2px 9px; font-size: 0.75rem; color: #9aa4b2; }
+  .cam-edit { margin-left: auto; color: #ff3b3b; text-decoration: none; font-size: 0.8rem; }
   .panel-filter { display: flex; gap: 8px; }
   .panel-filter button { background: #161b22; color: #9aa4b2; border: 1px solid #2a2f3a; border-radius: 999px; padding: 3px 10px; font-size: 0.75rem; cursor: pointer; }
   .panel-filter button.active { color: #fff; border-color: #ff3b3b; }
@@ -306,6 +314,7 @@ async function writeGlobePage(countByCode, slugByCode, visible, today) {
   <h2 id="panelTitle"></h2>
   <div class="sub" id="panelSub"></div>
   <div class="player" id="player"></div>
+  <div class="cam-meta" id="panelCamMeta"></div>
   <div class="panel-filter" id="panelFilter">
     <button type="button" data-f="all" class="active">All</button>
     <button type="button" data-f="live">🔴 Live</button>
@@ -324,6 +333,28 @@ async function writeGlobePage(countByCode, slugByCode, visible, today) {
   }
   var COUNTRIES = ${JSON.stringify(globeCountries)};
   var VIDS = ${JSON.stringify(vidsByCode)};
+  var CATM = ${CAT_META_JSON};
+  var CONDLABEL = { night: '🌙 Night', day: '☀️ Day', rain: '🌧 Rain', heavy_rain: '⛈ Heavy rain', snow: '❄️ Snow', heavy_snow: '🌨 Heavy snow', accident: '💥 Accident', fire: '🔥 Fire', violence: '🥊 Violence', fog: '🌫 Fog' };
+  var UILANG = localStorage.getItem('lang') || 'en';
+  var EDITLABEL = ({ en: 'Edit on site', ko: '사이트에서 수정', ja: 'サイトで編集', zh: '在网站编辑', es: 'Editar en el sitio' })[UILANG] || 'Edit on site';
+  window.__vidById = {}; window.__editHref = '/';
+  function renderCamMeta(id) {
+    var meta = document.getElementById('panelCamMeta');
+    if (!meta) return;
+    var v = window.__vidById[id];
+    if (!v) { meta.innerHTML = ''; return; }
+    var html = '';
+    var cat = v[3];
+    if (cat && CATM[cat]) {
+      var label = CATM[cat][UILANG] || CATM[cat].en || cat;
+      html += '<span class="cam-badge">' + (CATM[cat].icon ? CATM[cat].icon + ' ' : '') + String(label).replace(/</g, '&lt;') + '</span>';
+    }
+    (v[4] || '').split(',').filter(Boolean).forEach(function (t) {
+      html += '<span class="cam-badge cond">' + (CONDLABEL[t] || t) + '</span>';
+    });
+    html += '<a class="cam-edit" href="' + window.__editHref + '">\\u270f\\ufe0f ' + EDITLABEL + '</a>';
+    meta.innerHTML = html;
+  }
   var maxTotal = Math.max.apply(null, COUNTRIES.map(function (c) { return c.live + c.video; }));
   var selectedCode = null;
 
@@ -351,6 +382,9 @@ async function writeGlobePage(countByCode, slugByCode, visible, today) {
     document.getElementById('panelSub').textContent = 'Live: ' + d.live + ' · Videos: ' + d.video;
     document.getElementById('browseAll').href = d.href;
     var vids = VIDS[d.code] || [];
+    window.__editHref = d.href;
+    window.__vidById = {};
+    vids.forEach(function (v) { window.__vidById[v[0]] = v; });
     var list = document.getElementById('camList');
     list.innerHTML = '';
     function markActive(li) {
@@ -384,6 +418,7 @@ async function writeGlobePage(countByCode, slugByCode, visible, today) {
   function play(id) {
     document.getElementById('player').innerHTML =
       '<iframe src="https://www.youtube.com/embed/' + id + '?autoplay=1&mute=1&playsinline=1&rel=0" allow="autoplay; encrypted-media; fullscreen" allowfullscreen></iframe>';
+    renderCamMeta(id);
   }
   document.getElementById('panelClose').addEventListener('click', function () {
     panel.classList.remove('open');
@@ -443,10 +478,16 @@ function sortForPage(list) {
 
 async function main() {
   const [streams, categoriesRes, indexTemplate] = await Promise.all([
-    fetchAllRows('streams', 'video_id,title,channel_title,thumbnail,content_type,category,country,approval_status,status,visibility,duration_seconds,upvote_count,added_at'),
+    fetchAllRows('streams', 'video_id,title,channel_title,thumbnail,content_type,category,country,approval_status,status,visibility,duration_seconds,upvote_count,added_at,tags'),
     supabase.from('categories').select('key,label_en,label_ko,label_ja,label_zh,label_es,icon,sort_order').order('sort_order'),
     readFile(path.join(ROOT, 'index.html'), 'utf-8'),
   ]);
+  // 패널에서 클릭한 영상의 카테고리·조건을 보여주기 위한 참조 데이터
+  const catMeta = {};
+  for (const c of (categoriesRes.data || [])) {
+    catMeta[c.key] = { icon: c.icon || '', en: c.label_en, ko: c.label_ko, ja: c.label_ja, zh: c.label_zh, es: c.label_es };
+  }
+  const CAT_META_JSON = JSON.stringify(catMeta);
   if (categoriesRes.error) throw categoriesRes.error;
   const categories = categoriesRes.data || [];
   const visible = streams.filter(s => s.approval_status !== 'pending' && s.title);
@@ -652,7 +693,7 @@ async function main() {
     const lives = list.filter(s => s.content_type === 'live');
     const nonLives = list.filter(s => s.content_type !== 'live');
     const pick = lives.slice(0, 25).concat(nonLives.slice(0, 15)); // 라이브 25 + 일반영상 15 (한쪽이 정원을 다 차지하지 않게)
-    vidsAllByCode[code] = pick.map(s => [s.video_id, s.title.slice(0, 70), s.content_type === 'live' ? 1 : 0]);
+    vidsAllByCode[code] = pick.map(s => [s.video_id, s.title.slice(0, 70), s.content_type === 'live' ? 1 : 0, s.category || '', (s.tags || []).join(',')]);
     const cen = COUNTRY_CENTROIDS[code];
     if (cen) {
       globeCountriesInline.push({
@@ -663,7 +704,7 @@ async function main() {
     }
   }
 
-  await writeGlobePage(countByCode, slugByCode, visible, today);
+  await writeGlobePage(countByCode, slugByCode, visible, today, CAT_META_JSON);
   sitemapUrls.push({ loc: `${SITE}/globe.html`, priority: '0.7', changefreq: 'daily' });
 
   // ===== browse.html (전체 색인 — 크롤러와 사용자 모두의 진입점) =====
@@ -697,6 +738,7 @@ async function main() {
         <h2 id="panelTitle"></h2>
         <div class="sub" id="panelSub"></div>
         <div class="player" id="player"></div>
+        <div class="cam-meta" id="panelCamMeta"></div>
         <div class="panel-filter" id="panelFilter">
           <button type="button" data-f="all" class="active">All</button>
           <button type="button" data-f="live">🔴 Live</button>
@@ -713,6 +755,28 @@ async function main() {
         var VIDS = ${JSON.stringify(vidsAllByCode)};
         var TZ = ${JSON.stringify(COUNTRY_TZ)};
         var MTZ = ${JSON.stringify(MULTI_TZ_CODES)};
+        var CATM = ${CAT_META_JSON};
+        var CONDLABEL = { night: '🌙 Night', day: '☀️ Day', rain: '🌧 Rain', heavy_rain: '⛈ Heavy rain', snow: '❄️ Snow', heavy_snow: '🌨 Heavy snow', accident: '💥 Accident', fire: '🔥 Fire', violence: '🥊 Violence', fog: '🌫 Fog' };
+        var UILANG = localStorage.getItem('lang') || 'en';
+        var EDITLABEL = ({ en: 'Edit on site', ko: '사이트에서 수정', ja: 'サイトで編集', zh: '在网站编辑', es: 'Editar en el sitio' })[UILANG] || 'Edit on site';
+        window.__vidById = {}; window.__editHref = '/';
+        function renderCamMeta(id) {
+          var meta = document.getElementById('panelCamMeta');
+          if (!meta) return;
+          var v = window.__vidById[id];
+          if (!v) { meta.innerHTML = ''; return; }
+          var html = '';
+          var cat = v[3];
+          if (cat && CATM[cat]) {
+            var label = CATM[cat][UILANG] || CATM[cat].en || cat;
+            html += '<span class="cam-badge">' + (CATM[cat].icon ? CATM[cat].icon + ' ' : '') + String(label).replace(/</g, '&lt;') + '</span>';
+          }
+          (v[4] || '').split(',').filter(Boolean).forEach(function (t) {
+            html += '<span class="cam-badge cond">' + (CONDLABEL[t] || t) + '</span>';
+          });
+          html += '<a class="cam-edit" href="' + window.__editHref + '">\\u270f\\ufe0f ' + EDITLABEL + '</a>';
+          meta.innerHTML = html;
+        }
         var selLabelTimer = null;
         function localTime(code) {
           var tz = TZ[code];
@@ -776,6 +840,9 @@ async function main() {
           document.getElementById('panelSub').textContent = W.live + ': ' + d.live + ' · ' + W.videos + ': ' + d.video;
           document.getElementById('browseAll').href = d.href;
           var vids = VIDS[d.code] || [];
+          window.__editHref = d.href;
+          window.__vidById = {};
+          vids.forEach(function (v) { window.__vidById[v[0]] = v; });
           var list = document.getElementById('camList');
           list.innerHTML = '';
           function markActive(li) {
@@ -811,6 +878,7 @@ async function main() {
         function play(id) {
           document.getElementById('player').innerHTML =
             '<iframe src="https://www.youtube.com/embed/' + id + '?autoplay=1&mute=1&playsinline=1&rel=0" allow="autoplay; encrypted-media; fullscreen" allowfullscreen></iframe>';
+          renderCamMeta(id);
         }
         document.getElementById('panelClose').addEventListener('click', function () {
           panel.classList.remove('open');
