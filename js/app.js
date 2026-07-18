@@ -1969,8 +1969,3 @@ async function init() {
 }
 
 init();
-
-// PWA: 홈 화면 설치를 위한 서비스워커 (캐싱 없음 — sw.js 참고)
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('sw.js').catch(() => {});
-}
