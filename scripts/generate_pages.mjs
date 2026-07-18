@@ -218,6 +218,9 @@ async function writeGlobePage(countByCode, slugByCode, visible, today) {
   .panel li.active button { background: #241417; color: #fff; outline: 1px solid #ff3b3b; }
   .panel li .lv { color: #ff3b3b; font-weight: 700; font-size: 0.7rem; margin-right: 6px; }
   .panel a.browse-all { color: #ff3b3b; text-decoration: none; font-size: 0.9rem; }
+  @media (max-width: 640px) {
+    .panel { top: auto; bottom: 0; height: 62%; width: 100%; border-left: 0; border-top: 1px solid #2a2f3a; }
+  }
 </style>
 </head>
 <body>
@@ -261,7 +264,7 @@ async function writeGlobePage(countByCode, slugByCode, visible, today) {
     .onPointClick(function (d) { openPanel(d); });
   globe.controls().autoRotate = true;
   globe.controls().autoRotateSpeed = 0.6;
-  globe.pointOfView({ lat: 20, lng: 10, altitude: 2.2 });
+  globe.pointOfView({ lat: 20, lng: 10, altitude: 2.5 }); // 지구본 전체가 프레임 안에 들어오게 넉넉히
 
   var panel = document.getElementById('panel');
   function openPanel(d, autoplayRandom) {
@@ -295,7 +298,7 @@ async function writeGlobePage(countByCode, slugByCode, visible, today) {
     } else {
       document.getElementById('player').innerHTML = '';
     }
-    globe.pointOfView({ lat: d.lat, lng: d.lng, altitude: 1.6 }, 900);
+    globe.pointOfView({ lat: d.lat, lng: d.lng, altitude: 2.0 }, 900); // 잘리지 않는 선까지만 줌인
   }
   function play(id) {
     document.getElementById('player').innerHTML =
