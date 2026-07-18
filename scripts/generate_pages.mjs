@@ -72,6 +72,30 @@ const PAGE_CSS = `
   .map-type-filter button { background: var(--card-bg); color: var(--muted); border: 1px solid var(--border); border-radius: 999px; padding: 4px 12px; cursor: pointer; font-size: 0.8rem; }
   .map-type-filter button.active { color: #fff; border-color: var(--accent); }
   @media (max-width: 700px) { .browse-list { columns: 2; } }
+  .map-globe-row { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; align-items: start; }
+  .globe-box { height: 460px; border: 1px solid var(--border); border-radius: 10px; overflow: hidden; background: #000; }
+  .globe-bar { display: flex; gap: 12px; align-items: center; margin-top: 8px; flex-wrap: wrap; }
+  .random-btn { background: var(--accent); color: #fff; border: 0; border-radius: 999px; padding: 6px 14px; font-size: 0.85rem; font-weight: 600; cursor: pointer; }
+  .panel { position: fixed; right: 0; top: 0; bottom: 0; width: min(420px, 100%); z-index: 40; background: rgba(13,17,23,.97); border-left: 1px solid var(--border); padding: 16px; display: none; flex-direction: column; gap: 10px; }
+  .panel.open { display: flex; }
+  .panel .close { position: absolute; top: 10px; right: 12px; background: none; border: 0; color: var(--muted); font-size: 1.4rem; cursor: pointer; }
+  .panel h2 { font-size: 1.1rem; color: #fff; padding-right: 30px; margin: 0; }
+  .panel .sub { color: var(--muted); font-size: 0.85rem; }
+  .panel .player { aspect-ratio: 16/9; background: #000; border-radius: 8px; overflow: hidden; flex-shrink: 0; }
+  .panel .player iframe { width: 100%; height: 100%; border: 0; }
+  .panel ul { list-style: none; overflow-y: auto; flex: 1; margin: 0; padding: 0; }
+  .panel li { margin-bottom: 6px; }
+  .panel li button { display: flex; gap: 8px; align-items: flex-start; width: 100%; background: none; border: 0; color: var(--text); text-align: left; cursor: pointer; font-size: 0.82rem; padding: 4px; border-radius: 6px; }
+  .panel li button img { width: 96px; aspect-ratio: 16/9; object-fit: cover; border-radius: 4px; flex-shrink: 0; background: #000; }
+  .panel li button .meta { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+  .panel li button:hover { background: var(--card-bg); }
+  .panel li.active button { outline: 1px solid var(--accent); }
+  .panel li .lv { color: var(--accent); font-weight: 700; font-size: 0.7rem; margin-right: 6px; }
+  .panel a.browse-all { color: var(--accent); text-decoration: none; font-size: 0.9rem; }
+  @media (max-width: 900px) {
+    .map-globe-row { grid-template-columns: 1fr; }
+    .panel { top: auto; bottom: 0; height: 62%; width: 100%; border-left: 0; border-top: 1px solid var(--border); }
+  }
 `;
 
 function pageHtml({ title, description, canonicalPath, h1, intro, introData = '', bodyHtml }) {
@@ -473,8 +497,11 @@ async function main() {
             return mapType === 'live' ? live : mapType === 'video' ? video : live + video;
           }
           function repaint() {
-            paths.forEach(function (p) { p.setAttribute('fill', bucketColor(countOf(p))); });
+            paths.forEach(function (p) {
+              p.setAttribute('fill', p.dataset.code === window.__selCode ? '#ffd21f' : bucketColor(countOf(p)));
+            });
           }
+          window.__repaintMap = repaint;
           paths.forEach(function (p) {
             p.addEventListener('mousemove', function (e) {
               var W = window.__L || { live: 'Live', videos: 'Videos' };
@@ -484,7 +511,8 @@ async function main() {
               tip.style.top = (e.clientY + 14) + 'px';
             });
             p.addEventListener('mouseleave', function () { tip.hidden = true; });
-            if (p.dataset.href) p.addEventListener('click', function () { location.href = p.dataset.href; });
+            // 클릭하면 페이지 이동 대신 공유 패널을 열어 바로 재생 (3D 지구본과 동일한 UX)
+            if (p.dataset.href) p.addEventListener('click', function () { if (window.openCountry) window.openCountry(p.dataset); });
           });
           document.querySelectorAll('.map-type-filter button').forEach(function (b) {
             b.addEventListener('click', function () {
@@ -498,6 +526,26 @@ async function main() {
         })();
       </script>`;
 
+  // browse의 공유 패널/인라인 지구본용 데이터
+  const vidsAllByCode = {};
+  const globeCountriesInline = [];
+  for (const [code, c] of countByCode) {
+    const total = c.live + c.video;
+    if (!total) continue;
+    const list = visible.filter(s => s.country === code);
+    const lives = list.filter(s => s.content_type === 'live');
+    const pick = (lives.length ? lives : list).slice(0, 30);
+    vidsAllByCode[code] = pick.map(s => [s.video_id, s.title.slice(0, 70), s.content_type === 'live' ? 1 : 0]);
+    const cen = COUNTRY_CENTROIDS[code];
+    if (cen) {
+      globeCountriesInline.push({
+        code, name: countryNameOf(code), lat: cen[0], lng: cen[1],
+        live: c.live, video: c.video,
+        href: slugByCode.has(code) ? `/country/${slugByCode.get(code)}.html` : `/?country=${code}`,
+      });
+    }
+  }
+
   await writeGlobePage(countByCode, slugByCode, visible, today);
   sitemapUrls.push({ loc: `${SITE}/globe.html`, priority: '0.7', changefreq: 'daily' });
 
@@ -510,35 +558,115 @@ async function main() {
     intro: `${visible.length} live cams and videos, organized by where and what they show. Updated ${today}.`,
     introData: `data-n="${visible.length}" data-d="${today}"`,
     bodyHtml: `
-      <div class="map-type-filter view-toggle">
-        <button type="button" id="btn2d" class="active">🗺 2D Map</button>
-        <button type="button" id="btn3d">🌐 3D Globe</button>
-        <a href="/globe.html" id="fullGlobe" style="color:var(--muted);font-size:0.8rem;text-decoration:none">⛶ Fullscreen</a>
+      <div class="map-globe-row">
+        <div class="mg-col">
+          ${mapSection}
+        </div>
+        <div class="mg-col">
+          <div id="globe" class="globe-box"></div>
+          <div class="globe-bar">
+            <span class="map-note" id="globeHint">Drag to spin · click a point to watch</span>
+            <button type="button" class="random-btn" id="randomBtn">🎲 Random cam</button>
+            <a href="/globe.html" style="color:var(--muted);font-size:0.8rem;text-decoration:none">⛶ Fullscreen</a>
+          </div>
+        </div>
       </div>
-      <div id="view2d">
-      ${mapSection}
-      </div>
-      <div id="view3d" style="display:none">
-        <iframe id="globeFrame" style="width:100%;height:72vh;border:1px solid var(--border);border-radius:10px;background:#000" allow="autoplay; encrypted-media; fullscreen"></iframe>
-      </div>
+      <aside class="panel" id="panel">
+        <button type="button" class="close" id="panelClose">×</button>
+        <h2 id="panelTitle"></h2>
+        <div class="sub" id="panelSub"></div>
+        <div class="player" id="player"></div>
+        <ul id="camList"></ul>
+        <a class="browse-all" id="browseAll" href="#">Browse all →</a>
+      </aside>
+      <script src="https://unpkg.com/three@0.160.0/build/three.min.js"><\/script>
+      <script src="https://unpkg.com/globe.gl@2.32.0/dist/globe.gl.min.js"><\/script>
       <script>
-        (function () {
-          var v2 = document.getElementById('view2d'), v3 = document.getElementById('view3d');
-          var b2 = document.getElementById('btn2d'), b3 = document.getElementById('btn3d');
-          var frame = document.getElementById('globeFrame');
-          function show3d() {
-            v2.style.display = 'none'; v3.style.display = 'block';
-            b2.classList.remove('active'); b3.classList.add('active');
-            if (!frame.src) frame.src = '/globe.html?embed=1'; // 처음 열 때만 로드 (three.js를 미리 안 받게)
+        // 인라인 3D 지구본 + (2D 지도와 공유하는) 국가 패널
+        var GC = ${JSON.stringify(globeCountriesInline)};
+        var VIDS = ${JSON.stringify(vidsAllByCode)};
+        var maxTotal = Math.max.apply(null, GC.map(function (c) { return c.live + c.video; }));
+        var selectedCode = null;
+
+        var globe = Globe()(document.getElementById('globe'))
+          .globeImageUrl('https://unpkg.com/three-globe/example/img/earth-night.jpg')
+          .backgroundImageUrl('https://unpkg.com/three-globe/example/img/night-sky.png')
+          .pointsData(GC)
+          .pointLat('lat').pointLng('lng')
+          .pointColor(function (d) { return d.code === selectedCode ? '#ffd21f' : '#ff3b3b'; })
+          .pointAltitude(function (d) { return 0.01 + 0.1 * Math.sqrt((d.live + d.video) / maxTotal); })
+          .pointRadius(function (d) { return 0.4 + 1.1 * Math.sqrt((d.live + d.video) / maxTotal); })
+          .pointLabel(function (d) {
+            var W = window.__L || { live: 'Live', videos: 'Videos' };
+            return d.name + ' — ' + W.live + ': ' + d.live + ' · ' + W.videos + ': ' + d.video;
+          })
+          .onPointClick(function (d) { openPanel(d); });
+        globe.controls().autoRotate = true;
+        globe.controls().autoRotateSpeed = 0.6;
+        globe.pointOfView({ lat: 20, lng: 10, altitude: 2.5 });
+
+        var panel = document.getElementById('panel');
+        function openPanel(d, autoplayRandom) {
+          selectedCode = d.code;
+          window.__selCode = d.code;
+          globe.pointsData(GC);
+          if (window.__repaintMap) window.__repaintMap();
+          globe.controls().autoRotate = false;
+          var gc = GC.find(function (c) { return c.code === d.code; });
+          if (gc) {
+            var alt = Math.max(globe.pointOfView().altitude, 2.3);
+            globe.pointOfView({ lat: gc.lat, lng: gc.lng, altitude: alt }, 900);
           }
-          function show2d() {
-            v3.style.display = 'none'; v2.style.display = 'block';
-            b3.classList.remove('active'); b2.classList.add('active');
+          panel.classList.add('open');
+          document.getElementById('panelTitle').textContent = d.name;
+          var W = window.__L || { live: 'Live', videos: 'Videos' };
+          document.getElementById('panelSub').textContent = W.live + ': ' + d.live + ' · ' + W.videos + ': ' + d.video;
+          document.getElementById('browseAll').href = d.href;
+          var vids = VIDS[d.code] || [];
+          var list = document.getElementById('camList');
+          list.innerHTML = '';
+          function markActive(li) {
+            [].forEach.call(list.querySelectorAll('li.active'), function (x) { x.classList.remove('active'); });
+            if (li) li.classList.add('active');
           }
-          b2.addEventListener('click', show2d);
-          b3.addEventListener('click', show3d);
-          if (location.hash === '#globe') show3d();
-        })();
+          vids.forEach(function (v) {
+            var li = document.createElement('li');
+            var b = document.createElement('button');
+            b.innerHTML = '<img src="https://i.ytimg.com/vi/' + v[0] + '/mqdefault.jpg" loading="lazy" alt="">'
+              + '<span class="meta">' + (v[2] ? '<span class="lv">LIVE</span>' : '') + v[1].replace(/</g, '&lt;') + '</span>';
+            b.addEventListener('click', function () { markActive(li); play(v[0]); });
+            li.appendChild(b);
+            list.appendChild(li);
+          });
+          if (vids.length) {
+            var idx = autoplayRandom ? Math.floor(Math.random() * vids.length) : 0;
+            markActive(list.children[idx]);
+            play(vids[idx][0]);
+          } else {
+            document.getElementById('player').innerHTML = '';
+          }
+        }
+        window.openCountry = function (ds) {
+          openPanel({ code: ds.code, name: ds.name, live: Number(ds.live), video: Number(ds.video), href: ds.href });
+        };
+        function play(id) {
+          document.getElementById('player').innerHTML =
+            '<iframe src="https://www.youtube.com/embed/' + id + '?autoplay=1&mute=1&playsinline=1&rel=0" allow="autoplay; encrypted-media; fullscreen" allowfullscreen></iframe>';
+        }
+        document.getElementById('panelClose').addEventListener('click', function () {
+          panel.classList.remove('open');
+          document.getElementById('player').innerHTML = '';
+          selectedCode = null;
+          window.__selCode = null;
+          globe.pointsData(GC);
+          if (window.__repaintMap) window.__repaintMap();
+          globe.controls().autoRotate = true;
+        });
+        document.getElementById('randomBtn').addEventListener('click', function () {
+          var pool = [];
+          GC.forEach(function (c) { for (var i = 0; i < c.live + c.video; i++) pool.push(c); });
+          openPanel(pool[Math.floor(Math.random() * pool.length)], true);
+        });
       </script>
       <h2 id="hCat">By Category</h2>
       <ul class="browse-list">
@@ -552,11 +680,11 @@ async function main() {
         // 본 사이트의 언어 설정(localStorage 'lang')을 그대로 따라 페이지 문구를 바꾼다
         (function () {
           var dict = {
-            en: { back: '\\u2190 Back to site', h1: 'Browse by Country & Category', intro: '{n} live cams and videos, organized by where and what they show. Updated {d}.', byCategory: 'By Category', byCountry: 'By Country', mapNote: 'Hover a country to see how many cams it has \\u2014 click to browse them.', show: 'Show:', all: 'All', liveBtn: '\\ud83d\\udd34 Live', videosBtn: '\\ud83c\\udfac Videos', none: 'None', live: 'Live', videos: 'Videos', intl: 'International / Mixed', view2d: '\\ud83d\\uddfa 2D Map', view3d: '\\ud83c\\udf10 3D Globe' },
-            ko: { back: '\\u2190 사이트로 돌아가기', h1: '국가·카테고리별 둘러보기', intro: '{n}개의 라이브 캠과 영상을 장소·내용별로 정리했습니다. {d} 업데이트.', byCategory: '카테고리별', byCountry: '국가별', mapNote: '나라에 마우스를 올리면 캠 개수가 보이고, 클릭하면 해당 나라 영상으로 이동합니다.', show: '표시:', all: '전체', liveBtn: '\\ud83d\\udd34 라이브', videosBtn: '\\ud83c\\udfac 일반영상', none: '없음', live: '라이브', videos: '일반영상', intl: '국제/혼합', view2d: '\\ud83d\\uddfa 2D 지도', view3d: '\\ud83c\\udf10 3D 지구본' },
-            ja: { back: '\\u2190 サイトへ戻る', h1: '国・カテゴリ別に見る', intro: '{n}件のライブカメラと動画を場所と内容で整理。{d} 更新。', byCategory: 'カテゴリ別', byCountry: '国別', mapNote: '国にカーソルを合わせると台数が表示され、クリックでその国の映像へ移動します。', show: '表示:', all: 'すべて', liveBtn: '\\ud83d\\udd34 ライブ', videosBtn: '\\ud83c\\udfac 動画', none: 'なし', live: 'ライブ', videos: '動画', intl: '国際/混合', view2d: '\\ud83d\\uddfa 2D地図', view3d: '\\ud83c\\udf10 3D地球儀' },
-            zh: { back: '\\u2190 返回网站', h1: '按国家和分类浏览', intro: '{n}个直播摄像头和视频，按地点和内容整理。{d} 更新。', byCategory: '按分类', byCountry: '按国家', mapNote: '将鼠标悬停在国家上可查看数量，点击进入该国视频。', show: '显示:', all: '全部', liveBtn: '\\ud83d\\udd34 直播', videosBtn: '\\ud83c\\udfac 视频', none: '无', live: '直播', videos: '视频', intl: '国际/混合', view2d: '\\ud83d\\uddfa 2D地图', view3d: '\\ud83c\\udf10 3D地球' },
-            es: { back: '\\u2190 Volver al sitio', h1: 'Explorar por país y categoría', intro: '{n} cámaras en vivo y videos, organizados por lugar y contenido. Actualizado {d}.', byCategory: 'Por categoría', byCountry: 'Por país', mapNote: 'Pasa el cursor sobre un país para ver cuántas cámaras tiene; haz clic para explorarlas.', show: 'Mostrar:', all: 'Todo', liveBtn: '\\ud83d\\udd34 En vivo', videosBtn: '\\ud83c\\udfac Videos', none: 'Ninguno', live: 'En vivo', videos: 'Videos', intl: 'Internacional/Mixto', view2d: '\\ud83d\\uddfa Mapa 2D', view3d: '\\ud83c\\udf10 Globo 3D' },
+            en: { back: '\\u2190 Back to site', h1: 'Browse by Country & Category', intro: '{n} live cams and videos, organized by where and what they show. Updated {d}.', byCategory: 'By Category', byCountry: 'By Country', mapNote: 'Hover a country to see how many cams it has \\u2014 click to browse them.', show: 'Show:', all: 'All', liveBtn: '\\ud83d\\udd34 Live', videosBtn: '\\ud83c\\udfac Videos', none: 'None', live: 'Live', videos: 'Videos', intl: 'International / Mixed', ghint: 'Drag to spin \\u00b7 click a point to watch', random: '\\ud83c\\udfb2 Random cam', browseAll: 'Browse all \\u2192' },
+            ko: { back: '\\u2190 사이트로 돌아가기', h1: '국가·카테고리별 둘러보기', intro: '{n}개의 라이브 캠과 영상을 장소·내용별로 정리했습니다. {d} 업데이트.', byCategory: '카테고리별', byCountry: '국가별', mapNote: '나라에 마우스를 올리면 캠 개수가 보이고, 클릭하면 해당 나라 영상으로 이동합니다.', show: '표시:', all: '전체', liveBtn: '\\ud83d\\udd34 라이브', videosBtn: '\\ud83c\\udfac 일반영상', none: '없음', live: '라이브', videos: '일반영상', intl: '국제/혼합', ghint: '드래그로 회전 \\u00b7 포인트를 클릭해 시청', random: '\\ud83c\\udfb2 랜덤 캠', browseAll: '전체 보기 \\u2192' },
+            ja: { back: '\\u2190 サイトへ戻る', h1: '国・カテゴリ別に見る', intro: '{n}件のライブカメラと動画を場所と内容で整理。{d} 更新。', byCategory: 'カテゴリ別', byCountry: '国別', mapNote: '国にカーソルを合わせると台数が表示され、クリックでその国の映像へ移動します。', show: '表示:', all: 'すべて', liveBtn: '\\ud83d\\udd34 ライブ', videosBtn: '\\ud83c\\udfac 動画', none: 'なし', live: 'ライブ', videos: '動画', intl: '国際/混合', ghint: 'ドラッグで回転 \\u00b7 ポイントをクリックで視聴', random: '\\ud83c\\udfb2 ランダム', browseAll: 'すべて見る \\u2192' },
+            zh: { back: '\\u2190 返回网站', h1: '按国家和分类浏览', intro: '{n}个直播摄像头和视频，按地点和内容整理。{d} 更新。', byCategory: '按分类', byCountry: '按国家', mapNote: '将鼠标悬停在国家上可查看数量，点击进入该国视频。', show: '显示:', all: '全部', liveBtn: '\\ud83d\\udd34 直播', videosBtn: '\\ud83c\\udfac 视频', none: '无', live: '直播', videos: '视频', intl: '国际/混合', ghint: '拖动旋转 \\u00b7 点击圆点观看', random: '\\ud83c\\udfb2 随机', browseAll: '查看全部 \\u2192' },
+            es: { back: '\\u2190 Volver al sitio', h1: 'Explorar por país y categoría', intro: '{n} cámaras en vivo y videos, organizados por lugar y contenido. Actualizado {d}.', byCategory: 'Por categoría', byCountry: 'Por país', mapNote: 'Pasa el cursor sobre un país para ver cuántas cámaras tiene; haz clic para explorarlas.', show: 'Mostrar:', all: 'Todo', liveBtn: '\\ud83d\\udd34 En vivo', videosBtn: '\\ud83c\\udfac Videos', none: 'Ninguno', live: 'En vivo', videos: 'Videos', intl: 'Internacional/Mixto', ghint: 'Arrastra para girar \\u00b7 clic para ver', random: '\\ud83c\\udfb2 Aleatoria', browseAll: 'Ver todo \\u2192' },
           };
           // 본 사이트(i18n.js detectInitialLang)와 동일: 저장된 설정이 없으면 무조건 영어
           var lang = localStorage.getItem('lang') || 'en';
@@ -571,10 +699,10 @@ async function main() {
           document.getElementById('hCat').textContent = L.byCategory;
           document.getElementById('hCountry').textContent = L.byCountry;
           document.querySelector('.map-note').textContent = L.mapNote;
-          var vt = document.querySelector('.view-toggle');
-          vt.querySelector('#btn2d').textContent = L.view2d;
-          vt.querySelector('#btn3d').textContent = L.view3d;
-          var mtf = document.querySelector('.map-type-filter:not(.view-toggle)');
+          var gh = document.getElementById('globeHint'); if (gh) gh.textContent = L.ghint;
+          var rb = document.getElementById('randomBtn'); if (rb) rb.textContent = L.random;
+          var ba = document.getElementById('browseAll'); if (ba) ba.textContent = L.browseAll;
+          var mtf = document.querySelector('.map-type-filter');
           mtf.childNodes[0].textContent = L.show + ' ';
           mtf.querySelector('[data-type="all"]').textContent = L.all;
           mtf.querySelector('[data-type="live"]').textContent = L.liveBtn;
