@@ -1448,6 +1448,14 @@ function pendingCount() {
 }
 
 function renderSidebar() {
+  // 접힘 상태: 토글 버튼만 남긴다 (상태는 기기별 저장)
+  const sidebarCollapsed = localStorage.getItem('sidebarCollapsed') === '1';
+  document.body.classList.toggle('sidebar-collapsed', sidebarCollapsed);
+  const toggleHtml = `<div class="sidebar-toggle-wrap"><button type="button" id="sidebarToggle" class="sidebar-toggle">${sidebarCollapsed ? '▶' : '◀'}</button></div>`;
+  if (sidebarCollapsed) {
+    sidebar.innerHTML = toggleHtml;
+    return;
+  }
   // 대기 건이 없으면 일반 방문자에겐 굳이 빈 섹션을 보여주지 않는다 (관리자는 항상 표시)
   const pendingHtml = (pendingCount() > 0 || isAdmin) ? `
     <div class="sidebar-section">
@@ -1466,7 +1474,7 @@ function renderSidebar() {
       <a href="browse.html#globe" class="sidebar-group-btn sidebar-map-link">🌐 ${escapeHtml(t('globe_link'))}</a>
     </div>
   `;
-  sidebar.innerHTML = mapLinkHtml + pendingHtml + suggestHtml + SIDEBAR_GROUPS.map(g => `
+  sidebar.innerHTML = toggleHtml + mapLinkHtml + pendingHtml + suggestHtml + SIDEBAR_GROUPS.map(g => `
     <div class="sidebar-section">
       <button type="button" class="sidebar-group-btn" data-content-type="${g.type}" data-category="">${g.icon} ${escapeHtml(t(g.labelKey))} <span class="sidebar-count">${sidebarCount(g.type, null)}</span></button>
       <ul class="sidebar-sublist">
@@ -1497,6 +1505,13 @@ function updateSidebarActiveState() {
 }
 
 sidebar.addEventListener('click', async (e) => {
+  if (e.target.closest('#sidebarToggle')) {
+    const next = localStorage.getItem('sidebarCollapsed') === '1' ? '0' : '1';
+    localStorage.setItem('sidebarCollapsed', next);
+    renderSidebar();
+    updateSidebarActiveState();
+    return;
+  }
   if (e.target.closest('#suggestCategoryBtn')) {
     if (!currentUser) return;
     const suggestion = prompt(t('suggest_category_prompt'));

@@ -18,11 +18,21 @@ body {
 
 .page-layout {
   display: grid;
-  grid-template-columns: 210px 1fr;
+  grid-template-columns: 260px 1fr;
   grid-template-areas:
     "header header"
     "sidebar content";
   align-items: start;
+}
+
+/* 사이드바 접힘 상태: 토글 버튼만 남는 좁은 레일로 */
+.sidebar-collapsed .page-layout {
+  grid-template-columns: 44px 1fr;
+}
+
+.sidebar-collapsed .sidebar {
+  width: 44px;
+  padding: 20px 6px;
 }
 
 .site-header {
@@ -36,13 +46,35 @@ body {
 
 .sidebar {
   grid-area: sidebar;
-  width: 210px;
+  width: 260px;
   position: sticky;
   top: 0;
   max-height: 100vh;
   overflow-y: auto;
   padding: 20px 12px;
   border-right: 1px solid var(--border);
+}
+
+.sidebar-toggle-wrap {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 6px;
+}
+
+.sidebar-toggle {
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--muted);
+  width: 28px;
+  height: 28px;
+  cursor: pointer;
+  font-size: 0.8rem;
+}
+
+.sidebar-toggle:hover {
+  color: var(--accent);
+  border-color: var(--accent);
 }
 
 .sidebar-section {
@@ -121,13 +153,18 @@ body {
 }
 
 @media (max-width: 800px) {
-  .page-layout {
+  .page-layout,
+  .sidebar-collapsed .page-layout {
     /* minmax(0,1fr): 자식의 최소 콘텐츠 폭이 커도 트랙이 화면보다 넓어지지 않게 */
     grid-template-columns: minmax(0, 1fr);
     grid-template-areas:
       "header"
       "sidebar"
       "content";
+  }
+  .sidebar-collapsed .sidebar {
+    width: 100%;
+    padding: 8px 12px;
   }
   .header-toolbar {
     flex-wrap: wrap;
