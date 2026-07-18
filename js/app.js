@@ -1471,7 +1471,6 @@ function renderSidebar() {
   const mapLinkHtml = `
     <div class="sidebar-section">
       <a href="browse.html" class="sidebar-group-btn sidebar-map-link">🗺 ${escapeHtml(t('world_map_link'))}</a>
-      <a href="browse.html#globe" class="sidebar-group-btn sidebar-map-link">🌐 ${escapeHtml(t('globe_link'))}</a>
     </div>
   `;
   sidebar.innerHTML = toggleHtml + mapLinkHtml + pendingHtml + suggestHtml + SIDEBAR_GROUPS.map(g => `
