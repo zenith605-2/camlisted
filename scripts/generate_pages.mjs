@@ -562,15 +562,15 @@ async function main() {
     bodyHtml: `
       <div class="map-globe-row">
         <div class="mg-col">
-          ${mapSection}
-        </div>
-        <div class="mg-col">
           <div id="globe" class="globe-box"></div>
           <div class="globe-bar">
             <span class="map-note" id="globeHint">Drag to spin · click a point to watch</span>
             <button type="button" class="random-btn" id="randomBtn">🎲 Random cam</button>
             <a href="/globe.html" style="color:var(--muted);font-size:0.8rem;text-decoration:none">⛶ Fullscreen</a>
           </div>
+        </div>
+        <div class="mg-col">
+          ${mapSection}
         </div>
       </div>
       <aside class="panel" id="panel">
