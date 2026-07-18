@@ -145,7 +145,8 @@
             zh: { back: '\u2190 返回网站', h1: '按国家和分类浏览', intro: '{n}个直播摄像头和视频，按地点和内容整理。{d} 更新。', byCategory: '按分类', byCountry: '按国家', mapNote: '将鼠标悬停在国家上可查看数量，点击进入该国视频。', show: '显示:', all: '全部', liveBtn: '\ud83d\udd34 直播', videosBtn: '\ud83c\udfac 视频', none: '无', live: '直播', videos: '视频', intl: '国际/混合', view2d: '\ud83d\uddfa 2D地图', view3d: '\ud83c\udf10 3D地球' },
             es: { back: '\u2190 Volver al sitio', h1: 'Explorar por país y categoría', intro: '{n} cámaras en vivo y videos, organizados por lugar y contenido. Actualizado {d}.', byCategory: 'Por categoría', byCountry: 'Por país', mapNote: 'Pasa el cursor sobre un país para ver cuántas cámaras tiene; haz clic para explorarlas.', show: 'Mostrar:', all: 'Todo', liveBtn: '\ud83d\udd34 En vivo', videosBtn: '\ud83c\udfac Videos', none: 'Ninguno', live: 'En vivo', videos: 'Videos', intl: 'Internacional/Mixto', view2d: '\ud83d\uddfa Mapa 2D', view3d: '\ud83c\udf10 Globo 3D' },
           };
-          var lang = localStorage.getItem('lang') || (navigator.language || 'en').slice(0, 2);
+          // 본 사이트(i18n.js detectInitialLang)와 동일: 저장된 설정이 없으면 무조건 영어
+          var lang = localStorage.getItem('lang') || 'en';
           if (!dict[lang]) lang = 'en';
           var L = dict[lang];
           window.__L = L;
