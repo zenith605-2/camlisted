@@ -12,6 +12,8 @@ const SITE = 'https://camlisted.com';
 
 const SUPABASE_URL = process.env.SUPABASE_URL || 'https://chgodrjjalsrgyxuwjyq.supabase.co';
 const SUPABASE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY || 'sb_publishable_IPRYfUNkhfTLWohT6gjXYw_APGRcPuP';
+// 브라우저에 심는 공개(anon/publishable) 키 — SUPABASE_KEY(운영 시 service role)를 절대 HTML에 넣으면 안 됨
+const SUPABASE_ANON_KEY = 'sb_publishable_IPRYfUNkhfTLWohT6gjXYw_APGRcPuP';
 const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
 
 const MIN_COUNTRY_ENTRIES = 3;   // 이보다 적은 나라는 페이지를 만들지 않음 (얇은 페이지는 SEO에 역효과)
@@ -392,13 +394,18 @@ function sortForPage(list) {
 
 async function main() {
   const [streams, categoriesRes, indexTemplate] = await Promise.all([
-    fetchAllRows('streams', 'video_id,title,channel_title,thumbnail,content_type,category,country,approval_status,duration_seconds,upvote_count,added_at'),
+    fetchAllRows('streams', 'video_id,title,channel_title,thumbnail,content_type,category,country,approval_status,status,visibility,duration_seconds,upvote_count,added_at'),
     supabase.from('categories').select('key,label_en,label_ko,label_ja,label_zh,label_es,icon,sort_order').order('sort_order'),
     readFile(path.join(ROOT, 'index.html'), 'utf-8'),
   ]);
   if (categoriesRes.error) throw categoriesRes.error;
   const categories = categoriesRes.data || [];
   const visible = streams.filter(s => s.approval_status !== 'pending' && s.title);
+  // 인트로에 쓸 "메인 노출 수" = 메인 페이지 카운트와 같은 기준 (라이브 + 공개 + 승인). 오프라인은 뺀다.
+  const mainVisibleCount = streams.filter(s =>
+    s.approval_status !== 'pending' && s.title && s.status === 'live' &&
+    (s.visibility == null || s.visibility === 'listed')
+  ).length;
   const today = new Date().toISOString().slice(0, 10);
   console.log(`전체 ${streams.length}건 중 공개 ${visible.length}건으로 페이지 생성`);
 
@@ -616,8 +623,8 @@ async function main() {
     description: `Browse ${visible.length}+ YouTube live cams and real-world videos by country or category: traffic, beaches, harbors, dashcam footage and more.`,
     canonicalPath: '/browse.html',
     h1: 'Browse by Country & Category',
-    intro: `${visible.length} live cams and videos, organized by where and what they show. Updated ${today}.`,
-    introData: `data-n="${visible.length}" data-d="${today}"`,
+    intro: `${mainVisibleCount} live cams and videos, organized by where and what they show. Updated ${today}.`,
+    introData: `data-n="${mainVisibleCount}" data-d="${today}"`,
     bodyHtml: `
       <div class="map-globe-row">
         <div class="mg-col">
@@ -824,6 +831,19 @@ async function main() {
             var n = localName(p.dataset.code);
             if (n) p.dataset.name = n;
           });
+        })();
+        // 인트로의 영상 개수는 생성 시점에 박히므로, 페이지 열 때 실시간 개수로 갱신 (첫 숫자만 교체)
+        (function () {
+          fetch('${SUPABASE_URL}/rest/v1/streams?select=video_id&status=eq.live&title=not.is.null&or=(approval_status.is.null,approval_status.neq.pending)&or=(visibility.is.null,visibility.eq.listed)', {
+            headers: { apikey: '${SUPABASE_ANON_KEY}', Prefer: 'count=exact', Range: '0-0' },
+          }).then(function (r) {
+            var cr = r.headers.get('content-range') || '';
+            var n = Number((cr.split('/')[1] || '').trim());
+            if (!n) return;
+            var intro = document.querySelector('.browse-intro');
+            intro.dataset.n = n;
+            intro.textContent = intro.textContent.replace(/[\\d,]+/, n.toLocaleString());
+          }).catch(function () {});
         })();
       </script>`,
   });

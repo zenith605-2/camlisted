@@ -407,6 +407,12 @@ async function main() {
     }
 
     if (!isValidFor(contentType, info)) {
+      // 아직 승인 안 된 대기 영상이 라이브 종료/비공개가 됐으면 오프라인 유예(7일) 없이 바로 삭제한다.
+      // (유예는 방문자가 다시 찾을 수 있는 "승인된" 영상용. 검색으로 재유입 가능하니 차단목록엔 안 올림)
+      if (row.approval_status === 'pending') {
+        toDelete.push(row.video_id);
+        continue;
+      }
       offlineCount += 1;
       if (row.status !== 'offline' || !row.offline_since) {
         // 방금 오프라인으로 전환된 시점만 기록 (계속 오프라인이어도 최초 시점 유지 -> 7일 카운트 기준)

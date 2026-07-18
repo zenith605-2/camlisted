@@ -511,7 +511,7 @@ function cardInnerHtml(s, groupIndex) {
         <span class="live-badge ${badgeClass}">${badgeText}</span>
         ${s.approvalStatus === 'pending' ? `<span class="new-badge pending-badge">${t('pending_badge')}</span>` : (isRecentlyAdded ? '<span class="new-badge">NEW</span>' : '')}
         ${!isLiveType && s.durationSeconds ? `<span class="duration-badge">${formatDuration(s.durationSeconds)}</span>` : ''}
-        ${s.country && s.country !== 'XX' ? (wxHtml(s.country) || `<span class="wx-badge card-wx-slot" data-country="${escapeHtml(s.country)}"></span>`) : ''}
+        ${isLiveType && s.country && s.country !== 'XX' ? (wxHtml(s.country) || `<span class="wx-badge card-wx-slot" data-country="${escapeHtml(s.country)}"></span>`) : ''}
         ${offlineNoticeHtml}
         ${thumbHtml}
       </div>
