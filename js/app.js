@@ -1065,6 +1065,10 @@ function clearHoverPreview() {
 }
 
 function setupViewportAutoplay() {
+  // 카드가 '온전히' 화면에 들어왔을 때만 자동재생한다. 화면 위/아래 끝에 반쯤 걸친
+  // 줄은 재생하지 않으므로, 사용자가 실제로 보는 카드만 틀리고 재생 수도 자연히 줄어든다.
+  // 0.95 = 사실상 카드 전체가 보이는 상태(1.0은 서브픽셀 때문에 도달 못 하는 경우가 있어 피함).
+  const FULLY_VISIBLE = 0.95;
   viewportPreviewObserver = new IntersectionObserver((entries) => {
     if (previewMode() !== 'auto') return; // hover 모드에선 자동 재생 안 함
     for (const entry of entries) {
@@ -1073,7 +1077,7 @@ function setupViewportAutoplay() {
       if (!card) continue;
       const videoId = card.dataset.videoId;
       clearTimeout(viewportPreviewTimers.get(videoId));
-      if (entry.isIntersecting) {
+      if (entry.intersectionRatio >= FULLY_VISIBLE) {
         visiblePreviewThumbs.add(thumbWrap);
         // 스크롤 중 잠깐 지나치는 카드마다 iframe을 만들지 않도록 짧은 지연
         viewportPreviewTimers.set(videoId, setTimeout(() => startViewportPreview(thumbWrap, videoId), 400));
@@ -1083,7 +1087,7 @@ function setupViewportAutoplay() {
         stopViewportPreview(thumbWrap);
       }
     }
-  }, { threshold: 0.6 });
+  }, { threshold: [0, FULLY_VISIBLE] });
   grid.querySelectorAll('.thumb-wrap').forEach(el => viewportPreviewObserver.observe(el));
 }
 let ytApiReady = false;
