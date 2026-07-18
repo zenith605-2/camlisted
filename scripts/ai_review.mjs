@@ -21,12 +21,13 @@ if (!SUPABASE_URL || !SUPABASE_KEY) {
 const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
 
 // 키가 무료로 접근 가능한 모델이 계정/지역마다 달라, 후보를 순서대로 시도해 먼저 되는 걸 쓴다.
+// (gemini-flash-latest가 이 키에서 유일하게 되는 걸로 확인돼 맨 앞에 둠 — 나머지는 폴백)
 const MODEL_CANDIDATES = (process.env.GEMINI_MODEL ? [process.env.GEMINI_MODEL] : [])
-  .concat(['gemini-2.5-flash', 'gemini-2.0-flash', 'gemini-flash-latest', 'gemini-2.0-flash-lite', 'gemini-1.5-flash']);
+  .concat(['gemini-flash-latest', 'gemini-2.0-flash-lite', 'gemini-2.0-flash', 'gemini-1.5-flash']);
 let MODEL = null; // 첫 성공한 모델로 고정
 const BATCH = 15;            // 한 요청에 15개 (요청 수 절약)
 const MAX_PER_RUN = 450;     // 무료 하루 한도 안에서 안전하게
-const DELAY_MS = 6000;       // 요청 간 간격 (분당 요청 한도 여유)
+const DELAY_MS = 8000;       // 요청 간 간격 (무료 모델 분당 요청 한도 여유)
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
@@ -103,14 +104,14 @@ async function callGemini(prompt) {
     }
     throw new Error('사용 가능한 무료 모델 없음 (키/할당량 확인 필요)');
   }
-  // 모델 고정 후: 429면 백오프 후 1회 재시도
-  for (let attempt = 0; attempt < 2; attempt++) {
+  // 모델 고정 후: 429면 백오프 후 최대 2회 재시도 (무료 분당 한도 회복 대기)
+  for (let attempt = 0; attempt < 3; attempt++) {
     const res = await requestModel(MODEL, prompt);
     if (res.ok) {
       const data = await res.json();
       return JSON.parse(data?.candidates?.[0]?.content?.parts?.[0]?.text || '[]');
     }
-    if (res.status === 429 && attempt === 0) { await sleep(15000); continue; }
+    if (res.status === 429 && attempt < 2) { await sleep(20000); continue; }
     throw new Error(`Gemini ${res.status}: ${(await res.text()).slice(0, 160)}`);
   }
 }
