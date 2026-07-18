@@ -28,27 +28,20 @@
 <body>
 <div class="page-layout">
 <header class="site-header">
-  <div class="header-actions">
-    <select id="langSelect" class="lang-select">
-      <option value="en">English</option>
-      <option value="ja">日本語</option>
-      <option value="ko">한국어</option>
-      <option value="zh">中文</option>
-      <option value="es">Español</option>
-    </select>
-    <div class="header-toolbar">
-      <button type="button" id="leaderboardBtn" class="pill-btn" data-i18n="leaderboard_button">🏆 Leaderboard</button>
-      <a href="https://ko-fi.com/zenith605" target="_blank" rel="noopener" class="pill-btn kofi-btn" title="Support on Ko-fi">☕ Ko-fi</a>
-      <span class="toolbar-divider"></span>
-      <div id="authArea" class="auth-area"></div>
-    </div>
-  </div>
-  <div class="utility-bar">
+  <div class="topbar">
     <span id="visitorStats" class="visitor-stats"></span>
-    <a href="about.html" data-i18n="about_link">About &amp; How to Use</a>
-    · <a href="privacy.html" data-i18n="privacy_policy">Privacy Policy</a>
-    · <a href="terms.html" data-i18n="terms_of_service">Terms</a>
-    · <a href="feedback.html" data-i18n="feedback_title">Feedback &amp; Feature Requests</a>
+    <nav class="topbar-actions">
+      <select id="langSelect" class="lang-select">
+        <option value="en">English</option>
+        <option value="ja">日本語</option>
+        <option value="ko">한국어</option>
+        <option value="zh">中文</option>
+        <option value="es">Español</option>
+      </select>
+      <a href="https://ko-fi.com/zenith605" target="_blank" rel="noopener" class="kofi-btn" title="Support on Ko-fi">☕ Ko-fi</a>
+      <button type="button" id="leaderboardBtn" class="pill-btn" data-i18n="leaderboard_button">🏆 Leaderboard</button>
+      <div id="authArea" class="auth-area"></div>
+    </nav>
   </div>
   <div id="quotaInfo" class="quota-info" hidden></div>
   <a href="./" class="site-brand" aria-label="camlisted — home">
@@ -65,15 +58,7 @@
   </a>
   <h1><a href="./" class="site-title-link">Live Cams &amp; Footage in Poland</a></h1>
   <p class="subtitle" data-i18n="site_subtitle">A curated collection of live cams and real-world footage — traffic, wildlife, dashcams, city streets, and more, gathered from YouTube every day.</p>
-  <p class="category-hint" data-i18n="category_hint">🤝 Camlisted is built together by its users — sign in to submit new links, and fix any wrong category right on the card!</p>
-  <p id="memberPerks" class="member-perks" data-i18n="member_perks">✨ Free sign-in unlocks: submit links · upvote/downvote · favorites with notes · comments · Excel/TXT export · fix &amp; suggest categories</p>
-  <div id="cheerSection" class="cheer-section">
-    <div id="cheerList" class="cheer-list"></div>
-    <form id="cheerForm" class="cheer-form">
-      <input type="text" id="cheerInput" maxlength="200" data-i18n-placeholder="cheer_placeholder" placeholder="Leave a cheer! 🎉">
-      <button type="submit" data-i18n="cheer_send">Send</button>
-    </form>
-  </div>
+  <p id="memberPerks" class="contribute-line" data-i18n="member_perks">🤝 Built by its users — sign in to submit links, vote, favorite, comment &amp; fix categories</p>
   <div class="controls">
     <input type="text" id="searchInput" data-i18n-placeholder="search_placeholder" placeholder="Search by title or channel...">
   </div>
@@ -205,8 +190,27 @@
 </div>
 
 <p id="emptyState" class="empty-state" data-i18n="empty_state" hidden>No results to display.</p>
+
+<div id="cheerSection" class="cheer-section">
+  <div id="cheerList" class="cheer-list"></div>
+  <form id="cheerForm" class="cheer-form">
+    <input type="text" id="cheerInput" maxlength="200" data-i18n-placeholder="cheer_placeholder" placeholder="Leave a cheer! 🎉">
+    <button type="submit" data-i18n="cheer_send">Send</button>
+  </form>
 </div>
 </div>
+</div>
+
+<footer class="site-footer">
+  <a href="./" class="footer-brand"><span class="wm-cam">cam</span>listed</a>
+  <nav class="footer-links">
+    <a href="about.html" data-i18n="about_link">About &amp; How to Use</a>
+    <a href="privacy.html" data-i18n="privacy_policy">Privacy Policy</a>
+    <a href="terms.html" data-i18n="terms_of_service">Terms</a>
+    <a href="feedback.html" data-i18n="feedback_title">Feedback &amp; Feature Requests</a>
+  </nav>
+  <span class="footer-copy">© camlisted</span>
+</footer>
 
 <div id="modal" class="modal" hidden>
   <div class="modal-backdrop"></div>

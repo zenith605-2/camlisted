@@ -544,24 +544,43 @@ body {
   font-weight: 800;
 }
 
-/* 브랜드 로고 (지구본 + camlisted 워드마크) — 헤더 상단 */
+/* 상단 얇은 바: 왼쪽 방문자 수, 오른쪽 언어·Ko-fi·리더보드·로그인 */
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px 16px;
+  flex-wrap: wrap;
+  padding: 0 0 10px;
+  margin-bottom: 6px;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.8rem;
+}
+.topbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+/* 브랜드 로고 (지구본 + camlisted 워드마크) — 헤더 히어로 */
 .site-brand {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 11px;
+  gap: 12px;
   text-decoration: none;
-  margin: 2px 0 6px;
+  margin: 12px 0 8px;
 }
 .brand-globe {
-  width: 42px;
-  height: 42px;
+  width: 52px;
+  height: 52px;
   flex: none;
 }
 .brand-wordmark {
-  font-size: 30px;
+  font-size: 40px;
   font-weight: 800;
-  letter-spacing: -0.5px;
+  letter-spacing: -1px;
   line-height: 1;
   color: var(--text);
 }
@@ -571,9 +590,62 @@ body {
 .brand-pin:nth-of-type(3) { animation-delay: 1.6s; }
 @keyframes brandPinPulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.35; } }
 @media (prefers-reduced-motion: reduce) { .brand-pin { animation: none; } }
+
+/* 태그라인 (기존 h1) — 브랜드 아래 작은 부제목 (.site-header h1 규칙보다 구체적이어야 이김) */
+.site-header h1.site-tagline {
+  font-size: 1.15rem;
+  font-weight: 600;
+  margin: 0 0 6px;
+  color: var(--text);
+}
+.contribute-line {
+  margin: 8px 0 0;
+  font-size: 0.82rem;
+  color: var(--muted);
+}
+
 @media (max-width: 560px) {
-  .brand-globe { width: 34px; height: 34px; }
-  .brand-wordmark { font-size: 24px; }
+  .brand-globe { width: 40px; height: 40px; }
+  .brand-wordmark { font-size: 30px; }
+  .site-tagline { font-size: 1rem; }
+  .topbar { justify-content: center; }
+}
+
+/* 하단 footer: 정책/소개 링크 */
+.site-footer {
+  max-width: 1400px;
+  margin: 40px auto 0;
+  padding: 20px 24px 28px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 8px 18px;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+.footer-brand {
+  font-weight: 800;
+  letter-spacing: -0.3px;
+  color: var(--text);
+  text-decoration: none;
+}
+.footer-brand .wm-cam { color: var(--accent); }
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 16px;
+  justify-content: center;
+}
+.footer-links a { color: var(--muted); text-decoration: none; }
+.footer-links a:hover { color: var(--accent); }
+.footer-copy { color: var(--muted); opacity: 0.7; }
+
+/* 응원 위젯 — 헤더에서 그리드 아래로 이동 */
+.cheer-section {
+  max-width: 720px;
+  margin: 28px auto 0;
 }
 
 .site-title-link {

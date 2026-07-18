@@ -250,7 +250,7 @@ function appPage(indexTemplate, { title, description, canonicalPath, h1, presetS
   // 하위 폴더에서도 css/js 상대경로가 동작하도록 (반드시 다른 URL보다 먼저 선언되어야 함)
   html = html.replace('<head>', '<head>\n<base href="/">');
   // h1을 페이지 주제로 교체 (data-i18n을 떼서 언어 전환 시 일반 제목으로 덮어쓰이지 않게)
-  html = html.replace(/<h1><a href="\.\/" class="site-title-link" data-i18n="site_h1">[^<]*<\/a><\/h1>/,
+  html = html.replace(/<h1[^>]*><a href="\.\/" class="site-title-link" data-i18n="site_h1">[^<]*<\/a><\/h1>/,
     `<h1><a href="./" class="site-title-link">${escapeHtml(h1)}</a></h1>`);
   html = html.replace('<main id="grid" class="grid">', `${intro}<main id="grid" class="grid">${staticGrid}`);
   html = html.replace('<script src="js/app.js">', `<script>${presetScript}</script>\n<script src="js/app.js">`);
