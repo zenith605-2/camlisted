@@ -64,6 +64,9 @@
   .cam-info { flex-basis: 100%; color: var(--muted); font-size: 0.78rem; }
   .cam-badge { background: var(--card-bg); border: 1px solid var(--border); border-radius: 999px; padding: 2px 9px; font-size: 0.75rem; color: var(--muted); }
   .cam-edit { margin-left: auto; color: var(--accent); text-decoration: none; font-size: 0.8rem; }
+  .cam-cat-edit { background: var(--card-bg); border: 1px solid var(--border); border-radius: 999px; color: var(--text); font-size: 0.75rem; padding: 3px 8px; cursor: pointer; }
+  .cam-cond { background: var(--card-bg); border: 1px solid var(--border); border-radius: 999px; color: var(--muted); font-size: 0.72rem; padding: 2px 8px; cursor: pointer; }
+  .cam-cond.on { color: var(--accent); border-color: var(--accent); }
   .panel-filter { display: flex; gap: 8px; }
   .panel-filter button { background: var(--card-bg); color: var(--muted); border: 1px solid var(--border); border-radius: 999px; padding: 3px 10px; font-size: 0.75rem; cursor: pointer; }
   .panel-filter button.active { color: #fff; border-color: var(--accent); }
@@ -206,6 +209,7 @@
       </aside>
       <script src="https://unpkg.com/three@0.160.0/build/three.min.js"></script>
       <script src="https://unpkg.com/globe.gl@2.32.0/dist/globe.gl.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
       <script>
         // 인라인 3D 지구본 + (2D 지도와 공유하는) 국가 패널
         var GC = [{"code":"US","name":"United States","lat":39.8,"lng":-98.6,"live":353,"video":118,"href":"/country/united-states.html"},{"code":"GB","name":"United Kingdom","lat":54,"lng":-2,"live":62,"video":33,"href":"/country/united-kingdom.html"},{"code":"UA","name":"Ukraine","lat":48.4,"lng":31.2,"live":6,"video":0,"href":"/country/ukraine.html"},{"code":"ES","name":"Spain","lat":40.5,"lng":-3.7,"live":51,"video":10,"href":"/country/spain.html"},{"code":"ID","name":"Indonesia","lat":-0.8,"lng":113.9,"live":77,"video":0,"href":"/country/indonesia.html"},{"code":"IL","name":"Israel","lat":31,"lng":34.9,"live":5,"video":0,"href":"/country/israel.html"},{"code":"JP","name":"Japan","lat":36.2,"lng":138.3,"live":301,"video":71,"href":"/country/japan.html"},{"code":"KR","name":"South Korea","lat":36.5,"lng":127.9,"live":44,"video":44,"href":"/country/south-korea.html"},{"code":"IN","name":"India","lat":20.6,"lng":79,"live":0,"video":17,"href":"/country/india.html"},{"code":"AU","name":"Australia","lat":-25.3,"lng":133.8,"live":2,"video":23,"href":"/country/australia.html"},{"code":"CA","name":"Canada","lat":56.1,"lng":-106.3,"live":31,"video":14,"href":"/country/canada.html"},{"code":"BR","name":"Brazil","lat":-14.2,"lng":-51.9,"live":66,"video":1,"href":"/country/brazil.html"},{"code":"RU","name":"Russia","lat":61.5,"lng":105.3,"live":32,"video":12,"href":"/country/russia.html"},{"code":"MX","name":"Mexico","lat":23.6,"lng":-102.5,"live":30,"video":6,"href":"/country/mexico.html"},{"code":"TH","name":"Thailand","lat":15.9,"lng":100.9,"live":27,"video":9,"href":"/country/thailand.html"},{"code":"TW","name":"Taiwan","lat":23.7,"lng":121,"live":57,"video":3,"href":"/country/taiwan.html"},{"code":"VN","name":"Vietnam","lat":14.1,"lng":108.3,"live":10,"video":1,"href":"/country/vietnam.html"},{"code":"CN","name":"China","lat":35.9,"lng":104.2,"live":2,"video":17,"href":"/country/china.html"},{"code":"NA","name":"Namibia","lat":-22.9,"lng":18.5,"live":3,"video":0,"href":"/country/namibia.html"},{"code":"IT","name":"Italy","lat":41.9,"lng":12.6,"live":76,"video":11,"href":"/country/italy.html"},{"code":"PH","name":"Philippines","lat":12.9,"lng":121.8,"live":32,"video":0,"href":"/country/philippines.html"},{"code":"IS","name":"Iceland","lat":64.9,"lng":-19,"live":2,"video":1,"href":"/country/iceland.html"},{"code":"KE","name":"Kenya","lat":-0.02,"lng":37.9,"live":1,"video":0,"href":"/?country=KE"},{"code":"DE","name":"Germany","lat":51.2,"lng":10.4,"live":26,"video":16,"href":"/country/germany.html"},{"code":"AR","name":"Argentina","lat":-38.4,"lng":-63.6,"live":3,"video":0,"href":"/country/argentina.html"},{"code":"CH","name":"Switzerland","lat":46.8,"lng":8.2,"live":8,"video":5,"href":"/country/switzerland.html"},{"code":"HK","name":"Hong Kong SAR China","lat":22.3,"lng":114.2,"live":6,"video":3,"href":"/country/hong-kong-sar-china.html"},{"code":"AT","name":"Austria","lat":47.5,"lng":14.6,"live":3,"video":0,"href":"/country/austria.html"},{"code":"FR","name":"France","lat":46.2,"lng":2.2,"live":33,"video":8,"href":"/country/france.html"},{"code":"BE","name":"Belgium","lat":50.5,"lng":4.5,"live":2,"video":0,"href":"/?country=BE"},{"code":"NL","name":"Netherlands","lat":52.1,"lng":5.3,"live":31,"video":0,"href":"/country/netherlands.html"},{"code":"PT","name":"Portugal","lat":39.4,"lng":-8.2,"live":17,"video":2,"href":"/country/portugal.html"},{"code":"NZ","name":"New Zealand","lat":-40.9,"lng":174.9,"live":3,"video":1,"href":"/country/new-zealand.html"},{"code":"SG","name":"Singapore","lat":1.35,"lng":103.8,"live":1,"video":1,"href":"/?country=SG"},{"code":"FI","name":"Finland","lat":61.9,"lng":25.7,"live":12,"video":1,"href":"/country/finland.html"},{"code":"SE","name":"Sweden","lat":60.1,"lng":18.6,"live":7,"video":3,"href":"/country/sweden.html"},{"code":"PL","name":"Poland","lat":51.9,"lng":19.1,"live":4,"video":1,"href":"/country/poland.html"},{"code":"SK","name":"Slovakia","lat":48.7,"lng":19.7,"live":1,"video":0,"href":"/?country=SK"},{"code":"CR","name":"Costa Rica","lat":9.7,"lng":-83.8,"live":1,"video":0,"href":"/?country=CR"},{"code":"CZ","name":"Czechia","lat":49.8,"lng":15.5,"live":4,"video":2,"href":"/country/czechia.html"},{"code":"RO","name":"Romania","lat":45.9,"lng":24.9,"live":1,"video":3,"href":"/country/romania.html"},{"code":"GR","name":"Greece","lat":39.1,"lng":21.8,"live":0,"video":3,"href":"/country/greece.html"},{"code":"BD","name":"Bangladesh","lat":23.7,"lng":90.4,"live":0,"video":1,"href":"/?country=BD"},{"code":"TR","name":"Türkiye","lat":39,"lng":35.2,"live":0,"video":4,"href":"/country/t-rkiye.html"},{"code":"PE","name":"Peru","lat":-9.2,"lng":-75,"live":1,"video":0,"href":"/?country=PE"},{"code":"CL","name":"Chile","lat":-35.7,"lng":-71.5,"live":2,"video":0,"href":"/?country=CL"},{"code":"HR","name":"Croatia","lat":45.1,"lng":15.2,"live":3,"video":0,"href":"/country/croatia.html"},{"code":"IE","name":"Ireland","lat":53.4,"lng":-8.2,"live":1,"video":0,"href":"/?country=IE"},{"code":"AE","name":"United Arab Emirates","lat":23.4,"lng":53.8,"live":2,"video":1,"href":"/country/united-arab-emirates.html"},{"code":"ZA","name":"South Africa","lat":-30.6,"lng":22.9,"live":1,"video":1,"href":"/?country=ZA"},{"code":"MY","name":"Malaysia","lat":4.2,"lng":101.9,"live":3,"video":0,"href":"/country/malaysia.html"},{"code":"NO","name":"Norway","lat":60.5,"lng":8.5,"live":1,"video":0,"href":"/?country=NO"},{"code":"SA","name":"Saudi Arabia","lat":23.9,"lng":45.1,"live":3,"video":0,"href":"/country/saudi-arabia.html"},{"code":"DK","name":"Denmark","lat":56.3,"lng":9.5,"live":1,"video":0,"href":"/?country=DK"},{"code":"EE","name":"Estonia","lat":58.6,"lng":25,"live":1,"video":0,"href":"/?country=EE"},{"code":"MT","name":"Malta","lat":35.9,"lng":14.4,"live":1,"video":0,"href":"/?country=MT"}];
@@ -232,16 +236,43 @@
           info.push('\ud83d\udc4d ' + (v[8] || 0) + ' \ud83d\udc4e ' + (v[9] || 0));
           html += '<div class="cam-info">' + info.join(' \u00b7 ') + '</div>';
           var cat = v[3];
-          if (cat && CATM[cat]) {
-            var label = CATM[cat][UILANG] || CATM[cat].en || cat;
-            html += '<span class="cam-badge">' + (CATM[cat].icon ? CATM[cat].icon + ' ' : '') + String(label).replace(/</g, '&lt;') + '</span>';
+          var tags = (v[4] || '').split(',').filter(Boolean);
+          if (window.__me) {
+            var opts = Object.keys(CATM).map(function (k) {
+              return '<option value="' + k + '"' + (k === cat ? ' selected' : '') + '>' + (CATM[k].icon ? CATM[k].icon + ' ' : '') + (CATM[k][UILANG] || CATM[k].en || k) + '</option>';
+            }).join('');
+            html += '<select class="cam-cat-edit">' + opts + '</select>';
+            if (v[2] === 0) {
+              html += Object.keys(CONDLABEL).map(function (t) {
+                return '<button type="button" class="cam-cond' + (tags.indexOf(t) >= 0 ? ' on' : '') + '" data-t="' + t + '">' + CONDLABEL[t] + '</button>';
+              }).join('');
+            }
+            meta.innerHTML = html;
+            meta.querySelector('.cam-cat-edit').addEventListener('change', function () {
+              var val = this.value;
+              window.__sbc.rpc('set_stream_category', { p_video_id: id, p_category: val }).then(function (r) { if (!r.error) v[3] = val; });
+            });
+            [].forEach.call(meta.querySelectorAll('.cam-cond'), function (btn) {
+              btn.addEventListener('click', function () {
+                var t = btn.dataset.t, i = tags.indexOf(t);
+                if (i >= 0) tags.splice(i, 1); else tags.push(t);
+                btn.classList.toggle('on');
+                window.__sbc.rpc('set_stream_tags', { p_video_id: id, p_tags: tags.slice() }).then(function (r) { if (!r.error) v[4] = tags.join(','); });
+              });
+            });
+          } else {
+            if (cat && CATM[cat]) html += '<span class="cam-badge">' + (CATM[cat].icon ? CATM[cat].icon + ' ' : '') + String(CATM[cat][UILANG] || CATM[cat].en || cat).replace(/</g, '&lt;') + '</span>';
+            tags.forEach(function (t) { html += '<span class="cam-badge cond">' + (CONDLABEL[t] || t) + '</span>'; });
+            html += '<a class="cam-edit" href="' + window.__editHref + '">\u270f\ufe0f ' + EDITLABEL + '</a>';
+            meta.innerHTML = html;
           }
-          (v[4] || '').split(',').filter(Boolean).forEach(function (t) {
-            html += '<span class="cam-badge cond">' + (CONDLABEL[t] || t) + '</span>';
-          });
-          html += '<a class="cam-edit" href="' + window.__editHref + '">\u270f\ufe0f ' + EDITLABEL + '</a>';
-          meta.innerHTML = html;
         }
+        window.__sbc = window.supabase.createClient('https://chgodrjjalsrgyxuwjyq.supabase.co', 'sb_publishable_IPRYfUNkhfTLWohT6gjXYw_APGRcPuP');
+        window.__me = null;
+        window.__sbc.auth.getSession().then(function (r) {
+          window.__me = r.data.session ? r.data.session.user : null;
+          if (window.__playingId) renderCamMeta(window.__playingId);
+        });
         var selLabelTimer = null;
         function localTime(code) {
           var tz = TZ[code];
@@ -341,6 +372,7 @@
           openPanel({ code: ds.code, name: ds.name, live: Number(ds.live), video: Number(ds.video), href: ds.href });
         };
         function play(id) {
+          window.__playingId = id;
           document.getElementById('player').innerHTML =
             '<iframe src="https://www.youtube.com/embed/' + id + '?autoplay=1&mute=1&playsinline=1&rel=0" allow="autoplay; encrypted-media; fullscreen" allowfullscreen></iframe>';
           renderCamMeta(id);

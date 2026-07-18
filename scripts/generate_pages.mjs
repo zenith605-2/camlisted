@@ -107,6 +107,9 @@ const PAGE_CSS = `
   .cam-info { flex-basis: 100%; color: var(--muted); font-size: 0.78rem; }
   .cam-badge { background: var(--card-bg); border: 1px solid var(--border); border-radius: 999px; padding: 2px 9px; font-size: 0.75rem; color: var(--muted); }
   .cam-edit { margin-left: auto; color: var(--accent); text-decoration: none; font-size: 0.8rem; }
+  .cam-cat-edit { background: var(--card-bg); border: 1px solid var(--border); border-radius: 999px; color: var(--text); font-size: 0.75rem; padding: 3px 8px; cursor: pointer; }
+  .cam-cond { background: var(--card-bg); border: 1px solid var(--border); border-radius: 999px; color: var(--muted); font-size: 0.72rem; padding: 2px 8px; cursor: pointer; }
+  .cam-cond.on { color: var(--accent); border-color: var(--accent); }
   .panel-filter { display: flex; gap: 8px; }
   .panel-filter button { background: var(--card-bg); color: var(--muted); border: 1px solid var(--border); border-radius: 999px; padding: 3px 10px; font-size: 0.75rem; cursor: pointer; }
   .panel-filter button.active { color: #fff; border-color: var(--accent); }
@@ -292,6 +295,9 @@ async function writeGlobePage(countByCode, slugByCode, visible, today, CAT_META_
   .cam-info { flex-basis: 100%; color: #9aa4b2; font-size: 0.78rem; }
   .cam-badge { background: #161b22; border: 1px solid #2a2f3a; border-radius: 999px; padding: 2px 9px; font-size: 0.75rem; color: #9aa4b2; }
   .cam-edit { margin-left: auto; color: #ff3b3b; text-decoration: none; font-size: 0.8rem; }
+  .cam-cat-edit { background: #161b22; border: 1px solid #2a2f3a; border-radius: 999px; color: #e6e6e6; font-size: 0.75rem; padding: 3px 8px; cursor: pointer; }
+  .cam-cond { background: #161b22; border: 1px solid #2a2f3a; border-radius: 999px; color: #9aa4b2; font-size: 0.72rem; padding: 2px 8px; cursor: pointer; }
+  .cam-cond.on { color: #ff3b3b; border-color: #ff3b3b; }
   .panel-filter { display: flex; gap: 8px; }
   .panel-filter button { background: #161b22; color: #9aa4b2; border: 1px solid #2a2f3a; border-radius: 999px; padding: 3px 10px; font-size: 0.75rem; cursor: pointer; }
   .panel-filter button.active { color: #fff; border-color: #ff3b3b; }
@@ -327,6 +333,7 @@ async function writeGlobePage(countByCode, slugByCode, visible, today, CAT_META_
 </aside>
 <script src="https://unpkg.com/three@0.160.0/build/three.min.js"><\/script>
 <script src="https://unpkg.com/globe.gl@2.32.0/dist/globe.gl.min.js"><\/script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"><\/script>
 <script>
   // browse.html 안에 iframe으로 임베드될 때는 상단의 뒤로가기/제목을 숨긴다
   if (new URLSearchParams(location.search).has('embed')) {
@@ -355,16 +362,44 @@ async function writeGlobePage(countByCode, slugByCode, visible, today, CAT_META_
     info.push('\\ud83d\\udc4d ' + (v[8] || 0) + ' \\ud83d\\udc4e ' + (v[9] || 0)); // 추천/비추천
     html += '<div class="cam-info">' + info.join(' \\u00b7 ') + '</div>';
     var cat = v[3];
-    if (cat && CATM[cat]) {
-      var label = CATM[cat][UILANG] || CATM[cat].en || cat;
-      html += '<span class="cam-badge">' + (CATM[cat].icon ? CATM[cat].icon + ' ' : '') + String(label).replace(/</g, '&lt;') + '</span>';
+    var tags = (v[4] || '').split(',').filter(Boolean);
+    if (window.__me) {
+      // 로그인 시: 카테고리 select + (일반영상) 조건 토글 칩 — 메인 카드와 동일하게 바로 수정
+      var opts = Object.keys(CATM).map(function (k) {
+        return '<option value="' + k + '"' + (k === cat ? ' selected' : '') + '>' + (CATM[k].icon ? CATM[k].icon + ' ' : '') + (CATM[k][UILANG] || CATM[k].en || k) + '</option>';
+      }).join('');
+      html += '<select class="cam-cat-edit">' + opts + '</select>';
+      if (v[2] === 0) {
+        html += Object.keys(CONDLABEL).map(function (t) {
+          return '<button type="button" class="cam-cond' + (tags.indexOf(t) >= 0 ? ' on' : '') + '" data-t="' + t + '">' + CONDLABEL[t] + '</button>';
+        }).join('');
+      }
+      meta.innerHTML = html;
+      meta.querySelector('.cam-cat-edit').addEventListener('change', function () {
+        var val = this.value;
+        window.__sbc.rpc('set_stream_category', { p_video_id: id, p_category: val }).then(function (r) { if (!r.error) v[3] = val; });
+      });
+      [].forEach.call(meta.querySelectorAll('.cam-cond'), function (btn) {
+        btn.addEventListener('click', function () {
+          var t = btn.dataset.t, i = tags.indexOf(t);
+          if (i >= 0) tags.splice(i, 1); else tags.push(t);
+          btn.classList.toggle('on');
+          window.__sbc.rpc('set_stream_tags', { p_video_id: id, p_tags: tags.slice() }).then(function (r) { if (!r.error) v[4] = tags.join(','); });
+        });
+      });
+    } else {
+      if (cat && CATM[cat]) html += '<span class="cam-badge">' + (CATM[cat].icon ? CATM[cat].icon + ' ' : '') + String(CATM[cat][UILANG] || CATM[cat].en || cat).replace(/</g, '&lt;') + '</span>';
+      tags.forEach(function (t) { html += '<span class="cam-badge cond">' + (CONDLABEL[t] || t) + '</span>'; });
+      html += '<a class="cam-edit" href="' + window.__editHref + '">\\u270f\\ufe0f ' + EDITLABEL + '</a>';
+      meta.innerHTML = html;
     }
-    (v[4] || '').split(',').filter(Boolean).forEach(function (t) {
-      html += '<span class="cam-badge cond">' + (CONDLABEL[t] || t) + '</span>';
-    });
-    html += '<a class="cam-edit" href="' + window.__editHref + '">\\u270f\\ufe0f ' + EDITLABEL + '</a>';
-    meta.innerHTML = html;
   }
+  window.__sbc = window.supabase.createClient('${SUPABASE_URL}', '${SUPABASE_ANON_KEY}');
+  window.__me = null;
+  window.__sbc.auth.getSession().then(function (r) {
+    window.__me = r.data.session ? r.data.session.user : null;
+    if (window.__playingId) renderCamMeta(window.__playingId);
+  });
   var maxTotal = Math.max.apply(null, COUNTRIES.map(function (c) { return c.live + c.video; }));
   var selectedCode = null;
 
@@ -426,6 +461,7 @@ async function writeGlobePage(countByCode, slugByCode, visible, today, CAT_META_
     globe.pointOfView({ lat: d.lat, lng: d.lng, altitude: alt }, 900);
   }
   function play(id) {
+    window.__playingId = id;
     document.getElementById('player').innerHTML =
       '<iframe src="https://www.youtube.com/embed/' + id + '?autoplay=1&mute=1&playsinline=1&rel=0" allow="autoplay; encrypted-media; fullscreen" allowfullscreen></iframe>';
     renderCamMeta(id);
@@ -759,6 +795,7 @@ async function main() {
       </aside>
       <script src="https://unpkg.com/three@0.160.0/build/three.min.js"><\/script>
       <script src="https://unpkg.com/globe.gl@2.32.0/dist/globe.gl.min.js"><\/script>
+      <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"><\/script>
       <script>
         // 인라인 3D 지구본 + (2D 지도와 공유하는) 국가 패널
         var GC = ${JSON.stringify(globeCountriesInline)};
@@ -785,16 +822,43 @@ async function main() {
           info.push('\\ud83d\\udc4d ' + (v[8] || 0) + ' \\ud83d\\udc4e ' + (v[9] || 0));
           html += '<div class="cam-info">' + info.join(' \\u00b7 ') + '</div>';
           var cat = v[3];
-          if (cat && CATM[cat]) {
-            var label = CATM[cat][UILANG] || CATM[cat].en || cat;
-            html += '<span class="cam-badge">' + (CATM[cat].icon ? CATM[cat].icon + ' ' : '') + String(label).replace(/</g, '&lt;') + '</span>';
+          var tags = (v[4] || '').split(',').filter(Boolean);
+          if (window.__me) {
+            var opts = Object.keys(CATM).map(function (k) {
+              return '<option value="' + k + '"' + (k === cat ? ' selected' : '') + '>' + (CATM[k].icon ? CATM[k].icon + ' ' : '') + (CATM[k][UILANG] || CATM[k].en || k) + '</option>';
+            }).join('');
+            html += '<select class="cam-cat-edit">' + opts + '</select>';
+            if (v[2] === 0) {
+              html += Object.keys(CONDLABEL).map(function (t) {
+                return '<button type="button" class="cam-cond' + (tags.indexOf(t) >= 0 ? ' on' : '') + '" data-t="' + t + '">' + CONDLABEL[t] + '</button>';
+              }).join('');
+            }
+            meta.innerHTML = html;
+            meta.querySelector('.cam-cat-edit').addEventListener('change', function () {
+              var val = this.value;
+              window.__sbc.rpc('set_stream_category', { p_video_id: id, p_category: val }).then(function (r) { if (!r.error) v[3] = val; });
+            });
+            [].forEach.call(meta.querySelectorAll('.cam-cond'), function (btn) {
+              btn.addEventListener('click', function () {
+                var t = btn.dataset.t, i = tags.indexOf(t);
+                if (i >= 0) tags.splice(i, 1); else tags.push(t);
+                btn.classList.toggle('on');
+                window.__sbc.rpc('set_stream_tags', { p_video_id: id, p_tags: tags.slice() }).then(function (r) { if (!r.error) v[4] = tags.join(','); });
+              });
+            });
+          } else {
+            if (cat && CATM[cat]) html += '<span class="cam-badge">' + (CATM[cat].icon ? CATM[cat].icon + ' ' : '') + String(CATM[cat][UILANG] || CATM[cat].en || cat).replace(/</g, '&lt;') + '</span>';
+            tags.forEach(function (t) { html += '<span class="cam-badge cond">' + (CONDLABEL[t] || t) + '</span>'; });
+            html += '<a class="cam-edit" href="' + window.__editHref + '">\\u270f\\ufe0f ' + EDITLABEL + '</a>';
+            meta.innerHTML = html;
           }
-          (v[4] || '').split(',').filter(Boolean).forEach(function (t) {
-            html += '<span class="cam-badge cond">' + (CONDLABEL[t] || t) + '</span>';
-          });
-          html += '<a class="cam-edit" href="' + window.__editHref + '">\\u270f\\ufe0f ' + EDITLABEL + '</a>';
-          meta.innerHTML = html;
         }
+        window.__sbc = window.supabase.createClient('${SUPABASE_URL}', '${SUPABASE_ANON_KEY}');
+        window.__me = null;
+        window.__sbc.auth.getSession().then(function (r) {
+          window.__me = r.data.session ? r.data.session.user : null;
+          if (window.__playingId) renderCamMeta(window.__playingId);
+        });
         var selLabelTimer = null;
         function localTime(code) {
           var tz = TZ[code];
@@ -894,6 +958,7 @@ async function main() {
           openPanel({ code: ds.code, name: ds.name, live: Number(ds.live), video: Number(ds.video), href: ds.href });
         };
         function play(id) {
+          window.__playingId = id;
           document.getElementById('player').innerHTML =
             '<iframe src="https://www.youtube.com/embed/' + id + '?autoplay=1&mute=1&playsinline=1&rel=0" allow="autoplay; encrypted-media; fullscreen" allowfullscreen></iframe>';
           renderCamMeta(id);
