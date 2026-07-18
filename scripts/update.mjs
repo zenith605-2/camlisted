@@ -234,6 +234,15 @@ function isValidFor(contentType, info) {
   return info.snippet?.liveBroadcastContent === 'live';
 }
 
+// API 응답으로 실제 content_type을 판별한다. (등록 시 유저가 라이브/영상을 잘못 골랐어도 여기서 교정)
+// 지금 방송 중이면 'live', 아니면서 공개/미등록 영상이면 'video', 둘 다 아니면(비공개·삭제·종료) null.
+function trueContentType(info) {
+  if (!info) return null;
+  if (info.snippet?.liveBroadcastContent === 'live') return 'live';
+  if (info.status?.privacyStatus === 'public' || info.status?.privacyStatus === 'unlisted') return 'video';
+  return null;
+}
+
 async function getChannelCountries(channelIds) {
   const map = new Map();
   const uniqueIds = [...new Set(channelIds.filter(Boolean))];
@@ -408,7 +417,7 @@ async function main() {
   let offlineCount = 0;
 
   for (const row of existingRows) {
-    const contentType = row.content_type || 'live';
+    let contentType = row.content_type || 'live';
     const info = infoMap.get(row.video_id);
 
     // 세로 영상(쇼츠 등)은 사이트 성격에 안 맞음 -> 삭제 + 차단목록 (비율은 안 변하니 재수집 방지)
@@ -422,6 +431,12 @@ async function main() {
       nonEmbeddableIds.push(row.video_id);
       continue;
     }
+
+    // content_type 자동 교정: 등록 시 라이브/영상을 잘못 골랐어도 실제 상태로 바로잡는다.
+    // (라이브로 넣었는데 실제론 일반 공개영상 -> video로 전환해 offline 처리 대신 살려둠, 반대도 동일)
+    const correctType = trueContentType(info);
+    const contentTypeFixed = correctType && correctType !== contentType ? correctType : null;
+    if (contentTypeFixed) contentType = contentTypeFixed; // 이후 유효성 판정·정보 갱신은 교정된 타입 기준
 
     if (!isValidFor(contentType, info)) {
       // 아직 승인 안 된 대기 영상이 라이브 종료/비공개가 됐으면 오프라인 유예(7일) 없이 바로 삭제한다.
@@ -450,6 +465,14 @@ async function main() {
     validCount += 1;
     const patch = { video_id: row.video_id };
     let needsUpdate = false;
+    if (contentTypeFixed) {
+      patch.content_type = contentTypeFixed;
+      needsUpdate = true;
+      // 라이브->영상으로 교정되면 라이브 전용 썸네일(hqdefault_live)이 깨지므로 일반 썸네일로 교체
+      if (contentTypeFixed === 'video' && (row.thumbnail || '').includes('hqdefault_live')) {
+        patch.thumbnail = `https://i.ytimg.com/vi/${row.video_id}/hqdefault.jpg`;
+      }
+    }
     if (row.status !== 'live') {
       patch.status = 'live';
       patch.offline_since = null; // 다시 살아났으니 오프라인 카운트 초기화
