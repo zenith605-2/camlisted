@@ -5,11 +5,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Live Cams &amp; Webcams in Canada – Camlisted</title>
-<meta name="description" content="Watch 68 live cams and 15 real-world videos from Canada: traffic cameras, city streets, harbors, beaches and more. Verified daily.">
+<meta name="description" content="Watch 30 live cams and 14 real-world videos from Canada: traffic cameras, city streets, harbors, beaches and more. Verified daily.">
 <link rel="canonical" href="https://camlisted.com/country/canada.html">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Live Cams &amp; Webcams in Canada – Camlisted">
-<meta property="og:description" content="Watch 68 live cams and 15 real-world videos from Canada: traffic cameras, city streets, harbors, beaches and more. Verified daily.">
+<meta property="og:description" content="Watch 30 live cams and 14 real-world videos from Canada: traffic cameras, city streets, harbors, beaches and more. Verified daily.">
 <meta property="og:url" content="https://camlisted.com/country/canada.html">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="manifest" href="manifest.webmanifest">
@@ -70,9 +70,12 @@
     <select id="categoryFilter" hidden>
       <option value="">All</option>
     </select>
-    <select id="countryFilter" hidden>
-      <option value="" data-i18n="filter_all">All</option>
-    </select>
+    <div class="filter-group">
+      <span class="filter-label" data-i18n="filter_country">Country</span>
+      <select id="countryFilter">
+        <option value="" data-i18n="filter_all">All</option>
+      </select>
+    </div>
     <div class="filter-group">
       <span class="filter-label" data-i18n="filter_quality">Quality</span>
       <select id="qualityFilter">
@@ -154,14 +157,6 @@
 <div class="page-content">
 <span id="resultCount" class="result-count"></span>
 <main id="grid" class="grid">
-    <a class="entry" href="https://www.youtube.com/watch?v=qx7gry390YA" target="_blank" rel="noopener">
-      <div class="thumb" data-vid="qx7gry390YA"><img src="https://i.ytimg.com/vi/qx7gry390YA/hqdefault_live.jpg" alt="EarthCam Live:  Niagara Falls" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
-      <div class="entry-body"><strong>EarthCam Live:  Niagara Falls</strong><span>EarthCam</span></div>
-    </a>
-    <a class="entry" href="https://www.youtube.com/watch?v=3F0XlKxaqbk" target="_blank" rel="noopener">
-      <div class="thumb" data-vid="3F0XlKxaqbk"><img src="https://i.ytimg.com/vi/3F0XlKxaqbk/hqdefault_live.jpg" alt="🌎 Incredible ISS Astronaut Spacewalk Go Pro 🚀 Space Ambient Music" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
-      <div class="entry-body"><strong>🌎 Incredible ISS Astronaut Spacewalk Go Pro 🚀 Space Ambient Music</strong><span>WorldCam</span></div>
-    </a>
     <a class="entry" href="https://www.youtube.com/watch?v=sFeiuRohRwc" target="_blank" rel="noopener">
       <div class="thumb" data-vid="sFeiuRohRwc"><img src="https://i.ytimg.com/vi/sFeiuRohRwc/hqdefault_live.jpg" alt="Southernmost Beach Resort - Pool Cam" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Southernmost Beach Resort - Pool Cam</strong><span>Beach Live Cams</span></div>
@@ -169,6 +164,14 @@
     <a class="entry" href="https://www.youtube.com/watch?v=fRpwtzd3-H4" target="_blank" rel="noopener">
       <div class="thumb" data-vid="fRpwtzd3-H4"><img src="https://i.ytimg.com/vi/fRpwtzd3-H4/hqdefault_live.jpg" alt="🔴Southernmost Beach Resort - Shores Cam" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>🔴Southernmost Beach Resort - Shores Cam</strong><span>Beach Live Cams</span></div>
+    </a>
+    <a class="entry" href="https://www.youtube.com/watch?v=qx7gry390YA" target="_blank" rel="noopener">
+      <div class="thumb" data-vid="qx7gry390YA"><img src="https://i.ytimg.com/vi/qx7gry390YA/hqdefault_live.jpg" alt="EarthCam Live:  Niagara Falls" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="entry-body"><strong>EarthCam Live:  Niagara Falls</strong><span>EarthCam</span></div>
+    </a>
+    <a class="entry" href="https://www.youtube.com/watch?v=3F0XlKxaqbk" target="_blank" rel="noopener">
+      <div class="thumb" data-vid="3F0XlKxaqbk"><img src="https://i.ytimg.com/vi/3F0XlKxaqbk/hqdefault_live.jpg" alt="🌎 Incredible ISS Astronaut Spacewalk Go Pro 🚀 Space Ambient Music" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="entry-body"><strong>🌎 Incredible ISS Astronaut Spacewalk Go Pro 🚀 Space Ambient Music</strong><span>WorldCam</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=wy1ePMWnNGo" target="_blank" rel="noopener">
       <div class="thumb" data-vid="wy1ePMWnNGo"><img src="https://i.ytimg.com/vi/wy1ePMWnNGo/hqdefault_live.jpg" alt="Anna Maria Island - Holmes Beach, FL" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
@@ -186,6 +189,10 @@
       <div class="thumb" data-vid="k36fwVlkzBM"><img src="https://i.ytimg.com/vi/k36fwVlkzBM/hqdefault_live.jpg" alt="River View (City Hall, Brockville)" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>River View (City Hall, Brockville)</strong><span>City of Brockville web cameras</span></div>
     </a>
+    <a class="entry" href="https://www.youtube.com/watch?v=i4kxSPT7rGo" target="_blank" rel="noopener">
+      <div class="thumb" data-vid="i4kxSPT7rGo"><img src="https://i.ytimg.com/vi/i4kxSPT7rGo/hqdefault_live.jpg" alt="🔴 Live Now: 24/7 Santa Maria (Santiaguito) Volcano in 4K Ultra HD (Cam C)" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="entry-body"><strong>🔴 Live Now: 24/7 Santa Maria (Santiaguito) Volcano in 4K Ultra HD (Cam C)</strong><span>afarTV</span></div>
+    </a>
     <a class="entry" href="https://www.youtube.com/watch?v=xsRDTfuksyI" target="_blank" rel="noopener">
       <div class="thumb" data-vid="xsRDTfuksyI"><img src="https://i.ytimg.com/vi/xsRDTfuksyI/hqdefault_live.jpg" alt="Live Cam, Central Memorial Park, Calgary, Alberta" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Live Cam, Central Memorial Park, Calgary, Alberta</strong><span>DELTATECH Calgary</span></div>
@@ -198,65 +205,13 @@
       <div class="thumb" data-vid="ygedW8Q-pOc"><img src="https://i.ytimg.com/vi/ygedW8Q-pOc/hqdefault_live.jpg" alt="Ottawa LIVE Camera | Canada" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Ottawa LIVE Camera | Canada</strong><span>skyviewca</span></div>
     </a>
-    <a class="entry" href="https://www.youtube.com/watch?v=iWCeBAxRCBo" target="_blank" rel="noopener">
-      <div class="thumb" data-vid="iWCeBAxRCBo"><img src="https://i.ytimg.com/vi/iWCeBAxRCBo/hqdefault_live.jpg" alt="🔴 Live Now: 24/7 Hawaii Humpback Whale Marine Sanctuary in Maui, Hawaii in 4K Ultra HD" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
-      <div class="entry-body"><strong>🔴 Live Now: 24/7 Hawaii Humpback Whale Marine Sanctuary in Maui, Hawaii in 4K Ultra HD</strong><span>afarTV</span></div>
-    </a>
-    <a class="entry" href="https://www.youtube.com/watch?v=a_FK2mDP4W8" target="_blank" rel="noopener">
-      <div class="thumb" data-vid="a_FK2mDP4W8"><img src="https://i.ytimg.com/vi/a_FK2mDP4W8/hqdefault_live.jpg" alt="🔴 Live Now: Iceland Volcano Watch (Cam E)" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
-      <div class="entry-body"><strong>🔴 Live Now: Iceland Volcano Watch (Cam E)</strong><span>afarTV</span></div>
-    </a>
-    <a class="entry" href="https://www.youtube.com/watch?v=lynX9Smloe4" target="_blank" rel="noopener">
-      <div class="thumb" data-vid="lynX9Smloe4"><img src="https://i.ytimg.com/vi/lynX9Smloe4/hqdefault_live.jpg" alt="🔴 Live Now: 24/7 Etna Volcano, Sicily Italy in 4K" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
-      <div class="entry-body"><strong>🔴 Live Now: 24/7 Etna Volcano, Sicily Italy in 4K</strong><span>afarTV</span></div>
-    </a>
     <a class="entry" href="https://www.youtube.com/watch?v=wJTwuekiCr0" target="_blank" rel="noopener">
       <div class="thumb" data-vid="wJTwuekiCr0"><img src="https://i.ytimg.com/vi/wJTwuekiCr0/hqdefault_live.jpg" alt="Block House Island" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Block House Island</strong><span>City of Brockville web cameras</span></div>
     </a>
-    <a class="entry" href="https://www.youtube.com/watch?v=EGk3Mr0OshE" target="_blank" rel="noopener">
-      <div class="thumb" data-vid="EGk3Mr0OshE"><img src="https://i.ytimg.com/vi/EGk3Mr0OshE/hqdefault_live.jpg" alt="🔴 Live Now: 24/7 Mount Etna Volcano, Sicily, Italy (Multi-cams)" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
-      <div class="entry-body"><strong>🔴 Live Now: 24/7 Mount Etna Volcano, Sicily, Italy (Multi-cams)</strong><span>afarTV</span></div>
-    </a>
     <a class="entry" href="https://www.youtube.com/watch?v=Bm7WPwOOkZM" target="_blank" rel="noopener">
       <div class="thumb" data-vid="Bm7WPwOOkZM"><img src="https://i.ytimg.com/vi/Bm7WPwOOkZM/hqdefault_live.jpg" alt="🔴 Live Now: 24/7 Cape Canaveral Rocket Launch View from the Indian River" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>🔴 Live Now: 24/7 Cape Canaveral Rocket Launch View from the Indian River</strong><span>afarTV</span></div>
-    </a>
-    <a class="entry" href="https://www.youtube.com/watch?v=jUmrH7zrgaY" target="_blank" rel="noopener">
-      <div class="thumb" data-vid="jUmrH7zrgaY"><img src="https://i.ytimg.com/vi/jUmrH7zrgaY/hqdefault_live.jpg" alt="🔴 Live Now: 24/7 Erupting Popocatépetl Volcano from San Matias Tlalancaleca Mexico in 4K Ultra HD" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
-      <div class="entry-body"><strong>🔴 Live Now: 24/7 Erupting Popocatépetl Volcano from San Matias Tlalancaleca Mexico in 4K Ultra HD</strong><span>afarTV</span></div>
-    </a>
-    <a class="entry" href="https://www.youtube.com/watch?v=1rbBmhRQ5Gs" target="_blank" rel="noopener">
-      <div class="thumb" data-vid="1rbBmhRQ5Gs"><img src="https://i.ytimg.com/vi/1rbBmhRQ5Gs/hqdefault_live.jpg" alt="🔴 Live Now: 24/7 Erupting Semeru Volcano in Java, Indonesia in 4K Ultra HD (CAM A)" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
-      <div class="entry-body"><strong>🔴 Live Now: 24/7 Erupting Semeru Volcano in Java, Indonesia in 4K Ultra HD (CAM A)</strong><span>afarTV</span></div>
-    </a>
-    <a class="entry" href="https://www.youtube.com/watch?v=UDAZWxehMAI" target="_blank" rel="noopener">
-      <div class="thumb" data-vid="UDAZWxehMAI"><img src="https://i.ytimg.com/vi/UDAZWxehMAI/hqdefault_live.jpg" alt="🔴 Live Now: 24/7 Mayon Volcano is Erupting in the Philippines in 4K Ultra-HD" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
-      <div class="entry-body"><strong>🔴 Live Now: 24/7 Mayon Volcano is Erupting in the Philippines in 4K Ultra-HD</strong><span>afarTV</span></div>
-    </a>
-    <a class="entry" href="https://www.youtube.com/watch?v=z1kLiiWvm4U" target="_blank" rel="noopener">
-      <div class="thumb" data-vid="z1kLiiWvm4U"><img src="https://i.ytimg.com/vi/z1kLiiWvm4U/hqdefault_live.jpg" alt="🔴 Live Now: 24/7 Merapi Volcano Erupting in 4K Ultra HD (Indonesia)" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
-      <div class="entry-body"><strong>🔴 Live Now: 24/7 Merapi Volcano Erupting in 4K Ultra HD (Indonesia)</strong><span>afarTV</span></div>
-    </a>
-    <a class="entry" href="https://www.youtube.com/watch?v=Hr1Sv6B-kfM" target="_blank" rel="noopener">
-      <div class="thumb" data-vid="Hr1Sv6B-kfM"><img src="https://i.ytimg.com/vi/Hr1Sv6B-kfM/hqdefault_live.jpg" alt="🔴 Live Now: 24/7 Erupting Semeru Volcano in Java, Indonesia in 4K Ultra HD (Cam B)" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
-      <div class="entry-body"><strong>🔴 Live Now: 24/7 Erupting Semeru Volcano in Java, Indonesia in 4K Ultra HD (Cam B)</strong><span>afarTV</span></div>
-    </a>
-    <a class="entry" href="https://www.youtube.com/watch?v=_lxxEz6xYIY" target="_blank" rel="noopener">
-      <div class="thumb" data-vid="_lxxEz6xYIY"><img src="https://i.ytimg.com/vi/_lxxEz6xYIY/hqdefault_live.jpg" alt="🔴 Live Now: 24/7 Erupting Semeru Volcano in Java, Indonesia (Cam C)" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
-      <div class="entry-body"><strong>🔴 Live Now: 24/7 Erupting Semeru Volcano in Java, Indonesia (Cam C)</strong><span>afarTV</span></div>
-    </a>
-    <a class="entry" href="https://www.youtube.com/watch?v=DIWcJkiUnqY" target="_blank" rel="noopener">
-      <div class="thumb" data-vid="DIWcJkiUnqY"><img src="https://i.ytimg.com/vi/DIWcJkiUnqY/hqdefault_live.jpg" alt="🔴 Live Now: 24/7 Kanlaon Volcano in the Philippines" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
-      <div class="entry-body"><strong>🔴 Live Now: 24/7 Kanlaon Volcano in the Philippines</strong><span>afarTV</span></div>
-    </a>
-    <a class="entry" href="https://www.youtube.com/watch?v=i4kxSPT7rGo" target="_blank" rel="noopener">
-      <div class="thumb" data-vid="i4kxSPT7rGo"><img src="https://i.ytimg.com/vi/i4kxSPT7rGo/hqdefault_live.jpg" alt="🔴 Live Now: 24/7 Santa Maria (Santiaguito) Volcano in 4K Ultra HD (Cam C)" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
-      <div class="entry-body"><strong>🔴 Live Now: 24/7 Santa Maria (Santiaguito) Volcano in 4K Ultra HD (Cam C)</strong><span>afarTV</span></div>
-    </a>
-    <a class="entry" href="https://www.youtube.com/watch?v=FVdmnpJ2kM0" target="_blank" rel="noopener">
-      <div class="thumb" data-vid="FVdmnpJ2kM0"><img src="https://i.ytimg.com/vi/FVdmnpJ2kM0/hqdefault_live.jpg" alt="🔴 Live Now:  24/7 Kilauea Volcano Watch in Hawaii (Multi-cams)" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
-      <div class="entry-body"><strong>🔴 Live Now:  24/7 Kilauea Volcano Watch in Hawaii (Multi-cams)</strong><span>afarTV</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=5kpWKkJ-xKY" target="_blank" rel="noopener">
       <div class="thumb" data-vid="5kpWKkJ-xKY"><img src="https://i.ytimg.com/vi/5kpWKkJ-xKY/hqdefault_live.jpg" alt="🔴 Live Now: 24/7 Fuego Volcano Eruption in 4K Ultra HD (Guatemala)" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
@@ -270,26 +225,6 @@
       <div class="thumb" data-vid="yCzgcbCxg8s"><img src="https://i.ytimg.com/vi/yCzgcbCxg8s/hqdefault_live.jpg" alt="🔴 En directo: 24/7 Erupción del volcán de Fuego en 4K Ultra HD (Guatemala)" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>🔴 En directo: 24/7 Erupción del volcán de Fuego en 4K Ultra HD (Guatemala)</strong><span>afarTV</span></div>
     </a>
-    <a class="entry" href="https://www.youtube.com/watch?v=qkSvU9j4kqM" target="_blank" rel="noopener">
-      <div class="thumb" data-vid="qkSvU9j4kqM"><img src="https://i.ytimg.com/vi/qkSvU9j4kqM/hqdefault_live.jpg" alt="🔴 Live Now: 24/7 Iceland Volcano Watch (Multi-cams)" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
-      <div class="entry-body"><strong>🔴 Live Now: 24/7 Iceland Volcano Watch (Multi-cams)</strong><span>afarTV</span></div>
-    </a>
-    <a class="entry" href="https://www.youtube.com/watch?v=bGr1qtW1jnY" target="_blank" rel="noopener">
-      <div class="thumb" data-vid="bGr1qtW1jnY"><img src="https://i.ytimg.com/vi/bGr1qtW1jnY/hqdefault_live.jpg" alt="🔴 Live Now: SpaceX Gigabay Construction | Starship’s Giant Florida Factory Rises on the Space Coast" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
-      <div class="entry-body"><strong>🔴 Live Now: SpaceX Gigabay Construction | Starship’s Giant Florida Factory Rises on the Space Coast</strong><span>afarTV</span></div>
-    </a>
-    <a class="entry" href="https://www.youtube.com/watch?v=nerntsuIIqk" target="_blank" rel="noopener">
-      <div class="thumb" data-vid="nerntsuIIqk"><img src="https://i.ytimg.com/vi/nerntsuIIqk/hqdefault_live.jpg" alt="🔴 Live Now: 24/7 Bromo Volcano, Java, Indonesia in 4K Ultra HD" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
-      <div class="entry-body"><strong>🔴 Live Now: 24/7 Bromo Volcano, Java, Indonesia in 4K Ultra HD</strong><span>afarTV</span></div>
-    </a>
-    <a class="entry" href="https://www.youtube.com/watch?v=_ICZ2fokIbs" target="_blank" rel="noopener">
-      <div class="thumb" data-vid="_ICZ2fokIbs"><img src="https://i.ytimg.com/vi/_ICZ2fokIbs/hqdefault_live.jpg" alt="🔴Hotel Monaco - Venezia, Italy - Live Cam" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
-      <div class="entry-body"><strong>🔴Hotel Monaco - Venezia, Italy - Live Cam</strong><span>World Cams</span></div>
-    </a>
-    <a class="entry" href="https://www.youtube.com/watch?v=O8uzDVdShYE" target="_blank" rel="noopener">
-      <div class="thumb" data-vid="O8uzDVdShYE"><img src="https://i.ytimg.com/vi/O8uzDVdShYE/hqdefault_live.jpg" alt="🔴Fort Zachary Taylor Beach - Key West, Florida - Live Cam" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
-      <div class="entry-body"><strong>🔴Fort Zachary Taylor Beach - Key West, Florida - Live Cam</strong><span>Florida Live</span></div>
-    </a>
     <a class="entry" href="https://www.youtube.com/watch?v=4BeuX9wcI5I" target="_blank" rel="noopener">
       <div class="thumb" data-vid="4BeuX9wcI5I"><img src="https://i.ytimg.com/vi/4BeuX9wcI5I/hqdefault_live.jpg" alt="LIVE: View of downtown Toronto as wildfire smoke blankets city" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>LIVE: View of downtown Toronto as wildfire smoke blankets city</strong><span>CTV News</span></div>
@@ -297,38 +232,6 @@
     <a class="entry" href="https://www.youtube.com/watch?v=iUbDs97pV1U" target="_blank" rel="noopener">
       <div class="thumb" data-vid="iUbDs97pV1U"><img src="https://i.ytimg.com/vi/iUbDs97pV1U/hqdefault_live.jpg" alt="LIVE: View of downtown Toronto as wildfire smoke blankets city" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>LIVE: View of downtown Toronto as wildfire smoke blankets city</strong><span>CP24</span></div>
-    </a>
-    <a class="entry" href="https://www.youtube.com/watch?v=oHS8n6eVBVE" target="_blank" rel="noopener">
-      <div class="thumb" data-vid="oHS8n6eVBVE"><img src="https://i.ytimg.com/vi/oHS8n6eVBVE/hqdefault_live.jpg" alt="🔴Sandestin Beach - Sandestin, Florida - Live Cam" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
-      <div class="entry-body"><strong>🔴Sandestin Beach - Sandestin, Florida - Live Cam</strong><span>Florida Live</span></div>
-    </a>
-    <a class="entry" href="https://www.youtube.com/watch?v=dZvGsrQJ8Ig" target="_blank" rel="noopener">
-      <div class="thumb" data-vid="dZvGsrQJ8Ig"><img src="https://i.ytimg.com/vi/dZvGsrQJ8Ig/hqdefault_live.jpg" alt="🔴Lauderdale-by-the-Sea Beach - Fort Lauderdale, Florida - Live Cam" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
-      <div class="entry-body"><strong>🔴Lauderdale-by-the-Sea Beach - Fort Lauderdale, Florida - Live Cam</strong><span>Florida Live</span></div>
-    </a>
-    <a class="entry" href="https://www.youtube.com/watch?v=ZsbOBakkTFo" target="_blank" rel="noopener">
-      <div class="thumb" data-vid="ZsbOBakkTFo"><img src="https://i.ytimg.com/vi/ZsbOBakkTFo/hqdefault_live.jpg" alt="🔴Sharky&#39;s Beachfront Restaurant - Panama City Beach,  Florida - Cam 2" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
-      <div class="entry-body"><strong>🔴Sharky&#39;s Beachfront Restaurant - Panama City Beach,  Florida - Cam 2</strong><span>Florida Live</span></div>
-    </a>
-    <a class="entry" href="https://www.youtube.com/watch?v=uK-eZz0w-go" target="_blank" rel="noopener">
-      <div class="thumb" data-vid="uK-eZz0w-go"><img src="https://i.ytimg.com/vi/uK-eZz0w-go/hqdefault_live.jpg" alt="🔴Pink Shell Resort - Fort Myers, Florida - Live Cam" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
-      <div class="entry-body"><strong>🔴Pink Shell Resort - Fort Myers, Florida - Live Cam</strong><span>Florida Live</span></div>
-    </a>
-    <a class="entry" href="https://www.youtube.com/watch?v=EYs8y8gOwf0" target="_blank" rel="noopener">
-      <div class="thumb" data-vid="EYs8y8gOwf0"><img src="https://i.ytimg.com/vi/EYs8y8gOwf0/hqdefault_live.jpg" alt="🔴Sharky&#39;s Beachfront Restaurant - Panama City Beach,  Florida - Live Cam" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
-      <div class="entry-body"><strong>🔴Sharky&#39;s Beachfront Restaurant - Panama City Beach,  Florida - Live Cam</strong><span>Florida Live</span></div>
-    </a>
-    <a class="entry" href="https://www.youtube.com/watch?v=zclpD3QKEK4" target="_blank" rel="noopener">
-      <div class="thumb" data-vid="zclpD3QKEK4"><img src="https://i.ytimg.com/vi/zclpD3QKEK4/hqdefault_live.jpg" alt="🔴Pompano Beach, Florida - Live Cam" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
-      <div class="entry-body"><strong>🔴Pompano Beach, Florida - Live Cam</strong><span>Florida Live</span></div>
-    </a>
-    <a class="entry" href="https://www.youtube.com/watch?v=kuqSymepVTk" target="_blank" rel="noopener">
-      <div class="thumb" data-vid="kuqSymepVTk"><img src="https://i.ytimg.com/vi/kuqSymepVTk/hqdefault_live.jpg" alt="🔴Key Biscayne Beach Cam - Florida - Live Cam" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
-      <div class="entry-body"><strong>🔴Key Biscayne Beach Cam - Florida - Live Cam</strong><span>Florida Live</span></div>
-    </a>
-    <a class="entry" href="https://www.youtube.com/watch?v=LF9TnMUnhmE" target="_blank" rel="noopener">
-      <div class="thumb" data-vid="LF9TnMUnhmE"><img src="https://i.ytimg.com/vi/LF9TnMUnhmE/hqdefault_live.jpg" alt="🔴High Noon Beach Resort - Fort Lauderdale, Florida - Live Cam" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
-      <div class="entry-body"><strong>🔴High Noon Beach Resort - Fort Lauderdale, Florida - Live Cam</strong><span>Florida Live</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=6fveE_OP4MI" target="_blank" rel="noopener">
       <div class="thumb" data-vid="6fveE_OP4MI"><img src="https://i.ytimg.com/vi/6fveE_OP4MI/hqdefault_live.jpg" alt="🟥Live Spotting Montreal-Pierre Elliott Trudeau Int. Canada 🍁" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
@@ -350,73 +253,21 @@
       <div class="thumb" data-vid="iJxeutc3QCI"><img src="https://i.ytimg.com/vi/iJxeutc3QCI/hqdefault_live.jpg" alt="LIVE Montreal Trudeau Airport CYUL 24/7 Webcam Runway 24L" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>LIVE Montreal Trudeau Airport CYUL 24/7 Webcam Runway 24L</strong><span>Moore Equipment Ltd.</span></div>
     </a>
-    <a class="entry" href="https://www.youtube.com/watch?v=kGO2F0KogFQ" target="_blank" rel="noopener">
-      <div class="thumb" data-vid="kGO2F0KogFQ"><img src="https://i.ytimg.com/vi/kGO2F0KogFQ/hqdefault_live.jpg" alt="🔴Maia Pia Beach - Sardinia, Italy - Live Cam" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
-      <div class="entry-body"><strong>🔴Maia Pia Beach - Sardinia, Italy - Live Cam</strong><span>World Cams</span></div>
-    </a>
     <a class="entry" href="https://www.youtube.com/watch?v=lLYosWv_AwQ" target="_blank" rel="noopener">
       <div class="thumb" data-vid="lLYosWv_AwQ"><img src="https://i.ytimg.com/vi/lLYosWv_AwQ/hqdefault_live.jpg" alt="Ottawa, Ontario, Canada LIVE Camera" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Ottawa, Ontario, Canada LIVE Camera</strong><span>DestC</span></div>
     </a>
-    <a class="entry" href="https://www.youtube.com/watch?v=NSESB4D0pi4" target="_blank" rel="noopener">
-      <div class="thumb" data-vid="NSESB4D0pi4"><img src="https://i.ytimg.com/vi/NSESB4D0pi4/hqdefault_live.jpg" alt="🔴Slanica Beach - Murter, Croatia - Live Cam" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
-      <div class="entry-body"><strong>🔴Slanica Beach - Murter, Croatia - Live Cam</strong><span>World Cams</span></div>
-    </a>
-    <a class="entry" href="https://www.youtube.com/watch?v=zus08RD_Th4" target="_blank" rel="noopener">
-      <div class="thumb" data-vid="zus08RD_Th4"><img src="https://i.ytimg.com/vi/zus08RD_Th4/hqdefault_live.jpg" alt="🔴Hotel Monaco - Venezia, Italy - Live Cam" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
-      <div class="entry-body"><strong>🔴Hotel Monaco - Venezia, Italy - Live Cam</strong><span>World Cams</span></div>
-    </a>
-    <a class="entry" href="https://www.youtube.com/watch?v=DbpTEvxNqC0" target="_blank" rel="noopener">
-      <div class="thumb" data-vid="DbpTEvxNqC0"><img src="https://i.ytimg.com/vi/DbpTEvxNqC0/hqdefault_live.jpg" alt="🔴Venice Canal - Venice, Italy - Live Cam" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
-      <div class="entry-body"><strong>🔴Venice Canal - Venice, Italy - Live Cam</strong><span>World Cams</span></div>
-    </a>
-    <a class="entry" href="https://www.youtube.com/watch?v=7b-UCNBtMBM" target="_blank" rel="noopener">
-      <div class="thumb" data-vid="7b-UCNBtMBM"><img src="https://i.ytimg.com/vi/7b-UCNBtMBM/hqdefault_live.jpg" alt="🔴Gulf of Orosei - Cala Liberotto, Italy - Live Cam" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
-      <div class="entry-body"><strong>🔴Gulf of Orosei - Cala Liberotto, Italy - Live Cam</strong><span>World Cams</span></div>
-    </a>
-    <a class="entry" href="https://www.youtube.com/watch?v=iOpt4jD5CCI" target="_blank" rel="noopener">
-      <div class="thumb" data-vid="iOpt4jD5CCI"><img src="https://i.ytimg.com/vi/iOpt4jD5CCI/hqdefault_live.jpg" alt="🔴Bagno Venere Talani - San Vincenzo, Italy - Live Cam" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
-      <div class="entry-body"><strong>🔴Bagno Venere Talani - San Vincenzo, Italy - Live Cam</strong><span>World Cams</span></div>
-    </a>
-    <a class="entry" href="https://www.youtube.com/watch?v=NqWd_-hB5ZA" target="_blank" rel="noopener">
-      <div class="thumb" data-vid="NqWd_-hB5ZA"><img src="https://i.ytimg.com/vi/NqWd_-hB5ZA/hqdefault_live.jpg" alt="🔴Alfagar Aparthotels - Algarve, Portugal - Live Cam" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
-      <div class="entry-body"><strong>🔴Alfagar Aparthotels - Algarve, Portugal - Live Cam</strong><span>World Cams</span></div>
-    </a>
-    <a class="entry" href="https://www.youtube.com/watch?v=I3G_kTiKkKI" target="_blank" rel="noopener">
-      <div class="thumb" data-vid="I3G_kTiKkKI"><img src="https://i.ytimg.com/vi/I3G_kTiKkKI/hqdefault_live.jpg" alt="Le Saline beach - Sardinia, Italy - Live Cam" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
-      <div class="entry-body"><strong>Le Saline beach - Sardinia, Italy - Live Cam</strong><span>World Cams</span></div>
-    </a>
-    <a class="entry" href="https://www.youtube.com/watch?v=GdFGN2pzoRM" target="_blank" rel="noopener">
-      <div class="thumb" data-vid="GdFGN2pzoRM"><img src="https://i.ytimg.com/vi/GdFGN2pzoRM/hqdefault_live.jpg" alt="🔴Riva Del Sole Pool - Tuscany, Italy - Live Cam" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
-      <div class="entry-body"><strong>🔴Riva Del Sole Pool - Tuscany, Italy - Live Cam</strong><span>World Cams</span></div>
-    </a>
-    <a class="entry" href="https://www.youtube.com/watch?v=ZZGnUkyVQIY" target="_blank" rel="noopener">
-      <div class="thumb" data-vid="ZZGnUkyVQIY"><img src="https://i.ytimg.com/vi/ZZGnUkyVQIY/hqdefault_live.jpg" alt="🔴Village Rosapineta Sud - Rosolina Mare, Italy - Live Cam" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
-      <div class="entry-body"><strong>🔴Village Rosapineta Sud - Rosolina Mare, Italy - Live Cam</strong><span>World Cams</span></div>
+    <a class="entry" href="https://www.youtube.com/watch?v=7gBzLGlJnwk" target="_blank" rel="noopener">
+      <div class="thumb" data-vid="7gBzLGlJnwk"><img src="https://i.ytimg.com/vi/7gBzLGlJnwk/hqdefault_live.jpg" alt="Niagara Falls Live" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="entry-body"><strong>Niagara Falls Live</strong><span>Niagara Falls Live</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=97YNts0D2ak" target="_blank" rel="noopener">
       <div class="thumb" data-vid="97YNts0D2ak"><img src="https://i.ytimg.com/vi/97YNts0D2ak/hqdefault_live.jpg" alt="Key West Southernmost Point Live Cam 2" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Key West Southernmost Point Live Cam 2</strong><span>Beach Live Cams</span></div>
     </a>
-    <a class="entry" href="https://www.youtube.com/watch?v=z1rVuxG4ej4" target="_blank" rel="noopener">
-      <div class="thumb" data-vid="z1rVuxG4ej4"><img src="https://i.ytimg.com/vi/z1rVuxG4ej4/hqdefault_live.jpg" alt="🔴 Skid Row - Los Angeles - Live Cam" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
-      <div class="entry-body"><strong>🔴 Skid Row - Los Angeles - Live Cam</strong><span>Mexico Live</span></div>
-    </a>
-    <a class="entry" href="https://www.youtube.com/watch?v=AtpOppc3agE" target="_blank" rel="noopener">
-      <div class="thumb" data-vid="AtpOppc3agE"><img src="https://i.ytimg.com/vi/AtpOppc3agE/hqdefault_live.jpg" alt="🔴Duval Street - Key West, Florida - Live Cam" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
-      <div class="entry-body"><strong>🔴Duval Street - Key West, Florida - Live Cam</strong><span>World Live Cams</span></div>
-    </a>
     <a class="entry" href="https://www.youtube.com/watch?v=GHEmhcWjiTE" target="_blank" rel="noopener">
       <div class="thumb" data-vid="GHEmhcWjiTE"><img src="https://i.ytimg.com/vi/GHEmhcWjiTE/hqdefault_live.jpg" alt="LIVE: Vancouver | Cruise Ships | Skyline | Harbour | 24/7" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>LIVE: Vancouver | Cruise Ships | Skyline | Harbour | 24/7</strong><span>Vancouver Port Live</span></div>
-    </a>
-    <a class="entry" href="https://www.youtube.com/watch?v=p3GyODpWR-M" target="_blank" rel="noopener">
-      <div class="thumb" data-vid="p3GyODpWR-M"><img src="https://i.ytimg.com/vi/p3GyODpWR-M/hqdefault_live.jpg" alt="🔴Lucica Beach - Brela Croatia - Live Cam" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
-      <div class="entry-body"><strong>🔴Lucica Beach - Brela Croatia - Live Cam</strong><span>World Live Cams</span></div>
-    </a>
-    <a class="entry" href="https://www.youtube.com/watch?v=rxyNjFKwzJA" target="_blank" rel="noopener">
-      <div class="thumb" data-vid="rxyNjFKwzJA"><img src="https://i.ytimg.com/vi/rxyNjFKwzJA/hqdefault_live.jpg" alt="🔴🚢 Vancouver LIVE Cam | Cruise Ship LiveStream 24/7 | City Views &amp; Canada Place | Alaska Season 2026" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
-      <div class="entry-body"><strong>🔴🚢 Vancouver LIVE Cam | Cruise Ship LiveStream 24/7 | City Views &amp; Canada Place | Alaska Season 2026</strong><span>Vancouver Views Live</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=ZvqDwjNoN7Y" target="_blank" rel="noopener">
       <div class="thumb" data-vid="ZvqDwjNoN7Y"><img src="https://i.ytimg.com/vi/ZvqDwjNoN7Y/hqdefault_live.jpg" alt="CHEK News | Victoria Harbour Cam 24/7 Livestream" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
@@ -438,13 +289,17 @@
       <div class="thumb" data-vid="KGkj1XSiTTc"><img src="https://i.ytimg.com/vi/KGkj1XSiTTc/hqdefault.jpg" alt="Highway 401 crash caught on dash cam video" loading="lazy" width="320" height="180"><span class="badge">1:31</span></div>
       <div class="entry-body"><strong>Highway 401 crash caught on dash cam video</strong><span>CTV News</span></div>
     </a>
+    <a class="entry" href="https://www.youtube.com/watch?v=zkGwMz2Dfos" target="_blank" rel="noopener">
+      <div class="thumb" data-vid="zkGwMz2Dfos"><img src="https://i.ytimg.com/vi/zkGwMz2Dfos/hqdefault.jpg" alt="Montreal, Canada 🇨🇦 - by drone [4K]" loading="lazy" width="320" height="180"><span class="badge">5:09</span></div>
+      <div class="entry-body"><strong>Montreal, Canada 🇨🇦 - by drone [4K]</strong><span>Drone Snap</span></div>
+    </a>
     <a class="entry" href="https://www.youtube.com/watch?v=gSRPcRDPy1w" target="_blank" rel="noopener">
       <div class="thumb" data-vid="gSRPcRDPy1w"><img src="https://i.ytimg.com/vi/gSRPcRDPy1w/hqdefault.jpg" alt="One Minute Time-Lapse: Subway connects York University" loading="lazy" width="320" height="180"><span class="badge">1:20</span></div>
       <div class="entry-body"><strong>One Minute Time-Lapse: Subway connects York University</strong><span>York University</span></div>
     </a>
-    <a class="entry" href="https://www.youtube.com/watch?v=UsVsQaV7z5k" target="_blank" rel="noopener">
-      <div class="thumb" data-vid="UsVsQaV7z5k"><img src="https://i.ytimg.com/vi/UsVsQaV7z5k/hqdefault.jpg" alt="🇯🇵 4K Japan Walking Tour - Relaxing Moss Covered Village Walk | 4K Ambience in HDR 60fps" loading="lazy" width="320" height="180"><span class="badge">3:06:25</span></div>
-      <div class="entry-body"><strong>🇯🇵 4K Japan Walking Tour - Relaxing Moss Covered Village Walk | 4K Ambience in HDR 60fps</strong><span>World Wanderings: 4K Walking Tours</span></div>
+    <a class="entry" href="https://www.youtube.com/watch?v=SYzzp-khjiQ" target="_blank" rel="noopener">
+      <div class="thumb" data-vid="SYzzp-khjiQ"><img src="https://i.ytimg.com/vi/SYzzp-khjiQ/hqdefault.jpg" alt="Vancouver 4K Walking Tour (Canada) - Captions &amp; Immersive Sound [4K Ultra HD/60fps]" loading="lazy" width="320" height="180"><span class="badge">3:07:35</span></div>
+      <div class="entry-body"><strong>Vancouver 4K Walking Tour (Canada) - Captions &amp; Immersive Sound [4K Ultra HD/60fps]</strong><span>HP Walking Tours</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=rITjvTwU_Tw" target="_blank" rel="noopener">
       <div class="thumb" data-vid="rITjvTwU_Tw"><img src="https://i.ytimg.com/vi/rITjvTwU_Tw/hqdefault.jpg" alt="Five and a half months in five and a half minutes!" loading="lazy" width="320" height="180"><span class="badge">5:31</span></div>
@@ -465,14 +320,6 @@
     <a class="entry" href="https://www.youtube.com/watch?v=YzcawvDGe4Y" target="_blank" rel="noopener">
       <div class="thumb" data-vid="YzcawvDGe4Y"><img src="https://i.ytimg.com/vi/YzcawvDGe4Y/hqdefault.jpg" alt="People Walking Free Stock Footage, Royalty-Free No Copyright Content" loading="lazy" width="320" height="180"><span class="badge">1:57</span></div>
       <div class="entry-body"><strong>People Walking Free Stock Footage, Royalty-Free No Copyright Content</strong><span>Montreal Walking Tours</span></div>
-    </a>
-    <a class="entry" href="https://www.youtube.com/watch?v=ca9uN3QyDmQ" target="_blank" rel="noopener">
-      <div class="thumb" data-vid="ca9uN3QyDmQ"><img src="https://i.ytimg.com/vi/ca9uN3QyDmQ/hqdefault.jpg" alt="[4K] Seoul Nightlife Walking Tour - BEST Street Food, Night Markets, and Party Districts." loading="lazy" width="320" height="180"><span class="badge">2:31:52</span></div>
-      <div class="entry-body"><strong>[4K] Seoul Nightlife Walking Tour - BEST Street Food, Night Markets, and Party Districts.</strong><span>World Wanderings: 4K Walking Tours</span></div>
-    </a>
-    <a class="entry" href="https://www.youtube.com/watch?v=28ZjrtD_iL0" target="_blank" rel="noopener">
-      <div class="thumb" data-vid="28ZjrtD_iL0"><img src="https://i.ytimg.com/vi/28ZjrtD_iL0/hqdefault.jpg" alt="Tokyo, Japan 4K HDR Walking Tour 🇯🇵 Day &amp; Night Street Views in 60fps" loading="lazy" width="320" height="180"><span class="badge">3:30:04</span></div>
-      <div class="entry-body"><strong>Tokyo, Japan 4K HDR Walking Tour 🇯🇵 Day &amp; Night Street Views in 60fps</strong><span>World Wanderings: 4K Walking Tours</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=91BeCFEr0pI" target="_blank" rel="noopener">
       <div class="thumb" data-vid="91BeCFEr0pI"><img src="https://i.ytimg.com/vi/91BeCFEr0pI/hqdefault.jpg" alt="🇨🇦 Halifax Waterfront Walking Tour | Exploring Nova Scotia&#39;s Harbourfront" loading="lazy" width="320" height="180"><span class="badge">1:02:00</span></div>

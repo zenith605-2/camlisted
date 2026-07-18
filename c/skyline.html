@@ -70,9 +70,12 @@
     <select id="categoryFilter" hidden>
       <option value="">All</option>
     </select>
-    <select id="countryFilter" hidden>
-      <option value="" data-i18n="filter_all">All</option>
-    </select>
+    <div class="filter-group">
+      <span class="filter-label" data-i18n="filter_country">Country</span>
+      <select id="countryFilter">
+        <option value="" data-i18n="filter_all">All</option>
+      </select>
+    </div>
     <div class="filter-group">
       <span class="filter-label" data-i18n="filter_quality">Quality</span>
       <select id="qualityFilter">
@@ -154,13 +157,17 @@
 <div class="page-content">
 <span id="resultCount" class="result-count"></span>
 <main id="grid" class="grid">
-    <a class="entry" href="https://www.youtube.com/watch?v=s--MDmshT3I" target="_blank" rel="noopener">
-      <div class="thumb" data-vid="s--MDmshT3I"><img src="https://i.ytimg.com/vi/s--MDmshT3I/hqdefault_live.jpg" alt="【LIVE】函館山ライブカメラ ／ Mt. Hakodate Ropeway Live Camera" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
-      <div class="entry-body"><strong>【LIVE】函館山ライブカメラ ／ Mt. Hakodate Ropeway Live Camera</strong><span>ＦＭいるか</span></div>
-    </a>
     <a class="entry" href="https://www.youtube.com/watch?v=g952T7L_fAs" target="_blank" rel="noopener">
       <div class="thumb" data-vid="g952T7L_fAs"><img src="https://i.ytimg.com/vi/g952T7L_fAs/hqdefault_live.jpg" alt="Hanoi Live Camera 24/7 | Vinh Tuy Bridge Traffic | Hanoi Skyline Night View" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Hanoi Live Camera 24/7 | Vinh Tuy Bridge Traffic | Hanoi Skyline Night View</strong><span>Ha Noi Live</span></div>
+    </a>
+    <a class="entry" href="https://www.youtube.com/watch?v=dvqM0l2C8dA" target="_blank" rel="noopener">
+      <div class="thumb" data-vid="dvqM0l2C8dA"><img src="https://i.ytimg.com/vi/dvqM0l2C8dA/hqdefault_live.jpg" alt="仙台市役所本庁舎工事LIVEカメラ" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="entry-body"><strong>仙台市役所本庁舎工事LIVEカメラ</strong><span>仙台市役所本庁舎工事LIVE</span></div>
+    </a>
+    <a class="entry" href="https://www.youtube.com/watch?v=s--MDmshT3I" target="_blank" rel="noopener">
+      <div class="thumb" data-vid="s--MDmshT3I"><img src="https://i.ytimg.com/vi/s--MDmshT3I/hqdefault_live.jpg" alt="【LIVE】函館山ライブカメラ ／ Mt. Hakodate Ropeway Live Camera" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="entry-body"><strong>【LIVE】函館山ライブカメラ ／ Mt. Hakodate Ropeway Live Camera</strong><span>ＦＭいるか</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=AJGLajSFggk" target="_blank" rel="noopener">
       <div class="thumb" data-vid="AJGLajSFggk"><img src="https://i.ytimg.com/vi/AJGLajSFggk/hqdefault_live.jpg" alt="Warszawa na żywo /  Warsaw livestream #warsaw #live #poland  #warsawlivestream" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
@@ -242,10 +249,6 @@
       <div class="thumb" data-vid="ivCs4k9hi4w"><img src="https://i.ytimg.com/vi/ivCs4k9hi4w/hqdefault_live.jpg" alt="🔴  LIVE Real Time IRAN - ISRAEL Camera Feeds" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>🔴  LIVE Real Time IRAN - ISRAEL Camera Feeds</strong><span>OSINT Collective</span></div>
     </a>
-    <a class="entry" href="https://www.youtube.com/watch?v=dvqM0l2C8dA" target="_blank" rel="noopener">
-      <div class="thumb" data-vid="dvqM0l2C8dA"><img src="https://i.ytimg.com/vi/dvqM0l2C8dA/hqdefault_live.jpg" alt="仙台市役所本庁舎工事LIVEカメラ" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
-      <div class="entry-body"><strong>仙台市役所本庁舎工事LIVEカメラ</strong><span>仙台市役所本庁舎工事LIVE</span></div>
-    </a>
     <a class="entry" href="https://www.youtube.com/watch?v=TUjtOgs_fCM" target="_blank" rel="noopener">
       <div class="thumb" data-vid="TUjtOgs_fCM"><img src="https://i.ytimg.com/vi/TUjtOgs_fCM/hqdefault_live.jpg" alt="【LIVE配信】新潟駅前ライブカメラ（新潟市中央区）Live Camera, Niigata,  #新潟県 #新潟市 #新潟駅" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>【LIVE配信】新潟駅前ライブカメラ（新潟市中央区）Live Camera, Niigata,  #新潟県 #新潟市 #新潟駅</strong><span>新潟ニュース NST　-NIIGATA NEWS NST-</span></div>
@@ -257,6 +260,34 @@
     <a class="entry" href="https://www.youtube.com/watch?v=rO58lSBDZhE" target="_blank" rel="noopener">
       <div class="thumb" data-vid="rO58lSBDZhE"><img src="https://i.ytimg.com/vi/rO58lSBDZhE/hqdefault_live.jpg" alt="🔴Medina TV Live Online 24/7 | بث مباشر || قناة السنة النبوية Madinah Live Today HD" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>🔴Medina TV Live Online 24/7 | بث مباشر || قناة السنة النبوية Madinah Live Today HD</strong><span>Naimat</span></div>
+    </a>
+    <a class="entry" href="https://www.youtube.com/watch?v=CjtIYbmVfck" target="_blank" rel="noopener">
+      <div class="thumb" data-vid="CjtIYbmVfck"><img src="https://i.ytimg.com/vi/CjtIYbmVfck/hqdefault_live.jpg" alt="4K video LIVE CAMERA Saint Petersburg, Russia. Palace Bridge Дворцовый мост, навигация на Неве" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="entry-body"><strong>4K video LIVE CAMERA Saint Petersburg, Russia. Palace Bridge Дворцовый мост, навигация на Неве</strong><span>Mobotix Webcams Russia</span></div>
+    </a>
+    <a class="entry" href="https://www.youtube.com/watch?v=jc3NRsILvr4" target="_blank" rel="noopener">
+      <div class="thumb" data-vid="jc3NRsILvr4"><img src="https://i.ytimg.com/vi/jc3NRsILvr4/hqdefault_live.jpg" alt="LIVE CAMERA Russian Cruiser Aurora St.Petersburg Russia Россия онлайн Санкт-Петербург крейсер Аврора" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="entry-body"><strong>LIVE CAMERA Russian Cruiser Aurora St.Petersburg Russia Россия онлайн Санкт-Петербург крейсер Аврора</strong><span>Mobotix Webcams Russia Live</span></div>
+    </a>
+    <a class="entry" href="https://www.youtube.com/watch?v=VhGdKCs5KIA" target="_blank" rel="noopener">
+      <div class="thumb" data-vid="VhGdKCs5KIA"><img src="https://i.ytimg.com/vi/VhGdKCs5KIA/hqdefault_live.jpg" alt="🕹 LIVE CAMERA Russia Saint Petersburg interactive PTZ control real sound Moscow time online" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="entry-body"><strong>🕹 LIVE CAMERA Russia Saint Petersburg interactive PTZ control real sound Moscow time online</strong><span>Mobotix Webcams Russia</span></div>
+    </a>
+    <a class="entry" href="https://www.youtube.com/watch?v=RK3qMhzILeA" target="_blank" rel="noopener">
+      <div class="thumb" data-vid="RK3qMhzILeA"><img src="https://i.ytimg.com/vi/RK3qMhzILeA/hqdefault_live.jpg" alt="LIVE PTZ St. Petersburg Hotel Indigo. Смотровая площадка отеля Индиго Санкт-Петербург онлайн" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="entry-body"><strong>LIVE PTZ St. Petersburg Hotel Indigo. Смотровая площадка отеля Индиго Санкт-Петербург онлайн</strong><span>Mobotix Webcams Russia Live</span></div>
+    </a>
+    <a class="entry" href="https://www.youtube.com/watch?v=ITR6OmVukhc" target="_blank" rel="noopener">
+      <div class="thumb" data-vid="ITR6OmVukhc"><img src="https://i.ytimg.com/vi/ITR6OmVukhc/hqdefault_live.jpg" alt="ATL Axis Experience Center Live Stream" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="entry-body"><strong>ATL Axis Experience Center Live Stream</strong><span>FLL AEC</span></div>
+    </a>
+    <a class="entry" href="https://www.youtube.com/watch?v=SfPJLSMuCQE" target="_blank" rel="noopener">
+      <div class="thumb" data-vid="SfPJLSMuCQE"><img src="https://i.ytimg.com/vi/SfPJLSMuCQE/hqdefault_live.jpg" alt="[ Taiwan ] Live view demonstration : GV-BX2802" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="entry-body"><strong>[ Taiwan ] Live view demonstration : GV-BX2802</strong><span>GeoVision Demonstration</span></div>
+    </a>
+    <a class="entry" href="https://www.youtube.com/watch?v=cfeNpPsvjYY" target="_blank" rel="noopener">
+      <div class="thumb" data-vid="cfeNpPsvjYY"><img src="https://i.ytimg.com/vi/cfeNpPsvjYY/hqdefault_live.jpg" alt="Puebla. Vista de los volcanes Popocatépetl e Iztaccíhuatl desde Hotel Holiday Inn Puebla" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="entry-body"><strong>Puebla. Vista de los volcanes Popocatépetl e Iztaccíhuatl desde Hotel Holiday Inn Puebla</strong><span>Webcams de México TV / Canal 8</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=2axfHUSD97E" target="_blank" rel="noopener">
       <div class="thumb" data-vid="2axfHUSD97E"><img src="https://i.ytimg.com/vi/2axfHUSD97E/hqdefault_live.jpg" alt="Playa de La Mata - Webcam de Torrevieja" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
@@ -318,14 +349,6 @@
       <div class="thumb" data-vid="yCeQueusZxs"><img src="https://i.ytimg.com/vi/yCeQueusZxs/hqdefault_live.jpg" alt="[LIVE] AO VIVO Porto Alegre POA / GUAÍBA - Lago Guaíba, Cidade e Movimentação Portuária MOVE NO CHAT" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>[LIVE] AO VIVO Porto Alegre POA / GUAÍBA - Lago Guaíba, Cidade e Movimentação Portuária MOVE NO CHAT</strong><span>Câmeras ao Vivo RS - Pôr do Sol Guaíba</span></div>
     </a>
-    <a class="entry" href="https://www.youtube.com/watch?v=CjtIYbmVfck" target="_blank" rel="noopener">
-      <div class="thumb" data-vid="CjtIYbmVfck"><img src="https://i.ytimg.com/vi/CjtIYbmVfck/hqdefault_live.jpg" alt="4K video LIVE CAMERA Saint Petersburg, Russia. Palace Bridge Дворцовый мост, навигация на Неве" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
-      <div class="entry-body"><strong>4K video LIVE CAMERA Saint Petersburg, Russia. Palace Bridge Дворцовый мост, навигация на Неве</strong><span>Mobotix Webcams Russia</span></div>
-    </a>
-    <a class="entry" href="https://www.youtube.com/watch?v=jc3NRsILvr4" target="_blank" rel="noopener">
-      <div class="thumb" data-vid="jc3NRsILvr4"><img src="https://i.ytimg.com/vi/jc3NRsILvr4/hqdefault_live.jpg" alt="LIVE CAMERA Russian Cruiser Aurora St.Petersburg Russia Россия онлайн Санкт-Петербург крейсер Аврора" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
-      <div class="entry-body"><strong>LIVE CAMERA Russian Cruiser Aurora St.Petersburg Russia Россия онлайн Санкт-Петербург крейсер Аврора</strong><span>Mobotix Webcams Russia Live</span></div>
-    </a>
     <a class="entry" href="https://www.youtube.com/watch?v=LO_YkXikm1g" target="_blank" rel="noopener">
       <div class="thumb" data-vid="LO_YkXikm1g"><img src="https://i.ytimg.com/vi/LO_YkXikm1g/hqdefault_live.jpg" alt="Дворцовая набережная и река Нева в прямом эфире. Palace embankment and Neva river ship cam online" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Дворцовая набережная и река Нева в прямом эфире. Palace embankment and Neva river ship cam online</strong><span>Mobotix Webcams Russia</span></div>
@@ -338,17 +361,9 @@
       <div class="thumb" data-vid="nBGguzu8aTc"><img src="https://i.ytimg.com/vi/nBGguzu8aTc/hqdefault_live.jpg" alt="Online Camera Vladivostok Center Веб-камера Владивосток Океанский пр-т" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Online Camera Vladivostok Center Веб-камера Владивосток Океанский пр-т</strong><span>LIVEPOINTS</span></div>
     </a>
-    <a class="entry" href="https://www.youtube.com/watch?v=VhGdKCs5KIA" target="_blank" rel="noopener">
-      <div class="thumb" data-vid="VhGdKCs5KIA"><img src="https://i.ytimg.com/vi/VhGdKCs5KIA/hqdefault_live.jpg" alt="🕹 LIVE CAMERA Russia Saint Petersburg interactive PTZ control real sound Moscow time online" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
-      <div class="entry-body"><strong>🕹 LIVE CAMERA Russia Saint Petersburg interactive PTZ control real sound Moscow time online</strong><span>Mobotix Webcams Russia</span></div>
-    </a>
     <a class="entry" href="https://www.youtube.com/watch?v=89d3tEaqImM" target="_blank" rel="noopener">
       <div class="thumb" data-vid="89d3tEaqImM"><img src="https://i.ytimg.com/vi/89d3tEaqImM/hqdefault_live.jpg" alt="REALVIEWCAM360 - ROME Live Cam - Italy - RAMSAT HQ  Vatican &amp; St. Peter’s Basilica Night View  24/7" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>REALVIEWCAM360 - ROME Live Cam - Italy - RAMSAT HQ  Vatican &amp; St. Peter’s Basilica Night View  24/7</strong><span>RMS - RAMSAT Multimedia </span></div>
-    </a>
-    <a class="entry" href="https://www.youtube.com/watch?v=RK3qMhzILeA" target="_blank" rel="noopener">
-      <div class="thumb" data-vid="RK3qMhzILeA"><img src="https://i.ytimg.com/vi/RK3qMhzILeA/hqdefault_live.jpg" alt="LIVE PTZ St. Petersburg Hotel Indigo. Смотровая площадка отеля Индиго Санкт-Петербург онлайн" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
-      <div class="entry-body"><strong>LIVE PTZ St. Petersburg Hotel Indigo. Смотровая площадка отеля Индиго Санкт-Петербург онлайн</strong><span>Mobotix Webcams Russia Live</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=gXm3PGF4z0s" target="_blank" rel="noopener">
       <div class="thumb" data-vid="gXm3PGF4z0s"><img src="https://i.ytimg.com/vi/gXm3PGF4z0s/hqdefault_live.jpg" alt="Roma Live Cam - Rione Prati, Cupola di San Pietro" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
@@ -362,21 +377,9 @@
       <div class="thumb" data-vid="ZZrEQ2Y5kec"><img src="https://i.ytimg.com/vi/ZZrEQ2Y5kec/hqdefault_live.jpg" alt="Rimini Live Cam - Torre Pedrera" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Rimini Live Cam - Torre Pedrera</strong><span>Live Cam Italia</span></div>
     </a>
-    <a class="entry" href="https://www.youtube.com/watch?v=SfPJLSMuCQE" target="_blank" rel="noopener">
-      <div class="thumb" data-vid="SfPJLSMuCQE"><img src="https://i.ytimg.com/vi/SfPJLSMuCQE/hqdefault_live.jpg" alt="[ Taiwan ] Live view demonstration : GV-BX2802" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
-      <div class="entry-body"><strong>[ Taiwan ] Live view demonstration : GV-BX2802</strong><span>GeoVision Demonstration</span></div>
-    </a>
-    <a class="entry" href="https://www.youtube.com/watch?v=ITR6OmVukhc" target="_blank" rel="noopener">
-      <div class="thumb" data-vid="ITR6OmVukhc"><img src="https://i.ytimg.com/vi/ITR6OmVukhc/hqdefault_live.jpg" alt="ATL Axis Experience Center Live Stream" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
-      <div class="entry-body"><strong>ATL Axis Experience Center Live Stream</strong><span>FLL AEC</span></div>
-    </a>
     <a class="entry" href="https://www.youtube.com/watch?v=RObfJZTh8l4" target="_blank" rel="noopener">
       <div class="thumb" data-vid="RObfJZTh8l4"><img src="https://i.ytimg.com/vi/RObfJZTh8l4/hqdefault_live.jpg" alt="Live Camera Axis Q6315-LE from Bandar Puteri, Puchong, Malaysia" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Live Camera Axis Q6315-LE from Bandar Puteri, Puchong, Malaysia</strong><span>LH Technologies &amp; Solutions Sdn Bhd</span></div>
-    </a>
-    <a class="entry" href="https://www.youtube.com/watch?v=cfeNpPsvjYY" target="_blank" rel="noopener">
-      <div class="thumb" data-vid="cfeNpPsvjYY"><img src="https://i.ytimg.com/vi/cfeNpPsvjYY/hqdefault_live.jpg" alt="Puebla. Vista de los volcanes Popocatépetl e Iztaccíhuatl desde Hotel Holiday Inn Puebla" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
-      <div class="entry-body"><strong>Puebla. Vista de los volcanes Popocatépetl e Iztaccíhuatl desde Hotel Holiday Inn Puebla</strong><span>Webcams de México TV / Canal 8</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=Cmzo6T9lz40" target="_blank" rel="noopener">
       <div class="thumb" data-vid="Cmzo6T9lz40"><img src="https://i.ytimg.com/vi/Cmzo6T9lz40/hqdefault_live.jpg" alt="Cozumel, Quintana Roo En Vivo | Vista Panorámica desde Grand Park Royal Cozumel" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
@@ -418,6 +421,14 @@
       <div class="thumb" data-vid="ukoSyGLdoTQ"><img src="https://i.ytimg.com/vi/ukoSyGLdoTQ/hqdefault_live.jpg" alt="CVLLP (Clube de Voo Livre do Litoral Paulista) Moro do Itararé, São Vicente e Santos ao vivo Web Cam" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>CVLLP (Clube de Voo Livre do Litoral Paulista) Moro do Itararé, São Vicente e Santos ao vivo Web Cam</strong><span>Surfistafotografo</span></div>
     </a>
+    <a class="entry" href="https://www.youtube.com/watch?v=2IP5umloFrE" target="_blank" rel="noopener">
+      <div class="thumb" data-vid="2IP5umloFrE"><img src="https://i.ytimg.com/vi/2IP5umloFrE/hqdefault_live.jpg" alt="【甲府盆地の街並み】山梨県立科学館　屋上ライブカメラ（提供：テレビ山梨）【Kofu basin Live Cam in Japan】" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="entry-body"><strong>【甲府盆地の街並み】山梨県立科学館　屋上ライブカメラ（提供：テレビ山梨）【Kofu basin Live Cam in Japan】</strong><span>UTYテレビ山梨公式チャンネル</span></div>
+    </a>
+    <a class="entry" href="https://www.youtube.com/watch?v=p326sZfmwHM" target="_blank" rel="noopener">
+      <div class="thumb" data-vid="p326sZfmwHM"><img src="https://i.ytimg.com/vi/p326sZfmwHM/hqdefault_live.jpg" alt="TNC テレビ西日本　LIVE配信" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="entry-body"><strong>TNC テレビ西日本　LIVE配信</strong><span>福岡TNC ニュース</span></div>
+    </a>
     <a class="entry" href="https://www.youtube.com/watch?v=iUbDs97pV1U" target="_blank" rel="noopener">
       <div class="thumb" data-vid="iUbDs97pV1U"><img src="https://i.ytimg.com/vi/iUbDs97pV1U/hqdefault_live.jpg" alt="LIVE: View of downtown Toronto as wildfire smoke blankets city" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>LIVE: View of downtown Toronto as wildfire smoke blankets city</strong><span>CP24</span></div>
@@ -445,14 +456,6 @@
     <a class="entry" href="https://www.youtube.com/watch?v=XyMRbMYO7vA" target="_blank" rel="noopener">
       <div class="thumb" data-vid="XyMRbMYO7vA"><img src="https://i.ytimg.com/vi/XyMRbMYO7vA/hqdefault_live.jpg" alt="小清水町役場屋上カメラ | Koshimizu Town Hall Rooftop Camera" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>小清水町役場屋上カメラ | Koshimizu Town Hall Rooftop Camera</strong><span>小清水町役場ライブカメラ</span></div>
-    </a>
-    <a class="entry" href="https://www.youtube.com/watch?v=2IP5umloFrE" target="_blank" rel="noopener">
-      <div class="thumb" data-vid="2IP5umloFrE"><img src="https://i.ytimg.com/vi/2IP5umloFrE/hqdefault_live.jpg" alt="【甲府盆地の街並み】山梨県立科学館　屋上ライブカメラ（提供：テレビ山梨）【Kofu basin Live Cam in Japan】" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
-      <div class="entry-body"><strong>【甲府盆地の街並み】山梨県立科学館　屋上ライブカメラ（提供：テレビ山梨）【Kofu basin Live Cam in Japan】</strong><span>UTYテレビ山梨公式チャンネル</span></div>
-    </a>
-    <a class="entry" href="https://www.youtube.com/watch?v=p326sZfmwHM" target="_blank" rel="noopener">
-      <div class="thumb" data-vid="p326sZfmwHM"><img src="https://i.ytimg.com/vi/p326sZfmwHM/hqdefault_live.jpg" alt="TNC テレビ西日本　LIVE配信" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
-      <div class="entry-body"><strong>TNC テレビ西日本　LIVE配信</strong><span>福岡TNC ニュース</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=yImwm-Wc8NA" target="_blank" rel="noopener">
       <div class="thumb" data-vid="yImwm-Wc8NA"><img src="https://i.ytimg.com/vi/yImwm-Wc8NA/hqdefault_live.jpg" alt="Boulder Cam" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
@@ -486,14 +489,6 @@
       <div class="thumb" data-vid="_tam0-UVAcY"><img src="https://i.ytimg.com/vi/_tam0-UVAcY/hqdefault_live.jpg" alt="Ft. Lauderdale Axis Experience Center LIVE" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Ft. Lauderdale Axis Experience Center LIVE</strong><span>CamStreamer</span></div>
     </a>
-    <a class="entry" href="https://www.youtube.com/watch?v=yfI8jKgOnsY" target="_blank" rel="noopener">
-      <div class="thumb" data-vid="yfI8jKgOnsY"><img src="https://i.ytimg.com/vi/yfI8jKgOnsY/hqdefault_live.jpg" alt="Moody Gardens Pyramid Cam LIVE | Galveston, Texas" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
-      <div class="entry-body"><strong>Moody Gardens Pyramid Cam LIVE | Galveston, Texas</strong><span>Moody Gardens</span></div>
-    </a>
-    <a class="entry" href="https://www.youtube.com/watch?v=6kJPx0WSLdk" target="_blank" rel="noopener">
-      <div class="thumb" data-vid="6kJPx0WSLdk"><img src="https://i.ytimg.com/vi/6kJPx0WSLdk/hqdefault_live.jpg" alt="立石公園駐車場ライブカメラ" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
-      <div class="entry-body"><strong>立石公園駐車場ライブカメラ</strong><span>諏訪市公式チャンネル</span></div>
-    </a>
     <a class="entry" href="https://www.youtube.com/watch?v=VaDbfFG7RhI" target="_blank" rel="noopener">
       <div class="thumb" data-vid="VaDbfFG7RhI"><img src="https://i.ytimg.com/vi/VaDbfFG7RhI/hqdefault_live.jpg" alt="🔴 LIVE 24/7 Reno-Tahoe International Airport Plane Spotting - Grand Sierra Resort" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>🔴 LIVE 24/7 Reno-Tahoe International Airport Plane Spotting - Grand Sierra Resort</strong><span>RNO Flights</span></div>
@@ -502,9 +497,49 @@
       <div class="thumb" data-vid="_3Idi9ODl2U"><img src="https://i.ytimg.com/vi/_3Idi9ODl2U/hqdefault_live.jpg" alt="Camview: Wellington Airport Webcam Live Stream (Primary 4K)" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Camview: Wellington Airport Webcam Live Stream (Primary 4K)</strong><span>Camview NZ</span></div>
     </a>
+    <a class="entry" href="https://www.youtube.com/watch?v=yfI8jKgOnsY" target="_blank" rel="noopener">
+      <div class="thumb" data-vid="yfI8jKgOnsY"><img src="https://i.ytimg.com/vi/yfI8jKgOnsY/hqdefault_live.jpg" alt="Moody Gardens Pyramid Cam LIVE | Galveston, Texas" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="entry-body"><strong>Moody Gardens Pyramid Cam LIVE | Galveston, Texas</strong><span>Moody Gardens</span></div>
+    </a>
+    <a class="entry" href="https://www.youtube.com/watch?v=6kJPx0WSLdk" target="_blank" rel="noopener">
+      <div class="thumb" data-vid="6kJPx0WSLdk"><img src="https://i.ytimg.com/vi/6kJPx0WSLdk/hqdefault_live.jpg" alt="立石公園駐車場ライブカメラ" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="entry-body"><strong>立石公園駐車場ライブカメラ</strong><span>諏訪市公式チャンネル</span></div>
+    </a>
     <a class="entry" href="https://www.youtube.com/watch?v=iHqqkh_Lths" target="_blank" rel="noopener">
       <div class="thumb" data-vid="iHqqkh_Lths"><img src="https://i.ytimg.com/vi/iHqqkh_Lths/hqdefault_live.jpg" alt="EarthCam Live:  Terminal Tower Cam (Cleveland, OH)" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>EarthCam Live:  Terminal Tower Cam (Cleveland, OH)</strong><span>EarthCam</span></div>
+    </a>
+    <a class="entry" href="https://www.youtube.com/watch?v=huTf3dIE7MU" target="_blank" rel="noopener">
+      <div class="thumb" data-vid="huTf3dIE7MU"><img src="https://i.ytimg.com/vi/huTf3dIE7MU/hqdefault_live.jpg" alt="🔴 Downtown Los Angeles Live Cam - Sun Jul 12, 2026 PM" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="entry-body"><strong>🔴 Downtown Los Angeles Live Cam - Sun Jul 12, 2026 PM</strong><span>Dcline One</span></div>
+    </a>
+    <a class="entry" href="https://www.youtube.com/watch?v=va8zBSJWHVM" target="_blank" rel="noopener">
+      <div class="thumb" data-vid="va8zBSJWHVM"><img src="https://i.ytimg.com/vi/va8zBSJWHVM/hqdefault_live.jpg" alt="Live Cam 台北市河岸直播即時影像 台湾、台北のライブカメラ川岸の夜景 河岸美景 relax music Sleep peacefully, help sleep, relax the mind" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="entry-body"><strong>Live Cam 台北市河岸直播即時影像 台湾、台北のライブカメラ川岸の夜景 河岸美景 relax music Sleep peacefully, help sleep, relax the mind</strong><span>Taiwan Taipei Jacky</span></div>
+    </a>
+    <a class="entry" href="https://www.youtube.com/watch?v=c-fsELxk5aw" target="_blank" rel="noopener">
+      <div class="thumb" data-vid="c-fsELxk5aw"><img src="https://i.ytimg.com/vi/c-fsELxk5aw/hqdefault_live.jpg" alt="Live Cam Taiwan Taipei City 台湾、台北のライブカメラ川岸の夜景 給大家放鬆的畫面和音樂,請勿談論政治, 和沒意義的話題" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="entry-body"><strong>Live Cam Taiwan Taipei City 台湾、台北のライブカメラ川岸の夜景 給大家放鬆的畫面和音樂,請勿談論政治, 和沒意義的話題</strong><span>Taiwan Taipei Jacky</span></div>
+    </a>
+    <a class="entry" href="https://www.youtube.com/watch?v=AU_2zfM4m68" target="_blank" rel="noopener">
+      <div class="thumb" data-vid="AU_2zfM4m68"><img src="https://i.ytimg.com/vi/AU_2zfM4m68/hqdefault_live.jpg" alt="【LIVE】神戸ウォーターフロント  ＃メリケンパーク＃神戸ポートタワー" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="entry-body"><strong>【LIVE】神戸ウォーターフロント  ＃メリケンパーク＃神戸ポートタワー</strong><span>神戸ウォーターフロント開発機構</span></div>
+    </a>
+    <a class="entry" href="https://www.youtube.com/watch?v=VM18f-IIUTw" target="_blank" rel="noopener">
+      <div class="thumb" data-vid="VM18f-IIUTw"><img src="https://i.ytimg.com/vi/VM18f-IIUTw/hqdefault_live.jpg" alt="[4K Live] 東京・汐留 ライブカメラ live stream of Shimbashi,Tokyo" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="entry-body"><strong>[4K Live] 東京・汐留 ライブカメラ live stream of Shimbashi,Tokyo</strong><span>共同通信LiveCamera</span></div>
+    </a>
+    <a class="entry" href="https://www.youtube.com/watch?v=lLYosWv_AwQ" target="_blank" rel="noopener">
+      <div class="thumb" data-vid="lLYosWv_AwQ"><img src="https://i.ytimg.com/vi/lLYosWv_AwQ/hqdefault_live.jpg" alt="Ottawa, Ontario, Canada LIVE Camera" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="entry-body"><strong>Ottawa, Ontario, Canada LIVE Camera</strong><span>DestC</span></div>
+    </a>
+    <a class="entry" href="https://www.youtube.com/watch?v=vkpu1m5kaZ4" target="_blank" rel="noopener">
+      <div class="thumb" data-vid="vkpu1m5kaZ4"><img src="https://i.ytimg.com/vi/vkpu1m5kaZ4/hqdefault_live.jpg" alt="Palacio de Bellas Artes en la Ciudad de México" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="entry-body"><strong>Palacio de Bellas Artes en la Ciudad de México</strong><span>Webcams de México TV / Canal 9</span></div>
+    </a>
+    <a class="entry" href="https://www.youtube.com/watch?v=sfaP7G5rT6k" target="_blank" rel="noopener">
+      <div class="thumb" data-vid="sfaP7G5rT6k"><img src="https://i.ytimg.com/vi/sfaP7G5rT6k/hqdefault_live.jpg" alt="Vista panorámica en Vivo de la Ciudad de Querétaro" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="entry-body"><strong>Vista panorámica en Vivo de la Ciudad de Querétaro</strong><span>Webcams de México TV</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=mNlMCr5eeXs" target="_blank" rel="noopener">
       <div class="thumb" data-vid="mNlMCr5eeXs"><img src="https://i.ytimg.com/vi/mNlMCr5eeXs/hqdefault_live.jpg" alt="🔴 LIVE CAM: Downtown Mobile, AL from Dauphin&#39;s Resturant" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
@@ -521,18 +556,6 @@
     <a class="entry" href="https://www.youtube.com/watch?v=BSWhGNXxT9A" target="_blank" rel="noopener">
       <div class="thumb" data-vid="BSWhGNXxT9A"><img src="https://i.ytimg.com/vi/BSWhGNXxT9A/hqdefault_live.jpg" alt="🔴 Mersea Restaurant LIVE Bay View · San Francisco Skyline, Golden Gate &amp; Luxury Waterfront 🌉" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>🔴 Mersea Restaurant LIVE Bay View · San Francisco Skyline, Golden Gate &amp; Luxury Waterfront 🌉</strong><span>Teleport.camera</span></div>
-    </a>
-    <a class="entry" href="https://www.youtube.com/watch?v=huTf3dIE7MU" target="_blank" rel="noopener">
-      <div class="thumb" data-vid="huTf3dIE7MU"><img src="https://i.ytimg.com/vi/huTf3dIE7MU/hqdefault_live.jpg" alt="🔴 Downtown Los Angeles Live Cam - Sun Jul 12, 2026 PM" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
-      <div class="entry-body"><strong>🔴 Downtown Los Angeles Live Cam - Sun Jul 12, 2026 PM</strong><span>Dcline One</span></div>
-    </a>
-    <a class="entry" href="https://www.youtube.com/watch?v=AU_2zfM4m68" target="_blank" rel="noopener">
-      <div class="thumb" data-vid="AU_2zfM4m68"><img src="https://i.ytimg.com/vi/AU_2zfM4m68/hqdefault_live.jpg" alt="【LIVE】神戸ウォーターフロント  ＃メリケンパーク＃神戸ポートタワー" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
-      <div class="entry-body"><strong>【LIVE】神戸ウォーターフロント  ＃メリケンパーク＃神戸ポートタワー</strong><span>神戸ウォーターフロント開発機構</span></div>
-    </a>
-    <a class="entry" href="https://www.youtube.com/watch?v=VM18f-IIUTw" target="_blank" rel="noopener">
-      <div class="thumb" data-vid="VM18f-IIUTw"><img src="https://i.ytimg.com/vi/VM18f-IIUTw/hqdefault_live.jpg" alt="[4K Live] 東京・汐留 ライブカメラ live stream of Shimbashi,Tokyo" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
-      <div class="entry-body"><strong>[4K Live] 東京・汐留 ライブカメラ live stream of Shimbashi,Tokyo</strong><span>共同通信LiveCamera</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=KLZyYflpfjQ" target="_blank" rel="noopener">
       <div class="thumb" data-vid="KLZyYflpfjQ"><img src="https://i.ytimg.com/vi/KLZyYflpfjQ/hqdefault_live.jpg" alt="【Live-Japan】函館駅前ライブカメラ① #函館 #HAKODATE #函館湾 #JR函館駅" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
@@ -570,10 +593,6 @@
       <div class="thumb" data-vid="aJcTvBuj5AA"><img src="https://i.ytimg.com/vi/aJcTvBuj5AA/hqdefault_live.jpg" alt="宇和島市ライブカメラ【EBC】" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>宇和島市ライブカメラ【EBC】</strong><span>テレビ愛媛【公式】</span></div>
     </a>
-    <a class="entry" href="https://www.youtube.com/watch?v=lLYosWv_AwQ" target="_blank" rel="noopener">
-      <div class="thumb" data-vid="lLYosWv_AwQ"><img src="https://i.ytimg.com/vi/lLYosWv_AwQ/hqdefault_live.jpg" alt="Ottawa, Ontario, Canada LIVE Camera" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
-      <div class="entry-body"><strong>Ottawa, Ontario, Canada LIVE Camera</strong><span>DestC</span></div>
-    </a>
     <a class="entry" href="https://www.youtube.com/watch?v=gUgn9Mn_VM8" target="_blank" rel="noopener">
       <div class="thumb" data-vid="gUgn9Mn_VM8"><img src="https://i.ytimg.com/vi/gUgn9Mn_VM8/hqdefault_live.jpg" alt="EarthCam Live:  Brooklyn Bridge Cam" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>EarthCam Live:  Brooklyn Bridge Cam</strong><span>EarthCam</span></div>
@@ -594,10 +613,6 @@
       <div class="thumb" data-vid="vdj5kp3LLns"><img src="https://i.ytimg.com/vi/vdj5kp3LLns/hqdefault_live.jpg" alt="🔴 Livecamera Tokyo skytree &amp; Tsukiji stadium 2030 - Live of Tokyo in 4K ✨ 東京ライブカメラ 24/7" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>🔴 Livecamera Tokyo skytree &amp; Tsukiji stadium 2030 - Live of Tokyo in 4K ✨ 東京ライブカメラ 24/7</strong><span>🗼 TOKYO LIVE 4K 🌸</span></div>
     </a>
-    <a class="entry" href="https://www.youtube.com/watch?v=vkpu1m5kaZ4" target="_blank" rel="noopener">
-      <div class="thumb" data-vid="vkpu1m5kaZ4"><img src="https://i.ytimg.com/vi/vkpu1m5kaZ4/hqdefault_live.jpg" alt="Palacio de Bellas Artes en la Ciudad de México" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
-      <div class="entry-body"><strong>Palacio de Bellas Artes en la Ciudad de México</strong><span>Webcams de México TV / Canal 9</span></div>
-    </a>
     <a class="entry" href="https://www.youtube.com/watch?v=RhdmP5017VM" target="_blank" rel="noopener">
       <div class="thumb" data-vid="RhdmP5017VM"><img src="https://i.ytimg.com/vi/RhdmP5017VM/hqdefault_live.jpg" alt="CONCECAM - Concepción Centro, Chile - Cámara Ultra HD en vivo y en directo, live cam" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>CONCECAM - Concepción Centro, Chile - Cámara Ultra HD en vivo y en directo, live cam</strong><span>ConceCam</span></div>
@@ -605,10 +620,6 @@
     <a class="entry" href="https://www.youtube.com/watch?v=E9FK3QGdpqE" target="_blank" rel="noopener">
       <div class="thumb" data-vid="E9FK3QGdpqE"><img src="https://i.ytimg.com/vi/E9FK3QGdpqE/hqdefault_live.jpg" alt="Cámara en vivo y en directo - Live and direct camera desde Ñuñoa Santiago Chile + música chill" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Cámara en vivo y en directo - Live and direct camera desde Ñuñoa Santiago Chile + música chill</strong><span>Santiago Skyline Live</span></div>
-    </a>
-    <a class="entry" href="https://www.youtube.com/watch?v=sfaP7G5rT6k" target="_blank" rel="noopener">
-      <div class="thumb" data-vid="sfaP7G5rT6k"><img src="https://i.ytimg.com/vi/sfaP7G5rT6k/hqdefault_live.jpg" alt="Vista panorámica en Vivo de la Ciudad de Querétaro" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
-      <div class="entry-body"><strong>Vista panorámica en Vivo de la Ciudad de Querétaro</strong><span>Webcams de México TV</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=jSfjVpXcoGI" target="_blank" rel="noopener">
       <div class="thumb" data-vid="jSfjVpXcoGI"><img src="https://i.ytimg.com/vi/jSfjVpXcoGI/hqdefault_live.jpg" alt="🔴 LIVE CAM: Mobile Bay Delta from Daphne, Alabama" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
@@ -650,6 +661,10 @@
       <div class="thumb" data-vid="xdjEmXaf8o8"><img src="https://i.ytimg.com/vi/xdjEmXaf8o8/hqdefault_live.jpg" alt="東京ライブカメラ Tokyo live camera｜スカイツリー＆隅田川｜東東京の景色｜24時間配信" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>東京ライブカメラ Tokyo live camera｜スカイツリー＆隅田川｜東東京の景色｜24時間配信</strong><span>東京ライブカメラ | Tokyo Live Cam</span></div>
     </a>
+    <a class="entry" href="https://www.youtube.com/watch?v=h9v4l3maqfs" target="_blank" rel="noopener">
+      <div class="thumb" data-vid="h9v4l3maqfs"><img src="https://i.ytimg.com/vi/h9v4l3maqfs/hqdefault_live.jpg" alt="【LIVE】宮崎・大淀川ライブカメラ　現在の宮崎市内　Miyazaki" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="entry-body"><strong>【LIVE】宮崎・大淀川ライブカメラ　現在の宮崎市内　Miyazaki</strong><span>朝日新聞LIVE</span></div>
+    </a>
     <a class="entry" href="https://www.youtube.com/watch?v=3bCMZOjsGic" target="_blank" rel="noopener">
       <div class="thumb" data-vid="3bCMZOjsGic"><img src="https://i.ytimg.com/vi/3bCMZOjsGic/hqdefault_live.jpg" alt="【24H：LIVE】24時間 東京 新宿 歌舞伎町 上空  お天気ライブカメラ 24h Tokyo Shinjuku Kabukicho   Weather Camera（テイケイライブカメラ）" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>【24H：LIVE】24時間 東京 新宿 歌舞伎町 上空  お天気ライブカメラ 24h Tokyo Shinjuku Kabukicho   Weather Camera（テイケイライブカメラ）</strong><span>テイケイ公式チャンネル</span></div>
@@ -674,14 +689,6 @@
       <div class="thumb" data-vid="uvwfYzwY8tg"><img src="https://i.ytimg.com/vi/uvwfYzwY8tg/hqdefault_live.jpg" alt="【Taipei Live Cam】碧山巖 - 4K即時影像 | Bishan Temple | 碧山巌開漳聖王廟 | TAIPEI 101" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>【Taipei Live Cam】碧山巖 - 4K即時影像 | Bishan Temple | 碧山巌開漳聖王廟 | TAIPEI 101</strong><span>Taipei Travel Live Cam  台北觀光即時影像 </span></div>
     </a>
-    <a class="entry" href="https://www.youtube.com/watch?v=va8zBSJWHVM" target="_blank" rel="noopener">
-      <div class="thumb" data-vid="va8zBSJWHVM"><img src="https://i.ytimg.com/vi/va8zBSJWHVM/hqdefault_live.jpg" alt="Live Cam 台北市河岸直播即時影像 台湾、台北のライブカメラ川岸の夜景 河岸美景 relax music Sleep peacefully, help sleep, relax the mind" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
-      <div class="entry-body"><strong>Live Cam 台北市河岸直播即時影像 台湾、台北のライブカメラ川岸の夜景 河岸美景 relax music Sleep peacefully, help sleep, relax the mind</strong><span>Taiwan Taipei Jacky</span></div>
-    </a>
-    <a class="entry" href="https://www.youtube.com/watch?v=c-fsELxk5aw" target="_blank" rel="noopener">
-      <div class="thumb" data-vid="c-fsELxk5aw"><img src="https://i.ytimg.com/vi/c-fsELxk5aw/hqdefault_live.jpg" alt="Live Cam Taiwan Taipei City 台湾、台北のライブカメラ川岸の夜景 給大家放鬆的畫面和音樂,請勿談論政治, 和沒意義的話題" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
-      <div class="entry-body"><strong>Live Cam Taiwan Taipei City 台湾、台北のライブカメラ川岸の夜景 給大家放鬆的畫面和音樂,請勿談論政治, 和沒意義的話題</strong><span>Taiwan Taipei Jacky</span></div>
-    </a>
     <a class="entry" href="https://www.youtube.com/watch?v=fP4ecxfsJos" target="_blank" rel="noopener">
       <div class="thumb" data-vid="fP4ecxfsJos"><img src="https://i.ytimg.com/vi/fP4ecxfsJos/hqdefault_live.jpg" alt="【Taipei Live Cam】大佳河濱公園 - 4K即時影像 | Taipei Dajia Riverside Park | 台北大佳河濱公園" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>【Taipei Live Cam】大佳河濱公園 - 4K即時影像 | Taipei Dajia Riverside Park | 台北大佳河濱公園</strong><span>Taipei Travel Live Cam  台北觀光即時影像 </span></div>
@@ -689,10 +696,6 @@
     <a class="entry" href="https://www.youtube.com/watch?v=TAHj-RLysGg" target="_blank" rel="noopener">
       <div class="thumb" data-vid="TAHj-RLysGg"><img src="https://i.ytimg.com/vi/TAHj-RLysGg/hqdefault_live.jpg" alt="Panorámica en vivo de la Ciudad de Tijuana, Baja California" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Panorámica en vivo de la Ciudad de Tijuana, Baja California</strong><span>Los Recomendados by Webcams MX</span></div>
-    </a>
-    <a class="entry" href="https://www.youtube.com/watch?v=h9v4l3maqfs" target="_blank" rel="noopener">
-      <div class="thumb" data-vid="h9v4l3maqfs"><img src="https://i.ytimg.com/vi/h9v4l3maqfs/hqdefault_live.jpg" alt="【LIVE】宮崎・大淀川ライブカメラ　現在の宮崎市内　Miyazaki" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
-      <div class="entry-body"><strong>【LIVE】宮崎・大淀川ライブカメラ　現在の宮崎市内　Miyazaki</strong><span>朝日新聞LIVE</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=OV0JEv6C2QQ" target="_blank" rel="noopener">
       <div class="thumb" data-vid="OV0JEv6C2QQ"><img src="https://i.ytimg.com/vi/OV0JEv6C2QQ/hqdefault_live.jpg" alt="しまなみライブカメラ【EBC】" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
@@ -718,6 +721,10 @@
       <div class="thumb" data-vid="O0UGT7AT3aw"><img src="https://i.ytimg.com/vi/O0UGT7AT3aw/hqdefault_live.jpg" alt="EarthCam Live:  Chicago Skydeck Cam (Chicago, IL)" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>EarthCam Live:  Chicago Skydeck Cam (Chicago, IL)</strong><span>EarthCam</span></div>
     </a>
+    <a class="entry" href="https://www.youtube.com/watch?v=RVvYQghFCXk" target="_blank" rel="noopener">
+      <div class="thumb" data-vid="RVvYQghFCXk"><img src="https://i.ytimg.com/vi/RVvYQghFCXk/hqdefault_live.jpg" alt="[4K] 실시간 서울 한강 라이브캠 - 반포대교 (since 2020) Seoul Korea Live Cam Jazz radio" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="entry-body"><strong>[4K] 실시간 서울 한강 라이브캠 - 반포대교 (since 2020) Seoul Korea Live Cam Jazz radio</strong><span>데일리서울 한강 라이브캠</span></div>
+    </a>
     <a class="entry" href="https://www.youtube.com/watch?v=wUQc3RoLAPs" target="_blank" rel="noopener">
       <div class="thumb" data-vid="wUQc3RoLAPs"><img src="https://i.ytimg.com/vi/wUQc3RoLAPs/hqdefault_live.jpg" alt="Houston, Texas | 24/7 Live Downtown Skyline Camera" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Houston, Texas | 24/7 Live Downtown Skyline Camera</strong><span>ABC13 Houston</span></div>
@@ -733,10 +740,6 @@
     <a class="entry" href="https://www.youtube.com/watch?v=mpMdJJjw59E" target="_blank" rel="noopener">
       <div class="thumb" data-vid="mpMdJJjw59E"><img src="https://i.ytimg.com/vi/mpMdJJjw59E/hqdefault_live.jpg" alt="Western Harbor Cam" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Western Harbor Cam</strong><span>Duluth Harbor Cam</span></div>
-    </a>
-    <a class="entry" href="https://www.youtube.com/watch?v=RVvYQghFCXk" target="_blank" rel="noopener">
-      <div class="thumb" data-vid="RVvYQghFCXk"><img src="https://i.ytimg.com/vi/RVvYQghFCXk/hqdefault_live.jpg" alt="[4K] 실시간 서울 한강 라이브캠 - 반포대교 (since 2020) Seoul Korea Live Cam Jazz radio" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
-      <div class="entry-body"><strong>[4K] 실시간 서울 한강 라이브캠 - 반포대교 (since 2020) Seoul Korea Live Cam Jazz radio</strong><span>데일리서울 한강 라이브캠</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=PeYZZinH1wI" target="_blank" rel="noopener">
       <div class="thumb" data-vid="PeYZZinH1wI"><img src="https://i.ytimg.com/vi/PeYZZinH1wI/hqdefault_live.jpg" alt="🔴 LIVE Port Miami Cruise Ship Departures and Arrivals | ICON of the Seas" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>

@@ -70,9 +70,12 @@
     <select id="categoryFilter" hidden>
       <option value="">All</option>
     </select>
-    <select id="countryFilter" hidden>
-      <option value="" data-i18n="filter_all">All</option>
-    </select>
+    <div class="filter-group">
+      <span class="filter-label" data-i18n="filter_country">Country</span>
+      <select id="countryFilter">
+        <option value="" data-i18n="filter_all">All</option>
+      </select>
+    </div>
     <div class="filter-group">
       <span class="filter-label" data-i18n="filter_quality">Quality</span>
       <select id="qualityFilter">
@@ -154,21 +157,25 @@
 <div class="page-content">
 <span id="resultCount" class="result-count"></span>
 <main id="grid" class="grid">
-    <a class="entry" href="https://www.youtube.com/watch?v=0m4qDGzGN7k" target="_blank" rel="noopener">
-      <div class="thumb" data-vid="0m4qDGzGN7k"><img src="https://i.ytimg.com/vi/0m4qDGzGN7k/hqdefault_live.jpg" alt="Webcam Live Sarzana (SP) - Piazza Matteotti dal Comune di Sarzana" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
-      <div class="entry-body"><strong>Webcam Live Sarzana (SP) - Piazza Matteotti dal Comune di Sarzana</strong><span>Paesaggi Digitali</span></div>
-    </a>
     <a class="entry" href="https://www.youtube.com/watch?v=03pYP2Nmreo" target="_blank" rel="noopener">
       <div class="thumb" data-vid="03pYP2Nmreo"><img src="https://i.ytimg.com/vi/03pYP2Nmreo/hqdefault_live.jpg" alt="Vatican Media Live" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Vatican Media Live</strong><span>Vatican News</span></div>
     </a>
-    <a class="entry" href="https://www.youtube.com/watch?v=IEDF51akADs" target="_blank" rel="noopener">
-      <div class="thumb" data-vid="IEDF51akADs"><img src="https://i.ytimg.com/vi/IEDF51akADs/hqdefault_live.jpg" alt="MEDview: Brunnsparken, Varberg" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
-      <div class="entry-body"><strong>MEDview: Brunnsparken, Varberg</strong><span>MED - Mediateknik</span></div>
-    </a>
     <a class="entry" href="https://www.youtube.com/watch?v=GakUUW9Anpo" target="_blank" rel="noopener">
       <div class="thumb" data-vid="GakUUW9Anpo"><img src="https://i.ytimg.com/vi/GakUUW9Anpo/hqdefault_live.jpg" alt="Pszczyna - widok na rynek" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Pszczyna - widok na rynek</strong><span>Rynek Pszczyna</span></div>
+    </a>
+    <a class="entry" href="https://www.youtube.com/watch?v=70QjeKRWTz0" target="_blank" rel="noopener">
+      <div class="thumb" data-vid="70QjeKRWTz0"><img src="https://i.ytimg.com/vi/70QjeKRWTz0/hqdefault_live.jpg" alt="Park Muzyczny Kudowa Zdrój" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="entry-body"><strong>Park Muzyczny Kudowa Zdrój</strong><span>Łukasz Paluch</span></div>
+    </a>
+    <a class="entry" href="https://www.youtube.com/watch?v=0m4qDGzGN7k" target="_blank" rel="noopener">
+      <div class="thumb" data-vid="0m4qDGzGN7k"><img src="https://i.ytimg.com/vi/0m4qDGzGN7k/hqdefault_live.jpg" alt="Webcam Live Sarzana (SP) - Piazza Matteotti dal Comune di Sarzana" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="entry-body"><strong>Webcam Live Sarzana (SP) - Piazza Matteotti dal Comune di Sarzana</strong><span>Paesaggi Digitali</span></div>
+    </a>
+    <a class="entry" href="https://www.youtube.com/watch?v=IEDF51akADs" target="_blank" rel="noopener">
+      <div class="thumb" data-vid="IEDF51akADs"><img src="https://i.ytimg.com/vi/IEDF51akADs/hqdefault_live.jpg" alt="MEDview: Brunnsparken, Varberg" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="entry-body"><strong>MEDview: Brunnsparken, Varberg</strong><span>MED - Mediateknik</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=rdY0cwWmSOg" target="_blank" rel="noopener">
       <div class="thumb" data-vid="rdY0cwWmSOg"><img src="https://i.ytimg.com/vi/rdY0cwWmSOg/hqdefault_live.jpg" alt="🎥 LIVE Webcam Pompplein Egmond aan Zee | 24/7 Livebeelden van het Hart van Egmond" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
@@ -186,10 +193,6 @@
       <div class="thumb" data-vid="x4F6qn3VCTs"><img src="https://i.ytimg.com/vi/x4F6qn3VCTs/hqdefault_live.jpg" alt="Vatican Media Live - Polski" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Vatican Media Live - Polski</strong><span>Vatican News - Polski</span></div>
     </a>
-    <a class="entry" href="https://www.youtube.com/watch?v=70QjeKRWTz0" target="_blank" rel="noopener">
-      <div class="thumb" data-vid="70QjeKRWTz0"><img src="https://i.ytimg.com/vi/70QjeKRWTz0/hqdefault_live.jpg" alt="Park Muzyczny Kudowa Zdrój" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
-      <div class="entry-body"><strong>Park Muzyczny Kudowa Zdrój</strong><span>Łukasz Paluch</span></div>
-    </a>
     <a class="entry" href="https://www.youtube.com/watch?v=HmBsPGMdxwY" target="_blank" rel="noopener">
       <div class="thumb" data-vid="HmBsPGMdxwY"><img src="https://i.ytimg.com/vi/HmBsPGMdxwY/hqdefault_live.jpg" alt="Town Square - Piata Sfatului Brasov🔴 Pizza Roma Live Webcam" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Town Square - Piata Sfatului Brasov🔴 Pizza Roma Live Webcam</strong><span>See Transylvania</span></div>
@@ -205,6 +208,30 @@
     <a class="entry" href="https://www.youtube.com/watch?v=TJpX-S2CaII" target="_blank" rel="noopener">
       <div class="thumb" data-vid="TJpX-S2CaII"><img src="https://i.ytimg.com/vi/TJpX-S2CaII/hqdefault_live.jpg" alt="Basílica de Guadalupe, Ciudad de México, en vivo" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Basílica de Guadalupe, Ciudad de México, en vivo</strong><span>Webcams de México TV / Canal 10</span></div>
+    </a>
+    <a class="entry" href="https://www.youtube.com/watch?v=Bc_bgHNApZ8" target="_blank" rel="noopener">
+      <div class="thumb" data-vid="Bc_bgHNApZ8"><img src="https://i.ytimg.com/vi/Bc_bgHNApZ8/hqdefault_live.jpg" alt="🔴Gualdo Tadino Live Webcam" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="entry-body"><strong>🔴Gualdo Tadino Live Webcam</strong><span>Umbria Webcam</span></div>
+    </a>
+    <a class="entry" href="https://www.youtube.com/watch?v=SNcuhXFKByU" target="_blank" rel="noopener">
+      <div class="thumb" data-vid="SNcuhXFKByU"><img src="https://i.ytimg.com/vi/SNcuhXFKByU/hqdefault_live.jpg" alt="Trento live cam - centro città (Piazza Duomo)" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="entry-body"><strong>Trento live cam - centro città (Piazza Duomo)</strong><span>Live Trento H24 - Piazza Duomo</span></div>
+    </a>
+    <a class="entry" href="https://www.youtube.com/watch?v=8TZ8YRt9nYc" target="_blank" rel="noopener">
+      <div class="thumb" data-vid="8TZ8YRt9nYc"><img src="https://i.ytimg.com/vi/8TZ8YRt9nYc/hqdefault_live.jpg" alt="🔴Perugia Live Webcam" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="entry-body"><strong>🔴Perugia Live Webcam</strong><span>Umbria Webcam</span></div>
+    </a>
+    <a class="entry" href="https://www.youtube.com/watch?v=DezC_w8NQ2E" target="_blank" rel="noopener">
+      <div class="thumb" data-vid="DezC_w8NQ2E"><img src="https://i.ytimg.com/vi/DezC_w8NQ2E/hqdefault_live.jpg" alt="Centro de la Alcaldía Tlalpan en vivo" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="entry-body"><strong>Centro de la Alcaldía Tlalpan en vivo</strong><span>Webcams de México TV / Canal 7</span></div>
+    </a>
+    <a class="entry" href="https://www.youtube.com/watch?v=2T8A7ic2rTs" target="_blank" rel="noopener">
+      <div class="thumb" data-vid="2T8A7ic2rTs"><img src="https://i.ytimg.com/vi/2T8A7ic2rTs/hqdefault_live.jpg" alt="Hermosillo, Sonora En Vivo | Vista Plaza de Zaragoza" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="entry-body"><strong>Hermosillo, Sonora En Vivo | Vista Plaza de Zaragoza</strong><span>Webcams de México TV / Canal 10</span></div>
+    </a>
+    <a class="entry" href="https://www.youtube.com/watch?v=y7QcpQwxHrA" target="_blank" rel="noopener">
+      <div class="thumb" data-vid="y7QcpQwxHrA"><img src="https://i.ytimg.com/vi/y7QcpQwxHrA/hqdefault_live.jpg" alt="🔴Orvieto Live Webcam" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
+      <div class="entry-body"><strong>🔴Orvieto Live Webcam</strong><span>Umbria Webcam</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=Nqy5YyxpUFI" target="_blank" rel="noopener">
       <div class="thumb" data-vid="Nqy5YyxpUFI"><img src="https://i.ytimg.com/vi/Nqy5YyxpUFI/hqdefault_live.jpg" alt="Pachuca, Hidalgo En Vivo | Vista de Plaza de la Independencia hacía el SUR" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
@@ -246,33 +273,9 @@
       <div class="thumb" data-vid="cfCKCrOyHmw"><img src="https://i.ytimg.com/vi/cfCKCrOyHmw/hqdefault_live.jpg" alt="LIVE Webcam Germany: Göttingen - Historisches Rathaus und Gänseliesel-Brunnen" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>LIVE Webcam Germany: Göttingen - Historisches Rathaus und Gänseliesel-Brunnen</strong><span>GöCam</span></div>
     </a>
-    <a class="entry" href="https://www.youtube.com/watch?v=Bc_bgHNApZ8" target="_blank" rel="noopener">
-      <div class="thumb" data-vid="Bc_bgHNApZ8"><img src="https://i.ytimg.com/vi/Bc_bgHNApZ8/hqdefault_live.jpg" alt="🔴Gualdo Tadino Live Webcam" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
-      <div class="entry-body"><strong>🔴Gualdo Tadino Live Webcam</strong><span>Umbria Webcam</span></div>
-    </a>
-    <a class="entry" href="https://www.youtube.com/watch?v=SNcuhXFKByU" target="_blank" rel="noopener">
-      <div class="thumb" data-vid="SNcuhXFKByU"><img src="https://i.ytimg.com/vi/SNcuhXFKByU/hqdefault_live.jpg" alt="Trento live cam - centro città (Piazza Duomo)" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
-      <div class="entry-body"><strong>Trento live cam - centro città (Piazza Duomo)</strong><span>Live Trento H24 - Piazza Duomo</span></div>
-    </a>
-    <a class="entry" href="https://www.youtube.com/watch?v=8TZ8YRt9nYc" target="_blank" rel="noopener">
-      <div class="thumb" data-vid="8TZ8YRt9nYc"><img src="https://i.ytimg.com/vi/8TZ8YRt9nYc/hqdefault_live.jpg" alt="🔴Perugia Live Webcam" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
-      <div class="entry-body"><strong>🔴Perugia Live Webcam</strong><span>Umbria Webcam</span></div>
-    </a>
     <a class="entry" href="https://www.youtube.com/watch?v=d6IstgeKiiU" target="_blank" rel="noopener">
       <div class="thumb" data-vid="d6IstgeKiiU"><img src="https://i.ytimg.com/vi/d6IstgeKiiU/hqdefault_live.jpg" alt="Webcam Live Siena (SI) - Piazza del Campo" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
       <div class="entry-body"><strong>Webcam Live Siena (SI) - Piazza del Campo</strong><span>Paesaggi Digitali</span></div>
-    </a>
-    <a class="entry" href="https://www.youtube.com/watch?v=DezC_w8NQ2E" target="_blank" rel="noopener">
-      <div class="thumb" data-vid="DezC_w8NQ2E"><img src="https://i.ytimg.com/vi/DezC_w8NQ2E/hqdefault_live.jpg" alt="Centro de la Alcaldía Tlalpan en vivo" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
-      <div class="entry-body"><strong>Centro de la Alcaldía Tlalpan en vivo</strong><span>Webcams de México TV / Canal 7</span></div>
-    </a>
-    <a class="entry" href="https://www.youtube.com/watch?v=2T8A7ic2rTs" target="_blank" rel="noopener">
-      <div class="thumb" data-vid="2T8A7ic2rTs"><img src="https://i.ytimg.com/vi/2T8A7ic2rTs/hqdefault_live.jpg" alt="Hermosillo, Sonora En Vivo | Vista Plaza de Zaragoza" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
-      <div class="entry-body"><strong>Hermosillo, Sonora En Vivo | Vista Plaza de Zaragoza</strong><span>Webcams de México TV / Canal 10</span></div>
-    </a>
-    <a class="entry" href="https://www.youtube.com/watch?v=y7QcpQwxHrA" target="_blank" rel="noopener">
-      <div class="thumb" data-vid="y7QcpQwxHrA"><img src="https://i.ytimg.com/vi/y7QcpQwxHrA/hqdefault_live.jpg" alt="🔴Orvieto Live Webcam" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>
-      <div class="entry-body"><strong>🔴Orvieto Live Webcam</strong><span>Umbria Webcam</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=mBs2lOPdkMo" target="_blank" rel="noopener">
       <div class="thumb" data-vid="mBs2lOPdkMo"><img src="https://i.ytimg.com/vi/mBs2lOPdkMo/hqdefault_live.jpg" alt="🔴Montefalco Live Webcam" loading="lazy" width="320" height="180"><span class="badge live">LIVE</span></div>

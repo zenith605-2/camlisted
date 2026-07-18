@@ -70,9 +70,12 @@
     <select id="categoryFilter" hidden>
       <option value="">All</option>
     </select>
-    <select id="countryFilter" hidden>
-      <option value="" data-i18n="filter_all">All</option>
-    </select>
+    <div class="filter-group">
+      <span class="filter-label" data-i18n="filter_country">Country</span>
+      <select id="countryFilter">
+        <option value="" data-i18n="filter_all">All</option>
+      </select>
+    </div>
     <div class="filter-group">
       <span class="filter-label" data-i18n="filter_quality">Quality</span>
       <select id="qualityFilter">
@@ -154,13 +157,17 @@
 <div class="page-content">
 <span id="resultCount" class="result-count"></span>
 <main id="grid" class="grid">
-    <a class="entry" href="https://www.youtube.com/watch?v=f0l7vmoI3KM" target="_blank" rel="noopener">
-      <div class="thumb" data-vid="f0l7vmoI3KM"><img src="https://i.ytimg.com/vi/f0l7vmoI3KM/hqdefault.jpg" alt="【4K】🌎 Drone Footage 🔥 50 MEGACITIES of the World 2019 🔥 Cinematic Aerial Film" loading="lazy" width="320" height="180"><span class="badge">3:08:38</span></div>
-      <div class="entry-body"><strong>【4K】🌎 Drone Footage 🔥 50 MEGACITIES of the World 2019 🔥 Cinematic Aerial Film</strong><span>One Man Wolf Pack</span></div>
+    <a class="entry" href="https://www.youtube.com/watch?v=EPXFc2Dr9mQ" target="_blank" rel="noopener">
+      <div class="thumb" data-vid="EPXFc2Dr9mQ"><img src="https://i.ytimg.com/vi/EPXFc2Dr9mQ/hqdefault.jpg" alt="Hyderabad City - Amazing Drone Visual | Night to Morning in 4K | Hitech City" loading="lazy" width="320" height="180"><span class="badge">2:49</span></div>
+      <div class="entry-body"><strong>Hyderabad City - Amazing Drone Visual | Night to Morning in 4K | Hitech City</strong><span>Flying Frames</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=phPgZC9_QhQ" target="_blank" rel="noopener">
       <div class="thumb" data-vid="phPgZC9_QhQ"><img src="https://i.ytimg.com/vi/phPgZC9_QhQ/hqdefault.jpg" alt="SÃO PAULO from Above 🇧🇷 | Stunning 4K Drone Footage of Brazil’s Mega City" loading="lazy" width="320" height="180"><span class="badge">9:01</span></div>
       <div class="entry-body"><strong>SÃO PAULO from Above 🇧🇷 | Stunning 4K Drone Footage of Brazil’s Mega City</strong><span>Drone Snap</span></div>
+    </a>
+    <a class="entry" href="https://www.youtube.com/watch?v=f0l7vmoI3KM" target="_blank" rel="noopener">
+      <div class="thumb" data-vid="f0l7vmoI3KM"><img src="https://i.ytimg.com/vi/f0l7vmoI3KM/hqdefault.jpg" alt="【4K】🌎 Drone Footage 🔥 50 MEGACITIES of the World 2019 🔥 Cinematic Aerial Film" loading="lazy" width="320" height="180"><span class="badge">3:08:38</span></div>
+      <div class="entry-body"><strong>【4K】🌎 Drone Footage 🔥 50 MEGACITIES of the World 2019 🔥 Cinematic Aerial Film</strong><span>One Man Wolf Pack</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=8jT9ygmMvMg" target="_blank" rel="noopener">
       <div class="thumb" data-vid="8jT9ygmMvMg"><img src="https://i.ytimg.com/vi/8jT9ygmMvMg/hqdefault.jpg" alt="VENICE | Cinematic FPV" loading="lazy" width="320" height="180"><span class="badge">1:54</span></div>
@@ -169,10 +176,6 @@
     <a class="entry" href="https://www.youtube.com/watch?v=HY_OxIITp78" target="_blank" rel="noopener">
       <div class="thumb" data-vid="HY_OxIITp78"><img src="https://i.ytimg.com/vi/HY_OxIITp78/hqdefault.jpg" alt="[4K] SEATTLE 2026 🇺🇸 2 Hour Drone Aerial Relaxation Film | Washington USA United States of America" loading="lazy" width="320" height="180"><span class="badge">2:02:10</span></div>
       <div class="entry-body"><strong>[4K] SEATTLE 2026 🇺🇸 2 Hour Drone Aerial Relaxation Film | Washington USA United States of America</strong><span>Polychronis Film</span></div>
-    </a>
-    <a class="entry" href="https://www.youtube.com/watch?v=EPXFc2Dr9mQ" target="_blank" rel="noopener">
-      <div class="thumb" data-vid="EPXFc2Dr9mQ"><img src="https://i.ytimg.com/vi/EPXFc2Dr9mQ/hqdefault.jpg" alt="Hyderabad City - Amazing Drone Visual | Night to Morning in 4K | Hitech City" loading="lazy" width="320" height="180"><span class="badge">2:49</span></div>
-      <div class="entry-body"><strong>Hyderabad City - Amazing Drone Visual | Night to Morning in 4K | Hitech City</strong><span>Flying Frames</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=16SOByctoDo" target="_blank" rel="noopener">
       <div class="thumb" data-vid="16SOByctoDo"><img src="https://i.ytimg.com/vi/16SOByctoDo/hqdefault.jpg" alt="Cape Town 4K drone view • Amazing Aerial View Of Cape Town | Relaxation film with calming music" loading="lazy" width="320" height="180"><span class="badge">2:31:10</span></div>
@@ -186,57 +189,61 @@
       <div class="thumb" data-vid="AA-sv3ilNBE"><img src="https://i.ytimg.com/vi/AA-sv3ilNBE/hqdefault.jpg" alt="South Korea 4K Drone Video | Seoul, Busan, Songdo Cinematic Aerials" loading="lazy" width="320" height="180"><span class="badge">9:49</span></div>
       <div class="entry-body"><strong>South Korea 4K Drone Video | Seoul, Busan, Songdo Cinematic Aerials</strong><span>Explore The World 4K</span></div>
     </a>
-    <a class="entry" href="https://www.youtube.com/watch?v=_DJb5HjeDkQ" target="_blank" rel="noopener">
-      <div class="thumb" data-vid="_DJb5HjeDkQ"><img src="https://i.ytimg.com/vi/_DJb5HjeDkQ/hqdefault.jpg" alt="Megacities in 4K | Cinematic Drone Footage of World Cities" loading="lazy" width="320" height="180"><span class="badge">29:56</span></div>
-      <div class="entry-body"><strong>Megacities in 4K | Cinematic Drone Footage of World Cities</strong><span>Explore The World 4K</span></div>
-    </a>
-    <a class="entry" href="https://www.youtube.com/watch?v=zkGwMz2Dfos" target="_blank" rel="noopener">
-      <div class="thumb" data-vid="zkGwMz2Dfos"><img src="https://i.ytimg.com/vi/zkGwMz2Dfos/hqdefault.jpg" alt="Montreal, Canada 🇨🇦 - by drone [4K]" loading="lazy" width="320" height="180"><span class="badge">5:09</span></div>
-      <div class="entry-body"><strong>Montreal, Canada 🇨🇦 - by drone [4K]</strong><span>Drone Snap</span></div>
-    </a>
-    <a class="entry" href="https://www.youtube.com/watch?v=WHNNHAoaZD4" target="_blank" rel="noopener">
-      <div class="thumb" data-vid="WHNNHAoaZD4"><img src="https://i.ytimg.com/vi/WHNNHAoaZD4/hqdefault.jpg" alt="[4K] PARIS 2025 🇫🇷 1 Hour Aerial Drone Relaxation Film UHD | FRANCE" loading="lazy" width="320" height="180"><span class="badge">1:01:07</span></div>
-      <div class="entry-body"><strong>[4K] PARIS 2025 🇫🇷 1 Hour Aerial Drone Relaxation Film UHD | FRANCE</strong><span>Polychronis Film</span></div>
-    </a>
-    <a class="entry" href="https://www.youtube.com/watch?v=lM02vNMRRB0" target="_blank" rel="noopener">
-      <div class="thumb" data-vid="lM02vNMRRB0"><img src="https://i.ytimg.com/vi/lM02vNMRRB0/hqdefault.jpg" alt="7 HOUR 4K DRONE FILM: &quot;Earth from Above&quot; + Music by Nature Relaxation™ (Ambient AppleTV Style)" loading="lazy" width="320" height="180"><span class="badge">7:00:07</span></div>
-      <div class="entry-body"><strong>7 HOUR 4K DRONE FILM: &quot;Earth from Above&quot; + Music by Nature Relaxation™ (Ambient AppleTV Style)</strong><span>Nature Relaxation Films</span></div>
-    </a>
-    <a class="entry" href="https://www.youtube.com/watch?v=Dmhws_sBEic" target="_blank" rel="noopener">
-      <div class="thumb" data-vid="Dmhws_sBEic"><img src="https://i.ytimg.com/vi/Dmhws_sBEic/hqdefault.jpg" alt="Miami, Florida - USA 🇺🇸 - by drone / DJI Mavic 3 [4K]" loading="lazy" width="320" height="180"><span class="badge">14:50</span></div>
-      <div class="entry-body"><strong>Miami, Florida - USA 🇺🇸 - by drone / DJI Mavic 3 [4K]</strong><span>Drone Snap</span></div>
-    </a>
-    <a class="entry" href="https://www.youtube.com/watch?v=_iZ-vMCeH9U" target="_blank" rel="noopener">
-      <div class="thumb" data-vid="_iZ-vMCeH9U"><img src="https://i.ytimg.com/vi/_iZ-vMCeH9U/hqdefault.jpg" alt="Paris, France 🇫🇷 | 4K Drone Footage (With Subtitles)" loading="lazy" width="320" height="180"><span class="badge">4:38</span></div>
-      <div class="entry-body"><strong>Paris, France 🇫🇷 | 4K Drone Footage (With Subtitles)</strong><span>MTI Aerials</span></div>
+    <a class="entry" href="https://www.youtube.com/watch?v=FGRvP8eoPdw" target="_blank" rel="noopener">
+      <div class="thumb" data-vid="FGRvP8eoPdw"><img src="https://i.ytimg.com/vi/FGRvP8eoPdw/hqdefault.jpg" alt="Barcelona, Spain 🇪🇸 | 4K Drone Footage (With Subtitles)" loading="lazy" width="320" height="180"><span class="badge">8:29</span></div>
+      <div class="entry-body"><strong>Barcelona, Spain 🇪🇸 | 4K Drone Footage (With Subtitles)</strong><span>MTI Aerials</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=X2aY-HgWjzg" target="_blank" rel="noopener">
       <div class="thumb" data-vid="X2aY-HgWjzg"><img src="https://i.ytimg.com/vi/X2aY-HgWjzg/hqdefault.jpg" alt="Tokyo, Japan 🇯🇵 - by drone [4K]" loading="lazy" width="320" height="180"><span class="badge">4:33</span></div>
       <div class="entry-body"><strong>Tokyo, Japan 🇯🇵 - by drone [4K]</strong><span>Drone Snap</span></div>
     </a>
-    <a class="entry" href="https://www.youtube.com/watch?v=s8ctjBfWHBk" target="_blank" rel="noopener">
-      <div class="thumb" data-vid="s8ctjBfWHBk"><img src="https://i.ytimg.com/vi/s8ctjBfWHBk/hqdefault.jpg" alt="1 hour - Drone NYC Night" loading="lazy" width="320" height="180"><span class="badge">1:05:27</span></div>
-      <div class="entry-body"><strong>1 hour - Drone NYC Night</strong><span>the Dronalist</span></div>
-    </a>
-    <a class="entry" href="https://www.youtube.com/watch?v=4zAEDLwl9HI" target="_blank" rel="noopener">
-      <div class="thumb" data-vid="4zAEDLwl9HI"><img src="https://i.ytimg.com/vi/4zAEDLwl9HI/hqdefault.jpg" alt="Santorini, Greece 🇬🇷 in 4K ULTRA HD 60FPS Video by Drone" loading="lazy" width="320" height="180"><span class="badge">6:04</span></div>
-      <div class="entry-body"><strong>Santorini, Greece 🇬🇷 in 4K ULTRA HD 60FPS Video by Drone</strong><span>Exploropia</span></div>
-    </a>
     <a class="entry" href="https://www.youtube.com/watch?v=fIZke_A9Md4" target="_blank" rel="noopener">
       <div class="thumb" data-vid="fIZke_A9Md4"><img src="https://i.ytimg.com/vi/fIZke_A9Md4/hqdefault.jpg" alt="[4K] SAN FRANCISCO 2026 🇺🇸 4 Hour Drone Aerial Relaxation Film | California CA USA United States" loading="lazy" width="320" height="180"><span class="badge">4:02:47</span></div>
       <div class="entry-body"><strong>[4K] SAN FRANCISCO 2026 🇺🇸 4 Hour Drone Aerial Relaxation Film | California CA USA United States</strong><span>Polychronis Film</span></div>
-    </a>
-    <a class="entry" href="https://www.youtube.com/watch?v=4KBjBvxgwSU" target="_blank" rel="noopener">
-      <div class="thumb" data-vid="4KBjBvxgwSU"><img src="https://i.ytimg.com/vi/4KBjBvxgwSU/hqdefault.jpg" alt="[4K] MEXICO CITY 2026 🇲🇽 1 Hour Aerial Drone Relaxation Film UHD | Ciudad de México CDMX" loading="lazy" width="320" height="180"><span class="badge">1:05:34</span></div>
-      <div class="entry-body"><strong>[4K] MEXICO CITY 2026 🇲🇽 1 Hour Aerial Drone Relaxation Film UHD | Ciudad de México CDMX</strong><span>Polychronis Film</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=AuhonqvPb7E" target="_blank" rel="noopener">
       <div class="thumb" data-vid="AuhonqvPb7E"><img src="https://i.ytimg.com/vi/AuhonqvPb7E/hqdefault.jpg" alt="Figueroa st fly along 4K , throwing her keys and water at drone in 4K #6" loading="lazy" width="320" height="180"><span class="badge">5:10</span></div>
       <div class="entry-body"><strong>Figueroa st fly along 4K , throwing her keys and water at drone in 4K #6</strong><span>royal562</span></div>
     </a>
+    <a class="entry" href="https://www.youtube.com/watch?v=_DJb5HjeDkQ" target="_blank" rel="noopener">
+      <div class="thumb" data-vid="_DJb5HjeDkQ"><img src="https://i.ytimg.com/vi/_DJb5HjeDkQ/hqdefault.jpg" alt="Megacities in 4K | Cinematic Drone Footage of World Cities" loading="lazy" width="320" height="180"><span class="badge">29:56</span></div>
+      <div class="entry-body"><strong>Megacities in 4K | Cinematic Drone Footage of World Cities</strong><span>Explore The World 4K</span></div>
+    </a>
+    <a class="entry" href="https://www.youtube.com/watch?v=lM02vNMRRB0" target="_blank" rel="noopener">
+      <div class="thumb" data-vid="lM02vNMRRB0"><img src="https://i.ytimg.com/vi/lM02vNMRRB0/hqdefault.jpg" alt="7 HOUR 4K DRONE FILM: &quot;Earth from Above&quot; + Music by Nature Relaxation™ (Ambient AppleTV Style)" loading="lazy" width="320" height="180"><span class="badge">7:00:07</span></div>
+      <div class="entry-body"><strong>7 HOUR 4K DRONE FILM: &quot;Earth from Above&quot; + Music by Nature Relaxation™ (Ambient AppleTV Style)</strong><span>Nature Relaxation Films</span></div>
+    </a>
+    <a class="entry" href="https://www.youtube.com/watch?v=s8ctjBfWHBk" target="_blank" rel="noopener">
+      <div class="thumb" data-vid="s8ctjBfWHBk"><img src="https://i.ytimg.com/vi/s8ctjBfWHBk/hqdefault.jpg" alt="1 hour - Drone NYC Night" loading="lazy" width="320" height="180"><span class="badge">1:05:27</span></div>
+      <div class="entry-body"><strong>1 hour - Drone NYC Night</strong><span>the Dronalist</span></div>
+    </a>
+    <a class="entry" href="https://www.youtube.com/watch?v=Dmhws_sBEic" target="_blank" rel="noopener">
+      <div class="thumb" data-vid="Dmhws_sBEic"><img src="https://i.ytimg.com/vi/Dmhws_sBEic/hqdefault.jpg" alt="Miami, Florida - USA 🇺🇸 - by drone / DJI Mavic 3 [4K]" loading="lazy" width="320" height="180"><span class="badge">14:50</span></div>
+      <div class="entry-body"><strong>Miami, Florida - USA 🇺🇸 - by drone / DJI Mavic 3 [4K]</strong><span>Drone Snap</span></div>
+    </a>
+    <a class="entry" href="https://www.youtube.com/watch?v=zkGwMz2Dfos" target="_blank" rel="noopener">
+      <div class="thumb" data-vid="zkGwMz2Dfos"><img src="https://i.ytimg.com/vi/zkGwMz2Dfos/hqdefault.jpg" alt="Montreal, Canada 🇨🇦 - by drone [4K]" loading="lazy" width="320" height="180"><span class="badge">5:09</span></div>
+      <div class="entry-body"><strong>Montreal, Canada 🇨🇦 - by drone [4K]</strong><span>Drone Snap</span></div>
+    </a>
+    <a class="entry" href="https://www.youtube.com/watch?v=_iZ-vMCeH9U" target="_blank" rel="noopener">
+      <div class="thumb" data-vid="_iZ-vMCeH9U"><img src="https://i.ytimg.com/vi/_iZ-vMCeH9U/hqdefault.jpg" alt="Paris, France 🇫🇷 | 4K Drone Footage (With Subtitles)" loading="lazy" width="320" height="180"><span class="badge">4:38</span></div>
+      <div class="entry-body"><strong>Paris, France 🇫🇷 | 4K Drone Footage (With Subtitles)</strong><span>MTI Aerials</span></div>
+    </a>
+    <a class="entry" href="https://www.youtube.com/watch?v=WHNNHAoaZD4" target="_blank" rel="noopener">
+      <div class="thumb" data-vid="WHNNHAoaZD4"><img src="https://i.ytimg.com/vi/WHNNHAoaZD4/hqdefault.jpg" alt="[4K] PARIS 2025 🇫🇷 1 Hour Aerial Drone Relaxation Film UHD | FRANCE" loading="lazy" width="320" height="180"><span class="badge">1:01:07</span></div>
+      <div class="entry-body"><strong>[4K] PARIS 2025 🇫🇷 1 Hour Aerial Drone Relaxation Film UHD | FRANCE</strong><span>Polychronis Film</span></div>
+    </a>
+    <a class="entry" href="https://www.youtube.com/watch?v=4zAEDLwl9HI" target="_blank" rel="noopener">
+      <div class="thumb" data-vid="4zAEDLwl9HI"><img src="https://i.ytimg.com/vi/4zAEDLwl9HI/hqdefault.jpg" alt="Santorini, Greece 🇬🇷 in 4K ULTRA HD 60FPS Video by Drone" loading="lazy" width="320" height="180"><span class="badge">6:04</span></div>
+      <div class="entry-body"><strong>Santorini, Greece 🇬🇷 in 4K ULTRA HD 60FPS Video by Drone</strong><span>Exploropia</span></div>
+    </a>
     <a class="entry" href="https://www.youtube.com/watch?v=S_dfq9rFWAE" target="_blank" rel="noopener">
       <div class="thumb" data-vid="S_dfq9rFWAE"><img src="https://i.ytimg.com/vi/S_dfq9rFWAE/hqdefault.jpg" alt="Moscow Russia Aerial Drone 4K Timelab.pro" loading="lazy" width="320" height="180"><span class="badge">2:47</span></div>
       <div class="entry-body"><strong>Moscow Russia Aerial Drone 4K Timelab.pro</strong><span>Timelab Pro</span></div>
+    </a>
+    <a class="entry" href="https://www.youtube.com/watch?v=4KBjBvxgwSU" target="_blank" rel="noopener">
+      <div class="thumb" data-vid="4KBjBvxgwSU"><img src="https://i.ytimg.com/vi/4KBjBvxgwSU/hqdefault.jpg" alt="[4K] MEXICO CITY 2026 🇲🇽 1 Hour Aerial Drone Relaxation Film UHD | Ciudad de México CDMX" loading="lazy" width="320" height="180"><span class="badge">1:05:34</span></div>
+      <div class="entry-body"><strong>[4K] MEXICO CITY 2026 🇲🇽 1 Hour Aerial Drone Relaxation Film UHD | Ciudad de México CDMX</strong><span>Polychronis Film</span></div>
     </a>
     <a class="entry" href="https://www.youtube.com/watch?v=kcfs1-ryKWE" target="_blank" rel="noopener">
       <div class="thumb" data-vid="kcfs1-ryKWE"><img src="https://i.ytimg.com/vi/kcfs1-ryKWE/hqdefault.jpg" alt="FPV Drone Flight through Beautiful Iceland Canyon" loading="lazy" width="320" height="180"><span class="badge">1:08</span></div>
@@ -253,10 +260,6 @@
     <a class="entry" href="https://www.youtube.com/watch?v=PnDv_iij5Po" target="_blank" rel="noopener">
       <div class="thumb" data-vid="PnDv_iij5Po"><img src="https://i.ytimg.com/vi/PnDv_iij5Po/hqdefault.jpg" alt="FAIR Construction Site Time Lapse - Longterm Dronelapse" loading="lazy" width="320" height="180"><span class="badge">1:42</span></div>
       <div class="entry-body"><strong>FAIR Construction Site Time Lapse - Longterm Dronelapse</strong><span>FAIR GSI - Universe in the Lab</span></div>
-    </a>
-    <a class="entry" href="https://www.youtube.com/watch?v=FGRvP8eoPdw" target="_blank" rel="noopener">
-      <div class="thumb" data-vid="FGRvP8eoPdw"><img src="https://i.ytimg.com/vi/FGRvP8eoPdw/hqdefault.jpg" alt="Barcelona, Spain 🇪🇸 | 4K Drone Footage (With Subtitles)" loading="lazy" width="320" height="180"><span class="badge">8:29</span></div>
-      <div class="entry-body"><strong>Barcelona, Spain 🇪🇸 | 4K Drone Footage (With Subtitles)</strong><span>MTI Aerials</span></div>
     </a></main>
 
 <div id="bulkActionBar" class="bulk-action-bar" hidden>

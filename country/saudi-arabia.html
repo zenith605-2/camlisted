@@ -70,9 +70,12 @@
     <select id="categoryFilter" hidden>
       <option value="">All</option>
     </select>
-    <select id="countryFilter" hidden>
-      <option value="" data-i18n="filter_all">All</option>
-    </select>
+    <div class="filter-group">
+      <span class="filter-label" data-i18n="filter_country">Country</span>
+      <select id="countryFilter">
+        <option value="" data-i18n="filter_all">All</option>
+      </select>
+    </div>
     <div class="filter-group">
       <span class="filter-label" data-i18n="filter_quality">Quality</span>
       <select id="qualityFilter">
