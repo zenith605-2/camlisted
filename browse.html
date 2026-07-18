@@ -37,7 +37,8 @@
   .map-globe-row { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; align-items: start; }
   /* min-width:0 — svg(고유폭 900px)나 캔버스가 트랙을 밀어내지 못하게 (없으면 한쪽이 짜부라짐) */
   .mg-col { min-width: 0; }
-  .globe-box { height: 460px; border: 1px solid var(--border); border-radius: 10px; overflow: hidden; background: #000; }
+  .globe-box { position: relative; height: 460px; border: 1px solid var(--border); border-radius: 10px; overflow: hidden; background: #000; }
+  .globe-sel-label { position: absolute; top: 10px; left: 12px; z-index: 5; background: rgba(0,0,0,.7); border: 1px solid var(--accent); border-radius: 6px; padding: 4px 10px; color: #fff; font-size: 0.9rem; font-weight: 600; pointer-events: none; }
   .globe-bar { display: flex; gap: 12px; align-items: center; margin-top: 8px; flex-wrap: wrap; }
   .random-btn { background: var(--accent); color: #fff; border: 0; border-radius: 999px; padding: 6px 14px; font-size: 0.85rem; font-weight: 600; cursor: pointer; }
   .panel { position: fixed; right: 0; top: 0; bottom: 0; width: min(420px, 100%); z-index: 40; background: rgba(13,17,23,.97); border-left: 1px solid var(--border); padding: 16px; display: none; flex-direction: column; gap: 10px; }
@@ -77,7 +78,10 @@
   
       <div class="map-globe-row">
         <div class="mg-col">
-          <div id="globe" class="globe-box"></div>
+          <div class="globe-box">
+            <div id="globe" style="width:100%;height:100%"></div>
+            <div id="globeSelLabel" class="globe-sel-label" hidden></div>
+          </div>
           <div class="globe-bar">
             <span class="map-note" id="globeHint">Drag to spin · click a point to watch</span>
             <button type="button" class="random-btn" id="randomBtn">🎲 Random cam</button>
@@ -236,6 +240,8 @@
             globe.pointOfView({ lat: gc.lat, lng: gc.lng, altitude: alt }, 900);
           }
           panel.classList.add('open');
+          var gsl = document.getElementById('globeSelLabel');
+          if (gsl) { gsl.textContent = d.name; gsl.hidden = false; }
           document.getElementById('panelTitle').textContent = d.name;
           var W = window.__L || { live: 'Live', videos: 'Videos' };
           document.getElementById('panelSub').textContent = W.live + ': ' + d.live + ' · ' + W.videos + ': ' + d.video;
@@ -280,6 +286,8 @@
         document.getElementById('panelClose').addEventListener('click', function () {
           panel.classList.remove('open');
           document.getElementById('player').innerHTML = '';
+          var gsl = document.getElementById('globeSelLabel');
+          if (gsl) gsl.hidden = true;
           selectedCode = null;
           window.__selCode = null;
           globe.pointsData(GC);
