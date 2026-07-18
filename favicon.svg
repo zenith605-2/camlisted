@@ -1,1 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y="0.9em" font-size="90">📹</text></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <rect width="32" height="32" rx="7" fill="#0f1115"/>
+  <circle cx="16" cy="16" r="10" fill="none" stroke="#c7cdd6" stroke-width="1.7"/>
+  <ellipse cx="16" cy="16" rx="10" ry="3.9" fill="none" stroke="#c7cdd6" stroke-width="1.2"/>
+  <ellipse cx="16" cy="16" rx="3.9" ry="10" fill="none" stroke="#c7cdd6" stroke-width="1.2"/>
+  <circle cx="12" cy="12" r="2.6" fill="#ff3b3b"/>
+</svg>
