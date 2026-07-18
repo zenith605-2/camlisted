@@ -734,7 +734,7 @@ body {
   flex: none;
   display: flex;
   align-items: baseline;
-  gap: 8px;
+  gap: 10px;
   max-width: none;
   white-space: normal;
   overflow: visible;
@@ -744,6 +744,15 @@ body {
   font-size: 0.9rem;
   text-align: left;
   line-height: 1.4;
+}
+.feedback-page .cheer-body { flex: 1 1 auto; min-width: 0; }
+.cheer-time {
+  flex: none;
+  margin-left: auto;
+  color: var(--muted);
+  font-size: 0.72rem;
+  white-space: nowrap;
+  opacity: 0.8;
 }
 
 .cheer-empty {

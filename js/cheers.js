@@ -17,6 +17,13 @@ function escapeHtml(str) {
   ));
 }
 
+function formatCheerDate(iso) {
+  if (!iso) return '';
+  try {
+    return new Date(iso).toLocaleString(undefined, { dateStyle: 'medium', timeStyle: 'short' });
+  } catch { return ''; }
+}
+
 async function loadCheers() {
   const { data, error } = await sb
     .from('cheers')
@@ -26,7 +33,8 @@ async function loadCheers() {
   if (error) { cheerList.innerHTML = `<span class="cheer-empty">${escapeHtml(error.message)}</span>`; return; }
   cheerList.innerHTML = (data || []).map(c => `
     <span class="cheer-chip" data-cheer-id="${c.id}">
-      <b>${escapeHtml(c.name || t('anonymous'))}</b> ${escapeHtml(c.content)}
+      <span class="cheer-body"><b>${escapeHtml(c.name || t('anonymous'))}</b> ${escapeHtml(c.content)}</span>
+      <time class="cheer-time">${escapeHtml(formatCheerDate(c.created_at))}</time>
       ${isAdmin ? `<button type="button" class="cheer-delete-btn" data-cheer-id="${c.id}" title="delete">✕</button>` : ''}
     </span>
   `).join('') || `<span class="cheer-empty">${escapeHtml(t('cheer_empty'))}</span>`;
