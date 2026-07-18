@@ -94,6 +94,9 @@ const PAGE_CSS = `
   .panel li.active button { outline: 1px solid var(--accent); }
   .panel li .lv { color: var(--accent); font-weight: 700; font-size: 0.7rem; margin-right: 6px; }
   .panel a.browse-all { color: var(--accent); text-decoration: none; font-size: 0.9rem; }
+  .panel-filter { display: flex; gap: 8px; }
+  .panel-filter button { background: var(--card-bg); color: var(--muted); border: 1px solid var(--border); border-radius: 999px; padding: 3px 10px; font-size: 0.75rem; cursor: pointer; }
+  .panel-filter button.active { color: #fff; border-color: var(--accent); }
   @media (max-width: 900px) {
     .map-globe-row { grid-template-columns: 1fr; }
     .panel { top: auto; bottom: 0; height: 62%; width: 100%; border-left: 0; border-top: 1px solid var(--border); }
@@ -205,7 +208,8 @@ async function writeGlobePage(countByCode, slugByCode, visible, today) {
     // 나라별 재생 후보: 라이브 우선 최대 30개 (id, 제목, 라이브 여부)
     const list = visible.filter(s => s.country === code);
     const lives = list.filter(s => s.content_type === 'live');
-    const pick = (lives.length ? lives : list).slice(0, 30);
+    const nonLives = list.filter(s => s.content_type !== 'live');
+    const pick = lives.slice(0, 25).concat(nonLives.slice(0, 15)); // 라이브 25 + 일반영상 15 (한쪽이 정원을 다 차지하지 않게)
     vidsByCode[code] = pick.map(s => [s.video_id, s.title.slice(0, 70), s.content_type === 'live' ? 1 : 0]);
   }
 
@@ -244,6 +248,9 @@ async function writeGlobePage(countByCode, slugByCode, visible, today) {
   .panel li.active button { background: #241417; color: #fff; outline: 1px solid #ff3b3b; }
   .panel li .lv { color: #ff3b3b; font-weight: 700; font-size: 0.7rem; margin-right: 6px; }
   .panel a.browse-all { color: #ff3b3b; text-decoration: none; font-size: 0.9rem; }
+  .panel-filter { display: flex; gap: 8px; }
+  .panel-filter button { background: #161b22; color: #9aa4b2; border: 1px solid #2a2f3a; border-radius: 999px; padding: 3px 10px; font-size: 0.75rem; cursor: pointer; }
+  .panel-filter button.active { color: #fff; border-color: #ff3b3b; }
   @media (max-width: 640px) {
     .panel { top: auto; bottom: 0; height: 62%; width: 100%; border-left: 0; border-top: 1px solid #2a2f3a; }
   }
@@ -262,6 +269,11 @@ async function writeGlobePage(countByCode, slugByCode, visible, today) {
   <h2 id="panelTitle"></h2>
   <div class="sub" id="panelSub"></div>
   <div class="player" id="player"></div>
+  <div class="panel-filter" id="panelFilter">
+    <button type="button" data-f="all" class="active">All</button>
+    <button type="button" data-f="live">🔴 Live</button>
+    <button type="button" data-f="video">🎬 Videos</button>
+  </div>
   <ul id="camList"></ul>
   <a class="browse-all" id="browseAll" href="#">Browse all →</a>
 </aside>
@@ -310,6 +322,7 @@ async function writeGlobePage(countByCode, slugByCode, visible, today) {
     }
     vids.forEach(function (v) {
       var li = document.createElement('li');
+      li.dataset.live = v[2];
       var b = document.createElement('button');
       b.innerHTML = '<img src="https://i.ytimg.com/vi/' + v[0] + '/mqdefault.jpg" loading="lazy" alt="">'
         + '<span class="meta">' + (v[2] ? '<span class="lv">LIVE</span>' : '') + v[1].replace(/</g, '&lt;') + '</span>';
@@ -317,6 +330,8 @@ async function writeGlobePage(countByCode, slugByCode, visible, today) {
       li.appendChild(b);
       list.appendChild(li);
     });
+    var pf = document.getElementById('panelFilter');
+    [].forEach.call(pf.querySelectorAll('button'), function (x) { x.classList.toggle('active', x.dataset.f === 'all'); });
     if (vids.length) {
       var idx = autoplayRandom ? Math.floor(Math.random() * vids.length) : 0;
       markActive(list.children[idx]);
@@ -344,6 +359,15 @@ async function writeGlobePage(countByCode, slugByCode, visible, today) {
     var pool = [];
     COUNTRIES.forEach(function (c) { for (var i = 0; i < c.live + c.video; i++) pool.push(c); });
     openPanel(pool[Math.floor(Math.random() * pool.length)], true);
+  });
+  document.getElementById('panelFilter').addEventListener('click', function (e) {
+    var b = e.target.closest('button');
+    if (!b) return;
+    [].forEach.call(this.querySelectorAll('button'), function (x) { x.classList.toggle('active', x === b); });
+    var f = b.dataset.f;
+    [].forEach.call(document.getElementById('camList').children, function (li) {
+      li.style.display = (f === 'all' || (f === 'live') === (li.dataset.live === '1')) ? '' : 'none';
+    });
   });
 <\/script>
 </body>
@@ -478,6 +502,7 @@ async function main() {
         <svg viewBox="0 0 900 441" role="img" aria-label="World map of available cams by country">${mapSvgPaths}</svg>
         <div id="mapTip" class="map-tip" hidden></div>
       </div>
+      <p class="map-note" id="mapSelNote" style="color:var(--accent);font-weight:600" hidden></p>
       <p class="map-note">Hover a country to see how many cams it has — click to browse them.</p>
       <div class="map-legend">
         ${[...MAP_BUCKETS].reverse().map(b => `<span><span class="sw" style="background:${b.color}"></span><span${b.min === 0 ? ' class="legend-none"' : ''}>${b.label}</span></span>`).join('')}
@@ -499,9 +524,24 @@ async function main() {
             return mapType === 'live' ? live : mapType === 'video' ? video : live + video;
           }
           function repaint() {
+            var selName = null;
             paths.forEach(function (p) {
-              p.setAttribute('fill', p.dataset.code === window.__selCode ? '#ffd21f' : bucketColor(countOf(p)));
+              var sel = p.dataset.code === window.__selCode;
+              p.setAttribute('fill', bucketColor(countOf(p)));
+              p.style.stroke = sel ? '#ffffff' : '';
+              p.style.strokeWidth = sel ? '1.8' : '';
+              if (sel) { selName = p.dataset.name; p.parentNode.appendChild(p); } // 테두리가 이웃에 가려지지 않게 맨 위로
             });
+            var note = document.getElementById('mapSelNote');
+            if (note) {
+              if (selName) {
+                var W = window.__L || {};
+                note.textContent = (W.selected || 'Selected:') + ' ' + selName;
+                note.hidden = false;
+              } else {
+                note.hidden = true;
+              }
+            }
           }
           window.__repaintMap = repaint;
           paths.forEach(function (p) {
@@ -536,7 +576,8 @@ async function main() {
     if (!total) continue;
     const list = visible.filter(s => s.country === code);
     const lives = list.filter(s => s.content_type === 'live');
-    const pick = (lives.length ? lives : list).slice(0, 30);
+    const nonLives = list.filter(s => s.content_type !== 'live');
+    const pick = lives.slice(0, 25).concat(nonLives.slice(0, 15)); // 라이브 25 + 일반영상 15 (한쪽이 정원을 다 차지하지 않게)
     vidsAllByCode[code] = pick.map(s => [s.video_id, s.title.slice(0, 70), s.content_type === 'live' ? 1 : 0]);
     const cen = COUNTRY_CENTROIDS[code];
     if (cen) {
@@ -578,6 +619,11 @@ async function main() {
         <h2 id="panelTitle"></h2>
         <div class="sub" id="panelSub"></div>
         <div class="player" id="player"></div>
+        <div class="panel-filter" id="panelFilter">
+          <button type="button" data-f="all" class="active">All</button>
+          <button type="button" data-f="live">🔴 Live</button>
+          <button type="button" data-f="video">🎬 Videos</button>
+        </div>
         <ul id="camList"></ul>
         <a class="browse-all" id="browseAll" href="#">Browse all →</a>
       </aside>
@@ -641,6 +687,7 @@ async function main() {
           }
           vids.forEach(function (v) {
             var li = document.createElement('li');
+            li.dataset.live = v[2];
             var b = document.createElement('button');
             b.innerHTML = '<img src="https://i.ytimg.com/vi/' + v[0] + '/mqdefault.jpg" loading="lazy" alt="">'
               + '<span class="meta">' + (v[2] ? '<span class="lv">LIVE</span>' : '') + v[1].replace(/</g, '&lt;') + '</span>';
@@ -648,6 +695,11 @@ async function main() {
             li.appendChild(b);
             list.appendChild(li);
           });
+          var pf = document.getElementById('panelFilter');
+          pf.querySelector('[data-f="all"]').textContent = W.all || 'All';
+          pf.querySelector('[data-f="live"]').textContent = W.liveBtn || '\ud83d\udd34 Live';
+          pf.querySelector('[data-f="video"]').textContent = W.videosBtn || '\ud83c\udfac Videos';
+          [].forEach.call(pf.querySelectorAll('button'), function (x) { x.classList.toggle('active', x.dataset.f === 'all'); });
           if (vids.length) {
             var idx = autoplayRandom ? Math.floor(Math.random() * vids.length) : 0;
             markActive(list.children[idx]);
@@ -677,6 +729,15 @@ async function main() {
           GC.forEach(function (c) { for (var i = 0; i < c.live + c.video; i++) pool.push(c); });
           openPanel(pool[Math.floor(Math.random() * pool.length)], true);
         });
+        document.getElementById('panelFilter').addEventListener('click', function (e) {
+          var b = e.target.closest('button');
+          if (!b) return;
+          [].forEach.call(this.querySelectorAll('button'), function (x) { x.classList.toggle('active', x === b); });
+          var f = b.dataset.f;
+          [].forEach.call(document.getElementById('camList').children, function (li) {
+            li.style.display = (f === 'all' || (f === 'live') === (li.dataset.live === '1')) ? '' : 'none';
+          });
+        });
       </script>
       <h2 id="hCat">By Category</h2>
       <ul class="browse-list">
@@ -690,11 +751,11 @@ async function main() {
         // 본 사이트의 언어 설정(localStorage 'lang')을 그대로 따라 페이지 문구를 바꾼다
         (function () {
           var dict = {
-            en: { back: '\\u2190 Back to site', h1: 'Browse by Country & Category', intro: '{n} live cams and videos, organized by where and what they show. Updated {d}.', byCategory: 'By Category', byCountry: 'By Country', mapNote: 'Hover a country to see how many cams it has \\u2014 click to browse them.', show: 'Show:', all: 'All', liveBtn: '\\ud83d\\udd34 Live', videosBtn: '\\ud83c\\udfac Videos', none: 'None', live: 'Live', videos: 'Videos', intl: 'International / Mixed', ghint: 'Drag to spin \\u00b7 click a point to watch', random: '\\ud83c\\udfb2 Random cam', browseAll: 'Browse all \\u2192' },
-            ko: { back: '\\u2190 사이트로 돌아가기', h1: '국가·카테고리별 둘러보기', intro: '{n}개의 라이브 캠과 영상을 장소·내용별로 정리했습니다. {d} 업데이트.', byCategory: '카테고리별', byCountry: '국가별', mapNote: '나라에 마우스를 올리면 캠 개수가 보이고, 클릭하면 해당 나라 영상으로 이동합니다.', show: '표시:', all: '전체', liveBtn: '\\ud83d\\udd34 라이브', videosBtn: '\\ud83c\\udfac 일반영상', none: '없음', live: '라이브', videos: '일반영상', intl: '국제/혼합', ghint: '드래그로 회전 \\u00b7 포인트를 클릭해 시청', random: '\\ud83c\\udfb2 랜덤 캠', browseAll: '전체 보기 \\u2192' },
-            ja: { back: '\\u2190 サイトへ戻る', h1: '国・カテゴリ別に見る', intro: '{n}件のライブカメラと動画を場所と内容で整理。{d} 更新。', byCategory: 'カテゴリ別', byCountry: '国別', mapNote: '国にカーソルを合わせると台数が表示され、クリックでその国の映像へ移動します。', show: '表示:', all: 'すべて', liveBtn: '\\ud83d\\udd34 ライブ', videosBtn: '\\ud83c\\udfac 動画', none: 'なし', live: 'ライブ', videos: '動画', intl: '国際/混合', ghint: 'ドラッグで回転 \\u00b7 ポイントをクリックで視聴', random: '\\ud83c\\udfb2 ランダム', browseAll: 'すべて見る \\u2192' },
-            zh: { back: '\\u2190 返回网站', h1: '按国家和分类浏览', intro: '{n}个直播摄像头和视频，按地点和内容整理。{d} 更新。', byCategory: '按分类', byCountry: '按国家', mapNote: '将鼠标悬停在国家上可查看数量，点击进入该国视频。', show: '显示:', all: '全部', liveBtn: '\\ud83d\\udd34 直播', videosBtn: '\\ud83c\\udfac 视频', none: '无', live: '直播', videos: '视频', intl: '国际/混合', ghint: '拖动旋转 \\u00b7 点击圆点观看', random: '\\ud83c\\udfb2 随机', browseAll: '查看全部 \\u2192' },
-            es: { back: '\\u2190 Volver al sitio', h1: 'Explorar por país y categoría', intro: '{n} cámaras en vivo y videos, organizados por lugar y contenido. Actualizado {d}.', byCategory: 'Por categoría', byCountry: 'Por país', mapNote: 'Pasa el cursor sobre un país para ver cuántas cámaras tiene; haz clic para explorarlas.', show: 'Mostrar:', all: 'Todo', liveBtn: '\\ud83d\\udd34 En vivo', videosBtn: '\\ud83c\\udfac Videos', none: 'Ninguno', live: 'En vivo', videos: 'Videos', intl: 'Internacional/Mixto', ghint: 'Arrastra para girar \\u00b7 clic para ver', random: '\\ud83c\\udfb2 Aleatoria', browseAll: 'Ver todo \\u2192' },
+            en: { back: '\\u2190 Back to site', h1: 'Browse by Country & Category', intro: '{n} live cams and videos, organized by where and what they show. Updated {d}.', byCategory: 'By Category', byCountry: 'By Country', mapNote: 'Hover a country to see how many cams it has \\u2014 click to browse them.', show: 'Show:', all: 'All', liveBtn: '\\ud83d\\udd34 Live', videosBtn: '\\ud83c\\udfac Videos', none: 'None', live: 'Live', videos: 'Videos', intl: 'International / Mixed', ghint: 'Drag to spin \\u00b7 click a point to watch', random: '\\ud83c\\udfb2 Random cam', browseAll: 'Browse all \\u2192', selected: 'Selected:' },
+            ko: { back: '\\u2190 사이트로 돌아가기', h1: '국가·카테고리별 둘러보기', intro: '{n}개의 라이브 캠과 영상을 장소·내용별로 정리했습니다. {d} 업데이트.', byCategory: '카테고리별', byCountry: '국가별', mapNote: '나라에 마우스를 올리면 캠 개수가 보이고, 클릭하면 해당 나라 영상으로 이동합니다.', show: '표시:', all: '전체', liveBtn: '\\ud83d\\udd34 라이브', videosBtn: '\\ud83c\\udfac 일반영상', none: '없음', live: '라이브', videos: '일반영상', intl: '국제/혼합', ghint: '드래그로 회전 \\u00b7 포인트를 클릭해 시청', random: '\\ud83c\\udfb2 랜덤 캠', browseAll: '전체 보기 \\u2192', selected: '선택됨:' },
+            ja: { back: '\\u2190 サイトへ戻る', h1: '国・カテゴリ別に見る', intro: '{n}件のライブカメラと動画を場所と内容で整理。{d} 更新。', byCategory: 'カテゴリ別', byCountry: '国別', mapNote: '国にカーソルを合わせると台数が表示され、クリックでその国の映像へ移動します。', show: '表示:', all: 'すべて', liveBtn: '\\ud83d\\udd34 ライブ', videosBtn: '\\ud83c\\udfac 動画', none: 'なし', live: 'ライブ', videos: '動画', intl: '国際/混合', ghint: 'ドラッグで回転 \\u00b7 ポイントをクリックで視聴', random: '\\ud83c\\udfb2 ランダム', browseAll: 'すべて見る \\u2192', selected: '選択中:' },
+            zh: { back: '\\u2190 返回网站', h1: '按国家和分类浏览', intro: '{n}个直播摄像头和视频，按地点和内容整理。{d} 更新。', byCategory: '按分类', byCountry: '按国家', mapNote: '将鼠标悬停在国家上可查看数量，点击进入该国视频。', show: '显示:', all: '全部', liveBtn: '\\ud83d\\udd34 直播', videosBtn: '\\ud83c\\udfac 视频', none: '无', live: '直播', videos: '视频', intl: '国际/混合', ghint: '拖动旋转 \\u00b7 点击圆点观看', random: '\\ud83c\\udfb2 随机', browseAll: '查看全部 \\u2192', selected: '已选择:' },
+            es: { back: '\\u2190 Volver al sitio', h1: 'Explorar por país y categoría', intro: '{n} cámaras en vivo y videos, organizados por lugar y contenido. Actualizado {d}.', byCategory: 'Por categoría', byCountry: 'Por país', mapNote: 'Pasa el cursor sobre un país para ver cuántas cámaras tiene; haz clic para explorarlas.', show: 'Mostrar:', all: 'Todo', liveBtn: '\\ud83d\\udd34 En vivo', videosBtn: '\\ud83c\\udfac Videos', none: 'Ninguno', live: 'En vivo', videos: 'Videos', intl: 'Internacional/Mixto', ghint: 'Arrastra para girar \\u00b7 clic para ver', random: '\\ud83c\\udfb2 Aleatoria', browseAll: 'Ver todo \\u2192', selected: 'Seleccionado:' },
           };
           // 본 사이트(i18n.js detectInitialLang)와 동일: 저장된 설정이 없으면 무조건 영어
           var lang = localStorage.getItem('lang') || 'en';
