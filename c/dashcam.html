@@ -59,8 +59,12 @@
   <h1><a href="./" class="site-title-link">🚗 Dashcam Live Cams &amp; Videos</a></h1>
   <p class="subtitle" data-i18n="site_subtitle">A curated collection of live cams and real-world footage — traffic, wildlife, dashcams, city streets, and more, gathered from YouTube every day.</p>
   <p id="memberPerks" class="contribute-line" data-i18n="member_perks">🤝 Built by its users — sign in to submit links, vote, favorite, comment &amp; fix categories</p>
-  <div class="controls">
-    <input type="text" id="searchInput" data-i18n-placeholder="search_placeholder" placeholder="Search by title or channel...">
+  <div id="cheerSection" class="cheer-section">
+    <div id="cheerList" class="cheer-list"></div>
+    <form id="cheerForm" class="cheer-form">
+      <input type="text" id="cheerInput" maxlength="200" data-i18n-placeholder="cheer_placeholder" placeholder="Leave a cheer! 🎉">
+      <button type="submit" data-i18n="cheer_send">Send</button>
+    </form>
   </div>
   <div class="filter-bar">
     <div class="filter-group">
@@ -159,12 +163,8 @@
 
 <nav id="sidebar" class="sidebar"></nav>
 <div class="page-content">
-<div id="cheerSection" class="cheer-section">
-  <div id="cheerList" class="cheer-list"></div>
-  <form id="cheerForm" class="cheer-form">
-    <input type="text" id="cheerInput" maxlength="200" data-i18n-placeholder="cheer_placeholder" placeholder="Leave a cheer! 🎉">
-    <button type="submit" data-i18n="cheer_send">Send</button>
-  </form>
+<div class="controls">
+  <input type="text" id="searchInput" data-i18n-placeholder="search_placeholder" placeholder="Search by title or channel...">
 </div>
 <span id="resultCount" class="result-count"></span>
 <section class="seo-intro"><p>Browse <strong>165</strong> dashcam live cams and videos gathered from around the world — 4 live and 161 recorded. Coverage is strongest in United States, Australia, South Korea, and Russia, with fresh public YouTube feeds added and verified every day.</p><p>Right now you can watch “BEST OF UNEXPECTED AND FUNNY MOMENTS CAUGHT ON DASHCAM…” and “Australian Car Crash / Dash Cam Compilation 43”, among others. No sign-up needed — sort by most-upvoted or newest, or narrow to a single country below.</p><nav class="seo-links"><span class="seo-links-label">Dashcam cams by country:</span> <a href="/country/united-states/dashcam.html">United States</a> <a href="/country/australia/dashcam.html">Australia</a> <a href="/country/south-korea/dashcam.html">South Korea</a> <a href="/country/russia/dashcam.html">Russia</a> <a href="/country/japan/dashcam.html">Japan</a> <a href="/country/germany/dashcam.html">Germany</a> <a href="/country/united-kingdom/dashcam.html">United Kingdom</a></nav></section>

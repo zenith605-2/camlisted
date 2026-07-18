@@ -59,8 +59,12 @@
   <h1><a href="./" class="site-title-link">Live Cams &amp; Footage in Taiwan</a></h1>
   <p class="subtitle" data-i18n="site_subtitle">A curated collection of live cams and real-world footage — traffic, wildlife, dashcams, city streets, and more, gathered from YouTube every day.</p>
   <p id="memberPerks" class="contribute-line" data-i18n="member_perks">🤝 Built by its users — sign in to submit links, vote, favorite, comment &amp; fix categories</p>
-  <div class="controls">
-    <input type="text" id="searchInput" data-i18n-placeholder="search_placeholder" placeholder="Search by title or channel...">
+  <div id="cheerSection" class="cheer-section">
+    <div id="cheerList" class="cheer-list"></div>
+    <form id="cheerForm" class="cheer-form">
+      <input type="text" id="cheerInput" maxlength="200" data-i18n-placeholder="cheer_placeholder" placeholder="Leave a cheer! 🎉">
+      <button type="submit" data-i18n="cheer_send">Send</button>
+    </form>
   </div>
   <div class="filter-bar">
     <div class="filter-group">
@@ -159,12 +163,8 @@
 
 <nav id="sidebar" class="sidebar"></nav>
 <div class="page-content">
-<div id="cheerSection" class="cheer-section">
-  <div id="cheerList" class="cheer-list"></div>
-  <form id="cheerForm" class="cheer-form">
-    <input type="text" id="cheerInput" maxlength="200" data-i18n-placeholder="cheer_placeholder" placeholder="Leave a cheer! 🎉">
-    <button type="submit" data-i18n="cheer_send">Send</button>
-  </form>
+<div class="controls">
+  <input type="text" id="searchInput" data-i18n-placeholder="search_placeholder" placeholder="Search by title or channel...">
 </div>
 <span id="resultCount" class="result-count"></span>
 <section class="seo-intro"><p>Camlisted tracks <strong>59</strong> live cams and real-world videos from Taiwan — 56 streaming live right now and 3 recorded clips. They span Traffic, Coast / Seaside, Skyline, and Park and more, every feed pulled from public YouTube streams and re-checked daily so dead links fall away on their own.</p><p>Current highlights include “[4K] 傣族村莊徒步旅行（原聲） @霸派·騰衝·雲南省·中國” and “【4K】徒步探险，废弃工厂之旅｜徒步旅行｜Hiking Adventure, Abandoned Facto…”. It's all free to watch with no account — filter by category, video quality, or live status, or open the map to explore Taiwan by location.</p><nav class="seo-links"><span class="seo-links-label">Categories in Taiwan:</span> <a href="/country/taiwan/traffic.html">🚦 Traffic</a> <a href="/country/taiwan/coast.html">🌊 Coast / Seaside</a> <a href="/country/taiwan/skyline.html">🌆 Skyline</a> <a href="/country/taiwan/park.html">🌳 Park</a> <a href="/country/taiwan/beach.html">🏖️ Beach</a> <a href="/country/taiwan/mountain.html">⛰️ Mountain</a></nav></section>

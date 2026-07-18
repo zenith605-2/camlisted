@@ -59,8 +59,12 @@
   <h1><a href="./" class="site-title-link">Live Cams &amp; Footage in South Korea</a></h1>
   <p class="subtitle" data-i18n="site_subtitle">A curated collection of live cams and real-world footage — traffic, wildlife, dashcams, city streets, and more, gathered from YouTube every day.</p>
   <p id="memberPerks" class="contribute-line" data-i18n="member_perks">🤝 Built by its users — sign in to submit links, vote, favorite, comment &amp; fix categories</p>
-  <div class="controls">
-    <input type="text" id="searchInput" data-i18n-placeholder="search_placeholder" placeholder="Search by title or channel...">
+  <div id="cheerSection" class="cheer-section">
+    <div id="cheerList" class="cheer-list"></div>
+    <form id="cheerForm" class="cheer-form">
+      <input type="text" id="cheerInput" maxlength="200" data-i18n-placeholder="cheer_placeholder" placeholder="Leave a cheer! 🎉">
+      <button type="submit" data-i18n="cheer_send">Send</button>
+    </form>
   </div>
   <div class="filter-bar">
     <div class="filter-group">
@@ -159,12 +163,8 @@
 
 <nav id="sidebar" class="sidebar"></nav>
 <div class="page-content">
-<div id="cheerSection" class="cheer-section">
-  <div id="cheerList" class="cheer-list"></div>
-  <form id="cheerForm" class="cheer-form">
-    <input type="text" id="cheerInput" maxlength="200" data-i18n-placeholder="cheer_placeholder" placeholder="Leave a cheer! 🎉">
-    <button type="submit" data-i18n="cheer_send">Send</button>
-  </form>
+<div class="controls">
+  <input type="text" id="searchInput" data-i18n-placeholder="search_placeholder" placeholder="Search by title or channel...">
 </div>
 <span id="resultCount" class="result-count"></span>
 <section class="seo-intro"><p>Camlisted tracks <strong>88</strong> live cams and real-world videos from South Korea — 44 streaming live right now and 44 recorded clips. They span Walking Tour, Traffic, Dashcam, and Mountain and more, every feed pulled from public YouTube streams and re-checked daily so dead links fall away on their own.</p><p>Current highlights include “[4K LIVE CAM] 홍대입구역 – Hongdae, Seoul, Korea | 首爾, 弘大 |…” and “퇴근길 강남거리 걷기/ virtual walk tour - 4K seoul korea…”. It's all free to watch with no account — filter by category, video quality, or live status, or open the map to explore South Korea by location.</p><nav class="seo-links"><span class="seo-links-label">Categories in South Korea:</span> <a href="/country/south-korea/walk.html">👣 Walking Tour</a> <a href="/country/south-korea/traffic.html">🚦 Traffic</a> <a href="/country/south-korea/dashcam.html">🚗 Dashcam</a> <a href="/country/south-korea/mountain.html">⛰️ Mountain</a> <a href="/country/south-korea/beach.html">🏖️ Beach</a></nav></section>

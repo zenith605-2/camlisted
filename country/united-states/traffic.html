@@ -59,8 +59,12 @@
   <h1><a href="./" class="site-title-link">🚦 United States · Traffic Live Cams</a></h1>
   <p class="subtitle" data-i18n="site_subtitle">A curated collection of live cams and real-world footage — traffic, wildlife, dashcams, city streets, and more, gathered from YouTube every day.</p>
   <p id="memberPerks" class="contribute-line" data-i18n="member_perks">🤝 Built by its users — sign in to submit links, vote, favorite, comment &amp; fix categories</p>
-  <div class="controls">
-    <input type="text" id="searchInput" data-i18n-placeholder="search_placeholder" placeholder="Search by title or channel...">
+  <div id="cheerSection" class="cheer-section">
+    <div id="cheerList" class="cheer-list"></div>
+    <form id="cheerForm" class="cheer-form">
+      <input type="text" id="cheerInput" maxlength="200" data-i18n-placeholder="cheer_placeholder" placeholder="Leave a cheer! 🎉">
+      <button type="submit" data-i18n="cheer_send">Send</button>
+    </form>
   </div>
   <div class="filter-bar">
     <div class="filter-group">
@@ -159,12 +163,8 @@
 
 <nav id="sidebar" class="sidebar"></nav>
 <div class="page-content">
-<div id="cheerSection" class="cheer-section">
-  <div id="cheerList" class="cheer-list"></div>
-  <form id="cheerForm" class="cheer-form">
-    <input type="text" id="cheerInput" maxlength="200" data-i18n-placeholder="cheer_placeholder" placeholder="Leave a cheer! 🎉">
-    <button type="submit" data-i18n="cheer_send">Send</button>
-  </form>
+<div class="controls">
+  <input type="text" id="searchInput" data-i18n-placeholder="search_placeholder" placeholder="Search by title or channel...">
 </div>
 <span id="resultCount" class="result-count"></span>
 <section class="seo-intro"><p>Traffic live cams in United States — <strong>52</strong> feeds (52 live right now, 0 recorded), curated from public YouTube streams and re-checked daily.</p><p>Examples include “Boston, MA Live Cam - Boston Common at Boylston St.” and “Galveston, Texas | 24/7 Live Beach Camera”. Free to watch, no sign-up — this page zooms in on traffic scenes specifically within United States.</p><nav class="seo-links"><span class="seo-links-label">See also:</span> <a href="/country/united-states.html">All United States cams</a> <a href="/c/traffic.html">Traffic worldwide</a></nav></section>

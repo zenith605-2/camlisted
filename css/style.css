@@ -642,10 +642,10 @@ body {
 .footer-links a:hover { color: var(--accent); }
 .footer-copy { color: var(--muted); opacity: 0.7; }
 
-/* 응원 위젯 — 그리드 바로 위 (무한스크롤 아래에 두면 도달 불가라 상단에 배치) */
+/* 응원 위젯 — 헤더(검색 있던 자리) */
 .cheer-section {
   max-width: 720px;
-  margin: 4px auto 18px;
+  margin: 16px auto 4px;
 }
 
 .site-title-link {

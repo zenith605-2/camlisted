@@ -59,8 +59,12 @@
   <h1><a href="./" class="site-title-link">🏗️ Construction Live Cams &amp; Videos</a></h1>
   <p class="subtitle" data-i18n="site_subtitle">A curated collection of live cams and real-world footage — traffic, wildlife, dashcams, city streets, and more, gathered from YouTube every day.</p>
   <p id="memberPerks" class="contribute-line" data-i18n="member_perks">🤝 Built by its users — sign in to submit links, vote, favorite, comment &amp; fix categories</p>
-  <div class="controls">
-    <input type="text" id="searchInput" data-i18n-placeholder="search_placeholder" placeholder="Search by title or channel...">
+  <div id="cheerSection" class="cheer-section">
+    <div id="cheerList" class="cheer-list"></div>
+    <form id="cheerForm" class="cheer-form">
+      <input type="text" id="cheerInput" maxlength="200" data-i18n-placeholder="cheer_placeholder" placeholder="Leave a cheer! 🎉">
+      <button type="submit" data-i18n="cheer_send">Send</button>
+    </form>
   </div>
   <div class="filter-bar">
     <div class="filter-group">
@@ -159,12 +163,8 @@
 
 <nav id="sidebar" class="sidebar"></nav>
 <div class="page-content">
-<div id="cheerSection" class="cheer-section">
-  <div id="cheerList" class="cheer-list"></div>
-  <form id="cheerForm" class="cheer-form">
-    <input type="text" id="cheerInput" maxlength="200" data-i18n-placeholder="cheer_placeholder" placeholder="Leave a cheer! 🎉">
-    <button type="submit" data-i18n="cheer_send">Send</button>
-  </form>
+<div class="controls">
+  <input type="text" id="searchInput" data-i18n-placeholder="search_placeholder" placeholder="Search by title or channel...">
 </div>
 <span id="resultCount" class="result-count"></span>
 <section class="seo-intro"><p>Browse <strong>37</strong> construction live cams and videos gathered from around the world — 19 live and 18 recorded. Coverage is strongest in Netherlands, United States, Germany, and Russia, with fresh public YouTube feeds added and verified every day.</p><p>Right now you can watch “* Viewstar 8 Megapixel with zoom lens inside warehouse” and “* Hikvision 8 megapixel with zoom lens”, among others. No sign-up needed — sort by most-upvoted or newest, or narrow to a single country below.</p><nav class="seo-links"><span class="seo-links-label">Construction cams by country:</span> <a href="/country/netherlands/construction.html">Netherlands</a> <a href="/country/united-states/construction.html">United States</a></nav></section>
