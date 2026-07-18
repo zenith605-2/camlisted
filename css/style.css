@@ -1509,6 +1509,13 @@ body {
   font-size: 0.78rem;
 }
 
+.stats-card-sub {
+  display: block;
+  color: var(--muted);
+  font-size: 0.7rem;
+  margin-top: 4px;
+}
+
 .stats-table-wrap {
   overflow-x: auto;
 }

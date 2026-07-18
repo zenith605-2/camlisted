@@ -24,13 +24,23 @@ async function isAdminUser() {
 }
 
 async function loadStats() {
-  const [dailyRes, visitRes, signupRes, durationRes, streamCountRes, profileCountRes] = await Promise.all([
+  const [dailyRes, visitRes, signupRes, durationRes, streamCountRes, profileCountRes, pendingRes, offlineRes, visibleRes] = await Promise.all([
     sb.from('daily_stats').select('*').order('stat_date', { ascending: false }).limit(DAYS_TO_SHOW),
     sb.from('daily_visit_counts').select('*').order('visit_date', { ascending: false }).limit(DAYS_TO_SHOW),
     sb.from('daily_signup_counts').select('*').order('signup_date', { ascending: false }).limit(DAYS_TO_SHOW),
     sb.from('daily_duration_stats').select('*').order('stat_date', { ascending: false }).limit(DAYS_TO_SHOW),
     sb.from('streams').select('video_id', { count: 'exact', head: true }),
     sb.from('profiles').select('id', { count: 'exact', head: true }),
+    // Total의 내역: 승인 대기 / 오프라인(유예 중) / 실제 메인 노출 수 (Total = Visible + Pending + Offline)
+    sb.from('streams').select('video_id', { count: 'exact', head: true })
+      .eq('approval_status', 'pending'),
+    sb.from('streams').select('video_id', { count: 'exact', head: true })
+      .eq('status', 'offline')
+      .or('approval_status.is.null,approval_status.neq.pending'),
+    sb.from('streams').select('video_id', { count: 'exact', head: true })
+      .eq('status', 'live')
+      .or('approval_status.is.null,approval_status.neq.pending')
+      .or('visibility.is.null,visibility.eq.listed'),
   ]);
 
   const daily = dailyRes.data || [];
@@ -73,7 +83,7 @@ async function loadStats() {
   const totalUsers = profileCountRes.count ?? '?';
   const today = new Date(Date.now() + 9 * 3600 * 1000).toISOString().slice(0, 10); // KST 기준 오늘
   statsSummary.innerHTML = `
-    <div class="stats-card"><span class="stats-card-num">${totalStreams}</span><span class="stats-card-label">Total streams</span></div>
+    <div class="stats-card"><span class="stats-card-num">${totalStreams}</span><span class="stats-card-label">Total streams</span><span class="stats-card-sub">Visible ${visibleRes.count ?? '?'} · Pending ${pendingRes.count ?? '?'} · Offline ${offlineRes.count ?? '?'}</span></div>
     <div class="stats-card"><span class="stats-card-num">${totalUsers}</span><span class="stats-card-label">Total users</span></div>
     <div class="stats-card"><span class="stats-card-num">${visitsByDate.get(today) ?? 0}</span><span class="stats-card-label">Visitors today</span></div>
     <div class="stats-card"><span class="stats-card-num">${signupsByDate.get(today) ?? 0}</span><span class="stats-card-label">Signups today</span></div>
