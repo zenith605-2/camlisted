@@ -157,6 +157,23 @@ const TITLE_COUNTRY_RULES = [
   ['NZ', ['new zealand', 'auckland', 'queenstown', '뉴질랜드']],
 ];
 
+// 제목에 쓰인 문자(스크립트)로 나라를 추정 — 지명 사전으로 못 잡을 때의 보조 신호.
+// 한 나라에서만 쓰는 문자만 사용한다: 히라가나/가타카나=일본, 한글=한국, 태국문자=태국 등.
+// (한자는 중/일/한이 공유하므로 제외, 키릴/아랍은 여러 나라라 제외)
+function inferCountryFromScript(title) {
+  const s = String(title || '');
+  if (/[぀-ヿ]/.test(s)) return 'JP'; // 히라가나·가타카나
+  if (/[가-힣]/.test(s)) return 'KR'; // 한글
+  if (/[฀-๿]/.test(s)) return 'TH'; // 태국
+  if (/[֐-׿]/.test(s)) return 'IL'; // 히브리
+  if (/[ऀ-ॿ]/.test(s)) return 'IN'; // 데바나가리
+  if (/[ঀ-৿]/.test(s)) return 'BD'; // 벵골
+  if (/[຀-໿]/.test(s)) return 'LA'; // 라오
+  if (/[က-႟]/.test(s)) return 'MM'; // 미얀마
+  return null;
+}
+
+// 제목으로 나라 추정: (1) 지명 사전 → (2) 문자(스크립트) 보조
 function inferCountryFromTitle(title) {
   const lower = String(title || '').toLowerCase();
   for (const [code, patterns] of TITLE_COUNTRY_RULES) {
@@ -170,7 +187,7 @@ function inferCountryFromTitle(title) {
       }
     }
   }
-  return null;
+  return inferCountryFromScript(title);
 }
 
 // 세로 영상(쇼츠 등) 판별 — videos.list의 player 파트에 maxHeight를 지정하면
@@ -509,25 +526,29 @@ async function main() {
     console.log(`  -> 열람권 크레딧 적립: ${new Set(creditRecipients).size}명`);
   }
 
-  // (1차) 국가가 비어있는 행은 제목의 지명으로 먼저 추정 (유저가 수정한 값은 건드리지 않음)
+  // (1차) 제목(지명+언어)으로 나라를 (재)분류한다. 유저 수정('user')은 절대 건드리지 않고,
+  // 채널 국가로 잘못 분류됐던 기존 행도 제목이 명확하면 여기서 교정된다.
   const titleInferredIds = new Set();
   const byInferredCountry = new Map();
   for (const row of existingRows) {
-    if (row.country) continue;
+    if (row.country_source === 'user') continue; // 유저가 지정한 값은 보존
     const inferred = inferCountryFromTitle(row.title);
-    if (!inferred) continue;
+    if (!inferred || inferred === row.country) continue; // 이미 같으면 스킵
     if (!byInferredCountry.has(inferred)) byInferredCountry.set(inferred, []);
     byInferredCountry.get(inferred).push(row.video_id);
     titleInferredIds.add(row.video_id);
   }
   for (const [code, ids] of byInferredCountry) {
-    // .is('country', null) 가드: 그 사이 유저가 국가를 지정했다면 덮어쓰지 않는다
-    const { error } = await supabase.from('streams').update({ country: code }).in('video_id', ids).is('country', null);
+    // country_source=user 행은 배치에 안 담기지만, 경합 안전을 위해 쿼리에서도 한 번 더 배제
+    const { error } = await supabase.from('streams')
+      .update({ country: code, country_source: 'title' })
+      .in('video_id', ids)
+      .or('country_source.is.null,country_source.neq.user');
     if (error) console.error('제목 기반 국가 추정 실패:', code, error.message);
   }
-  if (titleInferredIds.size) console.log(`제목 지명으로 국가 추정: ${titleInferredIds.size}건`);
+  if (titleInferredIds.size) console.log(`제목으로 국가 분류/교정: ${titleInferredIds.size}건`);
 
-  // (2차) 여전히 비어있는 유효한 행들은 channels.list의 채널 국가로 채움
+  // (2차) 여전히 국가가 비어있는 유효한 행들은 channels.list의 채널 국가로 채움
   const rowsNeedingCountry = existingRows.filter(r => !r.country && !titleInferredIds.has(r.video_id) && isValidFor(r.content_type || 'live', infoMap.get(r.video_id)));
   const countryChannelIds = rowsNeedingCountry.map(r => infoMap.get(r.video_id).snippet.channelId);
   const countryMap = await getChannelCountries(countryChannelIds);
@@ -535,7 +556,7 @@ async function main() {
     const channelId = infoMap.get(row.video_id).snippet.channelId;
     const country = countryMap.get(channelId);
     if (country) {
-      const { error } = await supabase.from('streams').update({ country }).eq('video_id', row.video_id);
+      const { error } = await supabase.from('streams').update({ country, country_source: 'channel' }).eq('video_id', row.video_id);
       if (error) console.error('국가 업데이트 실패:', row.video_id, error.message);
     }
   }
@@ -740,6 +761,7 @@ async function main() {
       category_source: 'keyword',
       // 제목의 지명이 채널 국가보다 촬영지에 가까우므로 우선한다 (여행 채널/모음집 채널 대응)
       country: inferCountryFromTitle(c.title) || newCountryMap.get(c.channelId) || null,
+      country_source: inferCountryFromTitle(c.title) ? 'title' : (newCountryMap.get(c.channelId) ? 'channel' : null),
       started_at: c.contentType === 'live' ? (info.liveStreamingDetails?.actualStartTime || null) : null,
       published_at: c.contentType === 'video' ? (info.snippet?.publishedAt || null) : null,
       duration_seconds: c.contentType === 'video' ? parseDurationSeconds(info.contentDetails?.duration) : null,
