@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cheers 🎉 – Camlisted</title>
+<meta name="description" content="Leave a cheer for Camlisted — a public guestbook of short messages from visitors around the world.">
+<link rel="canonical" href="https://camlisted.com/cheers.html">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5525855908528070" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="header-actions">
+    <a href="index.html" class="auth-btn" data-i18n="back_to_site">← Back to site</a>
+  </div>
+  <h1>Cheers 🎉</h1>
+  <p class="subtitle">Leave a little cheer — a public guestbook for camlisted visitors around the world.</p>
+</header>
+
+<main class="feedback-page">
+  <form id="cheerForm" class="cheer-form">
+    <input type="text" id="cheerInput" maxlength="200" data-i18n-placeholder="cheer_placeholder" placeholder="Leave a cheer! 🎉">
+    <button type="submit" data-i18n="cheer_send">Send</button>
+  </form>
+  <div id="cheerList" class="cheer-list"></div>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="js/i18n.js"></script>
+<script src="js/cheers.js"></script>
+</body>
+</html>

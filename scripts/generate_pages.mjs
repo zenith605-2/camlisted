@@ -654,6 +654,7 @@ async function main() {
     { loc: `${SITE}/browse.html`, priority: '0.8', changefreq: 'daily' },
     { loc: `${SITE}/about.html`, priority: '0.7', changefreq: 'monthly' },
     { loc: `${SITE}/feedback.html`, priority: '0.5', changefreq: 'weekly' },
+    { loc: `${SITE}/cheers.html`, priority: '0.4', changefreq: 'weekly' },
     { loc: `${SITE}/privacy.html`, priority: '0.3', changefreq: 'yearly' },
     { loc: `${SITE}/terms.html`, priority: '0.3', changefreq: 'yearly' },
   ];
