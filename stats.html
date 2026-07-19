@@ -6,7 +6,7 @@
 <title>Daily Stats - Camlisted</title>
 <meta name="robots" content="noindex">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
-<link rel="stylesheet" href="css/style.css?v=20260719n">
+<link rel="stylesheet" href="css/style.css?v=20260720a">
 </head>
 <body>
 <header class="site-header">
@@ -42,15 +42,16 @@
     </div>
     <p class="stats-note">"Existing/Valid/Offline/New/Deleted" are recorded by the daily midnight-KST update job (from the day it first runs after this feature was added). Signups and Visitors are counted live from the database.</p>
 
-    <h2 class="stats-subheading">Traffic Sources (all time)</h2>
-    <p class="stats-note">Where visitors came from on their first visit (reddit, google, direct, etc.). Google Search Console only shows google search — this shows everything else too.</p>
+    <h2 class="stats-subheading">Traffic Sources</h2>
+    <p class="stats-note">Where visitors came from on their first visit (reddit, google, direct, etc.). Google Search Console only shows google search — this shows everything else too. Sorted by last 7 days; the bar shows the all-time (90-day) share.</p>
     <div class="stats-table-wrap">
       <table class="stats-table">
         <thead>
           <tr>
             <th>Source</th>
-            <th>Visits</th>
-            <th style="width:50%">Share</th>
+            <th>Today</th>
+            <th>7 days</th>
+            <th style="width:45%">All (90d) · share</th>
           </tr>
         </thead>
         <tbody id="sourceTableBody"></tbody>
@@ -91,6 +92,6 @@
 </main>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
-<script src="js/stats.js?v=20260719n"></script>
+<script src="js/stats.js?v=20260720a"></script>
 </body>
 </html>

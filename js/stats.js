@@ -90,42 +90,57 @@ async function loadStats() {
   `;
 }
 
+// KST 기준 날짜 문자열(YYYY-MM-DD): visit_log.visit_date와 같은 형식
+function kstDateStr(offsetDays = 0) {
+  return new Date(Date.now() + 9 * 3600 * 1000 - offsetDays * 86400 * 1000).toISOString().slice(0, 10);
+}
 async function loadSourceStats() {
   const body = document.getElementById('sourceTableBody');
   const { data, error } = await sb
     .from('visit_log')
-    .select('source')
+    .select('source, visit_date')
     .limit(50000);
   if (error) {
-    body.innerHTML = `<tr><td colspan="3">${escapeHtml(error.message)}</td></tr>`;
+    body.innerHTML = `<tr><td colspan="4">${escapeHtml(error.message)}</td></tr>`;
     return;
   }
   if (!data?.length) {
-    body.innerHTML = '<tr><td colspan="3">No visitor records yet.</td></tr>';
+    body.innerHTML = '<tr><td colspan="4">No visitor records yet.</td></tr>';
     return;
   }
-  const counts = new Map();
+  const today = kstDateStr(0);
+  const sevenAgo = kstDateStr(6); // 오늘 포함 최근 7일
+  const stat = new Map(); // source -> {today, week, all}
+  let tToday = 0, tWeek = 0, tAll = 0;
   for (const r of data) {
-    const s = r.source || 'unknown'; // 043 이전 기록은 source가 없음 → unknown
-    counts.set(s, (counts.get(s) || 0) + 1);
+    const s = r.source || 'unknown'; // 043 이전 기록은 source 없음 → unknown
+    const e = stat.get(s) || { today: 0, week: 0, all: 0 };
+    e.all += 1; tAll += 1;
+    if (r.visit_date >= sevenAgo) { e.week += 1; tWeek += 1; }
+    if (r.visit_date === today) { e.today += 1; tToday += 1; }
+    stat.set(s, e);
   }
-  const total = data.length;
-  const rows = [...counts.entries()].sort((a, b) => b[1] - a[1]);
-  body.innerHTML = rows.map(([source, n]) => {
-    const pct = Math.round((n / total) * 1000) / 10;
+  const rows = [...stat.entries()].sort((a, b) => b[1].week - a[1].week); // 최근 흐름 기준 정렬
+  body.innerHTML = rows.map(([source, e]) => {
+    const pct = tWeek ? Math.round((e.week / tWeek) * 1000) / 10 : 0;
     return `
       <tr>
         <td>${escapeHtml(source)}</td>
-        <td>${n}</td>
+        <td><strong>${e.today}</strong></td>
+        <td>${e.week}</td>
         <td>
           <div class="country-bar-wrap">
             <div class="country-bar" style="width:${pct}%"></div>
-            <span class="country-pct">${pct}%</span>
+            <span class="country-pct">${e.all} · ${pct}%</span>
           </div>
         </td>
       </tr>
     `;
-  }).join('');
+  }).join('') + `
+      <tr style="border-top:2px solid var(--border);font-weight:600">
+        <td>Total</td><td>${tToday}</td><td>${tWeek}</td>
+        <td><span class="country-pct">${tAll} all-time</span></td>
+      </tr>`;
 }
 
 async function loadCountryStats() {
