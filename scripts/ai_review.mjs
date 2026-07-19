@@ -70,7 +70,7 @@ Prefer the FILMING location over the channel owner's country when they conflict 
 Items to judge:
 ${JSON.stringify(items.map((s, i) => ({ i, title: s.title, channel: s.channel_title, type: s.content_type, hint: s.country || null })))}
 
-Give a short reason (<= 12 words) for each verdict.
+Give a short reason for each verdict, written in Korean (한국어, 20자 이내).
 
 Respond ONLY as a compact JSON array, one object per item:
 [{"i":0,"verdict":"approve|reject|unsure","category":"<key>","country":"<ISO2 or null>","reason":"<short>"}]`;

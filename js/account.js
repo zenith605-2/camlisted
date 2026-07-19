@@ -417,7 +417,8 @@ async function loadAiLog() {
     return `
       <tr class="admin-row">
         <td>${badge}</td>
-        <td class="admin-td-title"><a href="https://www.youtube.com/watch?v=${encodeURIComponent(r.video_id)}" target="_blank" rel="noopener">${escapeHtml((r.title || r.video_id).slice(0, 60))}</a></td>
+        <td class="admin-td-thumb"><img class="admin-thumb-sm" src="https://i.ytimg.com/vi/${encodeURIComponent(r.video_id)}/mqdefault.jpg" alt="" loading="lazy"></td>
+        <td class="admin-td-title"><a href="#" class="panel-play-link" data-video-id="${escapeHtml(r.video_id)}" data-title="${escapeHtml((r.title || '').slice(0, 80))}">${escapeHtml((r.title || r.video_id).slice(0, 60))}</a></td>
         <td>${escapeHtml(r.channel_title || '')}</td>
         <td class="admin-td-reason">${r.reason ? escapeHtml(r.reason) : ''}${r.suggested_country ? ` · 🌍 ${escapeHtml(r.suggested_country)}` : ''}</td>
         <td class="admin-td-actions">${actions}</td>
@@ -426,6 +427,7 @@ async function loadAiLog() {
   adminAiLog.innerHTML = `
     <div class="admin-table-wrap"><table class="admin-table">
       <thead><tr>
+        <th></th>
         <th></th>
         <th>${escapeHtml(t('admin_col_title'))}</th>
         <th>${escapeHtml(t('admin_col_channel'))}</th>
@@ -447,6 +449,12 @@ document.querySelectorAll('.ailog-tab').forEach(tab => {
 });
 
 adminAiLog?.addEventListener('click', async (e) => {
+  const play = e.target.closest('.panel-play-link');
+  if (play) {
+    e.preventDefault();
+    openVideoPanel(play.dataset.videoId, play.dataset.title);
+    return;
+  }
   const del = e.target.closest('.ailog-del-btn');
   const keep = e.target.closest('.ailog-keep-btn');
   if (!del && !keep) return;
@@ -557,10 +565,15 @@ async function getCategoryLabelMap() {
   return categoryLabelMap;
 }
 
-async function openVideoPanel(videoId) {
-  const s = catlogStreamMap.get(videoId);
+async function openVideoPanel(videoId, fallbackTitle = '') {
+  let s = catlogStreamMap.get(videoId);
+  if (!s) {
+    // 카테고리 로그 외(예: AI 검수 로그)에서 연 경우: 스트림 정보를 즉석 조회해 캐시
+    const { data } = await sb.from('streams').select('video_id, title, category, tags, content_type').eq('video_id', videoId).maybeSingle();
+    if (data) { s = data; catlogStreamMap.set(videoId, data); }
+  }
   videoPanel.hidden = false;
-  videoPanelTitle.textContent = (s?.title || videoId).slice(0, 80);
+  videoPanelTitle.textContent = (s?.title || fallbackTitle || videoId).slice(0, 80);
   videoPanelFrame.src = `https://www.youtube.com/embed/${encodeURIComponent(videoId)}?autoplay=1&mute=1&playsinline=1`;
   const [catMap, tagMap] = await Promise.all([getCategoryLabelMap(), getTagLabelMap()]);
   const cat = s?.category ? catMap.get(s.category) : null;
