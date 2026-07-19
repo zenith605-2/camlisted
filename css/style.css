@@ -1780,6 +1780,30 @@ body {
 .pager-btn:disabled { opacity: 0.35; cursor: default; }
 .pager-info { font-size: 0.8rem; color: var(--muted); }
 
+/* AI 로그: 카테고리 인라인 수정 + 조건 태그 토글 */
+.admin-td-cat { min-width: 150px; }
+.ailog-cat-select {
+  width: 100%;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 0.78rem;
+  padding: 4px 6px;
+}
+.ailog-cat-select.saved { border-color: #4caf50; }
+.ailog-tags { margin-top: 5px; display: flex; flex-wrap: wrap; gap: 3px; }
+.ailog-tag-chip {
+  font-size: 0.66rem;
+  padding: 1px 7px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  color: var(--muted);
+  cursor: pointer;
+  user-select: none;
+}
+.ailog-tag-chip.on { border-color: var(--accent); color: var(--accent); }
+
 /* AI 검수 로그 달력: 날짜 클릭 → 그날 기록만 표시 */
 .ailog-calendar { max-width: 360px; margin-bottom: 14px; }
 .cal-head { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }

@@ -527,6 +527,28 @@ async function loadAiLog() {
   if (error) { adminAiLog.textContent = error.message; return; }
   if (!data?.length) { adminAiLog.textContent = t('admin_ailog_empty'); return; }
 
+  // AI가 반영한 카테고리/조건(스트림 현재 값)을 함께 보여주고 바로 수정할 수 있게 조인
+  const aiIds = [...new Set(data.map(r => r.video_id))];
+  const [{ data: aiStreamRows }, aiCatMap, aiTagMap] = await Promise.all([
+    sb.from('streams').select('video_id, category, tags, content_type').in('video_id', aiIds),
+    getCategoryLabelMap(),
+    getTagLabelMap(),
+  ]);
+  const aiStreamMap = new Map((aiStreamRows || []).map(s => [s.video_id, s]));
+
+  const catEditCell = (r) => {
+    const s = aiStreamMap.get(r.video_id);
+    if (!s) return '<span class="admin-meta">–</span>'; // 삭제된 영상
+    const opts = [...aiCatMap.entries()]
+      .map(([k, v]) => `<option value="${escapeHtml(k)}" ${s.category === k ? 'selected' : ''}>${escapeHtml(v.icon)} ${escapeHtml(v.label)}</option>`)
+      .join('');
+    const chips = s.content_type === 'video'
+      ? `<div class="ailog-tags">${[...aiTagMap.entries()].map(([k, label]) =>
+          `<span class="ailog-tag-chip ${(s.tags || []).includes(k) ? 'on' : ''}" data-video-id="${escapeHtml(r.video_id)}" data-tag="${escapeHtml(k)}">${escapeHtml(label)}</span>`).join('')}</div>`
+      : '';
+    return `<select class="ailog-cat-select" data-video-id="${escapeHtml(r.video_id)}">${opts}</select>${chips}`;
+  };
+
   const bodyRows = data.map(r => {
     const badge = r.verdict === 'approve' ? '✅' : r.verdict === 'reject' ? '🚫' : '❓';
     // 거절 제안 + 아직 미처리인 것만 확정삭제/복구 버튼 노출
@@ -540,6 +562,7 @@ async function loadAiLog() {
         <td class="admin-td-thumb"><img class="admin-thumb-sm" src="https://i.ytimg.com/vi/${encodeURIComponent(r.video_id)}/mqdefault.jpg" alt="" loading="lazy"></td>
         <td class="admin-td-title"><a href="#" class="panel-play-link" data-video-id="${escapeHtml(r.video_id)}" data-title="${escapeHtml((r.title || '').slice(0, 80))}">${escapeHtml((r.title || r.video_id).slice(0, 60))}</a></td>
         <td>${escapeHtml(r.channel_title || '')}</td>
+        <td class="admin-td-cat">${catEditCell(r)}</td>
         <td class="admin-td-reason">${r.reason ? escapeHtml(r.reason) : ''}${r.suggested_country ? ` · 🌍 ${escapeHtml(r.suggested_country)}` : ''}</td>
         <td class="admin-td-actions">${actions}</td>
       </tr>`;
@@ -551,6 +574,7 @@ async function loadAiLog() {
         <th>${escapeHtml(t('account_export_thumbnail_label'))}</th>
         <th>${escapeHtml(t('admin_col_title'))}</th>
         <th>${escapeHtml(t('admin_col_channel'))}</th>
+        <th>${escapeHtml(t('admin_col_category'))}</th>
         <th>${escapeHtml(t('admin_col_reason'))}</th>
         <th></th>
       </tr></thead>
@@ -568,7 +592,28 @@ document.querySelectorAll('.ailog-tab').forEach(tab => {
   });
 });
 
+// AI 로그에서 카테고리 즉시 수정 (set_stream_category RPC — 변경 이력에도 남음)
+adminAiLog?.addEventListener('change', async (e) => {
+  const sel = e.target.closest('.ailog-cat-select');
+  if (!sel) return;
+  sel.disabled = true;
+  const { error } = await sb.rpc('set_stream_category', { p_video_id: sel.dataset.videoId, p_category: sel.value });
+  sel.disabled = false;
+  if (error) alert(error.message);
+  else { sel.classList.add('saved'); setTimeout(() => sel.classList.remove('saved'), 1000); }
+});
+
 adminAiLog?.addEventListener('click', async (e) => {
+  // 조건 태그 칩 토글 (일반 영상만) — 낙관적 갱신, 실패 시 되돌림
+  const chip = e.target.closest('.ailog-tag-chip');
+  if (chip) {
+    const row = chip.closest('.ailog-tags');
+    chip.classList.toggle('on');
+    const next = [...row.querySelectorAll('.ailog-tag-chip.on')].map(c => c.dataset.tag);
+    const { error } = await sb.rpc('set_stream_tags', { p_video_id: chip.dataset.videoId, p_tags: next });
+    if (error) { chip.classList.toggle('on'); alert(error.message); }
+    return;
+  }
   const play = e.target.closest('.panel-play-link');
   if (play) {
     e.preventDefault();
@@ -678,7 +723,7 @@ const videoPanelMeta = document.getElementById('videoPanelMeta');
 
 async function getCategoryLabelMap() {
   if (categoryLabelMap) return categoryLabelMap;
-  const { data } = await sb.from('categories').select('key, label_en, label_ko, label_ja, label_zh, label_es, icon');
+  const { data } = await sb.from('categories').select('key, label_en, label_ko, label_ja, label_zh, label_es, icon').order('sort_order');
   const langCol = { ko: 'label_ko', ja: 'label_ja', zh: 'label_zh', es: 'label_es' }[currentLang];
   categoryLabelMap = new Map((data || []).map(c => [c.key, {
     label: (langCol && c[langCol]) || c.label_en || c.key,
