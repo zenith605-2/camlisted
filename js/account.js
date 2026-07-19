@@ -650,6 +650,8 @@ adminAiLog?.addEventListener('click', async (e) => {
   const keep = e.target.closest('.ailog-keep-btn');
   if (!del && !keep) return;
   const videoId = (del || keep).dataset.videoId;
+  // 삭제는 이제 차단목록 등록까지 겸하는 영구 폐기이므로 실수 방지 확인
+  if (del && !confirm(t('admin_ailog_delete_confirm'))) return;
   const { error } = await sb.rpc('resolve_ai_rejection', {
     p_video_id: videoId,
     p_action: del ? 'delete' : 'restore',
