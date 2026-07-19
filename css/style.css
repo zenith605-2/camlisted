@@ -1781,7 +1781,8 @@ body {
 .pager-info { font-size: 0.8rem; color: var(--muted); }
 
 /* AI 로그: 카테고리 인라인 수정 + 조건 태그 토글 */
-.admin-td-cat { min-width: 150px; }
+.admin-td-cat { min-width: 130px; }
+.admin-td-cond { min-width: 150px; }
 .ailog-cat-select {
   width: 100%;
   background: var(--card-bg);
@@ -1792,7 +1793,7 @@ body {
   padding: 4px 6px;
 }
 .ailog-cat-select.saved { border-color: #4caf50; }
-.ailog-tags { margin-top: 5px; display: flex; flex-wrap: wrap; gap: 3px; }
+.ailog-tags { display: flex; flex-wrap: wrap; gap: 3px; }
 .ailog-tag-chip {
   font-size: 0.66rem;
   padding: 1px 7px;

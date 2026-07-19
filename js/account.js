@@ -542,11 +542,14 @@ async function loadAiLog() {
     const opts = [...aiCatMap.entries()]
       .map(([k, v]) => `<option value="${escapeHtml(k)}" ${s.category === k ? 'selected' : ''}>${escapeHtml(v.icon)} ${escapeHtml(v.label)}</option>`)
       .join('');
-    const chips = s.content_type === 'video'
-      ? `<div class="ailog-tags">${[...aiTagMap.entries()].map(([k, label]) =>
-          `<span class="ailog-tag-chip ${(s.tags || []).includes(k) ? 'on' : ''}" data-video-id="${escapeHtml(r.video_id)}" data-tag="${escapeHtml(k)}">${escapeHtml(label)}</span>`).join('')}</div>`
-      : '';
-    return `<select class="ailog-cat-select" data-video-id="${escapeHtml(r.video_id)}">${opts}</select>${chips}`;
+    return `<select class="ailog-cat-select" data-video-id="${escapeHtml(r.video_id)}">${opts}</select>`;
+  };
+  const condCell = (r) => {
+    const s = aiStreamMap.get(r.video_id);
+    if (!s) return '<span class="admin-meta">–</span>'; // 삭제된 영상
+    if (s.content_type !== 'video') return '<span class="admin-meta">–</span>'; // 라이브는 조건 태그 없음
+    return `<div class="ailog-tags">${[...aiTagMap.entries()].map(([k, label]) =>
+      `<span class="ailog-tag-chip ${(s.tags || []).includes(k) ? 'on' : ''}" data-video-id="${escapeHtml(r.video_id)}" data-tag="${escapeHtml(k)}">${escapeHtml(label)}</span>`).join('')}</div>`;
   };
 
   const bodyRows = data.map(r => {
@@ -563,6 +566,7 @@ async function loadAiLog() {
         <td class="admin-td-title"><a href="#" class="panel-play-link" data-video-id="${escapeHtml(r.video_id)}" data-title="${escapeHtml((r.title || '').slice(0, 80))}">${escapeHtml((r.title || r.video_id).slice(0, 60))}</a></td>
         <td>${escapeHtml(r.channel_title || '')}</td>
         <td class="admin-td-cat">${catEditCell(r)}</td>
+        <td class="admin-td-cond">${condCell(r)}</td>
         <td class="admin-td-reason">${r.reason ? escapeHtml(r.reason) : ''}${r.suggested_country ? ` · 🌍 ${escapeHtml(r.suggested_country)}` : ''}</td>
         <td class="admin-td-actions">${actions}</td>
       </tr>`;
@@ -575,6 +579,7 @@ async function loadAiLog() {
         <th>${escapeHtml(t('admin_col_title'))}</th>
         <th>${escapeHtml(t('admin_col_channel'))}</th>
         <th>${escapeHtml(t('admin_col_category'))}</th>
+        <th>${escapeHtml(t('admin_col_conditions'))}</th>
         <th>${escapeHtml(t('admin_col_reason'))}</th>
         <th></th>
       </tr></thead>
