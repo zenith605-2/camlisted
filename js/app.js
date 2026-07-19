@@ -64,7 +64,10 @@ let showRecentApprovedOnly = false; // 관리자 "최근 승인" 검수 뷰
 // 기본 9개로 시작하고, 시작 시 condition_tags 테이블에서 승인된 태그 전체를 불러온다
 let CONDITION_TAGS = ['night', 'day', 'rain', 'heavy_rain', 'snow', 'heavy_snow', 'accident', 'fire', 'violence'];
 let conditionTagLabels = new Map(); // key -> DB 라벨 (i18n 번역이 없는 유저 제안 태그용)
-const activeTags = new Set();       // 현재 켜져 있는 태그 필터
+const activeTags = new Set();       // 현재 켜져 있는 태그 필터 (일반 영상용 조건)
+// 라이브 전용: 캠 현지 시간대(6시간 구간) 필터 — 지금 그 나라가 어느 시간대인지로 거른다
+const LIVE_TIME_BLOCKS = { dawn: [0, 6], morning: [6, 12], afternoon: [12, 18], night: [18, 24] };
+let activeLiveTime = null;          // 'dawn' | 'morning' | 'afternoon' | 'night' | null
 let pendingCountryFromUrl = '';     // 딥링크의 country 값 (옵션이 늦게 채워져서 보관 후 적용)
 
 function tagLabel(tag) {
@@ -250,6 +253,7 @@ function mapRow(row) {
     offlineSince: row.offline_since || null,
     durationSeconds: row.duration_seconds || null,
     tags: row.tags || [],
+    embeddable: row.embeddable !== false, // 임베드 차단 영상: 컬럼 없거나 true면 재생 가능
     commentCount: 0,
   };
 }
@@ -285,6 +289,15 @@ function currentFiltered() {
     if (addedCutoff && (!s.addedAt || new Date(s.addedAt).getTime() < addedCutoff)) return false;
     // 조건 태그 필터: 태그는 일반 영상에만 있으므로 라이브는 자연히 제외됨
     if (activeTags.size && ![...activeTags].every(tg => s.tags.includes(tg))) return false;
+    // 라이브 현지 시간대 필터: 그 나라의 지금 시각이 선택한 6시간 구간에 들어야 함
+    if (activeLiveTime) {
+      if (s.contentType !== 'live') return false;
+      const w = countryWx.get(s.country);
+      if (!w) return false; // 시간대 정보 없는 나라는 판단 불가 → 제외
+      const h = new Date(Date.now() + w.offsetSec * 1000).getUTCHours();
+      const [lo, hi] = LIVE_TIME_BLOCKS[activeLiveTime];
+      if (h < lo || h >= hi) return false;
+    }
     return true;
   });
 
@@ -520,6 +533,7 @@ function cardInnerHtml(s, groupIndex) {
       <div class="thumb-wrap">
         ${isAdmin ? `<input type="checkbox" class="admin-select-checkbox" data-video-id="${escapeHtml(s.videoId)}" data-channel-group="${groupIndex}" ${selectedForDelete.has(s.videoId) ? 'checked' : ''}>` : ''}
         <span class="live-badge ${badgeClass}">${badgeText}</span>
+        ${!s.embeddable ? `<span class="embed-blocked-badge">${escapeHtml(t('embed_blocked'))}</span>` : ''}
         ${s.approvalStatus === 'pending' ? `<span class="new-badge pending-badge">${t('pending_badge')}</span>` : (isRecentlyAdded ? '<span class="new-badge">NEW</span>' : '')}
         ${!isLiveType && s.durationSeconds ? `<span class="duration-badge">${formatDuration(s.durationSeconds)}</span>` : ''}
         ${isLiveType && s.country && s.country !== 'XX' ? (wxHtml(s.country) || `<span class="wx-badge card-wx-slot" data-country="${escapeHtml(s.country)}"></span>`) : ''}
@@ -656,6 +670,11 @@ grid.addEventListener('click', async (e) => {
 
 async function openCard(videoId, title) {
   const s = streams.find(x => x.videoId === videoId);
+  // 임베드 차단 영상은 사이트 안에서 재생 불가 → 유튜브 새 탭으로 바로 연다
+  if (s && !s.embeddable) {
+    window.open(`https://www.youtube.com/watch?v=${encodeURIComponent(videoId)}`, '_blank', 'noopener');
+    return;
+  }
   if (VIEW_GATING_ENABLED && s && isNewStream(s) && !unlockedVideos.has(videoId)) {
     const result = await tryUnlock(videoId);
     if (!result.ok) {
@@ -1027,6 +1046,8 @@ function activePreviewCount() {
 function startViewportPreview(thumbWrap, videoId) {
   if (thumbWrap.querySelector('.hover-preview-iframe')) return;
   if (activePreviewCount() >= MAX_VIEWPORT_PREVIEWS) return; // 상한 도달 → 대기(썸네일 유지)
+  const sv = streams.find(x => x.videoId === videoId);
+  if (sv && !sv.embeddable) return; // 임베드 차단 영상은 미리보기 불가 → 썸네일 유지
   const iframe = document.createElement('iframe');
   iframe.className = 'hover-preview-iframe';
   iframe.src = `https://www.youtube.com/embed/${encodeURIComponent(videoId)}?autoplay=1&mute=1&controls=0&modestbranding=1&playsinline=1`;
@@ -1304,12 +1325,27 @@ const tagFilterBar = document.getElementById('tagFilterBar');
 
 function renderTagFilterBar() {
   if (!tagFilterBar) return;
-  tagFilterBar.innerHTML = CONDITION_TAGS.map(tg =>
+  // 라이브(현지 시간대)와 일반 영상(조건 태그) 필터를 그룹으로 구분해 표시
+  const timeChips = Object.keys(LIVE_TIME_BLOCKS).map(k =>
+    `<button type="button" class="tag-chip time-chip ${activeLiveTime === k ? 'active' : ''}" data-time="${k}">${escapeHtml(t('lt_' + k))}</button>`
+  ).join('');
+  const condChips = CONDITION_TAGS.map(tg =>
     `<button type="button" class="tag-chip ${activeTags.has(tg) ? 'active' : ''}" data-tag="${tg}">${escapeHtml(tagLabel(tg))}</button>`
-  ).join('') + `<span class="tag-filter-note">${escapeHtml(t('tag_filter_note'))}</span>`;
+  ).join('');
+  tagFilterBar.innerHTML =
+    `<span class="tag-group-label">🔴 ${escapeHtml(t('filter_live_time'))}</span>${timeChips}` +
+    `<span class="tag-group-sep"></span>` +
+    `<span class="tag-group-label">🎬 ${escapeHtml(t('filter_video_cond'))}</span>${condChips}`;
 }
 
 tagFilterBar?.addEventListener('click', (e) => {
+  const timeChip = e.target.closest('.time-chip');
+  if (timeChip) {
+    activeLiveTime = activeLiveTime === timeChip.dataset.time ? null : timeChip.dataset.time; // 재클릭 = 해제
+    renderTagFilterBar();
+    render(currentFiltered());
+    return;
+  }
   const chip = e.target.closest('.tag-chip');
   if (!chip) return;
   const tg = chip.dataset.tag;
@@ -1347,6 +1383,7 @@ document.getElementById('clearFiltersBtn').addEventListener('click', () => {
   showPendingOnly = false;
   showRecentApprovedOnly = false;
   activeTags.clear();
+  activeLiveTime = null;
   renderTagFilterBar();
   syncUrlFromFilters();
   updateSidebarActiveState();

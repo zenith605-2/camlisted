@@ -176,6 +176,35 @@ function fmtStay(secs) {
   return m ? `${m}m ${s}s` : `${s}s`;
 }
 
+let visitorPage = 0;
+const VISITOR_PAGE_SIZE = 50;
+let visitorRowsHtml = []; // 행 HTML 캐시 (페이지 전환 시 재조회 없이 슬라이스)
+
+function renderVisitorPage() {
+  const body = document.getElementById('visitorTableBody');
+  const pages = Math.max(1, Math.ceil(visitorRowsHtml.length / VISITOR_PAGE_SIZE));
+  if (visitorPage >= pages) visitorPage = pages - 1;
+  body.innerHTML = visitorRowsHtml.slice(visitorPage * VISITOR_PAGE_SIZE, (visitorPage + 1) * VISITOR_PAGE_SIZE).join('');
+  let pager = document.getElementById('visitorPager');
+  if (!pager) {
+    pager = document.createElement('div');
+    pager.id = 'visitorPager';
+    pager.className = 'admin-pager';
+    body.closest('.stats-table-wrap').after(pager);
+    pager.addEventListener('click', (e) => {
+      const b = e.target.closest('.pager-btn');
+      if (!b || b.disabled) return;
+      visitorPage += Number(b.dataset.nav);
+      renderVisitorPage();
+    });
+  }
+  pager.hidden = pages <= 1;
+  pager.innerHTML = `
+    <button type="button" class="pager-btn" data-nav="-1" ${visitorPage === 0 ? 'disabled' : ''}>◀</button>
+    <span class="pager-info">${visitorPage + 1} / ${pages} · ${visitorRowsHtml.length}</span>
+    <button type="button" class="pager-btn" data-nav="1" ${visitorPage === pages - 1 ? 'disabled' : ''}>▶</button>`;
+}
+
 async function loadRecentVisitors() {
   const body = document.getElementById('visitorTableBody');
   // RLS 정책상 관리자 토큰으로만 읽힌다 (일반 유저/게스트는 빈 결과)
@@ -183,7 +212,7 @@ async function loadRecentVisitors() {
     .from('visit_log')
     .select('created_at, country, ip, visitor_key')
     .order('created_at', { ascending: false })
-    .limit(100);
+    .limit(500);
   if (error) {
     body.innerHTML = `<tr><td colspan="5">${escapeHtml(error.message)}</td></tr>`;
     return;
@@ -211,7 +240,7 @@ async function loadRecentVisitors() {
   const fmtTime = (ts) => new Date(ts).toLocaleString('ko-KR', {
     timeZone: 'Asia/Seoul', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit',
   });
-  body.innerHTML = data.map(r => `
+  visitorRowsHtml = data.map(r => `
     <tr>
       <td>${fmtTime(r.created_at)}</td>
       <td>${escapeHtml(r.country || '–')}</td>
@@ -219,7 +248,9 @@ async function loadRecentVisitors() {
       <td>${escapeHtml((r.visitor_key || '').slice(0, 8))}</td>
       <td>${fmtStay(stayByKeyDate.get(`${r.visitor_key}|${kstDateOf(r.created_at)}`))}</td>
     </tr>
-  `).join('');
+  `);
+  visitorPage = 0;
+  renderVisitorPage();
 }
 
 async function init() {

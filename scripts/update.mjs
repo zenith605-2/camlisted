@@ -412,7 +412,8 @@ async function main() {
   const toUpdate = []; // 상태전환/정보보강 업데이트
   const creditRecipients = []; // 이번에 처음 검증 통과한 유저 제보의 제보자(added_by)
   const verticalIds = []; // 세로 영상(쇼츠 등) -> 삭제 + 차단목록
-  const nonEmbeddableIds = []; // 임베드 차단 영상 -> 삭제만 (설정 변경 시 재수집 가능)
+  // sql/045(embeddable 컬럼) 적용 여부: 적용 전엔 임베드 차단 처리를 건너뛴다 (insert 에러 방지)
+  const HAS_EMBEDDABLE = existingRows.length > 0 && 'embeddable' in existingRows[0];
   let validCount = 0;
   let offlineCount = 0;
 
@@ -426,11 +427,8 @@ async function main() {
       continue;
     }
 
-    // 임베드 재생이 차단된 영상은 사이트에서 재생 불가 -> 삭제만 (설정이 풀리면 재수집 가능하게 차단목록엔 미등록)
-    if (info && info.status?.embeddable === false) {
-      nonEmbeddableIds.push(row.video_id);
-      continue;
-    }
+    // 임베드 차단 영상: 삭제하지 않고 embeddable=false로 표시 → 썸네일 + 유튜브 링크로 노출
+    const embOk = !info || info.status?.embeddable !== false;
 
     // content_type 자동 교정: 등록 시 라이브/영상을 잘못 골랐어도 실제 상태로 바로잡는다.
     // (라이브로 넣었는데 실제론 일반 공개영상 -> video로 전환해 offline 처리 대신 살려둠, 반대도 동일)
@@ -465,6 +463,10 @@ async function main() {
     validCount += 1;
     const patch = { video_id: row.video_id };
     let needsUpdate = false;
+    if (HAS_EMBEDDABLE && row.embeddable !== embOk) {
+      patch.embeddable = embOk; // 임베드 차단/해제 상태를 매일 최신으로 반영
+      needsUpdate = true;
+    }
     if (contentTypeFixed) {
       patch.content_type = contentTypeFixed;
       needsUpdate = true;
@@ -759,10 +761,12 @@ async function main() {
   const candidateIds = [...candidateMap.keys()];
   const candidateInfoMap = await getVideoInfo(candidateIds);
 
-  // 임베드 재생이 차단된(embeddable=false) 영상은 사이트에서 재생이 안 되므로 애초에 제외
+  // 임베드 차단 영상: embeddable 컬럼 도입 후에는 수집하되 표시만 다르게(썸네일+유튜브 링크),
+  // 컬럼 도입 전에는 insert 에러가 나므로 기존처럼 제외
   const newCandidates = [...candidateMap.values()].filter(c => {
     const info = candidateInfoMap.get(c.videoId);
-    return isValidFor(c.contentType, info) && info?.status?.embeddable !== false;
+    if (!isValidFor(c.contentType, info)) return false;
+    return HAS_EMBEDDABLE || info?.status?.embeddable !== false;
   });
   const newCountryMap = await getChannelCountries(newCandidates.map(c => c.channelId));
 
@@ -789,6 +793,7 @@ async function main() {
       published_at: c.contentType === 'video' ? (info.snippet?.publishedAt || null) : null,
       duration_seconds: c.contentType === 'video' ? parseDurationSeconds(info.contentDetails?.duration) : null,
       tags: c.contentType === 'video' ? tagsFromTitle(c.title) : [],
+      ...(HAS_EMBEDDABLE ? { embeddable: info?.status?.embeddable !== false } : {}),
     };
   });
 
@@ -857,12 +862,18 @@ async function main() {
     else console.log(`7일 연속 오프라인으로 삭제: ${staleOfflineRows.length}건 (차단목록에는 미등록)`);
   }
 
-  // 카테고리 변경 이력 90일 보관: 오래된 로그는 매일 정리
-  const { error: catLogCleanErr } = await supabase
-    .from('category_changes')
-    .delete()
-    .lt('changed_at', new Date(Date.now() - 90 * 86400 * 1000).toISOString());
-  if (catLogCleanErr) console.error('카테고리 이력 정리 실패:', catLogCleanErr.message);
+  // 로그성 테이블 90일 보관 통일: 오래된 기록은 매일 정리
+  // (주의: visit_log를 지우면 방문자 'Total'이 최근 90일 순방문 기준이 된다)
+  const cutoff90 = new Date(Date.now() - 90 * 86400 * 1000).toISOString();
+  for (const [logTable, tsCol] of [
+    ['category_changes', 'changed_at'],
+    ['ai_review_log', 'reviewed_at'],
+    ['visit_log', 'created_at'],
+    ['visit_durations', 'created_at'],
+  ]) {
+    const { error: logCleanErr } = await supabase.from(logTable).delete().lt(tsCol, cutoff90);
+    if (logCleanErr) console.error(`${logTable} 정리 실패:`, logCleanErr.message);
+  }
 
   // 같은 채널 + 완전 동일 제목의 "라이브" 중복 정리: 같은 실시간 피드가 여러 스트림으로
   // 잡힌 경우만 대표 1개(최신)를 남긴다. 일반 영상(video)은 제목이 같아도 다른 날짜의
@@ -908,15 +919,8 @@ async function main() {
     }
   }
 
-  // 임베드 차단으로 전환된 영상 삭제 (차단목록 미등록 — 설정이 풀리면 자동 재수집)
-  if (nonEmbeddableIds.length) {
-    const { error: embErr } = await supabase.from('streams').delete().in('video_id', nonEmbeddableIds);
-    if (embErr) console.error('임베드 차단 영상 삭제 실패:', embErr.message);
-    else console.log(`임베드 차단 영상 삭제: ${nonEmbeddableIds.length}건`);
-  }
-
   // 오늘 실행 결과를 일일 집계 테이블에 기록 (관리자 대시보드용, 같은 날 재실행 시 덮어씀)
-  const deletedTotal = toDelete.length + (expiredRows?.length || 0) + (staleOfflineRows?.length || 0) + verticalIds.length + nonEmbeddableIds.length;
+  const deletedTotal = toDelete.length + (expiredRows?.length || 0) + (staleOfflineRows?.length || 0) + verticalIds.length;
   // 21:00 UTC(= KST 06:00)에 돌기 때문에 UTC 날짜를 쓰면 한국 기준으로 하루 밀린다 -> KST 날짜 사용
   const { error: statsErr } = await supabase.from('daily_stats').upsert({
     stat_date: new Date(Date.now() + 9 * 3600 * 1000).toISOString().slice(0, 10),

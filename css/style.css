@@ -1736,6 +1736,29 @@ body {
 /* 액션(마지막) 열이 좁아 버튼 글자가 세로로 꺾이던 것 방지 */
 .admin-table td:last-child { white-space: nowrap; }
 
+/* 태그 필터바 그룹 라벨 (라이브 시간대 / 영상 조건 구분) */
+.tag-group-label {
+  font-size: 0.75rem;
+  color: var(--muted);
+  margin-right: 2px;
+  white-space: nowrap;
+}
+.tag-group-sep { flex: none; width: 14px; }
+
+/* 임베드 차단 영상: 썸네일 위 배지 */
+.embed-blocked-badge {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  background: rgba(0, 0, 0, 0.75);
+  border: 1px solid rgba(255, 59, 59, 0.6);
+  color: #ffb3b3;
+  font-size: 0.68rem;
+  padding: 2px 8px;
+  border-radius: 999px;
+  z-index: 2;
+}
+
 /* 테이블 페이저: 50개 단위 ◀ 1/N ▶ */
 .admin-pager {
   display: flex;

@@ -319,18 +319,16 @@ async function loadMyFavorites() {
 
 function favoriteRowHtml(item, index) {
   return `
-    <div class="favorite-row" data-video-id="${escapeHtml(item.videoId)}">
-      <span class="favorite-row-num">${index + 1}</span>
-      <img class="favorite-row-thumb" src="${escapeHtml(item.thumbnail)}" alt="">
-      <div class="favorite-row-body">
-        <div class="favorite-row-title">${escapeHtml(item.title || item.videoId)}</div>
-        <div class="favorite-row-meta">
-          ${escapeHtml(item.channel)} · ${item.contentType === 'live' ? t('content_type_live') : t('content_type_video')}
-          ${item.note ? ` · 📝 ${escapeHtml(item.note)}` : ''}
-        </div>
-      </div>
-      <button type="button" class="favorite-remove-btn" data-video-id="${escapeHtml(item.videoId)}">${t('account_favorite_remove_button')}</button>
-    </div>
+    <tr class="admin-row" data-video-id="${escapeHtml(item.videoId)}">
+      <td class="admin-td-num">${index + 1}</td>
+      <td class="admin-td-thumb"><img class="admin-thumb-sm" src="${escapeHtml(item.thumbnail)}" alt="" loading="lazy"></td>
+      <td class="admin-td-title"><a href="#" class="panel-play-link" data-video-id="${escapeHtml(item.videoId)}">${escapeHtml((item.title || item.videoId).slice(0, 60))}</a></td>
+      <td>${escapeHtml(item.channel)}</td>
+      <td>${item.contentType === 'live' ? t('content_type_live') : t('content_type_video')}</td>
+      <td>${escapeHtml(item.conditions)}</td>
+      <td class="admin-td-reason">${escapeHtml(item.note)}</td>
+      <td><button type="button" class="favorite-remove-btn" data-video-id="${escapeHtml(item.videoId)}">${t('account_favorite_remove_button')}</button></td>
+    </tr>
   `;
 }
 
@@ -340,12 +338,34 @@ async function refreshFavoritesSection() {
   const liveCount = items.filter(i => i.contentType === 'live').length;
   const videoCount = items.filter(i => i.contentType === 'video').length;
   accountFavoritesCount.textContent = t('account_favorites_count_breakdown', { n: count || 0, live: liveCount, video: videoCount });
-  favoritesList.innerHTML = items.length
-    ? items.map(favoriteRowHtml).join('')
-    : `<p class="empty-state">${escapeHtml(t('account_export_empty'))}</p>`;
+  if (!items.length) {
+    favoritesList.innerHTML = `<p class="empty-state">${escapeHtml(t('account_export_empty'))}</p>`;
+    return;
+  }
+  favoritesList.innerHTML = `
+    <div class="admin-table-wrap"><table class="admin-table">
+      <thead><tr>
+        <th>#</th>
+        <th></th>
+        <th>${escapeHtml(t('admin_col_title'))}</th>
+        <th>${escapeHtml(t('admin_col_channel'))}</th>
+        <th>${escapeHtml(t('filter_type'))}</th>
+        <th>${escapeHtml(t('account_export_conditions_label'))}</th>
+        <th>${escapeHtml(t('account_export_note_label'))}</th>
+        <th></th>
+      </tr></thead>
+      <tbody>${items.map(favoriteRowHtml).join('')}</tbody>
+    </table></div>`;
+  enhanceAdminTable(favoritesList);
 }
 
 favoritesList.addEventListener('click', async (e) => {
+  const play = e.target.closest('.panel-play-link');
+  if (play) {
+    e.preventDefault();
+    openVideoPanel(play.dataset.videoId);
+    return;
+  }
   const btn = e.target.closest('.favorite-remove-btn');
   if (!btn) return;
   const videoId = btn.dataset.videoId;
