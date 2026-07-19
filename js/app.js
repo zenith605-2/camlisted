@@ -1949,6 +1949,10 @@ function visitSource() {
   return host; // 그 외는 출처 호스트명 그대로 기록
 }
 
+// 통계에서 제외할 IP(주로 운영자 본인). 로그인 여부·브라우저·시크릿창과 무관하게
+// 이 IP에서 온 방문은 아예 기록하지 않는다. (IP가 바뀌면 여기에 추가)
+const EXCLUDED_VISIT_IPS = ['39.118.165.152'];
+
 async function trackVisit() {
   // 관리자 본인의 방문은 통계에서 제외. 한 번 관리자로 로그인한 기기는 표시를 남겨서
   // 이후 로그아웃 상태로 둘러볼 때도 집계되지 않는다.
@@ -1962,6 +1966,8 @@ async function trackVisit() {
   // "오늘"의 기준은 한국 자정 (UTC 기준이면 KST 09:00에 리셋되어 헷갈림)
   const todayKst = new Date(Date.now() + 9 * 3600 * 1000).toISOString().slice(0, 10);
   const geo = await fetchVisitorGeo();
+  // 운영자 IP면 로그인 여부와 무관하게 집계 제외 (이 기기는 이후에도 계속 제외되도록 표시)
+  if (geo.ip && EXCLUDED_VISIT_IPS.includes(geo.ip)) { localStorage.setItem('excludeVisits', '1'); return; }
   const row = { visit_date: todayKst, visitor_key: visitorKey, ip: geo.ip, country: geo.country, source: visitSource() };
   const { error } = await sb.from('visit_log').insert(row);
   // 043 마이그레이션(source 컬럼) 실행 전이면 컬럼 없음 에러가 나므로 source 빼고 재시도해 방문 집계는 유지
