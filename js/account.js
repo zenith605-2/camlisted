@@ -89,7 +89,8 @@ function enhanceAdminTable(container) {
   for (let i = 0; i < colCount; i++) {
     const th = document.createElement('th');
     const label = headRow.children[i].textContent.trim();
-    if (!label) { controls.push(null); filterRow.appendChild(th); continue; }
+    // 빈 헤더(썸네일·액션)와 행번호(#) 열은 필터를 만들지 않음
+    if (!label || label === '#') { controls.push(null); filterRow.appendChild(th); continue; }
 
     const values = [...new Set(bodyRows.map(r => (r.children[i]?.textContent || '').trim()))].filter(Boolean);
     if (!values.length) { controls.push(null); filterRow.appendChild(th); continue; } // 텍스트 없는 열(썸네일 등)은 필터 생략

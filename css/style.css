@@ -1781,6 +1781,7 @@ body {
 .pager-info { font-size: 0.8rem; color: var(--muted); }
 
 /* AI 로그: 카테고리 인라인 수정 + 조건 태그 토글 */
+.admin-td-num { width: 44px; text-align: center; color: var(--text-dim); }
 .admin-td-cat { min-width: 130px; }
 .admin-td-cond { min-width: 150px; }
 .ailog-cat-select {
