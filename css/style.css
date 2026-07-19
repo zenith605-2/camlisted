@@ -1677,7 +1677,33 @@ body {
 .admin-table .admin-td-date { white-space: nowrap; color: var(--muted); font-size: 0.78rem; }
 .admin-table .admin-td-reason { max-width: 260px; }
 .admin-table .admin-td-actions { white-space: nowrap; }
-.admin-table button { font-size: 0.78rem; padding: 4px 9px; }
+/* 테이블 내 액션 버튼: 사이트 공통(.auth-btn) 톤의 다크 버튼. (구 카드형은 .admin-actions
+   컨테이너에 스타일이 묶여 있어 테이블 전환 후 기본 브라우저 버튼으로 떨어졌었다) */
+.admin-table button {
+  font-size: 0.78rem;
+  padding: 4px 10px;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  cursor: pointer;
+  white-space: nowrap;
+}
+.admin-table button:hover { border-color: var(--accent); color: var(--accent); }
+/* 파괴적 동작(삭제·확정삭제)은 빨간 계열로 구분 */
+.admin-table .delete-btn,
+.admin-table .ailog-del-btn {
+  border-color: rgba(255, 59, 59, 0.55);
+  color: var(--accent);
+}
+.admin-table .delete-btn:hover,
+.admin-table .ailog-del-btn:hover {
+  background: rgba(255, 59, 59, 0.12);
+  border-color: var(--accent);
+}
+/* 긍정 동작(살리기/승인)은 초록 계열 */
+.admin-table .ailog-keep-btn { border-color: rgba(76, 175, 80, 0.55); color: #6ecb74; }
+.admin-table .ailog-keep-btn:hover { background: rgba(76, 175, 80, 0.12); border-color: #4caf50; color: #7ed787; }
 .admin-avatar-sm {
   width: 22px;
   height: 22px;
