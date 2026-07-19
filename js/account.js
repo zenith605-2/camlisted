@@ -566,6 +566,7 @@ async function loadAiLog() {
         <td class="admin-td-thumb"><img class="admin-thumb-sm" src="https://i.ytimg.com/vi/${encodeURIComponent(r.video_id)}/mqdefault.jpg" alt="" loading="lazy"></td>
         <td class="admin-td-title"><a href="#" class="panel-play-link" data-video-id="${escapeHtml(r.video_id)}" data-title="${escapeHtml((r.title || '').slice(0, 80))}">${escapeHtml((r.title || r.video_id).slice(0, 60))}</a></td>
         <td>${escapeHtml(r.channel_title || '')}</td>
+        <td>${(() => { const s = aiStreamMap.get(r.video_id); return s ? (s.content_type === 'live' ? t('content_type_live') : t('content_type_video')) : '<span class="admin-meta">–</span>'; })()}</td>
         <td class="admin-td-cat">${catEditCell(r)}</td>
         <td class="admin-td-cond">${condCell(r)}</td>
         <td class="admin-td-reason">${r.reason ? escapeHtml(r.reason) : ''}${r.suggested_country ? ` · 🌍 ${escapeHtml(r.suggested_country)}` : ''}</td>
@@ -579,6 +580,7 @@ async function loadAiLog() {
         <th>${escapeHtml(t('account_export_thumbnail_label'))}</th>
         <th>${escapeHtml(t('admin_col_title'))}</th>
         <th>${escapeHtml(t('admin_col_channel'))}</th>
+        <th>${escapeHtml(t('filter_type'))}</th>
         <th>${escapeHtml(t('admin_col_category'))}</th>
         <th>${escapeHtml(t('admin_col_conditions'))}</th>
         <th>${escapeHtml(t('admin_col_reason'))}</th>
