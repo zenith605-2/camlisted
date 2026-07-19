@@ -1325,17 +1325,29 @@ const tagFilterBar = document.getElementById('tagFilterBar');
 
 function renderTagFilterBar() {
   if (!tagFilterBar) return;
-  // 라이브(현지 시간대)와 일반 영상(조건 태그) 필터를 그룹으로 구분해 표시
+  // 선택된 콘텐츠 타입에 맞는 필터만 보인다: 라이브=현지 시간대, 영상=조건 태그, 전체=둘 다
+  const ct = contentTypeFilter.value; // '' | 'live' | 'video'
+  const showLive = ct !== 'video';
+  const showVideo = ct !== 'live';
   const timeChips = Object.keys(LIVE_TIME_BLOCKS).map(k =>
     `<button type="button" class="tag-chip time-chip ${activeLiveTime === k ? 'active' : ''}" data-time="${k}">${escapeHtml(t('lt_' + k))}</button>`
   ).join('');
   const condChips = CONDITION_TAGS.map(tg =>
     `<button type="button" class="tag-chip ${activeTags.has(tg) ? 'active' : ''}" data-tag="${tg}">${escapeHtml(tagLabel(tg))}</button>`
   ).join('');
-  tagFilterBar.innerHTML =
-    `<span class="tag-group-label">🔴 ${escapeHtml(t('filter_live_time'))}</span>${timeChips}` +
-    `<span class="tag-group-sep"></span>` +
-    `<span class="tag-group-label">🎬 ${escapeHtml(t('filter_video_cond'))}</span>${condChips}`;
+  let html = '';
+  if (showLive) html += `<span class="tag-group-label">🔴 ${escapeHtml(t('filter_live_time'))}</span>${timeChips}`;
+  if (showLive && showVideo) html += `<span class="tag-group-sep"></span>`;
+  if (showVideo) html += `<span class="tag-group-label">🎬 ${escapeHtml(t('filter_video_cond'))}</span>${condChips}`;
+  tagFilterBar.innerHTML = html;
+}
+
+// 콘텐츠 타입이 바뀌면 숨겨질 그룹의 활성 필터를 정리하고(숨은 채 결과를 좁히는 것 방지) 바를 다시 그린다
+function onContentTypeChanged() {
+  const ct = contentTypeFilter.value;
+  if (ct === 'live') activeTags.clear();      // 라이브엔 조건 태그 미적용
+  if (ct === 'video') activeLiveTime = null;  // 영상엔 현지 시간대 미적용
+  renderTagFilterBar();
 }
 
 tagFilterBar?.addEventListener('click', (e) => {
@@ -1362,6 +1374,7 @@ searchInput.addEventListener('input', () => {
 });
 [contentTypeFilter, categoryFilter, countryFilter, qualityFilter, statusFilter, visibilityFilter, addedFilter, sortSelect].forEach(el => {
   el.addEventListener('change', () => {
+    if (el === contentTypeFilter) onContentTypeChanged();
     syncUrlFromFilters();
     updateSidebarActiveState();
     render(currentFiltered());
@@ -1724,6 +1737,7 @@ sidebar.addEventListener('click', async (e) => {
   showRecentApprovedOnly = false;
   contentTypeFilter.value = btn.dataset.contentType;
   categoryFilter.value = btn.dataset.category || '';
+  onContentTypeChanged(); // 사이드바 Live/Video 클릭 시 조건 필터도 해당 타입만 보이게
   syncUrlFromFilters();
   updateSidebarActiveState();
   render(currentFiltered());
