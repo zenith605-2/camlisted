@@ -107,6 +107,34 @@ body {
   text-decoration: none;
 }
 
+.sbg-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  min-width: 0;
+}
+
+.sidebar-caret {
+  display: inline-block;
+  width: 14px;
+  text-align: center;
+  color: var(--muted);
+  font-size: 0.75rem;
+  cursor: pointer;
+  user-select: none;
+  border-radius: 4px;
+}
+
+.sidebar-caret:hover {
+  color: var(--accent);
+  background: var(--card-bg);
+}
+
+/* 그룹 접힘: 하위 카테고리 목록 숨김 */
+.sidebar-section.group-collapsed .sidebar-sublist {
+  display: none;
+}
+
 .active-country-chip {
   background: rgba(255, 59, 59, 0.08);
   border: 1px solid var(--accent);

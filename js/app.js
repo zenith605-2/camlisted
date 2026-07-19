@@ -1655,9 +1655,14 @@ function renderSidebar() {
       <a href="browse.html" class="sidebar-group-btn sidebar-map-link">🗺 ${escapeHtml(t('world_map_link'))}</a>
     </div>
   `;
-  sidebar.innerHTML = toggleHtml + mapLinkHtml + pendingHtml + suggestHtml + SIDEBAR_GROUPS.map(g => `
-    <div class="sidebar-section">
-      <button type="button" class="sidebar-group-btn" data-content-type="${g.type}" data-category="">${g.icon} ${escapeHtml(t(g.labelKey))} <span class="sidebar-count">${sidebarCount(g.type, null)}</span></button>
+  sidebar.innerHTML = toggleHtml + mapLinkHtml + pendingHtml + suggestHtml + SIDEBAR_GROUPS.map(g => {
+    const groupCollapsed = localStorage.getItem('sbGroupCollapsed_' + g.type) === '1';
+    return `
+    <div class="sidebar-section${groupCollapsed ? ' group-collapsed' : ''}">
+      <button type="button" class="sidebar-group-btn" data-content-type="${g.type}" data-category="">
+        <span class="sbg-label"><span class="sidebar-caret" data-group-toggle="${g.type}" role="button" aria-label="toggle subcategories">${groupCollapsed ? '▸' : '▾'}</span> ${g.icon} ${escapeHtml(t(g.labelKey))}</span>
+        <span class="sidebar-count">${sidebarCount(g.type, null)}</span>
+      </button>
       <ul class="sidebar-sublist">
         ${categoriesList
           .map(c => ({ c, count: sidebarCount(g.type, c.key) }))
@@ -1667,7 +1672,7 @@ function renderSidebar() {
         `).join('')}
       </ul>
     </div>
-  `).join('');
+  `; }).join('');
   updateSidebarActiveState();
 }
 
@@ -1691,6 +1696,15 @@ sidebar.addEventListener('click', async (e) => {
   if (e.target.closest('#sidebarToggle')) {
     const next = localStorage.getItem('sidebarCollapsed') === '1' ? '0' : '1';
     localStorage.setItem('sidebarCollapsed', next);
+    renderSidebar();
+    updateSidebarActiveState();
+    return;
+  }
+  // 그룹 헤더의 화살표(▾/▸)는 하위 카테고리 접기/펴기만 (필터는 안 바꿈)
+  const groupToggle = e.target.closest('[data-group-toggle]');
+  if (groupToggle) {
+    const key = 'sbGroupCollapsed_' + groupToggle.dataset.groupToggle;
+    localStorage.setItem(key, localStorage.getItem(key) === '1' ? '0' : '1');
     renderSidebar();
     updateSidebarActiveState();
     return;
