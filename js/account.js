@@ -795,6 +795,17 @@ function closeVideoPanel() {
 }
 document.getElementById('videoPanelClose')?.addEventListener('click', closeVideoPanel);
 
+// 프리뷰 패널이 열려 있을 때 바깥을 클릭하거나 Esc를 누르면 닫는다
+document.addEventListener('click', (e) => {
+  if (videoPanel.hidden) return;
+  if (e.target.closest('#videoPanel')) return;      // 패널 내부 클릭은 유지
+  if (e.target.closest('.panel-play-link')) return; // 다른 영상 열기 클릭은 openVideoPanel이 처리
+  closeVideoPanel();
+});
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && !videoPanel.hidden) closeVideoPanel();
+});
+
 adminCategoryLog?.addEventListener('click', async (e) => {
   const play = e.target.closest('.panel-play-link');
   if (play) {

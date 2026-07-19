@@ -63,11 +63,16 @@ const PAGE_CSS = `
   .browse-list .count { color: var(--muted); font-size: 0.85rem; }
   /* 지구본 박스(.globe-box)와 같은 크기의 카드로 맞춘다 — svg는 안에서 비율 유지하며 중앙 배치 */
   .map-wrap { position: relative; margin: 0; height: 460px; border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
-  .map-wrap svg { width: 100%; height: 100%; display: block; }
+  .map-wrap svg { width: 100%; height: 100%; display: block; touch-action: none; }
   @media (max-width: 900px) { .map-wrap { height: 320px; } }
   .map-wrap path { stroke: var(--bg, #0d1117); stroke-width: 0.5; }
   .map-wrap path[data-href] { cursor: pointer; }
   .map-wrap path:hover { filter: brightness(1.6); stroke: #ffffff; }
+  .map-wrap.zoomed svg { cursor: grab; }
+  .map-wrap.grabbing svg { cursor: grabbing; }
+  .map-zoom { position: absolute; right: 10px; bottom: 10px; display: flex; flex-direction: column; gap: 6px; z-index: 11; }
+  .map-zoom button { width: 34px; height: 34px; border-radius: 8px; background: rgba(0,0,0,.7); border: 1px solid var(--border); color: #fff; font-size: 1.15rem; line-height: 1; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+  .map-zoom button:hover { border-color: var(--accent); }
   .map-tip { position: fixed; z-index: 10; background: rgba(0,0,0,.85); border: 1px solid var(--border); color: #fff; padding: 5px 10px; border-radius: 6px; font-size: 0.85rem; pointer-events: none; white-space: nowrap; }
   .map-tip.pinned { position: absolute; transform: translate(-50%, -110%); border-color: var(--accent); }
   .map-note { color: var(--muted); font-size: 0.8rem; margin-bottom: 4px; }
@@ -853,6 +858,11 @@ async function main() {
         <svg viewBox="0 0 900 441" role="img" aria-label="World map of available cams by country">${mapSvgPaths}</svg>
         <div id="mapTip" class="map-tip" hidden></div>
         <div id="mapPinTip" class="map-tip pinned" hidden></div>
+        <div class="map-zoom">
+          <button type="button" id="mapZoomIn" aria-label="Zoom in">+</button>
+          <button type="button" id="mapZoomOut" aria-label="Zoom out">−</button>
+          <button type="button" id="mapZoomReset" aria-label="Reset view">⤾</button>
+        </div>
       </div>
       <div class="globe-bar">
         <div class="map-type-filter" style="margin:0">Show:
@@ -864,12 +874,74 @@ async function main() {
           ${[...MAP_BUCKETS].reverse().map(b => `<span><span class="sw" style="background:${b.color}"></span><span${b.min === 0 ? ' class="legend-none"' : ''}>${b.label}</span></span>`).join('')}
         </div>
       </div>
-      <p class="map-note" id="mapHoverNote">Hover a country to see how many cams it has — click to browse them.</p>
+      <p class="map-note" id="mapHoverNote">Hover a country to see how many cams it has — click to browse. Scroll to zoom, drag to pan.</p>
       <script>
         (function () {
           var tip = document.getElementById('mapTip');
           var paths = [].slice.call(document.querySelectorAll('.map-wrap path'));
           var mapType = 'all';
+
+          // ---- 확대/이동 (viewBox 조작) ----
+          var svg = document.querySelector('.map-wrap svg');
+          var wrap = document.querySelector('.map-wrap');
+          var BASE = { w: 900, h: 441 };
+          var vb = { x: 0, y: 0, w: 900, h: 441 };
+          var MINW = BASE.w / 8; // 최대 8배 확대
+          var moved = false;
+          function applyVB() {
+            svg.setAttribute('viewBox', vb.x + ' ' + vb.y + ' ' + vb.w + ' ' + vb.h);
+            wrap.classList.toggle('zoomed', vb.w < BASE.w - 0.5);
+            if (window.__repaintMap) window.__repaintMap();
+          }
+          function clampVB() {
+            if (vb.w > BASE.w) { vb.w = BASE.w; vb.h = BASE.h; }
+            if (vb.x < 0) vb.x = 0;
+            if (vb.y < 0) vb.y = 0;
+            if (vb.x + vb.w > BASE.w) vb.x = BASE.w - vb.w;
+            if (vb.y + vb.h > BASE.h) vb.y = BASE.h - vb.h;
+          }
+          function zoomAt(factor, cx, cy) {
+            var nw = vb.w / factor;
+            if (nw > BASE.w) nw = BASE.w;
+            if (nw < MINW) nw = MINW;
+            var nh = nw * (BASE.h / BASE.w);
+            vb.x = cx - (cx - vb.x) * (nw / vb.w);
+            vb.y = cy - (cy - vb.y) * (nh / vb.h);
+            vb.w = nw; vb.h = nh;
+            clampVB(); applyVB();
+          }
+          function svgPoint(e) {
+            var r = svg.getBoundingClientRect();
+            return { x: vb.x + (e.clientX - r.left) / r.width * vb.w, y: vb.y + (e.clientY - r.top) / r.height * vb.h };
+          }
+          svg.addEventListener('wheel', function (e) {
+            e.preventDefault();
+            var p = svgPoint(e);
+            zoomAt(e.deltaY < 0 ? 1.25 : 1 / 1.25, p.x, p.y);
+          }, { passive: false });
+          document.getElementById('mapZoomIn').addEventListener('click', function () { zoomAt(1.5, vb.x + vb.w / 2, vb.y + vb.h / 2); });
+          document.getElementById('mapZoomOut').addEventListener('click', function () { zoomAt(1 / 1.5, vb.x + vb.w / 2, vb.y + vb.h / 2); });
+          document.getElementById('mapZoomReset').addEventListener('click', function () { vb = { x: 0, y: 0, w: BASE.w, h: BASE.h }; applyVB(); });
+          // 확대 상태에서 드래그로 이동 (드래그하면 클릭은 무시해 실수 재생 방지)
+          var panning = false, startX, startY, startVBx, startVBy;
+          svg.addEventListener('pointerdown', function (e) {
+            moved = false;
+            if (vb.w >= BASE.w - 0.5) return; // 확대 안 됐으면 클릭 그대로 동작
+            panning = true; startX = e.clientX; startY = e.clientY; startVBx = vb.x; startVBy = vb.y;
+            wrap.classList.add('grabbing');
+            try { svg.setPointerCapture(e.pointerId); } catch (_) {}
+          });
+          svg.addEventListener('pointermove', function (e) {
+            if (!panning) return;
+            var r = svg.getBoundingClientRect();
+            if (Math.abs(e.clientX - startX) + Math.abs(e.clientY - startY) > 4) moved = true;
+            vb.x = startVBx - (e.clientX - startX) / r.width * vb.w;
+            vb.y = startVBy - (e.clientY - startY) / r.height * vb.h;
+            clampVB(); applyVB();
+          });
+          function endPan(e) { panning = false; wrap.classList.remove('grabbing'); try { svg.releasePointerCapture(e.pointerId); } catch (_) {} }
+          svg.addEventListener('pointerup', endPan);
+          svg.addEventListener('pointercancel', endPan);
           function bucketColor(n) {
             if (!n) return '#232a35';
             if (n >= 200) return '#ff3b3b';
@@ -924,7 +996,7 @@ async function main() {
             });
             p.addEventListener('mouseleave', function () { tip.hidden = true; });
             // 클릭하면 페이지 이동 대신 공유 패널을 열어 바로 재생 (3D 지구본과 동일한 UX)
-            if (p.dataset.href) p.addEventListener('click', function () { if (window.openCountry) window.openCountry(p.dataset); });
+            if (p.dataset.href) p.addEventListener('click', function () { if (moved) return; if (window.openCountry) window.openCountry(p.dataset); });
           });
           document.querySelectorAll('.map-type-filter button').forEach(function (b) {
             b.addEventListener('click', function () {
@@ -1251,11 +1323,11 @@ async function main() {
         // 본 사이트의 언어 설정(localStorage 'lang')을 그대로 따라 페이지 문구를 바꾼다
         (function () {
           var dict = {
-            en: { back: '\\u2190 Back to site', h1: 'Browse by Country & Category', intro: '{n} live cams and videos, organized by where and what they show. Updated {d}.', byCategory: 'By Category', byCountry: 'By Country', mapNote: 'Hover a country to see how many cams it has \\u2014 click to browse them.', show: 'Show:', all: 'All', liveBtn: '\\ud83d\\udd34 Live', videosBtn: '\\ud83c\\udfac Videos', none: 'None', live: 'Live', videos: 'Videos', intl: 'International / Mixed', ghint: 'Drag to spin \\u00b7 click a point to watch', random: '\\ud83c\\udfb2 Random cam', browseAll: 'Browse all \\u2192', selected: 'Selected:' },
-            ko: { back: '\\u2190 사이트로 돌아가기', h1: '국가·카테고리별 둘러보기', intro: '{n}개의 라이브 캠과 영상을 장소·내용별로 정리했습니다. {d} 업데이트.', byCategory: '카테고리별', byCountry: '국가별', mapNote: '나라에 마우스를 올리면 캠 개수가 보이고, 클릭하면 해당 나라 영상으로 이동합니다.', show: '표시:', all: '전체', liveBtn: '\\ud83d\\udd34 라이브', videosBtn: '\\ud83c\\udfac 일반영상', none: '없음', live: '라이브', videos: '일반영상', intl: '국제/혼합', ghint: '드래그로 회전 \\u00b7 포인트를 클릭해 시청', random: '\\ud83c\\udfb2 랜덤 캠', browseAll: '전체 보기 \\u2192', selected: '선택됨:' },
-            ja: { back: '\\u2190 サイトへ戻る', h1: '国・カテゴリ別に見る', intro: '{n}件のライブカメラと動画を場所と内容で整理。{d} 更新。', byCategory: 'カテゴリ別', byCountry: '国別', mapNote: '国にカーソルを合わせると台数が表示され、クリックでその国の映像へ移動します。', show: '表示:', all: 'すべて', liveBtn: '\\ud83d\\udd34 ライブ', videosBtn: '\\ud83c\\udfac 動画', none: 'なし', live: 'ライブ', videos: '動画', intl: '国際/混合', ghint: 'ドラッグで回転 \\u00b7 ポイントをクリックで視聴', random: '\\ud83c\\udfb2 ランダム', browseAll: 'すべて見る \\u2192', selected: '選択中:' },
-            zh: { back: '\\u2190 返回网站', h1: '按国家和分类浏览', intro: '{n}个直播摄像头和视频，按地点和内容整理。{d} 更新。', byCategory: '按分类', byCountry: '按国家', mapNote: '将鼠标悬停在国家上可查看数量，点击进入该国视频。', show: '显示:', all: '全部', liveBtn: '\\ud83d\\udd34 直播', videosBtn: '\\ud83c\\udfac 视频', none: '无', live: '直播', videos: '视频', intl: '国际/混合', ghint: '拖动旋转 \\u00b7 点击圆点观看', random: '\\ud83c\\udfb2 随机', browseAll: '查看全部 \\u2192', selected: '已选择:' },
-            es: { back: '\\u2190 Volver al sitio', h1: 'Explorar por país y categoría', intro: '{n} cámaras en vivo y videos, organizados por lugar y contenido. Actualizado {d}.', byCategory: 'Por categoría', byCountry: 'Por país', mapNote: 'Pasa el cursor sobre un país para ver cuántas cámaras tiene; haz clic para explorarlas.', show: 'Mostrar:', all: 'Todo', liveBtn: '\\ud83d\\udd34 En vivo', videosBtn: '\\ud83c\\udfac Videos', none: 'Ninguno', live: 'En vivo', videos: 'Videos', intl: 'Internacional/Mixto', ghint: 'Arrastra para girar \\u00b7 clic para ver', random: '\\ud83c\\udfb2 Aleatoria', browseAll: 'Ver todo \\u2192', selected: 'Seleccionado:' },
+            en: { back: '\\u2190 Back to site', h1: 'Browse by Country & Category', intro: '{n} live cams and videos, organized by where and what they show. Updated {d}.', byCategory: 'By Category', byCountry: 'By Country', mapNote: 'Hover a country to see how many cams it has \\u2014 click to browse. Scroll to zoom, drag to pan.', show: 'Show:', all: 'All', liveBtn: '\\ud83d\\udd34 Live', videosBtn: '\\ud83c\\udfac Videos', none: 'None', live: 'Live', videos: 'Videos', intl: 'International / Mixed', ghint: 'Drag to spin \\u00b7 click a point to watch', random: '\\ud83c\\udfb2 Random cam', browseAll: 'Browse all \\u2192', selected: 'Selected:' },
+            ko: { back: '\\u2190 사이트로 돌아가기', h1: '국가·카테고리별 둘러보기', intro: '{n}개의 라이브 캠과 영상을 장소·내용별로 정리했습니다. {d} 업데이트.', byCategory: '카테고리별', byCountry: '국가별', mapNote: '나라에 마우스를 올리면 캠 개수가 보이고, 클릭하면 해당 나라 영상으로 이동합니다. 스크롤로 확대, 드래그로 이동.', show: '표시:', all: '전체', liveBtn: '\\ud83d\\udd34 라이브', videosBtn: '\\ud83c\\udfac 일반영상', none: '없음', live: '라이브', videos: '일반영상', intl: '국제/혼합', ghint: '드래그로 회전 \\u00b7 포인트를 클릭해 시청', random: '\\ud83c\\udfb2 랜덤 캠', browseAll: '전체 보기 \\u2192', selected: '선택됨:' },
+            ja: { back: '\\u2190 サイトへ戻る', h1: '国・カテゴリ別に見る', intro: '{n}件のライブカメラと動画を場所と内容で整理。{d} 更新。', byCategory: 'カテゴリ別', byCountry: '国別', mapNote: '国にカーソルを合わせると台数が表示され、クリックでその国の映像へ移動します。スクロールで拡大、ドラッグで移動。', show: '表示:', all: 'すべて', liveBtn: '\\ud83d\\udd34 ライブ', videosBtn: '\\ud83c\\udfac 動画', none: 'なし', live: 'ライブ', videos: '動画', intl: '国際/混合', ghint: 'ドラッグで回転 \\u00b7 ポイントをクリックで視聴', random: '\\ud83c\\udfb2 ランダム', browseAll: 'すべて見る \\u2192', selected: '選択中:' },
+            zh: { back: '\\u2190 返回网站', h1: '按国家和分类浏览', intro: '{n}个直播摄像头和视频，按地点和内容整理。{d} 更新。', byCategory: '按分类', byCountry: '按国家', mapNote: '将鼠标悬停在国家上可查看数量，点击进入该国视频。滚动缩放，拖动平移。', show: '显示:', all: '全部', liveBtn: '\\ud83d\\udd34 直播', videosBtn: '\\ud83c\\udfac 视频', none: '无', live: '直播', videos: '视频', intl: '国际/混合', ghint: '拖动旋转 \\u00b7 点击圆点观看', random: '\\ud83c\\udfb2 随机', browseAll: '查看全部 \\u2192', selected: '已选择:' },
+            es: { back: '\\u2190 Volver al sitio', h1: 'Explorar por país y categoría', intro: '{n} cámaras en vivo y videos, organizados por lugar y contenido. Actualizado {d}.', byCategory: 'Por categoría', byCountry: 'Por país', mapNote: 'Pasa el cursor sobre un país para ver cuántas cámaras tiene; haz clic para explorarlas. Rueda para acercar, arrastra para mover.', show: 'Mostrar:', all: 'Todo', liveBtn: '\\ud83d\\udd34 En vivo', videosBtn: '\\ud83c\\udfac Videos', none: 'Ninguno', live: 'En vivo', videos: 'Videos', intl: 'Internacional/Mixto', ghint: 'Arrastra para girar \\u00b7 clic para ver', random: '\\ud83c\\udfb2 Aleatoria', browseAll: 'Ver todo \\u2192', selected: 'Seleccionado:' },
           };
           // 본 사이트(i18n.js detectInitialLang)와 동일: 저장된 설정이 없으면 무조건 영어
           var lang = localStorage.getItem('lang') || 'en';
