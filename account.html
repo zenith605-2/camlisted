@@ -21,25 +21,38 @@
   <p id="accountLoggedOut" class="empty-state" hidden data-i18n="account_login_required">Sign in to manage your account.</p>
 
   <div id="accountContent" hidden>
-    <section class="account-section">
-      <h2 data-i18n="account_profile_heading">Profile</h2>
-      <p><strong data-i18n="account_email_label">Email:</strong> <span id="accountEmail"></span></p>
-      <p><strong data-i18n="account_nickname_label">Nickname:</strong> <span id="accountNickname"></span>
-        <button type="button" id="accountEditNicknameBtn" class="auth-btn" data-i18n="nickname_edit_button">Edit nickname</button>
-      </p>
-    </section>
+    <div class="account-tabs">
+      <button type="button" class="account-tab-btn active" data-tab="account" data-i18n="account_tab_account">My Account</button>
+      <button type="button" class="account-tab-btn" data-tab="admin" id="adminTabBtn" hidden data-i18n="account_tab_admin">Admin</button>
+    </div>
 
-    <section class="account-section">
-      <h2 data-i18n="account_favorites_heading">My Favorites</h2>
-      <p id="accountFavoritesCount"></p>
-      <div id="favoritesList" class="favorites-list"></div>
-      <div class="account-export-buttons">
-        <button type="button" id="exportXlsxBtn" class="auth-btn" data-i18n="account_export_xlsx">Export as Excel (XLSX)</button>
-        <button type="button" id="exportTxtBtn" class="auth-btn" data-i18n="account_export_txt">Export as TXT</button>
-      </div>
-    </section>
+    <div id="accountTab" class="account-tab-panel">
+      <section class="account-section">
+        <h2 data-i18n="account_profile_heading">Profile</h2>
+        <p><strong data-i18n="account_email_label">Email:</strong> <span id="accountEmail"></span></p>
+        <p><strong data-i18n="account_nickname_label">Nickname:</strong> <span id="accountNickname"></span>
+          <button type="button" id="accountEditNicknameBtn" class="auth-btn" data-i18n="nickname_edit_button">Edit nickname</button>
+        </p>
+      </section>
 
-    <div id="adminSections" hidden>
+      <section class="account-section">
+        <h2 data-i18n="account_favorites_heading">My Favorites</h2>
+        <p id="accountFavoritesCount"></p>
+        <div id="favoritesList" class="favorites-list"></div>
+        <div class="account-export-buttons">
+          <button type="button" id="exportXlsxBtn" class="auth-btn" data-i18n="account_export_xlsx">Export as Excel (XLSX)</button>
+          <button type="button" id="exportTxtBtn" class="auth-btn" data-i18n="account_export_txt">Export as TXT</button>
+        </div>
+      </section>
+
+      <section class="account-section account-danger-zone">
+        <h2 data-i18n="account_danger_heading">Danger Zone</h2>
+        <p data-i18n="account_delete_warning">Deleting your account removes your profile, favorites, votes, and comments. Links you submitted stay on the site (just no longer credited to you). This cannot be undone.</p>
+        <button type="button" id="accountDeleteBtn" class="account-delete-btn" data-i18n="account_delete_button">Delete my account</button>
+      </section>
+    </div>
+
+    <div id="adminTab" class="account-tab-panel" hidden>
       <section class="account-section">
         <h2>📊 <a href="stats.html">Daily Stats Dashboard</a></h2>
         <p class="account-section-desc">Update-job results, new signups, and daily visitors.</p>
@@ -85,12 +98,6 @@
         <div id="adminTagList" class="admin-list"></div>
       </section>
     </div>
-
-    <section class="account-section account-danger-zone">
-      <h2 data-i18n="account_danger_heading">Danger Zone</h2>
-      <p data-i18n="account_delete_warning">Deleting your account removes your profile, favorites, votes, and comments. Links you submitted stay on the site (just no longer credited to you). This cannot be undone.</p>
-      <button type="button" id="accountDeleteBtn" class="account-delete-btn" data-i18n="account_delete_button">Delete my account</button>
-    </section>
   </div>
 </main>
 

@@ -13,9 +13,21 @@ const accountFavoritesCount = document.getElementById('accountFavoritesCount');
 const favoritesList = document.getElementById('favoritesList');
 const exportXlsxBtn = document.getElementById('exportXlsxBtn');
 const exportTxtBtn = document.getElementById('exportTxtBtn');
-const adminSections = document.getElementById('adminSections');
+const accountTab = document.getElementById('accountTab');
+const adminTab = document.getElementById('adminTab');
+const adminTabBtn = document.getElementById('adminTabBtn');
 const adminFlaggedList = document.getElementById('adminFlaggedList');
 const adminUserList = document.getElementById('adminUserList');
+
+// 탭 전환: '내 계정' / '관리자'
+document.querySelectorAll('.account-tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.account-tab-btn').forEach(b => b.classList.toggle('active', b === btn));
+    const tab = btn.dataset.tab;
+    accountTab.hidden = tab !== 'account';
+    adminTab.hidden = tab !== 'admin';
+  });
+});
 
 let currentUser = null;
 let isAdmin = false;
@@ -378,7 +390,7 @@ async function refresh() {
   await refreshFavoritesSection();
 
   await checkAdmin();
-  adminSections.hidden = !isAdmin;
+  adminTabBtn.hidden = !isAdmin; // 관리자 탭 버튼은 관리자에게만 노출 (패널은 탭 클릭 시 표시)
   if (isAdmin) {
     await Promise.all([loadFlagged(), loadUsers(), loadCategoryLog(), loadSuggestions(), loadTagSuggestions(), loadConditionTagList(), loadAiLog()]);
   }

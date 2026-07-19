@@ -1641,6 +1641,30 @@ body {
   padding: 24px;
 }
 
+/* 계정/관리자 탭 */
+.account-tabs {
+  display: flex;
+  gap: 6px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 20px;
+}
+.account-tab-btn {
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  color: var(--muted);
+  font-size: 0.95rem;
+  font-weight: 600;
+  padding: 10px 14px;
+  cursor: pointer;
+  margin-bottom: -1px;
+}
+.account-tab-btn:hover { color: var(--text); }
+.account-tab-btn.active {
+  color: var(--text);
+  border-bottom-color: var(--accent);
+}
+
 .account-section-desc {
   margin: 4px 0 0;
   color: var(--muted);
