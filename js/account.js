@@ -394,7 +394,7 @@ exportTxtBtn.addEventListener('click', async () => {
 
 // ===== AI 검수 로그 (승인/거절제안 검토 + 확정삭제/복구) =====
 const adminAiLog = document.getElementById('adminAiLog');
-let aiLogVerdict = 'reject';
+let aiLogVerdict = ''; // 기본: 전체 (탭 순서 = 전체 / 승인됨 / 거절 제안)
 
 async function loadAiLog() {
   if (!adminAiLog) return;
