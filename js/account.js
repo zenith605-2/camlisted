@@ -217,6 +217,8 @@ function userRowHtml(u) {
     <tr class="admin-row" data-user-id="${escapeHtml(u.id)}" data-is-admin="${u.is_admin}">
       <td class="admin-td-title"><img class="admin-avatar-sm" src="${u.avatar_url || ''}" alt=""> ${escapeHtml(u.display_name || t('admin_no_nickname'))}</td>
       <td>${u.submissionCount}</td>
+      <td>${u.catEditCount}</td>
+      <td>${u.condEditCount}</td>
       <td class="admin-td-date">${new Date(u.created_at).toLocaleDateString()}</td>
       <td>${u.is_admin ? t('admin_role_admin') : t('admin_role_user')}</td>
       <td><button type="button" class="toggle-admin-btn">${u.is_admin ? t('admin_revoke_button') : t('admin_promote_button')}</button></td>
@@ -226,21 +228,35 @@ function userRowHtml(u) {
 
 async function loadUsers() {
   adminUserList.textContent = t('loading');
-  const [{ data: profiles, error: profileErr }, { data: submissions, error: subErr }] = await Promise.all([
+  const [
+    { data: profiles, error: profileErr },
+    { data: submissions, error: subErr },
+    { data: catChanges },
+    { data: tagChanges },
+  ] = await Promise.all([
     sb.from('profiles').select('id, display_name, avatar_url, is_admin, created_at').order('created_at'),
     sb.from('streams').select('added_by').not('added_by', 'is', null),
+    sb.from('category_changes').select('changed_by').not('changed_by', 'is', null),
+    sb.from('tag_changes').select('changed_by').not('changed_by', 'is', null),
   ]);
   if (profileErr) {
     adminUserList.textContent = t('admin_users_load_failed', { message: profileErr.message });
     return;
   }
-  const counts = new Map();
-  if (!subErr) {
-    for (const row of submissions || []) {
-      counts.set(row.added_by, (counts.get(row.added_by) || 0) + 1);
-    }
-  }
-  const rows = (profiles || []).map(u => ({ ...u, submissionCount: counts.get(u.id) || 0 }));
+  const tally = (rowsArr, key) => {
+    const m = new Map();
+    for (const row of rowsArr || []) m.set(row[key], (m.get(row[key]) || 0) + 1);
+    return m;
+  };
+  const counts = subErr ? new Map() : tally(submissions, 'added_by');
+  const catCounts = tally(catChanges, 'changed_by'); // 카테고리 수정 횟수
+  const tagCounts = tally(tagChanges, 'changed_by');  // 조건(태그) 수정 횟수
+  const rows = (profiles || []).map(u => ({
+    ...u,
+    submissionCount: counts.get(u.id) || 0,
+    catEditCount: catCounts.get(u.id) || 0,
+    condEditCount: tagCounts.get(u.id) || 0,
+  }));
   if (!rows.length) {
     adminUserList.textContent = t('admin_users_empty');
     return;
@@ -250,6 +266,8 @@ async function loadUsers() {
       <thead><tr>
         <th>${escapeHtml(t('admin_col_user'))}</th>
         <th>${escapeHtml(t('admin_col_submissions'))}</th>
+        <th>${escapeHtml(t('admin_col_cat_edits'))}</th>
+        <th>${escapeHtml(t('admin_col_cond_edits'))}</th>
         <th>${escapeHtml(t('admin_col_joined'))}</th>
         <th>${escapeHtml(t('admin_col_role'))}</th>
         <th></th>

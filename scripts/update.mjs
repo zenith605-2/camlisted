@@ -867,6 +867,7 @@ async function main() {
   const cutoff90 = new Date(Date.now() - 90 * 86400 * 1000).toISOString();
   for (const [logTable, tsCol] of [
     ['category_changes', 'changed_at'],
+    ['tag_changes', 'changed_at'],
     ['ai_review_log', 'reviewed_at'],
     ['visit_log', 'created_at'],
     ['visit_durations', 'created_at'],
