@@ -49,22 +49,18 @@ async function checkAdmin() {
 
 function flaggedRowHtml(r) {
   return `
-    <div class="admin-row" data-video-id="${escapeHtml(r.video_id)}" data-visibility="${r.visibility}">
-      <img class="admin-thumb" src="${r.thumbnail || ''}" alt="">
-      <div class="admin-info">
-        <div class="admin-title">${escapeHtml(r.title || r.video_id)}</div>
-        <div class="admin-meta">
-          ${t('admin_channel_label')}: ${escapeHtml(r.channel_title || t('admin_no_info'))} ·
-          👎 ${r.downvote_count || 0} ·
-          ${r.visibility === 'hidden' ? t('admin_status_hidden') : t('admin_status_listed')}
-        </div>
-        <a href="https://www.youtube.com/watch?v=${encodeURIComponent(r.video_id)}" target="_blank" rel="noopener">${t('watch_on_youtube')}</a>
-      </div>
-      <div class="admin-actions">
+    <tr class="admin-row" data-video-id="${escapeHtml(r.video_id)}" data-visibility="${r.visibility}">
+      <td class="admin-td-title">
+        <a href="https://www.youtube.com/watch?v=${encodeURIComponent(r.video_id)}" target="_blank" rel="noopener">${escapeHtml((r.title || r.video_id).slice(0, 60))}</a>
+      </td>
+      <td>${escapeHtml(r.channel_title || t('admin_no_info'))}</td>
+      <td>👎 ${r.downvote_count || 0}</td>
+      <td>${r.visibility === 'hidden' ? t('admin_status_hidden') : t('admin_status_listed')}</td>
+      <td class="admin-td-actions">
         <button type="button" class="toggle-visibility-btn">${r.visibility === 'hidden' ? t('admin_show_button') : t('admin_hide_button')}</button>
         <button type="button" class="delete-btn">${t('admin_delete_button')}</button>
-      </div>
-    </div>
+      </td>
+    </tr>
   `;
 }
 
@@ -84,7 +80,17 @@ async function loadFlagged() {
     adminFlaggedList.textContent = t('admin_flagged_empty');
     return;
   }
-  adminFlaggedList.innerHTML = data.map(flaggedRowHtml).join('');
+  adminFlaggedList.innerHTML = `
+    <div class="admin-table-wrap"><table class="admin-table">
+      <thead><tr>
+        <th>${escapeHtml(t('admin_col_title'))}</th>
+        <th>${escapeHtml(t('admin_col_channel'))}</th>
+        <th>👎</th>
+        <th>${escapeHtml(t('admin_col_status'))}</th>
+        <th></th>
+      </tr></thead>
+      <tbody>${data.map(flaggedRowHtml).join('')}</tbody>
+    </table></div>`;
 }
 
 adminFlaggedList.addEventListener('click', async (e) => {
@@ -116,19 +122,13 @@ adminFlaggedList.addEventListener('click', async (e) => {
 
 function userRowHtml(u) {
   return `
-    <div class="admin-row" data-user-id="${escapeHtml(u.id)}" data-is-admin="${u.is_admin}">
-      <img class="admin-thumb user-avatar" src="${u.avatar_url || ''}" alt="">
-      <div class="admin-info">
-        <div class="admin-title">${escapeHtml(u.display_name || t('admin_no_nickname'))}</div>
-        <div class="admin-meta">
-          ${t('admin_submissions_label')} ${u.submissionCount} · ${t('admin_joined_label')} ${new Date(u.created_at).toLocaleDateString()} ·
-          ${u.is_admin ? t('admin_role_admin') : t('admin_role_user')}
-        </div>
-      </div>
-      <div class="admin-actions">
-        <button type="button" class="toggle-admin-btn">${u.is_admin ? t('admin_revoke_button') : t('admin_promote_button')}</button>
-      </div>
-    </div>
+    <tr class="admin-row" data-user-id="${escapeHtml(u.id)}" data-is-admin="${u.is_admin}">
+      <td class="admin-td-title"><img class="admin-avatar-sm" src="${u.avatar_url || ''}" alt=""> ${escapeHtml(u.display_name || t('admin_no_nickname'))}</td>
+      <td>${u.submissionCount}</td>
+      <td class="admin-td-date">${new Date(u.created_at).toLocaleDateString()}</td>
+      <td>${u.is_admin ? t('admin_role_admin') : t('admin_role_user')}</td>
+      <td><button type="button" class="toggle-admin-btn">${u.is_admin ? t('admin_revoke_button') : t('admin_promote_button')}</button></td>
+    </tr>
   `;
 }
 
@@ -153,7 +153,17 @@ async function loadUsers() {
     adminUserList.textContent = t('admin_users_empty');
     return;
   }
-  adminUserList.innerHTML = rows.map(userRowHtml).join('');
+  adminUserList.innerHTML = `
+    <div class="admin-table-wrap"><table class="admin-table">
+      <thead><tr>
+        <th>${escapeHtml(t('admin_col_user'))}</th>
+        <th>${escapeHtml(t('admin_col_submissions'))}</th>
+        <th>${escapeHtml(t('admin_col_joined'))}</th>
+        <th>${escapeHtml(t('admin_col_role'))}</th>
+        <th></th>
+      </tr></thead>
+      <tbody>${rows.map(userRowHtml).join('')}</tbody>
+    </table></div>`;
 }
 
 adminUserList.addEventListener('click', async (e) => {
@@ -330,7 +340,7 @@ async function loadAiLog() {
   if (error) { adminAiLog.textContent = error.message; return; }
   if (!data?.length) { adminAiLog.textContent = t('admin_ailog_empty'); return; }
 
-  adminAiLog.innerHTML = data.map(r => {
+  const bodyRows = data.map(r => {
     const badge = r.verdict === 'approve' ? '✅' : r.verdict === 'reject' ? '🚫' : '❓';
     // 거절 제안 + 아직 미처리인 것만 확정삭제/복구 버튼 노출
     const actions = (r.verdict === 'reject' && r.resolution === 'pending')
@@ -338,19 +348,25 @@ async function loadAiLog() {
          <button type="button" class="ailog-keep-btn" data-video-id="${escapeHtml(r.video_id)}">${escapeHtml(t('admin_ailog_restore'))}</button>`
       : (r.resolution !== 'pending' ? `<span class="admin-meta">${escapeHtml(r.resolution === 'deleted' ? t('admin_ailog_deleted') : t('admin_ailog_restored'))}</span>` : '');
     return `
-      <div class="admin-row">
-        <div class="admin-info">
-          <div class="admin-title">${badge} ${escapeHtml((r.title || r.video_id).slice(0, 70))}</div>
-          <div class="admin-meta">
-            ${escapeHtml(r.channel_title || '')}
-            ${r.reason ? `· 💬 ${escapeHtml(r.reason)}` : ''}
-            ${r.suggested_country ? `· 🌍 ${escapeHtml(r.suggested_country)}` : ''}
-            · <a href="https://www.youtube.com/watch?v=${encodeURIComponent(r.video_id)}" target="_blank" rel="noopener">▶</a>
-          </div>
-        </div>
-        <div class="admin-actions">${actions}</div>
-      </div>`;
+      <tr class="admin-row">
+        <td>${badge}</td>
+        <td class="admin-td-title"><a href="https://www.youtube.com/watch?v=${encodeURIComponent(r.video_id)}" target="_blank" rel="noopener">${escapeHtml((r.title || r.video_id).slice(0, 60))}</a></td>
+        <td>${escapeHtml(r.channel_title || '')}</td>
+        <td class="admin-td-reason">${r.reason ? escapeHtml(r.reason) : ''}${r.suggested_country ? ` · 🌍 ${escapeHtml(r.suggested_country)}` : ''}</td>
+        <td class="admin-td-actions">${actions}</td>
+      </tr>`;
   }).join('');
+  adminAiLog.innerHTML = `
+    <div class="admin-table-wrap"><table class="admin-table">
+      <thead><tr>
+        <th></th>
+        <th>${escapeHtml(t('admin_col_title'))}</th>
+        <th>${escapeHtml(t('admin_col_channel'))}</th>
+        <th>${escapeHtml(t('admin_col_reason'))}</th>
+        <th></th>
+      </tr></thead>
+      <tbody>${bodyRows}</tbody>
+    </table></div>`;
 }
 
 document.querySelectorAll('.ailog-tab').forEach(tab => {
@@ -423,21 +439,27 @@ async function loadCategoryLog() {
   const titleMap = new Map((videosRes.data || []).map(v => [v.video_id, v.title]));
   const nameMap = new Map((usersRes.data || []).map(u => [u.id, u.display_name]));
 
-  adminCategoryLog.innerHTML = data.map(r => `
-    <div class="admin-row">
-      <div class="admin-info">
-        <div class="admin-title">${escapeHtml((titleMap.get(r.video_id) || r.video_id).slice(0, 70))}</div>
-        <div class="admin-meta">
-          ${escapeHtml(r.old_category || '(none)')} → <b>${escapeHtml(r.new_category)}</b>
-          · ${escapeHtml(nameMap.get(r.changed_by) || t('anonymous'))}
-          · ${new Date(r.changed_at).toLocaleString()}
-        </div>
-      </div>
-      <div class="admin-actions">
-        ${r.old_category && titleMap.has(r.video_id) ? `<button type="button" class="catlog-revert-btn" data-video-id="${escapeHtml(r.video_id)}" data-old-category="${escapeHtml(r.old_category)}">${escapeHtml(t('admin_catlog_revert'))}</button>` : ''}
-      </div>
-    </div>
-  `).join('');
+  adminCategoryLog.innerHTML = `
+    <div class="admin-table-wrap"><table class="admin-table">
+      <thead><tr>
+        <th>${escapeHtml(t('admin_col_title'))}</th>
+        <th>${escapeHtml(t('admin_col_before'))}</th>
+        <th>${escapeHtml(t('admin_col_after'))}</th>
+        <th>${escapeHtml(t('admin_col_by'))}</th>
+        <th>${escapeHtml(t('admin_col_date'))}</th>
+        <th></th>
+      </tr></thead>
+      <tbody>${data.map(r => `
+        <tr class="admin-row">
+          <td class="admin-td-title">${escapeHtml((titleMap.get(r.video_id) || r.video_id).slice(0, 60))}</td>
+          <td>${escapeHtml(r.old_category || '(none)')}</td>
+          <td><b>${escapeHtml(r.new_category)}</b></td>
+          <td>${escapeHtml(nameMap.get(r.changed_by) || t('anonymous'))}</td>
+          <td class="admin-td-date">${new Date(r.changed_at).toLocaleString()}</td>
+          <td>${r.old_category && titleMap.has(r.video_id) ? `<button type="button" class="catlog-revert-btn" data-video-id="${escapeHtml(r.video_id)}" data-old-category="${escapeHtml(r.old_category)}">${escapeHtml(t('admin_catlog_revert'))}</button>` : ''}</td>
+        </tr>`).join('')}
+      </tbody>
+    </table></div>`;
 }
 
 adminCategoryLog?.addEventListener('click', async (e) => {

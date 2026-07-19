@@ -1636,9 +1636,45 @@ body {
 }
 
 .account-page {
-  max-width: 640px;
+  max-width: 960px; /* 관리자 탭의 테이블이 들어갈 폭 확보 */
   margin: 0 auto;
   padding: 24px;
+}
+
+/* 관리자 목록 테이블 (유저/카테고리 로그/비추천/AI 로그) */
+.admin-table-wrap { overflow-x: auto; }
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.83rem;
+}
+.admin-table th,
+.admin-table td {
+  border: 1px solid var(--border);
+  padding: 7px 10px;
+  text-align: left;
+  vertical-align: middle;
+}
+.admin-table th {
+  background: var(--card-bg);
+  color: var(--muted);
+  font-weight: 600;
+  white-space: nowrap;
+}
+.admin-table .admin-td-title { max-width: 280px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.admin-table .admin-td-title a { color: var(--text); text-decoration: none; }
+.admin-table .admin-td-title a:hover { color: var(--accent); }
+.admin-table .admin-td-date { white-space: nowrap; color: var(--muted); font-size: 0.78rem; }
+.admin-table .admin-td-reason { max-width: 260px; }
+.admin-table .admin-td-actions { white-space: nowrap; }
+.admin-table button { font-size: 0.78rem; padding: 4px 9px; }
+.admin-avatar-sm {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  object-fit: cover;
+  vertical-align: middle;
+  margin-right: 6px;
 }
 
 /* 계정/관리자 탭 */
