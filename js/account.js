@@ -43,7 +43,7 @@ function flaggedRowHtml(r) {
         <div class="admin-title">${escapeHtml(r.title || r.video_id)}</div>
         <div class="admin-meta">
           ${t('admin_channel_label')}: ${escapeHtml(r.channel_title || t('admin_no_info'))} ·
-          👎 ${r.downvote_count || 0} · 🚩 ${r.report_count || 0} ·
+          👎 ${r.downvote_count || 0} ·
           ${r.visibility === 'hidden' ? t('admin_status_hidden') : t('admin_status_listed')}
         </div>
         <a href="https://www.youtube.com/watch?v=${encodeURIComponent(r.video_id)}" target="_blank" rel="noopener">${t('watch_on_youtube')}</a>
@@ -61,7 +61,7 @@ async function loadFlagged() {
   const { data, error } = await sb
     .from('streams')
     .select('*')
-    .or('visibility.eq.hidden,downvote_count.gt.0,report_count.gt.0')
+    .or('visibility.eq.hidden,downvote_count.gt.0')
     .order('downvote_count', { ascending: false });
 
   if (error) {
