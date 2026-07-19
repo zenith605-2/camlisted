@@ -1661,6 +1661,16 @@ body {
   font-weight: 600;
   white-space: nowrap;
 }
+/* 테이블 행에는 카드형 .admin-row 스타일(flex/배경/테두리)을 무효화 — <tr>이 표 행으로 동작해야 함 */
+.admin-table .admin-row {
+  display: table-row;
+  padding: 0;
+  border: none;
+  border-radius: 0;
+  margin: 0;
+  background: none;
+  gap: 0;
+}
 .admin-table .admin-td-title { max-width: 280px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .admin-table .admin-td-title a { color: var(--text); text-decoration: none; }
 .admin-table .admin-td-title a:hover { color: var(--accent); }
