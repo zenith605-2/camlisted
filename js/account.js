@@ -60,11 +60,23 @@ function enhanceAdminTable(container) {
     applyView();
   });
 
+  // 셀의 필터용 텍스트: 드롭다운은 "선택된 옵션", 조건 칩은 "켜진 칩"만 읽는다
+  // (select.textContent는 모든 옵션이 합쳐져 나오고, 칩 셀은 꺼진 칩까지 섞이므로 그대로 쓰면 필터가 깨진다)
+  const cellText = (cell) => {
+    if (!cell) return '';
+    const sel = cell.querySelector('select');
+    if (sel) return (sel.options[sel.selectedIndex]?.textContent || '').trim();
+    if (cell.querySelector('.ailog-tag-chip')) {
+      return [...cell.querySelectorAll('.ailog-tag-chip.on')].map(c => c.textContent.trim()).join(', ');
+    }
+    return (cell.textContent || '').trim();
+  };
+
   const matchRow = (row) => {
     for (let i = 0; i < colCount; i++) {
       const ctrl = controls[i];
       if (!ctrl || !ctrl.value) continue;
-      const cell = (row.children[i]?.textContent || '').trim();
+      const cell = cellText(row.children[i]);
       if (ctrl.tagName === 'SELECT' ? cell !== ctrl.value : !cell.toLowerCase().includes(ctrl.value.toLowerCase())) return false;
     }
     return true;
@@ -92,7 +104,7 @@ function enhanceAdminTable(container) {
     // 빈 헤더(썸네일·액션)와 행번호(#) 열은 필터를 만들지 않음
     if (!label || label === '#') { controls.push(null); filterRow.appendChild(th); continue; }
 
-    const values = [...new Set(bodyRows.map(r => (r.children[i]?.textContent || '').trim()))].filter(Boolean);
+    const values = [...new Set(bodyRows.map(r => cellText(r.children[i])))].filter(Boolean);
     if (!values.length) { controls.push(null); filterRow.appendChild(th); continue; } // 텍스트 없는 열(썸네일 등)은 필터 생략
     let ctrl;
     if (values.length <= 12) {
