@@ -268,6 +268,44 @@ async function loadRecentVisitors() {
   renderVisitorPage();
 }
 
+// IP 기준 재방문자: 같은 IP가 서로 다른 날짜에 2번 이상 방문한 목록 (방문 일수 많은 순)
+async function loadReturningVisitors() {
+  const body = document.getElementById('returningTableBody');
+  const { data, error } = await sb
+    .from('visit_log')
+    .select('ip, visit_date, created_at, country')
+    .limit(50000);
+  if (error) { body.innerHTML = `<tr><td colspan="5">${escapeHtml(error.message)}</td></tr>`; return; }
+  if (!data?.length) { body.innerHTML = '<tr><td colspan="5">No visitor records yet.</td></tr>'; return; }
+  const byIp = new Map();
+  for (const r of data) {
+    if (!r.ip) continue;
+    const day = r.visit_date || kstDateOf(r.created_at);
+    let e = byIp.get(r.ip);
+    if (!e) { e = { days: new Set(), country: r.country || '–', first: day, last: day }; byIp.set(r.ip, e); }
+    e.days.add(day);
+    if (r.country) e.country = r.country;
+    if (day < e.first) e.first = day;
+    if (day > e.last) e.last = day;
+  }
+  const rows = [...byIp.entries()]
+    .map(([ip, e]) => ({ ip, country: e.country, visits: e.days.size, first: e.first, last: e.last }))
+    .filter(r => r.visits >= 2)
+    .sort((a, b) => b.visits - a.visits || (a.last < b.last ? 1 : -1));
+  if (!rows.length) {
+    body.innerHTML = '<tr><td colspan="5">No returning visitors yet (same IP on 2+ days).</td></tr>';
+    return;
+  }
+  body.innerHTML = rows.map((r, i) => `
+    <tr>
+      <td>${i + 1}</td>
+      <td class="ip-cell">${escapeHtml(r.ip)}</td>
+      <td>${escapeHtml(r.country)}</td>
+      <td><strong>${r.visits}</strong></td>
+      <td>${escapeHtml(r.first)} → ${escapeHtml(r.last)}</td>
+    </tr>`).join('');
+}
+
 async function init() {
   if (!(await isAdminUser())) {
     statsGate.textContent = 'This page is for administrators only. Please sign in with an admin account on the main site first.';
@@ -275,7 +313,7 @@ async function init() {
   }
   statsGate.hidden = true;
   statsContent.hidden = false;
-  await Promise.all([loadStats(), loadRecentVisitors(), loadSourceStats(), loadCountryStats()]);
+  await Promise.all([loadStats(), loadRecentVisitors(), loadSourceStats(), loadCountryStats(), loadReturningVisitors()]);
 }
 
 init();

@@ -6,7 +6,7 @@
 <title>Daily Stats - Camlisted</title>
 <meta name="robots" content="noindex">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
-<link rel="stylesheet" href="css/style.css?v=20260720a">
+<link rel="stylesheet" href="css/style.css?v=20260720b">
 </head>
 <body>
 <header class="site-header">
@@ -72,6 +72,23 @@
       </table>
     </div>
 
+    <h2 class="stats-subheading">Returning Visitors (by IP)</h2>
+    <p class="stats-note">Same IP that showed up on 2+ different days, most visits first. Note: one IP can be several people (offices, mobile carriers), so treat this as a rough loyalty signal.</p>
+    <div class="stats-table-wrap">
+      <table class="stats-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>IP</th>
+            <th>Country</th>
+            <th>Days visited</th>
+            <th>First → last</th>
+          </tr>
+        </thead>
+        <tbody id="returningTableBody"></tbody>
+      </table>
+    </div>
+
     <h2 class="stats-subheading">Recent Visitors</h2>
     <div class="stats-table-wrap">
       <table class="stats-table">
@@ -92,6 +109,6 @@
 </main>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
-<script src="js/stats.js?v=20260720a"></script>
+<script src="js/stats.js?v=20260720b"></script>
 </body>
 </html>
