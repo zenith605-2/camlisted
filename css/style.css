@@ -2358,9 +2358,9 @@ body {
 }
 
 .admin-list {
-  max-width: 900px;
-  margin: 0 auto;
-  padding: 24px;
+  /* (구) max-width:900px가 테이블을 852px로 조이고 있었음 — 섹션 폭을 그대로 쓰게 해제 */
+  margin: 0;
+  padding: 0;
   color: var(--muted);
 }
 
