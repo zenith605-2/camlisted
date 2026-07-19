@@ -26,7 +26,8 @@ const MODEL_CANDIDATES = (process.env.GEMINI_MODEL ? [process.env.GEMINI_MODEL] 
   .concat(['gemini-flash-latest', 'gemini-2.0-flash-lite', 'gemini-2.0-flash', 'gemini-1.5-flash']);
 let MODEL = null; // 첫 성공한 모델로 고정
 const BATCH = 15;            // 한 요청에 15개 (요청 수 절약)
-const MAX_PER_RUN = 450;     // 무료 하루 한도 안에서 안전하게
+const MAX_PER_RUN = 450;     // 대기 큐 검수: 무료 하루 한도 안에서 안전하게
+const AUDIT_PER_RUN = 150;   // 승인 카탈로그 재검수: 매일 오래된 것부터 이만큼씩 순환 (전체가 며칠~몇 주에 한 바퀴)
 const DELAY_MS = 8000;       // 요청 간 간격 (무료 모델 분당 요청 한도 여유)
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
@@ -54,7 +55,7 @@ function buildPrompt(items, categoryKeys) {
 
 APPROVE only if the video is genuinely one of these — a fixed camera view, or real-world ambient / walking / driving footage, with NO host talking to the camera and no edited entertainment.
 
-REJECT if it is: news broadcast, talk show, music video, gaming, reaction/commentary, tutorial, product review, talking-head vlog, sports match broadcast, movie/TV clip, or clearly unrelated/staged content.
+REJECT if it is: news broadcast or anchor desk, talk show, music video, a 24/7 music / BGM / lofi / relaxing-sound / white-noise / sleep livestream (reject even if the title says LIVE and shows a static image), gaming, reaction/commentary, tutorial, product review, talking-head vlog, sports match broadcast, movie/TV clip, or clearly unrelated/staged content.
 
 If you cannot tell from the title and channel, use "unsure".
 
@@ -118,20 +119,24 @@ async function callGemini(prompt) {
   }
 }
 
-async function main() {
-  const [{ data: cats }, pending] = await Promise.all([
-    supabase.from('categories').select('key').neq('key', 'other'),
-    fetchPending(),
-  ]);
-  const categoryKeys = (cats || []).map((c) => c.key);
-  const validCat = new Set([...categoryKeys, 'other']);
+// 이미 승인(공개)된 카탈로그를 오래된 순으로 다시 판정하기 위한 조회.
+// ai_checked_at이 오래됐거나(없는) 것부터 순환 재검수 → 전체가 시간을 두고 한 바퀴 돈다.
+async function fetchApprovedToAudit(limit) {
+  const { data, error } = await supabase
+    .from('streams')
+    .select('video_id, title, channel_title, category, country, country_source, content_type')
+    .eq('approval_status', 'approved')
+    .order('ai_checked_at', { ascending: true, nullsFirst: true })
+    .limit(limit);
+  if (error) throw error;
+  return data || [];
+}
 
-  if (!pending.length) {
-    console.log('AI 검수: 대기 큐가 비어 있음');
-    return;
-  }
+// 대기 큐 검수: 승인/거절제안/보류. (기존 동작 유지)
+async function reviewPending(pending, categoryKeys, validCat) {
+  if (!pending.length) { console.log('AI 검수: 대기 큐가 비어 있음'); return; }
   console.log(`AI 검수 대상: ${pending.length}건 (배치 ${BATCH})`);
-
+  const now = new Date().toISOString();
   let approved = 0, rejected = 0, unsure = 0, failed = 0;
 
   for (let i = 0; i < pending.length; i += BATCH) {
@@ -165,7 +170,7 @@ async function main() {
 
       // 승인 또는 보류: 카테고리·국가 교정을 함께 반영 (보류여도 큐에서 정확도 개선)
       const patch = {};
-      if (verdict === 'approve') patch.approval_status = 'approved';
+      if (verdict === 'approve') { patch.approval_status = 'approved'; patch.ai_checked_at = now; } // 방금 승인 → 재검수 대상에서 잠시 제외
       if (v.category && validCat.has(v.category) && v.category !== s.category) {
         patch.category = v.category;
         patch.category_source = 'ai';
@@ -190,6 +195,72 @@ async function main() {
   }
 
   console.log(`AI 검수 완료 — 승인 ${approved} / 거절제안 ${rejected}(대기유지·관리자 확인 필요) / 보류 ${unsure} / 실패 ${failed}`);
+}
+
+// 승인(공개)된 카탈로그 재검수: 쓰레기로 판정되면 삭제 대신 visibility='hidden'(공개만 차단)로 내리고
+// AI Review Log에 남긴다 → 관리자가 Keep(복구)/Confirm(삭제) 결정. 오탐이어도 데이터는 안 사라짐.
+async function auditApproved(categoryKeys, validCat) {
+  const rows = await fetchApprovedToAudit(AUDIT_PER_RUN);
+  if (!rows.length) { console.log('재검수: 승인 카탈로그 없음'); return; }
+  console.log(`승인 카탈로그 재검수: ${rows.length}건 (오래된 순)`);
+  const now = new Date().toISOString();
+  let hidden = 0, kept = 0, failed = 0;
+
+  for (let i = 0; i < rows.length; i += BATCH) {
+    const batch = rows.slice(i, i + BATCH);
+    let verdicts;
+    try {
+      verdicts = await callGemini(buildPrompt(batch, categoryKeys));
+    } catch (err) {
+      console.error(`재검수 배치 ${i / BATCH} 실패:`, err.message);
+      failed += batch.length;
+      await sleep(DELAY_MS);
+      continue;
+    }
+    const byIndex = new Map((verdicts || []).map((v) => [v.i, v]));
+
+    const logRows = [];
+    for (let j = 0; j < batch.length; j++) {
+      const s = batch[j];
+      const v = byIndex.get(j);
+      const verdict = v && ['approve', 'reject', 'unsure'].includes(v.verdict) ? v.verdict : 'unsure';
+      const patch = { ai_checked_at: now }; // 재검수했음을 표시 → 순환
+
+      if (verdict === 'reject') {
+        patch.visibility = 'hidden'; // 공개에서만 내림(삭제 아님) — Keep으로 복구 가능
+        hidden += 1;
+        logRows.push({
+          video_id: s.video_id, title: s.title, channel_title: s.channel_title,
+          verdict: 'reject', reason: ('재검수: ' + (v?.reason || '')).slice(0, 200),
+          suggested_category: v?.category || null, suggested_country: v?.country || null,
+        });
+      } else {
+        kept += 1;
+        // 유지되는 건 카테고리·국가 교정만 겸함 (정확도 개선)
+        if (v?.category && validCat.has(v.category) && v.category !== s.category) { patch.category = v.category; patch.category_source = 'ai'; }
+        if (v?.country && /^[A-Z]{2}$/.test(v.country) && s.country_source !== 'user' && v.country !== s.country) { patch.country = v.country; patch.country_source = 'ai'; }
+      }
+      const { error } = await supabase.from('streams').update(patch).eq('video_id', s.video_id);
+      if (error) { console.error('재검수 반영 실패:', s.video_id, error.message); failed += 1; }
+    }
+    if (logRows.length) {
+      const { error } = await supabase.from('ai_review_log').insert(logRows);
+      if (error) console.error('재검수 로그 실패:', error.message);
+    }
+    console.log(`  재검수 진행 ${Math.min(i + BATCH, rows.length)}/${rows.length}`);
+    if (i + BATCH < rows.length) await sleep(DELAY_MS);
+  }
+
+  console.log(`재검수 완료 — 숨김 ${hidden} / 유지 ${kept} / 실패 ${failed}`);
+}
+
+async function main() {
+  const { data: cats } = await supabase.from('categories').select('key').neq('key', 'other');
+  const categoryKeys = (cats || []).map((c) => c.key);
+  const validCat = new Set([...categoryKeys, 'other']);
+
+  await reviewPending(await fetchPending(), categoryKeys, validCat);
+  await auditApproved(categoryKeys, validCat); // 이미 공개된 카탈로그도 순환 재검수 (쓰레기 자동 정리)
 }
 
 main().catch((err) => { console.error(err); process.exit(1); });
