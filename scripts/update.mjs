@@ -864,13 +864,14 @@ async function main() {
     .lt('changed_at', new Date(Date.now() - 90 * 86400 * 1000).toISOString());
   if (catLogCleanErr) console.error('카테고리 이력 정리 실패:', catLogCleanErr.message);
 
-  // 같은 채널 + 완전 동일 제목 중복 정리: 대표 1개만 남긴다.
-  // (채널이 같은 캠을 여러 스트림/아카이브로 반복 올리면 그리드에 똑같은 카드가 나란히 뜸)
-  // 라이브 우선, 그다음 최신 등록순으로 대표를 고르고 나머지는 삭제 + 차단목록(재수집 방지).
+  // 같은 채널 + 완전 동일 제목의 "라이브" 중복 정리: 같은 실시간 피드가 여러 스트림으로
+  // 잡힌 경우만 대표 1개(최신)를 남긴다. 일반 영상(video)은 제목이 같아도 다른 날짜의
+  // 녹화본일 수 있으므로(예: 리조트 캠 일별 아카이브) 절대 건드리지 않는다.
   try {
     const dupRows = await fetchAllRows('streams', 'video_id, title, channel_title, content_type, added_at');
     const dupGroups = new Map();
     for (const r of dupRows || []) {
+      if (r.content_type !== 'live') continue; // 라이브만 대상
       if (!r.title || !r.channel_title) continue;
       const k = `${r.channel_title}||${r.title}`;
       if (!dupGroups.has(k)) dupGroups.set(k, []);
@@ -879,9 +880,7 @@ async function main() {
     const dupIds = [];
     for (const rows of dupGroups.values()) {
       if (rows.length < 2) continue;
-      rows.sort((a, b) =>
-        ((b.content_type === 'live') - (a.content_type === 'live'))
-        || String(b.added_at || '').localeCompare(String(a.added_at || '')));
+      rows.sort((a, b) => String(b.added_at || '').localeCompare(String(a.added_at || '')));
       dupIds.push(...rows.slice(1).map(r => r.video_id));
     }
     if (dupIds.length) {
