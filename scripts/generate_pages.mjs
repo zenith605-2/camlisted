@@ -1266,7 +1266,7 @@ async function main() {
             '<iframe src="https://www.youtube.com/embed/' + id + '?autoplay=1&mute=1&playsinline=1&rel=0" allow="autoplay; encrypted-media; fullscreen" allowfullscreen></iframe>';
           renderCamMeta(id);
         }
-        document.getElementById('panelClose').addEventListener('click', function () {
+        function closePanel() {
           panel.classList.remove('open');
           document.getElementById('player').innerHTML = '';
           var gsl = document.getElementById('globeSelLabel');
@@ -1277,6 +1277,17 @@ async function main() {
           globe.pointsData(GC);
           if (window.__repaintMap) window.__repaintMap();
           globe.controls().autoRotate = true;
+        }
+        document.getElementById('panelClose').addEventListener('click', closePanel);
+        // 패널이 열려 있을 때 바깥(지도/지구본·패널 외 영역)을 클릭하거나 Esc를 누르면 닫는다.
+        // 지도·지구본·랜덤 버튼은 .map-globe-row 안에 있어 클릭해도 닫히지 않는다(패널을 여는/바꾸는 조작).
+        document.addEventListener('click', function (e) {
+          if (!panel.classList.contains('open')) return;
+          if (e.target.closest('#panel') || e.target.closest('.map-globe-row')) return;
+          closePanel();
+        });
+        document.addEventListener('keydown', function (e) {
+          if (e.key === 'Escape' && panel.classList.contains('open')) closePanel();
         });
         document.getElementById('randomBtn').addEventListener('click', function () {
           var pool = [];
