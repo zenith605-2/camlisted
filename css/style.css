@@ -1736,6 +1736,48 @@ body {
 /* 액션(마지막) 열이 좁아 버튼 글자가 세로로 꺾이던 것 방지 */
 .admin-table td:last-child { white-space: nowrap; }
 
+/* AI 검수 로그 달력: 날짜 클릭 → 그날 기록만 표시 */
+.ailog-calendar { max-width: 360px; margin-bottom: 14px; }
+.cal-head { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+.cal-title { font-weight: 600; font-size: 0.9rem; min-width: 110px; text-align: center; }
+.cal-nav, .cal-clear {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 0.75rem;
+  padding: 4px 9px;
+  cursor: pointer;
+}
+.cal-nav:hover, .cal-clear:hover { border-color: var(--accent); color: var(--accent); }
+.cal-clear { margin-left: auto; }
+.cal-clear.active { border-color: var(--accent); color: var(--accent); }
+.cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 3px; }
+.cal-wd { text-align: center; font-size: 0.68rem; color: var(--muted); padding: 2px 0; }
+.cal-day {
+  position: relative;
+  aspect-ratio: 1;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--muted);
+  font-size: 0.72rem;
+  cursor: pointer;
+  padding: 0;
+}
+.cal-day:disabled { opacity: 0.3; cursor: default; }
+.cal-day.has { color: var(--text); border-color: rgba(255, 59, 59, 0.45); }
+.cal-day.has i {
+  position: absolute;
+  bottom: 1px;
+  right: 3px;
+  font-style: normal;
+  font-size: 0.58rem;
+  color: var(--accent);
+}
+.cal-day.active { background: var(--accent); color: #fff; }
+.cal-day.active i { color: #fff; }
+
 /* 목록 썸네일 (카테고리 변경 이력 등) — min-width로 셀이 쭈그러들지 않게 고정 */
 .admin-td-thumb { width: 84px; min-width: 84px; }
 .admin-thumb-sm {

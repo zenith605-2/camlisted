@@ -857,6 +857,13 @@ async function main() {
     else console.log(`7일 연속 오프라인으로 삭제: ${staleOfflineRows.length}건 (차단목록에는 미등록)`);
   }
 
+  // 카테고리 변경 이력 90일 보관: 오래된 로그는 매일 정리
+  const { error: catLogCleanErr } = await supabase
+    .from('category_changes')
+    .delete()
+    .lt('changed_at', new Date(Date.now() - 90 * 86400 * 1000).toISOString());
+  if (catLogCleanErr) console.error('카테고리 이력 정리 실패:', catLogCleanErr.message);
+
   // 생존확인 루프에서 발견한 기존 세로 영상 삭제 + 차단목록 등록
   if (verticalIds.length) {
     const { error: verticalErr } = await supabase.from('streams').delete().in('video_id', verticalIds);

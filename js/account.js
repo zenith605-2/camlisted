@@ -395,14 +395,89 @@ exportTxtBtn.addEventListener('click', async () => {
 // ===== AI 검수 로그 (승인/거절제안 검토 + 확정삭제/복구) =====
 const adminAiLog = document.getElementById('adminAiLog');
 let aiLogVerdict = ''; // 기본: 전체 (탭 순서 = 전체 / 승인됨 / 거절 제안)
+let aiLogDate = null;              // 'YYYY-MM-DD' — 달력에서 날짜 선택 시 그날 것만
+let aiLogCalMonth = new Date();    // 달력에 표시 중인 월
+let aiLogCounts = new Map();       // 'YYYY-MM-DD' -> 검수 건수 (달력 표시용)
+
+function localDateKey(iso) {
+  const d = new Date(iso);
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+}
+
+// 날짜별 검수 건수를 모아 달력을 그린다 (최근 3000건이면 몇 달치 충분)
+async function loadAiLogCalendar() {
+  const { data } = await sb.from('ai_review_log')
+    .select('reviewed_at')
+    .order('reviewed_at', { ascending: false })
+    .limit(3000);
+  aiLogCounts = new Map();
+  for (const r of data || []) {
+    const k = localDateKey(r.reviewed_at);
+    aiLogCounts.set(k, (aiLogCounts.get(k) || 0) + 1);
+  }
+  renderAiLogCalendar();
+}
+
+function renderAiLogCalendar() {
+  const el = document.getElementById('aiLogCalendar');
+  if (!el) return;
+  const y = aiLogCalMonth.getFullYear();
+  const m = aiLogCalMonth.getMonth();
+  const startDow = new Date(y, m, 1).getDay();
+  const days = new Date(y, m + 1, 0).getDate();
+  const loc = currentLang === 'ko' ? 'ko-KR' : undefined;
+  const monthLabel = new Date(y, m, 1).toLocaleString(loc, { year: 'numeric', month: 'long' });
+  // 2023-01-01은 일요일 — 요일 이름 로컬라이즈용 기준일
+  const wd = [...Array(7)].map((_, i) => new Date(2023, 0, 1 + i).toLocaleString(loc, { weekday: 'narrow' }));
+  let html = `<div class="cal-head">
+    <button type="button" class="cal-nav" data-nav="-1">◀</button>
+    <span class="cal-title">${escapeHtml(monthLabel)}</span>
+    <button type="button" class="cal-nav" data-nav="1">▶</button>
+    <button type="button" class="cal-clear${aiLogDate ? '' : ' active'}">${escapeHtml(t('admin_filter_all'))}</button>
+  </div><div class="cal-grid">`;
+  html += wd.map(w => `<span class="cal-wd">${escapeHtml(w)}</span>`).join('');
+  for (let i = 0; i < startDow; i++) html += '<span></span>';
+  for (let d = 1; d <= days; d++) {
+    const key = `${y}-${String(m + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
+    const n = aiLogCounts.get(key) || 0;
+    html += `<button type="button" class="cal-day${n ? ' has' : ''}${aiLogDate === key ? ' active' : ''}" data-date="${key}" ${n ? '' : 'disabled'}>${d}${n ? `<i>${n}</i>` : ''}</button>`;
+  }
+  el.innerHTML = html + '</div>';
+}
+
+document.getElementById('aiLogCalendar')?.addEventListener('click', (e) => {
+  const nav = e.target.closest('.cal-nav');
+  if (nav) {
+    aiLogCalMonth = new Date(aiLogCalMonth.getFullYear(), aiLogCalMonth.getMonth() + Number(nav.dataset.nav), 1);
+    renderAiLogCalendar();
+    return;
+  }
+  if (e.target.closest('.cal-clear')) {
+    aiLogDate = null;
+    renderAiLogCalendar();
+    loadAiLog();
+    return;
+  }
+  const day = e.target.closest('.cal-day');
+  if (day && !day.disabled) {
+    aiLogDate = aiLogDate === day.dataset.date ? null : day.dataset.date; // 같은 날 재클릭 = 해제
+    renderAiLogCalendar();
+    loadAiLog();
+  }
+});
 
 async function loadAiLog() {
   if (!adminAiLog) return;
   let query = sb.from('ai_review_log')
     .select('*')
     .order('reviewed_at', { ascending: false })
-    .limit(100);
+    .limit(aiLogDate ? 500 : 100);
   if (aiLogVerdict) query = query.eq('verdict', aiLogVerdict);
+  if (aiLogDate) {
+    const start = new Date(`${aiLogDate}T00:00:00`); // 로컬 자정 기준
+    const end = new Date(start.getTime() + 86400 * 1000);
+    query = query.gte('reviewed_at', start.toISOString()).lt('reviewed_at', end.toISOString());
+  }
   const { data, error } = await query;
   if (error) { adminAiLog.textContent = error.message; return; }
   if (!data?.length) { adminAiLog.textContent = t('admin_ailog_empty'); return; }
@@ -484,7 +559,7 @@ async function refresh() {
   await checkAdmin();
   adminTabBtn.hidden = !isAdmin; // 관리자 탭 버튼은 관리자에게만 노출 (패널은 탭 클릭 시 표시)
   if (isAdmin) {
-    await Promise.all([loadFlagged(), loadUsers(), loadCategoryLog(), loadSuggestions(), loadTagSuggestions(), loadConditionTagList(), loadAiLog()]);
+    await Promise.all([loadFlagged(), loadUsers(), loadCategoryLog(), loadSuggestions(), loadTagSuggestions(), loadConditionTagList(), loadAiLog(), loadAiLogCalendar()]);
   }
 }
 
