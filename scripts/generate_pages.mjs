@@ -236,6 +236,9 @@ function collectionJsonLd({ name, url, description, crumbs }) {
   return JSON.stringify(blocks);
 }
 
+// 홈 전용 정적 색인 블록의 자리. 매 실행마다 이 구간을 통째로 갈아끼우므로 반복 생성해도 누적되지 않는다.
+const HOME_STATIC_RE = /<!--HOME_STATIC_START-->[\s\S]*?<!--HOME_STATIC_END-->/;
+
 function appPage(indexTemplate, { title, description, canonicalPath, h1, presetScript, staticGrid, intro = '', ogImage = '', jsonLd = '' }) {
   let html = indexTemplate;
   html = html.replace(/<title[^>]*>[\s\S]*?<\/title>/, `<title>${escapeHtml(title)}</title>`);
@@ -258,6 +261,7 @@ function appPage(indexTemplate, { title, description, canonicalPath, h1, presetS
   html = html.replace(/<h1[^>]*><a href="\.\/" class="site-title-link" data-i18n="site_h1">[^<]*<\/a><\/h1>/,
     `<h1><a href="./" class="site-title-link">${escapeHtml(h1)}</a></h1>`);
   html = html.replace('<main id="grid" class="grid">', `${intro}<main id="grid" class="grid">${staticGrid}`);
+  html = html.replace(HOME_STATIC_RE, ''); // 홈 전용 정적 색인 블록 — 국가/카테고리 페이지엔 자체 staticGrid가 있으므로 제외
   html = html.replace('<script src="js/app.js">', `<script>${presetScript}</script>\n<script src="js/app.js">`);
   return html;
 }
@@ -644,12 +648,9 @@ async function main() {
 
   // 홈페이지 공유 미리보기(og:image/twitter:image)를 현재 최상위 라이브 캠 썸네일로 갱신 →
   // 링크를 공유할 때 실제 캠 미리보기가 뜨고, 매일 신선한 유효 이미지로 유지된다.
+  // (실제 index.html 기록은 국가/카테고리 집계가 끝난 뒤, 정적 색인 블록과 함께 아래에서 한 번에 수행)
   const homeTop = visible.filter(s => s.content_type === 'live')
     .sort((a, b) => (b.upvote_count || 0) - (a.upvote_count || 0))[0] || visible[0];
-  if (homeTop?.video_id) {
-    const resolvedIndex = indexTemplate.replace(/(\/vi\/)[^/]*(\/hqdefault\.jpg")/g, `$1${homeTop.video_id}$2`);
-    await writeFile(path.join(ROOT, 'index.html'), resolvedIndex);
-  }
 
   await mkdir(path.join(ROOT, 'country'), { recursive: true });
   await mkdir(path.join(ROOT, 'c'), { recursive: true });
@@ -846,6 +847,55 @@ async function main() {
   ];
   const heatColor = (count) => MAP_BUCKETS.find(b => count >= b.min).color;
   const slugByCode = new Map(countryPages.map(c => [c.code, c.slug]));
+
+  // ===== 홈페이지 정적 색인 블록 =====
+  // 홈은 카드를 전부 JS로 그려서 크롤러에겐 사실상 빈 페이지였다(헤더 문구와 필터 라벨만 읽힘).
+  // 검색엔진이 읽을 실제 텍스트(대표 캠 제목)와 국가/카테고리 페이지로 가는 내부 링크를 여기서 심는다.
+  const isHomeListed = (s) => s.status === 'live' && (s.visibility == null || s.visibility === 'listed');
+  const homeCatCount = new Map();
+  for (const s of visible) {
+    if (!isHomeListed(s)) continue;
+    const k = s.category || 'other';
+    homeCatCount.set(k, (homeCatCount.get(k) || 0) + 1);
+  }
+  const homePopular = visible
+    .filter(s => s.content_type === 'live' && isHomeListed(s))
+    .sort((a, b) => (b.upvote_count || 0) - (a.upvote_count || 0) || new Date(b.added_at) - new Date(a.added_at))
+    .slice(0, 40);
+  const homeStatic = `<!--HOME_STATIC_START-->
+    <section class="home-index">
+      <h2>Live cams on Camlisted</h2>
+      <p>Camlisted is a free, daily-updated directory of public <strong>YouTube live cams</strong> and real-world
+      footage. Every stream listed here is a publicly available YouTube broadcast &mdash; traffic and street cams,
+      beaches and harbours, mountains and wildlife, airports and train stations. An automated job checks every cam
+      each day, so streams that go offline are removed and new ones are added on their own.
+      <strong>${mainVisibleCount}</strong> cams are live right now (updated ${escapeHtml(today)}).</p>
+      <h3>Popular live cams right now</h3>
+      <ul class="home-index-list">
+        ${homePopular.map(s => `<li>${escapeHtml(truncTitle(s.title))}${s.channel_title ? ` &mdash; ${escapeHtml(s.channel_title)}` : ''}${s.country ? ` (${escapeHtml(countryNameOf(s.country) || s.country)})` : ''}</li>`).join('')}
+      </ul>
+      <h3>Live cams by category</h3>
+      <ul class="home-index-links">
+        ${categories.map(c => {
+          const n = homeCatCount.get(c.key) || 0;
+          return n ? `<li><a href="/c/${c.key}.html">${escapeHtml(c.label_en || c.key)} live cams</a> <span>${n}</span></li>` : '';
+        }).join('')}
+      </ul>
+      <h3>Live cams by country</h3>
+      <ul class="home-index-links">
+        ${[...countryPages].sort((a, b) => b.count - a.count).slice(0, 60)
+          .map(c => `<li><a href="/country/${c.slug}.html">${escapeHtml(c.name)} live cams</a> <span>${c.count}</span></li>`).join('')}
+      </ul>
+      <p><a href="/browse.html">Browse every country and category &rarr;</a></p>
+    </section>
+  <!--HOME_STATIC_END-->`;
+  let resolvedIndex = indexTemplate.replace(HOME_STATIC_RE, homeStatic);
+  // 홈 공유 미리보기(og:image/twitter:image)를 오늘의 대표 라이브 캠 썸네일로 갱신
+  if (homeTop?.video_id) {
+    resolvedIndex = resolvedIndex.replace(/(\/vi\/)[^/]*(\/hqdefault\.jpg")/g, `$1${homeTop.video_id}$2`);
+  }
+  await writeFile(path.join(ROOT, 'index.html'), resolvedIndex);
+  console.log(`홈 정적 색인 블록 생성 (대표 캠 ${homePopular.length}건 · 국가 링크 ${Math.min(countryPages.length, 60)}개)`);
   const mapPaths = JSON.parse(await readFile(path.join(ROOT, 'config', 'world_map_paths.json'), 'utf-8'));
   const mapSvgPaths = Object.entries(mapPaths).map(([code, v]) => {
     const c = countByCode.get(code) || { live: 0, video: 0 };

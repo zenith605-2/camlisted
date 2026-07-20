@@ -2639,3 +2639,24 @@ body {
     -webkit-box-orient: vertical;
   }
 }
+
+/* ===== 홈 하단 정적 색인 (검색엔진이 읽을 실제 콘텐츠 + 내부 링크) ===== */
+.home-index {
+  margin: 40px 0 8px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+  color: var(--muted);
+  font-size: 0.88rem;
+  line-height: 1.6;
+}
+.home-index h2 { font-size: 1.05rem; color: var(--text); margin: 0 0 10px; }
+.home-index h3 { font-size: 0.95rem; color: var(--text); margin: 22px 0 8px; }
+.home-index p { margin: 0 0 8px; }
+.home-index a { color: var(--muted); text-decoration: none; }
+.home-index a:hover { color: var(--accent); text-decoration: underline; }
+.home-index-list { list-style: none; padding: 0; margin: 0; columns: 2; column-gap: 28px; }
+.home-index-list li { margin-bottom: 4px; break-inside: avoid; }
+.home-index-links { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 6px 14px; }
+.home-index-links li { white-space: nowrap; }
+.home-index-links span { color: var(--border); font-size: 0.8rem; }
+@media (max-width: 700px) { .home-index-list { columns: 1; } }
