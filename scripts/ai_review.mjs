@@ -27,7 +27,10 @@ const MODEL_CANDIDATES = (process.env.GEMINI_MODEL ? [process.env.GEMINI_MODEL] 
 let MODEL = null; // 첫 성공한 모델로 고정
 const BATCH = 15;            // 한 요청에 15개 (요청 수 절약)
 const MAX_PER_RUN = 450;     // 대기 큐 검수: 무료 하루 한도 안에서 안전하게
-const AUDIT_PER_RUN = 150;   // 승인 카탈로그 재검수: 매일 오래된 것부터 이만큼씩 순환 (전체가 며칠~몇 주에 한 바퀴)
+const AUDIT_PER_RUN = 60;    // 승인 카탈로그 재검수: 무료 일일 할당량을 고려해 보수적으로 (대기 큐 검수가 우선)
+
+// 429가 재시도 후에도 계속되면 그날 무료 할당량이 소진된 것 — 더 시도해도 낭비이므로 즉시 중단한다
+const isQuotaExhausted = (err) => /\b429\b/.test(err?.message || '');
 const DELAY_MS = 8000;       // 요청 간 간격 (무료 모델 분당 요청 한도 여유)
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
@@ -134,10 +137,10 @@ async function fetchApprovedToAudit(limit) {
 
 // 대기 큐 검수: 승인/거절제안/보류. (기존 동작 유지)
 async function reviewPending(pending, categoryKeys, validCat) {
-  if (!pending.length) { console.log('AI 검수: 대기 큐가 비어 있음'); return; }
+  if (!pending.length) { console.log('AI 검수: 대기 큐가 비어 있음'); return false; }
   console.log(`AI 검수 대상: ${pending.length}건 (배치 ${BATCH})`);
   const now = new Date().toISOString();
-  let approved = 0, rejected = 0, unsure = 0, failed = 0;
+  let approved = 0, rejected = 0, unsure = 0, failed = 0, quotaOut = false;
 
   for (let i = 0; i < pending.length; i += BATCH) {
     const batch = pending.slice(i, i + BATCH);
@@ -147,6 +150,7 @@ async function reviewPending(pending, categoryKeys, validCat) {
     } catch (err) {
       console.error(`배치 ${i / BATCH} 실패:`, err.message);
       failed += batch.length;
+      if (isQuotaExhausted(err)) { console.error('  → 무료 할당량 소진, 대기 큐 검수 중단 (남은 건 내일 처리)'); quotaOut = true; break; }
       await sleep(DELAY_MS);
       continue;
     }
@@ -195,6 +199,7 @@ async function reviewPending(pending, categoryKeys, validCat) {
   }
 
   console.log(`AI 검수 완료 — 승인 ${approved} / 거절제안 ${rejected}(대기유지·관리자 확인 필요) / 보류 ${unsure} / 실패 ${failed}`);
+  return quotaOut;
 }
 
 // 승인(공개)된 카탈로그 재검수: 쓰레기로 판정되면 삭제 대신 visibility='hidden'(공개만 차단)로 내리고
@@ -214,6 +219,7 @@ async function auditApproved(categoryKeys, validCat) {
     } catch (err) {
       console.error(`재검수 배치 ${i / BATCH} 실패:`, err.message);
       failed += batch.length;
+      if (isQuotaExhausted(err)) { console.error('  → 무료 할당량 소진, 재검수 중단 (다음 실행에서 이어서 순환)'); break; }
       await sleep(DELAY_MS);
       continue;
     }
@@ -259,7 +265,9 @@ async function main() {
   const categoryKeys = (cats || []).map((c) => c.key);
   const validCat = new Set([...categoryKeys, 'other']);
 
-  await reviewPending(await fetchPending(), categoryKeys, validCat);
+  // 대기 큐 검수가 우선. 거기서 무료 할당량이 소진됐으면 재검수는 통째로 건너뛴다(시도해도 전부 429 낭비)
+  const quotaOut = await reviewPending(await fetchPending(), categoryKeys, validCat);
+  if (quotaOut) { console.log('재검수 건너뜀 — 무료 할당량 소진 (다음 실행에서 이어서)'); return; }
   await auditApproved(categoryKeys, validCat); // 이미 공개된 카탈로그도 순환 재검수 (쓰레기 자동 정리)
 }
 
