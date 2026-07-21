@@ -29,8 +29,10 @@ const BATCH = 15;            // 한 요청에 15개 (요청 수 절약)
 const MAX_PER_RUN = 450;     // 대기 큐 검수: 무료 하루 한도 안에서 안전하게
 const AUDIT_PER_RUN = 60;    // 승인 카탈로그 재검수: 무료 일일 할당량을 고려해 보수적으로 (대기 큐 검수가 우선)
 
-// 429가 재시도 후에도 계속되면 그날 무료 할당량이 소진된 것 — 더 시도해도 낭비이므로 즉시 중단한다
-const isQuotaExhausted = (err) => /\b429\b/.test(err?.message || '');
+// 무료 일일 할당량이 소진되면 이후 요청은 전부 429다. 한 번 확인되면 플래그를 세워
+// 남은 배치를 즉시 포기한다(계속 시도하면 수십 분을 낭비하고 쿼터만 더 태운다).
+let QUOTA_EXHAUSTED = false;
+const isQuotaExhausted = () => QUOTA_EXHAUSTED;
 const DELAY_MS = 8000;       // 요청 간 간격 (무료 모델 분당 요청 한도 여유)
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
@@ -96,6 +98,7 @@ async function requestModel(model, prompt) {
 async function callGemini(prompt) {
   // 아직 모델을 못 정했으면 후보를 순서대로 시도해 200 나오는 걸 채택
   if (!MODEL) {
+    let quotaHit = false;
     for (const cand of MODEL_CANDIDATES) {
       const res = await requestModel(cand, prompt);
       if (res.ok) {
@@ -106,8 +109,11 @@ async function callGemini(prompt) {
       }
       const body = (await res.text()).slice(0, 120);
       console.log(`  모델 ${cand} 사용 불가 (${res.status}) ${res.status === 429 ? '· 할당량/무료티어 문제' : body}`);
+      if (res.status === 429) quotaHit = true;
       if (res.status !== 404 && res.status !== 400) await sleep(2000); // 429 등은 잠깐 쉬고 다음 후보
     }
+    // 후보 전부 429였다면 모델이 없는 게 아니라 그날 할당량이 끝난 것
+    if (quotaHit) QUOTA_EXHAUSTED = true;
     throw new Error('사용 가능한 무료 모델 없음 (키/할당량 확인 필요)');
   }
   // 모델 고정 후: 429면 백오프 후 최대 2회 재시도 (무료 분당 한도 회복 대기)
@@ -118,6 +124,7 @@ async function callGemini(prompt) {
       return JSON.parse(data?.candidates?.[0]?.content?.parts?.[0]?.text || '[]');
     }
     if (res.status === 429 && attempt < 2) { await sleep(20000); continue; }
+    if (res.status === 429) QUOTA_EXHAUSTED = true; // 재시도까지 했는데 429 → 일일 한도
     throw new Error(`Gemini ${res.status}: ${(await res.text()).slice(0, 160)}`);
   }
 }
@@ -150,7 +157,7 @@ async function reviewPending(pending, categoryKeys, validCat) {
     } catch (err) {
       console.error(`배치 ${i / BATCH} 실패:`, err.message);
       failed += batch.length;
-      if (isQuotaExhausted(err)) { console.error('  → 무료 할당량 소진, 대기 큐 검수 중단 (남은 건 내일 처리)'); quotaOut = true; break; }
+      if (isQuotaExhausted()) { console.error('  → 무료 할당량 소진, 대기 큐 검수 중단 (남은 건 내일 처리)'); quotaOut = true; break; }
       await sleep(DELAY_MS);
       continue;
     }
@@ -219,7 +226,7 @@ async function auditApproved(categoryKeys, validCat) {
     } catch (err) {
       console.error(`재검수 배치 ${i / BATCH} 실패:`, err.message);
       failed += batch.length;
-      if (isQuotaExhausted(err)) { console.error('  → 무료 할당량 소진, 재검수 중단 (다음 실행에서 이어서 순환)'); break; }
+      if (isQuotaExhausted()) { console.error('  → 무료 할당량 소진, 재검수 중단 (다음 실행에서 이어서 순환)'); break; }
       await sleep(DELAY_MS);
       continue;
     }
