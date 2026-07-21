@@ -1112,17 +1112,55 @@ function activePreviewCount() {
   return grid.querySelectorAll('.hover-preview-iframe').length;
 }
 
+// 자동재생되는 김에 최대 해상도를 측정해 DB에 기록한다 (공식 IFrame API).
+// 해상도가 아직 없는 영상만, 세션당 1회만 시도 — 방문자가 스크롤하는 것만으로 화질 필터가 채워진다.
+const qualityProbeAttempted = new Set();
+
+function probeQuality(iframe, videoId) {
+  withYtApi(() => {
+    try {
+      new YT.Player(iframe, {
+        events: {
+          onStateChange: (e) => {
+            if (e.data !== YT.PlayerState.PLAYING) return;
+            // 재생 직후엔 화질 목록이 비어있을 수 있어 잠시 간격을 두고 몇 번 재시도
+            const read = (tries) => {
+              let levels = [];
+              try { levels = e.target.getAvailableQualityLevels ? e.target.getAvailableQualityLevels() : []; } catch { return; }
+              const best = levels && levels[0];
+              if (best && best !== 'auto') {
+                sb.rpc('report_stream_quality', { p_video_id: videoId, p_quality: best });
+                const sv = streams.find(x => x.videoId === videoId);
+                if (sv) sv.maxQuality = best; // 다음 렌더부터 카드 뱃지·화질 필터에 반영
+              } else if (tries > 0) {
+                setTimeout(() => read(tries - 1), 1500);
+              }
+            };
+            read(3);
+          },
+        },
+      });
+    } catch (err) { console.error(err); }
+  });
+}
+
 function startViewportPreview(thumbWrap, videoId) {
   if (thumbWrap.querySelector('.hover-preview-iframe')) return;
   if (activePreviewCount() >= MAX_VIEWPORT_PREVIEWS) return; // 상한 도달 → 대기(썸네일 유지)
   const sv = streams.find(x => x.videoId === videoId);
   if (sv && !sv.embeddable) return; // 임베드 차단 영상은 미리보기 불가 → 썸네일 유지
+  const needsProbe = sv && !sv.maxQuality && !qualityProbeAttempted.has(videoId);
   const iframe = document.createElement('iframe');
   iframe.className = 'hover-preview-iframe';
-  iframe.src = `https://www.youtube.com/embed/${encodeURIComponent(videoId)}?autoplay=1&mute=1&controls=0&modestbranding=1&playsinline=1`;
+  iframe.src = `https://www.youtube.com/embed/${encodeURIComponent(videoId)}?autoplay=1&mute=1&controls=0&modestbranding=1&playsinline=1` +
+    (needsProbe ? `&enablejsapi=1&origin=${encodeURIComponent(location.origin)}` : '');
   iframe.setAttribute('allow', 'autoplay; encrypted-media');
   iframe.setAttribute('frameborder', '0');
   thumbWrap.appendChild(iframe);
+  if (needsProbe) {
+    qualityProbeAttempted.add(videoId);
+    probeQuality(iframe, videoId);
+  }
 }
 
 function stopViewportPreview(thumbWrap) {
