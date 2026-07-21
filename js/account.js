@@ -233,6 +233,90 @@ adminFlaggedList.addEventListener('click', async (e) => {
   }
 });
 
+// ===== 차단목록 (삭제 시 등록된 영상/채널 — 자정 수집에서 영구 제외) =====
+const adminBlocklist = document.getElementById('adminBlocklist');
+const adminBlockedChannels = document.getElementById('adminBlockedChannels');
+
+async function loadBlocklist() {
+  if (!adminBlocklist) return;
+  const [{ data: vids, error: vErr }, { data: chans, error: cErr }] = await Promise.all([
+    sb.from('blocklist').select('video_id, created_at').order('created_at', { ascending: false }).limit(2000),
+    sb.from('blocked_channels').select('channel_id, created_at').order('created_at', { ascending: false }).limit(500),
+  ]);
+  const fmtDate = (ts) => new Date(ts).toLocaleDateString();
+
+  if (vErr) adminBlocklist.textContent = vErr.message;
+  else if (!vids?.length) adminBlocklist.innerHTML = `<p class="empty-state">${escapeHtml(t('admin_blocklist_empty'))}</p>`;
+  else {
+    adminBlocklist.innerHTML = `
+      <div class="admin-table-wrap"><table class="admin-table">
+        <thead><tr>
+          <th>#</th>
+          <th>${escapeHtml(t('account_export_thumbnail_label'))}</th>
+          <th>${escapeHtml(t('admin_col_title'))}</th>
+          <th>${escapeHtml(t('admin_col_date'))}</th>
+          <th></th>
+        </tr></thead>
+        <tbody>${vids.map((r, i) => `
+          <tr class="admin-row">
+            <td class="admin-td-num">${i + 1}</td>
+            <td class="admin-td-thumb"><img class="admin-thumb-sm" src="https://i.ytimg.com/vi/${encodeURIComponent(r.video_id)}/mqdefault.jpg" alt="" loading="lazy"></td>
+            <td class="admin-td-title"><a href="#" class="panel-play-link" data-video-id="${escapeHtml(r.video_id)}" data-title="${escapeHtml(r.video_id)}">${escapeHtml(r.video_id)}</a></td>
+            <td class="admin-td-date">${fmtDate(r.created_at)}</td>
+            <td><button type="button" class="unblock-btn" data-video-id="${escapeHtml(r.video_id)}">${escapeHtml(t('admin_unblock_button'))}</button></td>
+          </tr>`).join('')}</tbody>
+      </table></div>`;
+    enhanceAdminTable(adminBlocklist);
+  }
+
+  if (!adminBlockedChannels) return;
+  if (cErr) adminBlockedChannels.textContent = cErr.message;
+  else if (!chans?.length) adminBlockedChannels.innerHTML = `<p class="empty-state">${escapeHtml(t('admin_blocklist_empty'))}</p>`;
+  else {
+    adminBlockedChannels.innerHTML = `
+      <div class="admin-table-wrap"><table class="admin-table">
+        <thead><tr>
+          <th>#</th>
+          <th>${escapeHtml(t('admin_col_channel'))}</th>
+          <th>${escapeHtml(t('admin_col_date'))}</th>
+          <th></th>
+        </tr></thead>
+        <tbody>${chans.map((r, i) => `
+          <tr class="admin-row">
+            <td class="admin-td-num">${i + 1}</td>
+            <td class="admin-td-title"><a href="https://www.youtube.com/channel/${encodeURIComponent(r.channel_id)}" target="_blank" rel="noopener">${escapeHtml(r.channel_id)}</a></td>
+            <td class="admin-td-date">${fmtDate(r.created_at)}</td>
+            <td><button type="button" class="unblock-chan-btn" data-channel-id="${escapeHtml(r.channel_id)}">${escapeHtml(t('admin_unblock_button'))}</button></td>
+          </tr>`).join('')}</tbody>
+      </table></div>`;
+    enhanceAdminTable(adminBlockedChannels);
+  }
+}
+
+adminBlocklist?.addEventListener('click', async (e) => {
+  const play = e.target.closest('.panel-play-link');
+  if (play) {
+    e.preventDefault();
+    openVideoPanel(play.dataset.videoId, play.dataset.title);
+    return;
+  }
+  const btn = e.target.closest('.unblock-btn');
+  if (!btn) return;
+  btn.disabled = true;
+  const { error } = await sb.from('blocklist').delete().eq('video_id', btn.dataset.videoId);
+  if (error) { alert(error.message); btn.disabled = false; return; }
+  await loadBlocklist();
+});
+
+adminBlockedChannels?.addEventListener('click', async (e) => {
+  const btn = e.target.closest('.unblock-chan-btn');
+  if (!btn) return;
+  btn.disabled = true;
+  const { error } = await sb.from('blocked_channels').delete().eq('channel_id', btn.dataset.channelId);
+  if (error) { alert(error.message); btn.disabled = false; return; }
+  await loadBlocklist();
+});
+
 function userRowHtml(u) {
   return `
     <tr class="admin-row" data-user-id="${escapeHtml(u.id)}" data-is-admin="${u.is_admin}">
@@ -754,7 +838,7 @@ async function refresh() {
   await checkAdmin();
   adminTabBtn.hidden = !isAdmin; // 관리자 탭 버튼은 관리자에게만 노출 (패널은 탭 클릭 시 표시)
   if (isAdmin) {
-    await Promise.all([loadFlagged(), loadUsers(), loadCategoryLog(), loadSuggestions(), loadTagSuggestions(), loadConditionTagList(), loadAiLog(), loadAiLogCalendar()]);
+    await Promise.all([loadFlagged(), loadBlocklist(), loadUsers(), loadCategoryLog(), loadSuggestions(), loadTagSuggestions(), loadConditionTagList(), loadAiLog(), loadAiLogCalendar()]);
   }
 }
 

@@ -2692,3 +2692,6 @@ body {
 .sub-status.approved { color: #4caf50; background: rgba(76, 175, 80, 0.12); }
 .sub-status.rejected { color: #ff7b72; background: rgba(255, 59, 59, 0.12); }
 .sub-status.pending { color: #ffb020; background: rgba(255, 176, 32, 0.12); }
+
+/* 차단목록 섹션의 소제목 (Blocked Channels) */
+.admin-subheading { margin: 20px 0 8px; font-size: 0.95rem; color: var(--text); }
