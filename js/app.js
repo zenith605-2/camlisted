@@ -1888,6 +1888,7 @@ cheerList?.addEventListener('click', async (e) => {
 let visitSegmentStart = Date.now();
 
 function sendVisitDuration() {
+  if (IS_BOT) return; // 크롤러는 체류시간도 집계 제외
   if (localStorage.getItem('excludeVisits')) return; // 관리자 기기는 체류시간도 집계 제외
   const seconds = Math.round((Date.now() - visitSegmentStart) / 1000);
   visitSegmentStart = Date.now();
@@ -1953,7 +1954,12 @@ function visitSource() {
 // 이 IP에서 온 방문은 아예 기록하지 않는다. (IP가 바뀌면 여기에 추가)
 const EXCLUDED_VISIT_IPS = ['39.118.165.152'];
 
+// 검색엔진 크롤러(구글봇 등)는 JS를 실행하면서 localStorage를 유지하지 않아
+// 렌더링마다 새 방문자로 잡힌다 → UA로 걸러 방문/체류 기록에서 제외
+const IS_BOT = /bot|crawl|spider|slurp|headless|lighthouse|prerender/i.test(navigator.userAgent);
+
 async function trackVisit() {
+  if (IS_BOT) return; // 크롤러 렌더링은 방문으로 집계하지 않는다
   // 관리자 본인의 방문은 통계에서 제외. 한 번 관리자로 로그인한 기기는 표시를 남겨서
   // 이후 로그아웃 상태로 둘러볼 때도 집계되지 않는다.
   if (isAdmin) localStorage.setItem('excludeVisits', '1');
