@@ -2680,3 +2680,15 @@ body {
 .ai-verdict-line.reject { color: #ff7b72; background: rgba(255, 59, 59, 0.1); }
 .ai-verdict-line.unsure { color: #ffb020; background: rgba(255, 176, 32, 0.1); }
 .ai-verdict-line.none { color: var(--muted); background: var(--card-bg); }
+
+/* ===== 내 제보 이력 상태 배지 ===== */
+.sub-status {
+  display: inline-block;
+  font-size: 0.75rem;
+  border-radius: 999px;
+  padding: 2px 10px;
+  white-space: nowrap;
+}
+.sub-status.approved { color: #4caf50; background: rgba(76, 175, 80, 0.12); }
+.sub-status.rejected { color: #ff7b72; background: rgba(255, 59, 59, 0.12); }
+.sub-status.pending { color: #ffb020; background: rgba(255, 176, 32, 0.12); }

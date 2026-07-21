@@ -681,6 +681,61 @@ adminAiLog?.addEventListener('click', async (e) => {
   await loadAiLog();
 });
 
+// ===== 내 제보 이력 (submission_log — RLS로 본인 것만 조회됨) =====
+async function loadMySubmissions() {
+  const el = document.getElementById('mySubmissionsList');
+  if (!el) return;
+  const { data, error } = await sb
+    .from('submission_log')
+    .select('*')
+    .order('created_at', { ascending: false })
+    .limit(500);
+  if (error) {
+    // 053 마이그레이션 실행 전이면 테이블이 없음 → 섹션을 조용히 숨긴다
+    el.closest('.account-section').hidden = true;
+    return;
+  }
+  el.closest('.account-section').hidden = false;
+  if (!data?.length) {
+    el.innerHTML = `<p class="empty-state">${escapeHtml(t('account_submissions_empty'))}</p>`;
+    return;
+  }
+  const badge = (s) =>
+    s === 'approved' ? `<span class="sub-status approved">✅ ${escapeHtml(t('sub_status_approved'))}</span>`
+    : s === 'rejected' ? `<span class="sub-status rejected">🚫 ${escapeHtml(t('sub_status_rejected'))}</span>`
+    : `<span class="sub-status pending">⏳ ${escapeHtml(t('sub_status_pending'))}</span>`;
+  const fmtDate = (ts) => new Date(ts).toLocaleDateString();
+  el.innerHTML = `
+    <div class="admin-table-wrap"><table class="admin-table">
+      <thead><tr>
+        <th>#</th>
+        <th>${escapeHtml(t('account_export_thumbnail_label'))}</th>
+        <th>${escapeHtml(t('admin_col_title'))}</th>
+        <th>${escapeHtml(t('admin_col_status'))}</th>
+        <th>${escapeHtml(t('admin_col_reason'))}</th>
+        <th>${escapeHtml(t('admin_col_date'))}</th>
+      </tr></thead>
+      <tbody>${data.map((r, i) => `
+        <tr class="admin-row">
+          <td class="admin-td-num">${i + 1}</td>
+          <td class="admin-td-thumb"><img class="admin-thumb-sm" src="https://i.ytimg.com/vi/${encodeURIComponent(r.video_id)}/mqdefault.jpg" alt="" loading="lazy"></td>
+          <td class="admin-td-title"><a href="#" class="panel-play-link" data-video-id="${escapeHtml(r.video_id)}" data-title="${escapeHtml((r.title || '').slice(0, 80))}">${escapeHtml((r.title || r.video_id).slice(0, 60))}</a></td>
+          <td>${badge(r.status)}</td>
+          <td class="admin-td-reason">${escapeHtml(r.reason || '')}</td>
+          <td class="admin-td-date">${fmtDate(r.created_at)}</td>
+        </tr>`).join('')}</tbody>
+    </table></div>`;
+  enhanceAdminTable(el);
+}
+
+document.getElementById('mySubmissionsList')?.addEventListener('click', (e) => {
+  const play = e.target.closest('.panel-play-link');
+  if (play) {
+    e.preventDefault();
+    openVideoPanel(play.dataset.videoId, play.dataset.title);
+  }
+});
+
 async function refresh() {
   applyStaticTranslations();
   if (!currentUser) {
@@ -694,6 +749,7 @@ async function refresh() {
   const { data } = await sb.from('profiles').select('display_name').eq('id', currentUser.id).maybeSingle();
   accountNickname.textContent = data?.display_name || t('anonymous');
   await refreshFavoritesSection();
+  await loadMySubmissions();
 
   await checkAdmin();
   adminTabBtn.hidden = !isAdmin; // 관리자 탭 버튼은 관리자에게만 노출 (패널은 탭 클릭 시 표시)
