@@ -26,8 +26,8 @@ const MODEL_CANDIDATES = (process.env.GEMINI_MODEL ? [process.env.GEMINI_MODEL] 
   .concat(['gemini-flash-latest', 'gemini-2.0-flash-lite', 'gemini-2.0-flash', 'gemini-1.5-flash']);
 let MODEL = null; // 첫 성공한 모델로 고정
 const BATCH = 15;            // 한 요청에 15개 (요청 수 절약)
-const MAX_PER_RUN = 450;     // 대기 큐 검수: 무료 하루 한도 안에서 안전하게
-const AUDIT_PER_RUN = 60;    // 승인 카탈로그 재검수: 무료 일일 할당량을 고려해 보수적으로 (대기 큐 검수가 우선)
+const MAX_PER_RUN = 600;     // 대기 큐 검수 (유료 티어 전환 후 상향 — 하루 수집량을 당일 전부 소화)
+const AUDIT_PER_RUN = 250;   // 승인 카탈로그 재검수 (유료 전환으로 상향 — 전체 카탈로그가 약 2주에 한 바퀴)
 
 // 무료 일일 할당량이 소진되면 이후 요청은 전부 429다. 한 번 확인되면 플래그를 세워
 // 남은 배치를 즉시 포기한다(계속 시도하면 수십 분을 낭비하고 쿼터만 더 태운다).
