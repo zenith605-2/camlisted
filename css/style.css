@@ -2660,3 +2660,23 @@ body {
 .home-index-links li { white-space: nowrap; }
 .home-index-links span { color: var(--border); font-size: 0.8rem; }
 @media (max-width: 700px) { .home-index-list { columns: 1; } }
+
+/* ===== 승인 대기 뷰(관리자): AI 판정 필터 바 + 카드 판정 라벨 ===== */
+.pending-ai-bar {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 4px 0 10px;
+}
+.ai-verdict-line {
+  display: block;
+  font-size: 0.75rem;
+  line-height: 1.4;
+  border-radius: 6px;
+  padding: 3px 8px;
+  margin-top: 4px;
+}
+.ai-verdict-line.reject { color: #ff7b72; background: rgba(255, 59, 59, 0.1); }
+.ai-verdict-line.unsure { color: #ffb020; background: rgba(255, 176, 32, 0.1); }
+.ai-verdict-line.none { color: var(--muted); background: var(--card-bg); }

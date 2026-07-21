@@ -59,6 +59,10 @@ let currentUser = null;
 let isAdmin = false;
 let showPendingOnly = false; // "대기중" 사이드바 항목을 눌렀을 때만 true
 let showRecentApprovedOnly = false; // 관리자 "최근 승인" 검수 뷰
+// 승인 대기 뷰(관리자): AI 판정 결과 표시/필터 — ai_review_log는 RLS상 관리자만 읽힌다
+let pendingAiMap = new Map();  // video_id -> { verdict: 'reject'|'unsure', reason }
+let pendingAiLoaded = false;   // 로드 성공 여부 (비관리자는 항상 false → 배지/필터 미표시)
+let pendingAiFilter = '';      // '' 전체 | 'reject' 거절제안 | 'unsure' 보류 | 'none' 미판정
 
 // 조건 태그 (일반 영상 전용) — 카테고리와 별개의 필터 축
 // 기본 9개로 시작하고, 시작 시 condition_tags 테이블에서 승인된 태그 전체를 불러온다
@@ -271,7 +275,13 @@ function currentFiltered() {
   const addedCutoff = addedWithinDays ? Date.now() - addedWithinDays * 24 * 3600 * 1000 : null;
 
   const filtered = streams.filter(s => {
-    if (showPendingOnly) return s.approvalStatus === 'pending';
+    if (showPendingOnly) {
+      if (s.approvalStatus !== 'pending') return false;
+      if (!pendingAiFilter || !pendingAiLoaded) return true;
+      const v = pendingAiMap.get(s.videoId);
+      if (pendingAiFilter === 'none') return !v; // AI가 아직 판정 못 한 것(판정실패 포함)
+      return v?.verdict === pendingAiFilter;
+    }
     // 관리자 전용 "최근 승인" 뷰: 최근 3일 내 등록·승인된 영상만 (다른 필터 무시) — 검수용
     if (showRecentApprovedOnly) {
       return s.approvalStatus !== 'pending' && s.addedAt &&
@@ -361,11 +371,63 @@ resultCountEl.addEventListener('click', (e) => {
   render(currentFiltered());
 });
 
+// 승인 대기 항목들의 최신 AI 판정을 불러온다 (관리자 전용 — RLS로 다른 계정은 빈 결과)
+async function loadPendingAiVerdicts() {
+  pendingAiMap = new Map();
+  pendingAiLoaded = false;
+  if (!isAdmin) return;
+  const ids = streams.filter(s => s.approvalStatus === 'pending').map(s => s.videoId);
+  for (let i = 0; i < ids.length; i += 200) {
+    const { data, error } = await sb
+      .from('ai_review_log')
+      .select('video_id, verdict, reason, reviewed_at')
+      .in('video_id', ids.slice(i, i + 200))
+      .order('reviewed_at', { ascending: false });
+    if (error) return; // 읽기 실패 시 배지 없이 기존 화면 유지
+    for (const r of data || []) {
+      if (!pendingAiMap.has(r.video_id)) pendingAiMap.set(r.video_id, { verdict: r.verdict, reason: r.reason || '' });
+    }
+  }
+  pendingAiLoaded = true;
+}
+
+// 승인 대기 뷰 상단의 AI 판정 필터 칩 (전체/거절제안/보류/미판정)
+function renderPendingAiBar() {
+  document.getElementById('pendingAiBar')?.remove();
+  if (!(showPendingOnly && isAdmin && pendingAiLoaded)) return;
+  const pending = streams.filter(s => s.approvalStatus === 'pending');
+  const counts = { reject: 0, unsure: 0, none: 0 };
+  for (const s of pending) {
+    const v = pendingAiMap.get(s.videoId);
+    if (!v) counts.none += 1;
+    else if (counts[v.verdict] !== undefined) counts[v.verdict] += 1;
+  }
+  const chip = (key, label, n) =>
+    `<button type="button" class="tag-chip ${pendingAiFilter === key ? 'active' : ''}" data-ai-filter="${key}">${label}${n == null ? '' : ` ${n}`}</button>`;
+  const bar = document.createElement('div');
+  bar.id = 'pendingAiBar';
+  bar.className = 'pending-ai-bar';
+  bar.innerHTML =
+    `<span class="tag-group-label">🤖 ${escapeHtml(t('pending_ai_label'))}</span>` +
+    chip('', t('filter_all'), pending.length) +
+    chip('reject', `🚫 ${t('pending_ai_reject')}`, counts.reject) +
+    chip('unsure', `❓ ${t('pending_ai_unsure')}`, counts.unsure) +
+    chip('none', `⏳ ${t('pending_ai_unjudged')}`, counts.none);
+  bar.addEventListener('click', (e) => {
+    const b = e.target.closest('[data-ai-filter]');
+    if (!b) return;
+    pendingAiFilter = b.dataset.aiFilter;
+    render(currentFiltered());
+  });
+  resultCountEl.before(bar);
+}
+
 function render(list) {
   clearHoverPreview();
   grid.innerHTML = '';
   emptyState.hidden = list.length > 0;
   updateResultCount(list.length);
+  renderPendingAiBar();
 
   // 승인 대기 뷰에서 관리자에게 일괄 승인 버튼을 보여준다
   document.getElementById('approveAllBtn')?.remove();
@@ -544,6 +606,13 @@ function cardInnerHtml(s, groupIndex) {
         <p class="card-title">${escapeHtml(s.title)}</p>
         <p class="card-channel">${escapeHtml(s.channelTitle)}</p>
         <span class="card-keyword">👍 ${s.upvoteCount} · 👎 ${s.downvoteCount}</span>
+        ${pendingAiLoaded && s.approvalStatus === 'pending' ? (() => {
+          const v = pendingAiMap.get(s.videoId);
+          if (!v) return `<span class="ai-verdict-line none">⏳ ${escapeHtml(t('pending_ai_unjudged'))}</span>`;
+          const icon = v.verdict === 'reject' ? '🚫' : '❓';
+          const label = v.verdict === 'reject' ? t('pending_ai_reject') : t('pending_ai_unsure');
+          return `<span class="ai-verdict-line ${v.verdict}">${icon} AI: ${escapeHtml(label)}${v.reason ? ` — ${escapeHtml(v.reason)}` : ''}</span>`;
+        })() : ''}
         ${s.source === 'user'
           ? `<span class="card-keyword">👤 ${escapeHtml(submitterNames.get(s.addedBy) || t('anonymous'))}</span>`
           : (s.matchedKeyword ? `<span class="card-keyword">${escapeHtml(s.matchedKeyword)}</span>` : '')}
@@ -1395,6 +1464,7 @@ document.getElementById('clearFiltersBtn').addEventListener('click', () => {
   favoritesOnlyCheckbox.checked = false;
   showPendingOnly = false;
   showRecentApprovedOnly = false;
+  pendingAiFilter = '';
   activeTags.clear();
   activeLiveTime = null;
   renderTagFilterBar();
@@ -1734,13 +1804,17 @@ sidebar.addEventListener('click', async (e) => {
   if (e.target.closest('#sidebarPendingBtn')) {
     showPendingOnly = true;
     showRecentApprovedOnly = false;
+    pendingAiFilter = '';
     updateSidebarActiveState();
-    render(currentFiltered());
+    render(currentFiltered());              // AI 판정 로드 전에도 목록은 즉시 표시
+    await loadPendingAiVerdicts();          // 관리자면 판정 결과를 불러와서
+    if (showPendingOnly) render(currentFiltered()); // 배지·필터 바를 반영해 다시 그림
     return;
   }
   if (e.target.closest('#sidebarRecentBtn')) {
     showRecentApprovedOnly = true;
     showPendingOnly = false;
+    pendingAiFilter = '';
     updateSidebarActiveState();
     render(currentFiltered());
     return;
@@ -1749,6 +1823,7 @@ sidebar.addEventListener('click', async (e) => {
   if (!btn) return;
   showPendingOnly = false;
   showRecentApprovedOnly = false;
+  pendingAiFilter = '';
   contentTypeFilter.value = btn.dataset.contentType;
   categoryFilter.value = btn.dataset.category || '';
   onContentTypeChanged(); // 사이드바 Live/Video 클릭 시 조건 필터도 해당 타입만 보이게
