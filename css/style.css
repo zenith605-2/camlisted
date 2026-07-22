@@ -2705,3 +2705,18 @@ body {
 /* AI 로그: 열이 많아 조건 칩과 국가 select를 촘촘하게 */
 .admin-td-cond .ailog-tag-chip { font-size: 0.62rem; padding: 1px 5px; }
 .ailog-country-select { min-width: 96px; max-width: 130px; }
+
+/* 승인 대기 뷰: 전체 선택 버튼 (일괄 승인 버튼과 같은 줄에 나란히) */
+.select-all-pending-btn {
+  display: inline-block;
+  margin: 8px 0 0 24px;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text);
+  padding: 8px 16px;
+  font-size: 0.88rem;
+  cursor: pointer;
+}
+.select-all-pending-btn:hover { border-color: var(--accent); color: var(--accent); }
+.approve-all-btn { display: inline-block; margin: 8px 0 0 24px; }

@@ -429,8 +429,9 @@ function render(list) {
   updateResultCount(list.length);
   renderPendingAiBar();
 
-  // 승인 대기 뷰에서 관리자에게 일괄 승인 버튼을 보여준다
+  // 승인 대기 뷰에서 관리자에게 일괄 승인 / 전체 선택 버튼을 보여준다
   document.getElementById('approveAllBtn')?.remove();
+  document.getElementById('selectAllPendingBtn')?.remove();
   if (showPendingOnly && isAdmin && list.length) {
     const approveAllBtn = document.createElement('button');
     approveAllBtn.type = 'button';
@@ -439,6 +440,26 @@ function render(list) {
     approveAllBtn.textContent = t('approve_all_button', { n: list.length });
     approveAllBtn.addEventListener('click', handleApproveAll);
     resultCountEl.after(approveAllBtn);
+
+    // 지금 필터에 걸린 대기 항목 전체를 한 번에 선택/해제 → 하단 일괄 삭제 바로 처리
+    const allSelected = list.every(s => selectedForDelete.has(s.videoId));
+    const selectAllBtn = document.createElement('button');
+    selectAllBtn.type = 'button';
+    selectAllBtn.id = 'selectAllPendingBtn';
+    selectAllBtn.className = 'select-all-pending-btn';
+    selectAllBtn.textContent = allSelected
+      ? t('deselect_all_button', { n: list.length })
+      : t('select_all_button', { n: list.length });
+    selectAllBtn.addEventListener('click', () => {
+      if (list.every(s => selectedForDelete.has(s.videoId))) {
+        list.forEach(s => selectedForDelete.delete(s.videoId));
+      } else {
+        list.forEach(s => selectedForDelete.add(s.videoId));
+      }
+      updateBulkActionBar();
+      render(currentFiltered());
+    });
+    approveAllBtn.after(selectAllBtn);
   }
   renderIsListView = grid.classList.contains('list-view') && sortSelect.value === 'default';
   renderFullList = list;
