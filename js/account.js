@@ -705,8 +705,11 @@ async function loadAiLog() {
     if (!(r.verdict === 'reject' && r.resolution === 'pending') && aiStreamMap.has(r.video_id)) {
       actions += ` <button type="button" class="ailog-del2-btn" data-video-id="${escapeHtml(r.video_id)}">🗑 ${escapeHtml(t('admin_delete_button'))}</button>`;
     }
+    // 거절제안 + 미처리 행만 일괄 처리 대상 (이미 처리된 행은 되돌릴 게 없음)
+    const selectable = r.verdict === 'reject' && r.resolution === 'pending';
     return `
       <tr class="admin-row">
+        <td class="admin-td-check">${selectable ? `<input type="checkbox" class="ailog-check" data-video-id="${escapeHtml(r.video_id)}">` : ''}</td>
         <td>${badge}</td>
         <td class="admin-td-thumb"><img class="admin-thumb-sm" src="https://i.ytimg.com/vi/${encodeURIComponent(r.video_id)}/mqdefault.jpg" alt="" loading="lazy"></td>
         <td class="admin-td-title"><a href="#" class="panel-play-link" data-video-id="${escapeHtml(r.video_id)}" data-title="${escapeHtml((r.title || '').slice(0, 80))}">${escapeHtml((r.title || r.video_id).slice(0, 60))}</a></td>
@@ -719,9 +722,19 @@ async function loadAiLog() {
         <td class="admin-td-actions">${actions}</td>
       </tr>`;
   }).join('');
-  adminAiLog.innerHTML = `
+  // 현재 목록에 일괄 처리 가능한(거절제안·미처리) 행이 있으면 상단에 일괄 바를 붙인다
+  const selectableCount = data.filter(r => r.verdict === 'reject' && r.resolution === 'pending').length;
+  const bulkBar = selectableCount ? `
+    <div class="ailog-bulk-bar">
+      <label class="ailog-bulk-all"><input type="checkbox" id="ailogCheckAll"> ${escapeHtml(t('ailog_select_all'))}</label>
+      <span id="ailogSelCount" class="admin-meta">${escapeHtml(t('bulk_selected_count', { n: 0 }))}</span>
+      <button type="button" id="ailogBulkKeep" class="ailog-bulk-keep" disabled>${escapeHtml(t('ailog_bulk_keep'))}</button>
+      <button type="button" id="ailogBulkDelete" class="ailog-bulk-del" disabled>${escapeHtml(t('ailog_bulk_delete'))}</button>
+    </div>` : '';
+  adminAiLog.innerHTML = bulkBar + `
     <div class="admin-table-wrap"><table class="admin-table">
       <thead><tr>
+        <th class="admin-td-check"></th>
         <th></th>
         <th>${escapeHtml(t('account_export_thumbnail_label'))}</th>
         <th>${escapeHtml(t('admin_col_title'))}</th>
@@ -736,7 +749,57 @@ async function loadAiLog() {
       <tbody>${bodyRows}</tbody>
     </table></div>`;
   enhanceAdminTable(adminAiLog);
+  syncAiLogBulkBar();
 }
+
+// 선택 개수에 따라 일괄 버튼 활성화 + "모두 선택" 체크 상태를 맞춘다.
+// 페이지네이션으로 숨겨진 행도 체크는 유지되므로, 개수는 전체 기준으로 센다.
+function syncAiLogBulkBar() {
+  const boxes = [...adminAiLog.querySelectorAll('.ailog-check')];
+  const checked = boxes.filter(b => b.checked);
+  const count = document.getElementById('ailogSelCount');
+  const keep = document.getElementById('ailogBulkKeep');
+  const del = document.getElementById('ailogBulkDelete');
+  const all = document.getElementById('ailogCheckAll');
+  if (count) count.textContent = t('bulk_selected_count', { n: checked.length });
+  if (keep) keep.disabled = checked.length === 0;
+  if (del) del.disabled = checked.length === 0;
+  if (all) all.checked = boxes.length > 0 && checked.length === boxes.length;
+}
+
+// 선택된 항목들을 순차 처리 (RPC가 건별이라 하나씩 — 진행 상황을 버튼에 표시)
+async function aiLogBulkResolve(action) {
+  const ids = [...adminAiLog.querySelectorAll('.ailog-check')].filter(b => b.checked).map(b => b.dataset.videoId);
+  if (!ids.length) return;
+  const isDelete = action === 'delete';
+  if (!confirm(isDelete ? t('ailog_bulk_delete_confirm', { n: ids.length }) : t('ailog_bulk_keep_confirm', { n: ids.length }))) return;
+  const btn = document.getElementById(isDelete ? 'ailogBulkDelete' : 'ailogBulkKeep');
+  const other = document.getElementById(isDelete ? 'ailogBulkKeep' : 'ailogBulkDelete');
+  btn.disabled = other.disabled = true;
+  let done = 0, failed = 0;
+  for (const id of ids) {
+    const { error } = await sb.rpc('resolve_ai_rejection', { p_video_id: id, p_action: isDelete ? 'delete' : 'restore' });
+    if (error) failed += 1;
+    done += 1;
+    btn.textContent = `${done}/${ids.length}…`;
+  }
+  if (failed) alert(t('ailog_bulk_failed', { n: failed }));
+  await loadAiLog();
+}
+
+document.getElementById('adminAiLog')?.addEventListener('click', (e) => {
+  if (e.target.closest('#ailogBulkKeep')) aiLogBulkResolve('keep');
+  else if (e.target.closest('#ailogBulkDelete')) aiLogBulkResolve('delete');
+});
+
+adminAiLog?.addEventListener('change', (e) => {
+  if (e.target.id === 'ailogCheckAll') {
+    adminAiLog.querySelectorAll('.ailog-check').forEach(b => { b.checked = e.target.checked; });
+    syncAiLogBulkBar();
+  } else if (e.target.classList.contains('ailog-check')) {
+    syncAiLogBulkBar();
+  }
+});
 
 document.querySelectorAll('.ailog-tab').forEach(tab => {
   tab.addEventListener('click', () => {

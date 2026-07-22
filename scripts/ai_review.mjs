@@ -62,6 +62,8 @@ APPROVE only if the video is genuinely one of these — a fixed camera view, or 
 
 REJECT if it is: news broadcast or anchor desk, talk show, music video, a 24/7 music / BGM / lofi / relaxing-sound / white-noise / sleep livestream (reject even if the title says LIVE and shows a static image), gaming, reaction/commentary, tutorial, product review, talking-head vlog, sports match broadcast, movie/TV clip, or clearly unrelated/staged content.
 
+IMPORTANT — background music does NOT make it a music stream. Many genuine live cams play music or ambience over the camera feed (e.g. an airport cam, a city skyline cam, or a tram cam with a relaxing soundtrack). APPROVE those: the camera view is the point. Only reject as a music stream when the picture itself is not a real-world camera view — a static image, album art, or looping animation with the music as the actual content. Likewise, commentary or narration over a genuine live camera feed is fine; reject only when a host on screen is the subject.
+
 If you cannot tell from the title and channel, use "unsure".
 
 Also pick the best category key from this list (or "other"): ${categoryKeys.join(', ')}.

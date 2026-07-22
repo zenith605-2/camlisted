@@ -2720,3 +2720,29 @@ body {
 }
 .select-all-pending-btn:hover { border-color: var(--accent); color: var(--accent); }
 .approve-all-btn { display: inline-block; margin: 8px 0 0 24px; }
+
+/* AI 로그 일괄 처리 바 (거절제안 목록에서 여러 건을 한 번에 살리기/삭제) */
+.ailog-bulk-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+  padding: 8px 12px;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+.ailog-bulk-all { display: inline-flex; align-items: center; gap: 6px; font-size: 0.85rem; cursor: pointer; }
+.ailog-bulk-keep, .ailog-bulk-del {
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 5px 12px;
+  font-size: 0.82rem;
+  cursor: pointer;
+  background: var(--bg);
+}
+.ailog-bulk-keep { color: #4caf50; border-color: #2e7d32; }
+.ailog-bulk-del { color: #ff7b72; border-color: #a33; }
+.ailog-bulk-keep:disabled, .ailog-bulk-del:disabled { opacity: 0.4; cursor: default; }
+.admin-td-check { width: 30px; text-align: center; }
