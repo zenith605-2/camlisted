@@ -187,6 +187,46 @@ function kstDateOf(ts) {
   return new Date(new Date(ts).getTime() + 9 * 3600 * 1000).toISOString().slice(0, 10);
 }
 
+// 오늘 방문이 특정 IP에 몰려 있는지 (크롤러·시크릿창 반복 접속 등) 한눈에 보기 위한 표.
+// 방문자 수가 갑자기 튀었을 때 원인을 SQL 없이 바로 확인하려고 만든 것.
+async function loadTodayTopIps() {
+  const body = document.getElementById('todayIpTableBody');
+  if (!body) return;
+  const today = kstDateStr(0);
+  const { data, error } = await sb
+    .from('visit_log')
+    .select('ip, country, source, created_at')
+    .eq('visit_date', today)
+    .limit(5000);
+  if (error) { body.innerHTML = `<tr><td colspan="6">${escapeHtml(error.message)}</td></tr>`; return; }
+  if (!data?.length) { body.innerHTML = '<tr><td colspan="6">No visits recorded today yet.</td></tr>'; return; }
+  const byIp = new Map();
+  for (const r of data) {
+    const ip = r.ip || '(no ip)';
+    const e = byIp.get(ip) || { hits: 0, country: r.country || '–', sources: new Set(), first: r.created_at, last: r.created_at };
+    e.hits += 1;
+    if (r.country) e.country = r.country;
+    if (r.source) e.sources.add(r.source);
+    if (r.created_at < e.first) e.first = r.created_at;
+    if (r.created_at > e.last) e.last = r.created_at;
+    byIp.set(ip, e);
+  }
+  const fmtTime = (ts) => new Date(ts).toLocaleTimeString('ko-KR', { timeZone: 'Asia/Seoul', hour: '2-digit', minute: '2-digit' });
+  const rows = [...byIp.entries()].sort((a, b) => b[1].hits - a[1].hits).slice(0, 20);
+  body.innerHTML = rows.map(([ip, e], i) => `
+    <tr>
+      <td>${i + 1}</td>
+      <td class="ip-cell">${escapeHtml(ip)}</td>
+      <td>${escapeHtml(e.country)}</td>
+      <td>${escapeHtml([...e.sources].join(', ') || '–')}</td>
+      <td><strong${e.hits >= 5 ? ' style="color:#ff7b72"' : ''}>${e.hits}</strong></td>
+      <td>${fmtTime(e.first)} → ${fmtTime(e.last)}</td>
+    </tr>`).join('') + `
+    <tr style="border-top:2px solid var(--border);font-weight:600">
+      <td>Total</td><td colspan="3">${byIp.size} unique IPs</td><td>${data.length}</td><td></td>
+    </tr>`;
+}
+
 function fmtStay(secs) {
   if (!secs) return '–';
   const m = Math.floor(secs / 60), s = secs % 60;
@@ -316,7 +356,7 @@ async function init() {
   }
   statsGate.hidden = true;
   statsContent.hidden = false;
-  await Promise.all([loadStats(), loadRecentVisitors(), loadSourceStats(), loadCountryStats(), loadReturningVisitors()]);
+  await Promise.all([loadStats(), loadRecentVisitors(), loadSourceStats(), loadCountryStats(), loadReturningVisitors(), loadTodayTopIps()]);
 }
 
 init();

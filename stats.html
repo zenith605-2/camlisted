@@ -6,7 +6,7 @@
 <title>Daily Stats - Camlisted</title>
 <meta name="robots" content="noindex">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
-<link rel="stylesheet" href="css/style.css?v=20260720h">
+<link rel="stylesheet" href="css/style.css?v=20260722a">
 </head>
 <body>
 <header class="site-header">
@@ -72,6 +72,24 @@
       </table>
     </div>
 
+    <h2 class="stats-subheading">Today's Top IPs</h2>
+    <p class="stats-note">Most active IPs today. A single IP with many hits usually means a crawler or repeated visits from one device (e.g. private-window testing) rather than real traffic — that is what inflates the daily count.</p>
+    <div class="stats-table-wrap">
+      <table class="stats-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>IP</th>
+            <th>Country</th>
+            <th>Source</th>
+            <th>Hits today</th>
+            <th>First → last (KST)</th>
+          </tr>
+        </thead>
+        <tbody id="todayIpTableBody"></tbody>
+      </table>
+    </div>
+
     <h2 class="stats-subheading">Returning Visitors (by IP)</h2>
     <p class="stats-note">Same IP that showed up on 2+ different days, most visits first. Note: one IP can be several people (offices, mobile carriers), so treat this as a rough loyalty signal.</p>
     <div class="stats-table-wrap">
@@ -110,6 +128,6 @@
 </main>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
-<script src="js/stats.js?v=20260720h"></script>
+<script src="js/stats.js?v=20260722a"></script>
 </body>
 </html>
