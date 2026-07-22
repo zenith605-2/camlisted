@@ -2088,6 +2088,12 @@ function visitSource() {
 // 이 IP에서 온 방문은 아예 기록하지 않는다. (IP가 바뀌면 여기에 추가)
 const EXCLUDED_VISIT_IPS = ['39.118.165.152'];
 
+// 크롤러 IP 대역(접두사). UA 검사만으로는 구글봇을 다 못 거른다 — 렌더링용 크롤러 일부는
+// 평범한 Chrome UA로 오기 때문에, 실제로 66.249.x.x에서 하루 168건이 방문자로 잡혔다.
+// 66.249.64.0/19는 구글 전용 대역이라 실제 사람이 쓸 일이 없다.
+const BOT_IP_PREFIXES = ['66.249.'];
+const isBotIp = (ip) => !!ip && BOT_IP_PREFIXES.some(p => ip.startsWith(p));
+
 // 검색엔진 크롤러(구글봇 등)는 JS를 실행하면서 localStorage를 유지하지 않아
 // 렌더링마다 새 방문자로 잡힌다 → UA로 걸러 방문/체류 기록에서 제외
 // "bot"이 안 들어가는 크롤러도 많다 (Google-InspectionTool = 서치콘솔 URL 검사, GoogleOther,
@@ -2111,6 +2117,9 @@ async function trackVisit() {
   const geo = await fetchVisitorGeo();
   // 운영자 IP면 로그인 여부와 무관하게 집계 제외 (이 기기는 이후에도 계속 제외되도록 표시)
   if (geo.ip && EXCLUDED_VISIT_IPS.includes(geo.ip)) { localStorage.setItem('excludeVisits', '1'); return; }
+  // 크롤러 대역은 excludeVisits 표시를 남기지 않는다 (localStorage를 유지하지 않아 무의미하고,
+  // 혹시 그 IP를 실제 사람이 쓰게 되더라도 기기에 영구 제외 표시가 남지 않도록)
+  if (isBotIp(geo.ip)) return;
   const row = { visit_date: todayKst, visitor_key: visitorKey, ip: geo.ip, country: geo.country, source: visitSource() };
   const { error } = await sb.from('visit_log').insert(row);
   // 043 마이그레이션(source 컬럼) 실행 전이면 컬럼 없음 에러가 나므로 source 빼고 재시도해 방문 집계는 유지
