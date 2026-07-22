@@ -2090,7 +2090,10 @@ const EXCLUDED_VISIT_IPS = ['39.118.165.152'];
 
 // 검색엔진 크롤러(구글봇 등)는 JS를 실행하면서 localStorage를 유지하지 않아
 // 렌더링마다 새 방문자로 잡힌다 → UA로 걸러 방문/체류 기록에서 제외
-const IS_BOT = /bot|crawl|spider|slurp|headless|lighthouse|prerender/i.test(navigator.userAgent);
+// "bot"이 안 들어가는 크롤러도 많다 (Google-InspectionTool = 서치콘솔 URL 검사, GoogleOther,
+// facebookexternalhit 등). 이런 것들은 localStorage를 유지하지 않아 렌더링마다 새 방문자로 잡힌다.
+const IS_BOT = /bot|crawl|spider|slurp|headless|lighthouse|prerender|inspectiontool|googleother|google-read|facebookexternalhit|embedly|quora link preview|preview|scrape|fetch|monitor|uptime|pingdom|curl|wget|python-requests|axios|okhttp|java\//i
+  .test(navigator.userAgent);
 
 async function trackVisit() {
   if (IS_BOT) return; // 크롤러 렌더링은 방문으로 집계하지 않는다
