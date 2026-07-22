@@ -679,11 +679,14 @@ async function loadAiLog() {
   const countryName = (code) => {
     try { return new Intl.DisplayNames([currentLang], { type: 'region' }).of(code) || code; } catch { return code; }
   };
+  // 카테고리처럼 바로 드롭다운으로 보여준다. 다만 500행 × 200개국 옵션을 미리 만들면 무거우므로
+  // 현재 값 하나만 넣어두고, 포커스될 때 전체 목록을 채운다(focusin 핸들러).
   const countryCell = (r) => {
     const s = aiStreamMap.get(r.video_id);
     if (!s) return '<span class="admin-meta">–</span>';
-    const c = s.country;
-    return `<span class="ailog-country" data-video-id="${escapeHtml(r.video_id)}" data-country="${escapeHtml(c || '')}" title="${escapeHtml(t('admin_country_edit_hint'))}">${c ? `${escapeHtml(countryName(c))} (${escapeHtml(c)})` : '🌍 ?'}</span>`;
+    const c = s.country || '';
+    const label = c ? `${countryName(c)} (${c})` : '🌍 ?';
+    return `<select class="ailog-cat-select ailog-country-select" data-video-id="${escapeHtml(r.video_id)}" data-country="${escapeHtml(c)}"><option value="${escapeHtml(c)}">${escapeHtml(label)}</option></select>`;
   };
 
   const bodyRows = data.map(r => {
@@ -762,6 +765,14 @@ adminAiLog?.addEventListener('change', async (e) => {
 
 // 국가 텍스트 클릭 → 그 자리에서 select로 전환 (행이 500개라 전 행에 select를 미리 만들면 무거워서 지연 생성)
 const AILOG_CC = 'AD AE AF AG AL AM AO AR AT AU AZ BA BB BD BE BF BG BH BI BJ BN BO BR BS BT BW BY BZ CA CD CF CG CH CI CL CM CN CO CR CU CV CY CZ DE DJ DK DM DO DZ EC EE EG ER ES ET FI FJ FM FR GA GB GD GE GH GL GM GN GQ GR GT GW GY HK HN HR HT HU ID IE IL IN IQ IR IS IT JM JO JP KE KG KH KI KM KN KP KR KW KZ LA LB LC LI LK LR LS LT LU LV LY MA MC MD ME MG MH MK ML MM MN MO MR MT MU MV MW MX MY MZ NA NE NG NI NL NO NP NZ OM PA PE PF PG PH PK PL PT PW PY QA RO RS RU RW SA SB SC SD SE SG SI SK SL SM SN SO SR SS ST SV SY SZ TD TG TH TJ TL TM TN TO TR TT TW TZ UA UG US UY UZ VC VE VN VU WS YE ZA ZM ZW'.split(' ');
+// 국가 select에 포커스가 오면 그때 전체 국가 목록을 채운다 (행마다 미리 만들면 무거움)
+adminAiLog?.addEventListener('focusin', (e) => {
+  const sel = e.target.closest('.ailog-country-select');
+  if (!sel || sel.dataset.filled) return;
+  sel.dataset.filled = '1';
+  sel.innerHTML = ailogCountryOptions(sel.dataset.country || '');
+});
+
 function ailogCountryOptions(current) {
   const name = (code) => {
     try { return new Intl.DisplayNames([currentLang], { type: 'region' }).of(code) || code; } catch { return code; }
@@ -786,17 +797,6 @@ adminAiLog?.addEventListener('click', async (e) => {
   if (play) {
     e.preventDefault();
     openVideoPanel(play.dataset.videoId, play.dataset.title);
-    return;
-  }
-  // 국가 텍스트 클릭 → 수정용 select로 전환
-  const countrySpan = e.target.closest('.ailog-country');
-  if (countrySpan) {
-    const sel = document.createElement('select');
-    sel.className = 'ailog-cat-select ailog-country-select';
-    sel.dataset.videoId = countrySpan.dataset.videoId;
-    sel.innerHTML = ailogCountryOptions(countrySpan.dataset.country || '');
-    countrySpan.replaceWith(sel);
-    sel.focus();
     return;
   }
   // 일반 삭제 버튼 (승인된 행 등) — 차단목록 등록 후 삭제해 재수집 방지

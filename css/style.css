@@ -1664,7 +1664,7 @@ body {
 }
 
 .account-page {
-  max-width: 1320px; /* 관리자 탭의 테이블이 들어갈 폭 확보 */
+  max-width: 1560px; /* 관리자 탭의 테이블이 들어갈 폭 확보 (AI 로그가 열이 많음) */
   margin: 0 auto;
   padding: 24px;
 }
@@ -1701,11 +1701,11 @@ body {
 }
 /* 필터가 숨긴 행: 위 display:table-row가 hidden 속성(display:none)을 덮어쓰지 않게 */
 .admin-table .admin-row[hidden] { display: none; }
-.admin-table .admin-td-title { max-width: 360px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.admin-table .admin-td-title { max-width: 220px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .admin-table .admin-td-title a { color: var(--text); text-decoration: none; }
 .admin-table .admin-td-title a:hover { color: var(--accent); }
 .admin-table .admin-td-date { white-space: nowrap; color: var(--muted); font-size: 0.78rem; }
-.admin-table .admin-td-reason { max-width: 260px; }
+.admin-table .admin-td-reason { max-width: 150px; }
 .admin-table .admin-td-actions { white-space: nowrap; }
 /* 테이블 내 액션 버튼: 사이트 공통(.auth-btn) 톤의 다크 버튼. (구 카드형은 .admin-actions
    컨테이너에 스타일이 묶여 있어 테이블 전환 후 기본 브라우저 버튼으로 떨어졌었다) */
@@ -1811,7 +1811,7 @@ body {
 /* AI 로그: 카테고리 인라인 수정 + 조건 태그 토글 */
 .admin-td-num { width: 44px; text-align: center; color: var(--text-dim); }
 .admin-td-cat { min-width: 130px; }
-.admin-td-cond { min-width: 150px; }
+.admin-td-cond { min-width: 130px; max-width: 190px; }
 .ailog-cat-select {
   width: 100%;
   background: var(--card-bg);
@@ -2701,3 +2701,7 @@ body {
 .ailog-country { cursor: pointer; border-bottom: 1px dashed var(--border); font-size: 0.8rem; }
 .ailog-country:hover { color: var(--accent); border-bottom-color: var(--accent); }
 .ailog-del2-btn { white-space: nowrap; }
+
+/* AI 로그: 열이 많아 조건 칩과 국가 select를 촘촘하게 */
+.admin-td-cond .ailog-tag-chip { font-size: 0.62rem; padding: 1px 5px; }
+.ailog-country-select { min-width: 96px; max-width: 130px; }
