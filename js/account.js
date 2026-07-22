@@ -965,9 +965,64 @@ async function refresh() {
 
   await checkAdmin();
   adminTabBtn.hidden = !isAdmin; // 관리자 탭 버튼은 관리자에게만 노출 (패널은 탭 클릭 시 표시)
-  if (isAdmin) {
-    await Promise.all([loadFlagged(), loadBlocklist(), loadUsers(), loadCategoryLog(), loadSuggestions(), loadTagSuggestions(), loadConditionTagList(), loadAiLog(), loadAiLogCalendar()]);
+  if (isAdmin) setupAdminSections();
+}
+
+// ===== 관리자 섹션 접기/펴기 =====
+// 섹션이 9개라 한 화면에 다 펼치면 너무 길다. 기본은 모두 접힘이고, 펼친 것만 데이터를 불러온다
+// (전체를 한 번에 로드하던 것 대비 초기 로딩도 크게 줄어든다). 펼침 상태는 기기별로 기억.
+const ADMIN_SECTION_LOADERS = {
+  flagged: loadFlagged,
+  blocklist: loadBlocklist,
+  users: loadUsers,
+  catlog: loadCategoryLog,
+  ailog: async () => { await Promise.all([loadAiLogCalendar(), loadAiLog()]); },
+  sugg: loadSuggestions,
+  tagsugg: loadTagSuggestions,
+  tags: loadConditionTagList,
+};
+const adminSectionLoaded = new Set();
+
+async function openAdminSection(section) {
+  const key = section.dataset.adminSection;
+  section.classList.remove('collapsed');
+  localStorage.setItem('adminSectionOpen_' + key, '1');
+  const caret = section.querySelector('.admin-section-caret');
+  if (caret) caret.textContent = '▾';
+  const loader = ADMIN_SECTION_LOADERS[key];
+  if (loader && !adminSectionLoaded.has(key)) {
+    adminSectionLoaded.add(key);
+    try { await loader(); } catch (err) { adminSectionLoaded.delete(key); console.error(err); }
   }
+}
+
+function closeAdminSection(section) {
+  section.classList.add('collapsed');
+  localStorage.setItem('adminSectionOpen_' + section.dataset.adminSection, '0');
+  const caret = section.querySelector('.admin-section-caret');
+  if (caret) caret.textContent = '▸';
+}
+
+function setupAdminSections() {
+  document.querySelectorAll('#adminTab .account-section[data-admin-section]').forEach(section => {
+    if (section.dataset.collapsibleReady) return; // 재호출 시 중복 바인딩 방지
+    section.dataset.collapsibleReady = '1';
+    const h2 = section.querySelector('h2');
+    if (!h2) return;
+    const caret = document.createElement('span');
+    caret.className = 'admin-section-caret';
+    caret.textContent = '▸';
+    h2.prepend(caret);
+    h2.classList.add('admin-section-toggle');
+    h2.addEventListener('click', (e) => {
+      if (e.target.closest('a')) return; // 제목 안의 링크(통계 대시보드)는 그대로 이동
+      if (section.classList.contains('collapsed')) openAdminSection(section);
+      else closeAdminSection(section);
+    });
+    // 기본 접힘. 이전에 펼쳐뒀던 섹션만 복원하며 그때 데이터를 불러온다
+    if (localStorage.getItem('adminSectionOpen_' + section.dataset.adminSection) === '1') openAdminSection(section);
+    else section.classList.add('collapsed');
+  });
 }
 
 // ===== 카테고리 변경 이력 + 되돌리기 =====

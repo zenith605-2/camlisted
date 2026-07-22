@@ -2746,3 +2746,22 @@ body {
 .ailog-bulk-del { color: #ff7b72; border-color: #a33; }
 .ailog-bulk-keep:disabled, .ailog-bulk-del:disabled { opacity: 0.4; cursor: default; }
 .admin-td-check { width: 30px; text-align: center; }
+
+/* ===== 관리자 섹션 접기/펴기 (섹션이 많아 기본은 접힌 상태) ===== */
+.admin-section-toggle {
+  cursor: pointer;
+  user-select: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.admin-section-toggle:hover { color: var(--accent); }
+.admin-section-caret {
+  display: inline-block;
+  width: 14px;
+  color: var(--muted);
+  font-size: 0.8rem;
+}
+/* 접힘: 제목만 남기고 본문 숨김 */
+.account-section.collapsed > *:not(h2) { display: none; }
+.account-section.collapsed { padding-bottom: 8px; }
