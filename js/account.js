@@ -226,12 +226,17 @@ adminFlaggedList.addEventListener('click', async (e) => {
 
   if (e.target.closest('.delete-btn')) {
     if (!confirm(t('admin_delete_confirm'))) return;
+    // 삭제 전에 채널·제목을 읽어둔다 — 라이브 재시작(새 videoId) 재수집 차단용 (sql/058)
+    const { data: row2 } = await sb.from('streams').select('channel_id,title').eq('video_id', videoId).maybeSingle();
     const { error } = await sb.from('streams').delete().eq('video_id', videoId);
     if (error) {
       alert(t('admin_delete_failed', { message: error.message }));
       return;
     }
-    await sb.from('blocklist').insert({ video_id: videoId, blocked_by: currentUser.id });
+    await sb.from('blocklist').insert({
+      video_id: videoId, blocked_by: currentUser.id,
+      channel_id: row2?.channel_id || null, title: row2?.title || null,
+    });
     await loadFlagged();
   }
 });
@@ -877,7 +882,12 @@ adminAiLog?.addEventListener('click', async (e) => {
   if (del2) {
     if (!confirm(t('admin_delete_confirm'))) return;
     del2.disabled = true;
-    await sb.from('blocklist').insert({ video_id: del2.dataset.videoId, blocked_by: currentUser.id });
+    // 채널·제목까지 기록해 같은 카메라의 재시작(새 videoId) 재수집도 막는다 (sql/058)
+    const { data: row3 } = await sb.from('streams').select('channel_id,title').eq('video_id', del2.dataset.videoId).maybeSingle();
+    await sb.from('blocklist').insert({
+      video_id: del2.dataset.videoId, blocked_by: currentUser.id,
+      channel_id: row3?.channel_id || null, title: row3?.title || null,
+    });
     const { error } = await sb.from('streams').delete().eq('video_id', del2.dataset.videoId);
     if (error) { alert(error.message); del2.disabled = false; return; }
     await loadAiLog();

@@ -872,7 +872,14 @@ bulkDeleteBtn.addEventListener('click', async () => {
     alert(t('admin_delete_failed', { message: error.message }));
     return;
   }
-  await sb.from('blocklist').insert(ids.map(video_id => ({ video_id, blocked_by: currentUser.id })));
+  // 채널ID·제목을 함께 기록: 라이브가 재시작되면 새 videoId를 받으므로, 수집기가
+  // "차단된 (채널, 제목) 쌍"으로도 걸러야 지운 카메라가 되돌아오지 않는다 (sql/058)
+  const byId = new Map(streams.map(s => [s.videoId, s]));
+  await sb.from('blocklist').insert(ids.map(video_id => ({
+    video_id, blocked_by: currentUser.id,
+    channel_id: byId.get(video_id)?.channelId || null,
+    title: byId.get(video_id)?.title || null,
+  })));
   const channelIds = [...channelGroupsFullySelected.values()];
   if (channelIds.length) {
     await sb.from('blocked_channels').insert(channelIds.map(channel_id => ({ channel_id, blocked_by: currentUser.id })));
@@ -885,10 +892,15 @@ bulkDeleteBtn.addEventListener('click', async () => {
 });
 
 async function blockAndDelete(videoId) {
+  const s = streams.find(x => x.videoId === videoId);
   const { error } = await sb.from('streams').delete().eq('video_id', videoId);
   if (error) return error;
   // 삭제한 videoId를 차단 목록에 기록해, 다음날 자동 검색/채널스캔이 다시 넣지 못하게 한다.
-  await sb.from('blocklist').insert({ video_id: videoId, blocked_by: currentUser.id });
+  // 채널ID·제목도 함께: 같은 카메라가 새 videoId로 재시작해도 수집기가 쌍으로 걸러낸다 (sql/058)
+  await sb.from('blocklist').insert({
+    video_id: videoId, blocked_by: currentUser.id,
+    channel_id: s?.channelId || null, title: s?.title || null,
+  });
   return null;
 }
 

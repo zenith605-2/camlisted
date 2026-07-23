@@ -368,7 +368,7 @@ async function main() {
     readFile(EXCLUDE_KEYWORDS_PATH, 'utf-8').catch(() => '{"keywords":[]}'),
     readFile(NO_EMBED_KEYWORDS_PATH, 'utf-8').catch(() => '{"keywords":[]}'),
     supabase.from('categories').select('key, keywords'),
-    fetchAllRows('blocklist', 'video_id'),
+    fetchAllRows('blocklist', 'video_id,channel_id,title').catch(() => fetchAllRows('blocklist', 'video_id')),
     fetchAllRows('blocked_channels', 'channel_id'),
   ]);
   const keywords = JSON.parse(keywordsRaw).keywords || [];
@@ -379,6 +379,18 @@ async function main() {
   const categoryRows = (categoriesResult.data || []).filter(c => c.key !== 'other');
   const blockedIds = new Set(blocklistRows.map(r => r.video_id));
   const blockedChannelIds = new Set(blockedChannelRows.map(r => r.channel_id));
+
+  // 재시작 루프 차단: 관리자가 지운 라이브는 채널이 방송을 껐다 켜면 새 videoId로 돌아오므로
+  // videoId 차단만으로는 부족하다. 차단 시점에 기록된 (채널ID, 제목) 쌍과 일치하는 후보를
+  // 검색 단계에서 함께 걸러낸다 (sql/058). 채널 전체 차단이 아닌 이유: 카메라 여러 대를
+  // 운영하는 채널에서 한 대만 지운 경우 나머지는 살아야 하기 때문.
+  const normTitle = (t) => (t || '').toLowerCase().replace(/\s+/g, ' ').trim();
+  const blockedPairs = new Set(
+    blocklistRows.filter(r => r.channel_id && r.title).map(r => `${r.channel_id}::${normTitle(r.title)}`)
+  );
+  const isBlockedRestart = (r) =>
+    r.channelId && r.title && blockedPairs.has(`${r.channelId}::${normTitle(r.title)}`);
+  console.log(`차단목록: videoId ${blockedIds.size}건, 채널 ${blockedChannelIds.size}건, (채널,제목) 쌍 ${blockedPairs.size}건`);
 
   const isExcluded = (title, channelTitle) => {
     const haystack = `${title} ${channelTitle}`.toLowerCase();
@@ -613,6 +625,7 @@ async function main() {
         if (knownIds.has(r.videoId) || candidateMap.has(r.videoId)) continue;
         if (r.channelId && blockedChannelIds.has(r.channelId)) continue;
         if (isExcluded(r.title, r.channelTitle)) continue;
+        if (isBlockedRestart(r)) continue;
         candidateMap.set(r.videoId, r);
       }
       console.log(`  검색 "${keyword}": ${results.length}건 조회`);
@@ -633,6 +646,7 @@ async function main() {
         if (knownIds.has(r.videoId) || candidateMap.has(r.videoId)) continue;
         if (r.channelId && blockedChannelIds.has(r.channelId)) continue;
         if (isExcluded(r.title, r.channelTitle)) continue;
+        if (isBlockedRestart(r)) continue;
         candidateMap.set(r.videoId, r);
       }
       console.log(`  영상 검색 "${keyword}": ${results.length}건 조회`);
@@ -670,6 +684,7 @@ async function main() {
           if (knownIds.has(r.videoId) || candidateMap.has(r.videoId)) continue;
           if (r.channelId && blockedChannelIds.has(r.channelId)) continue;
           if (isExcluded(r.title, r.channelTitle)) continue;
+          if (isBlockedRestart(r)) continue;
           candidateMap.set(r.videoId, r);
         }
         console.log(`  부스트 검색 [${catKey}] "${query}": ${results.length}건 조회`);
@@ -703,6 +718,7 @@ async function main() {
         for (const r of results) {
           if (knownIds.has(r.videoId) || candidateMap.has(r.videoId)) continue;
           if (isExcluded(r.title, r.channelTitle)) continue;
+          if (isBlockedRestart(r)) continue;
           candidateMap.set(r.videoId, r);
         }
       } catch (err) {
@@ -752,6 +768,7 @@ async function main() {
       for (const r of results) {
         if (knownIds.has(r.videoId) || candidateMap.has(r.videoId)) continue;
         if (isExcluded(r.title, r.channelTitle)) continue;
+        if (isBlockedRestart(r)) continue;
         candidateMap.set(r.videoId, r);
       }
     } catch (err) {
