@@ -571,6 +571,12 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://camlisted.com/country/japan/avenue.html</loc>
+    <lastmod>2026-07-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://camlisted.com/country/japan/beach.html</loc>
     <lastmod>2026-07-24</lastmod>
     <changefreq>weekly</changefreq>
@@ -589,13 +595,13 @@
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://camlisted.com/country/united-states/beach.html</loc>
+    <loc>https://camlisted.com/country/japan/airport.html</loc>
     <lastmod>2026-07-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://camlisted.com/country/japan/airport.html</loc>
+    <loc>https://camlisted.com/country/united-states/beach.html</loc>
     <lastmod>2026-07-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
@@ -649,13 +655,13 @@
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://camlisted.com/country/canada/harbor.html</loc>
+    <loc>https://camlisted.com/country/spain/beach.html</loc>
     <lastmod>2026-07-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://camlisted.com/country/spain/beach.html</loc>
+    <loc>https://camlisted.com/country/canada/skyline.html</loc>
     <lastmod>2026-07-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
@@ -907,12 +913,6 @@
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://camlisted.com/country/japan/avenue.html</loc>
-    <lastmod>2026-07-24</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
     <loc>https://camlisted.com/country/italy/walk.html</loc>
     <lastmod>2026-07-24</lastmod>
     <changefreq>weekly</changefreq>
@@ -931,13 +931,19 @@
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://camlisted.com/country/south-korea/mountain.html</loc>
+    <loc>https://camlisted.com/country/taiwan/plaza.html</loc>
     <lastmod>2026-07-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://camlisted.com/country/philippines/avenue.html</loc>
+    <lastmod>2026-07-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://camlisted.com/country/united-states/park.html</loc>
     <lastmod>2026-07-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
@@ -1057,12 +1063,6 @@
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://camlisted.com/country/united-states/park.html</loc>
-    <lastmod>2026-07-24</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
     <loc>https://camlisted.com/country/japan/mountain.html</loc>
     <lastmod>2026-07-24</lastmod>
     <changefreq>weekly</changefreq>
@@ -1087,19 +1087,7 @@
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://camlisted.com/country/italy/coast.html</loc>
-    <lastmod>2026-07-24</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
     <loc>https://camlisted.com/country/united-states/alley.html</loc>
-    <lastmod>2026-07-24</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://camlisted.com/country/united-kingdom/river.html</loc>
     <lastmod>2026-07-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
@@ -1111,7 +1099,19 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://camlisted.com/country/united-kingdom/river.html</loc>
+    <lastmod>2026-07-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://camlisted.com/country/netherlands/beach.html</loc>
+    <lastmod>2026-07-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://camlisted.com/country/italy/coast.html</loc>
     <lastmod>2026-07-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
@@ -1148,6 +1148,12 @@
   </url>
   <url>
     <loc>https://camlisted.com/country/china/dashcam.html</loc>
+    <lastmod>2026-07-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://camlisted.com/country/south-korea/mountain.html</loc>
     <lastmod>2026-07-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
@@ -1250,12 +1256,6 @@
   </url>
   <url>
     <loc>https://camlisted.com/country/taiwan/river.html</loc>
-    <lastmod>2026-07-24</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://camlisted.com/country/canada/skyline.html</loc>
     <lastmod>2026-07-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
