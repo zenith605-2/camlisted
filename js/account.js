@@ -990,6 +990,8 @@ const ADMIN_SECTION_LOADERS = {
   blocklist: loadBlocklist,
   users: loadUsers,
   catlog: loadCategoryLog,
+  countrylog: loadCountryLog,
+  tagchangelog: loadTagChangeLog,
   ailog: async () => { await Promise.all([loadAiLogCalendar(), loadAiLog()]); },
   sugg: loadSuggestions,
   tagsugg: loadTagSuggestions,
@@ -1298,6 +1300,163 @@ adminCategoryLog?.addEventListener('click', async (e) => {
   });
   if (error) alert(error.message);
   await loadCategoryLog();
+});
+
+// ===== 국가 변경 이력 + 되돌리기 (카테고리 로그와 완전히 같은 구조 — country_changes, sql/061) =====
+const adminCountryLog = document.getElementById('adminCountryLog');
+
+async function loadCountryLog() {
+  const { data, error } = await sb
+    .from('country_changes')
+    .select('*')
+    .order('changed_at', { ascending: false })
+    .limit(500);
+  if (error) {
+    adminCountryLog.textContent = error.message;
+    return;
+  }
+  if (!data?.length) {
+    adminCountryLog.textContent = t('admin_countrylog_empty');
+    return;
+  }
+  const videoIds = [...new Set(data.map(r => r.video_id))];
+  const userIds = [...new Set(data.map(r => r.changed_by).filter(Boolean))];
+  const [videosRes, usersRes] = await Promise.all([
+    sb.from('streams').select('video_id, title, thumbnail, category, tags, content_type').in('video_id', videoIds),
+    userIds.length ? sb.from('profiles').select('id, display_name').in('id', userIds) : Promise.resolve({ data: [] }),
+  ]);
+  const streamMap = new Map((videosRes.data || []).map(v => [v.video_id, v]));
+  const nameMap = new Map((usersRes.data || []).map(u => [u.id, u.display_name]));
+
+  adminCountryLog.innerHTML = `
+    <div class="admin-table-wrap"><table class="admin-table">
+      <thead><tr>
+        <th>#</th>
+        <th>${escapeHtml(t('admin_col_date'))}</th>
+        <th>${escapeHtml(t('account_export_thumbnail_label'))}</th>
+        <th>${escapeHtml(t('admin_col_title'))}</th>
+        <th>${escapeHtml(t('admin_col_before'))}</th>
+        <th>${escapeHtml(t('admin_col_after'))}</th>
+        <th>${escapeHtml(t('admin_col_by'))}</th>
+        <th></th>
+      </tr></thead>
+      <tbody>${data.map((r, idx) => {
+        const s = streamMap.get(r.video_id);
+        const thumb = s?.thumbnail || `https://i.ytimg.com/vi/${r.video_id}/mqdefault.jpg`;
+        return `
+        <tr class="admin-row">
+          <td class="admin-td-num">${idx + 1}</td>
+          <td class="admin-td-date">${new Date(r.changed_at).toLocaleString(undefined, { month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit' })}</td>
+          <td class="admin-td-thumb"><img class="admin-thumb-sm" src="${escapeHtml(thumb)}" alt="" loading="lazy"></td>
+          <td class="admin-td-title"><a href="#" class="panel-play-link" data-video-id="${escapeHtml(r.video_id)}">${escapeHtml((s?.title || r.video_id).slice(0, 60))}</a></td>
+          <td>${escapeHtml(r.old_country || '(none)')}</td>
+          <td><b>${escapeHtml(r.new_country || '(none)')}</b></td>
+          <td>${escapeHtml(nameMap.get(r.changed_by) || t('anonymous'))}</td>
+          <td>${s ? `<button type="button" class="countrylog-revert-btn" data-video-id="${escapeHtml(r.video_id)}" data-old-country="${escapeHtml(r.old_country || '')}">${escapeHtml(t('admin_catlog_revert'))}</button>` : ''}</td>
+        </tr>`;
+      }).join('')}
+      </tbody>
+    </table></div>`;
+  enhanceAdminTable(adminCountryLog);
+}
+
+adminCountryLog?.addEventListener('click', async (e) => {
+  const play = e.target.closest('.panel-play-link');
+  if (play) {
+    e.preventDefault();
+    openVideoPanel(play.dataset.videoId);
+    return;
+  }
+  const btn = e.target.closest('.countrylog-revert-btn');
+  if (!btn) return;
+  btn.disabled = true;
+  // 되돌리기 = 이전 국가로 재설정 (이 변경도 이력에 남음). 빈 문자열이면 "국가 없음"으로 되돌리는 것.
+  const { error } = await sb.rpc('set_stream_country', {
+    p_video_id: btn.dataset.videoId,
+    p_country: btn.dataset.oldCountry || null,
+  });
+  if (error) alert(error.message);
+  await loadCountryLog();
+});
+
+// ===== 조건 태그 변경 이력 + 되돌리기 (기록 자체는 046부터 이미 tag_changes에 쌓이고 있었음.
+// 지금까지 관리자 화면에서 "유저별 수정 횟수"만 보였고 실제로 뭘 바꿨는지 볼 방법이 없었음) =====
+const adminTagChangeLog = document.getElementById('adminTagChangeLog');
+
+async function loadTagChangeLog() {
+  const { data, error } = await sb
+    .from('tag_changes')
+    .select('*')
+    .order('changed_at', { ascending: false })
+    .limit(500);
+  if (error) {
+    adminTagChangeLog.textContent = error.message;
+    return;
+  }
+  if (!data?.length) {
+    adminTagChangeLog.textContent = t('admin_tagchangelog_empty');
+    return;
+  }
+  const videoIds = [...new Set(data.map(r => r.video_id))];
+  const userIds = [...new Set(data.map(r => r.changed_by).filter(Boolean))];
+  const [videosRes, usersRes, tagMap] = await Promise.all([
+    sb.from('streams').select('video_id, title, thumbnail, category, tags, content_type').in('video_id', videoIds),
+    userIds.length ? sb.from('profiles').select('id, display_name').in('id', userIds) : Promise.resolve({ data: [] }),
+    getTagLabelMap(),
+  ]);
+  const streamMap = new Map((videosRes.data || []).map(v => [v.video_id, v]));
+  const nameMap = new Map((usersRes.data || []).map(u => [u.id, u.display_name]));
+  const tagsText = (arr) => (arr || []).map(k => tagMap.get(k) || k).join(', ') || '(none)';
+
+  adminTagChangeLog.innerHTML = `
+    <div class="admin-table-wrap"><table class="admin-table">
+      <thead><tr>
+        <th>#</th>
+        <th>${escapeHtml(t('admin_col_date'))}</th>
+        <th>${escapeHtml(t('account_export_thumbnail_label'))}</th>
+        <th>${escapeHtml(t('admin_col_title'))}</th>
+        <th>${escapeHtml(t('admin_col_before'))}</th>
+        <th>${escapeHtml(t('admin_col_after'))}</th>
+        <th>${escapeHtml(t('admin_col_by'))}</th>
+        <th></th>
+      </tr></thead>
+      <tbody>${data.map((r, idx) => {
+        const s = streamMap.get(r.video_id);
+        const thumb = s?.thumbnail || `https://i.ytimg.com/vi/${r.video_id}/mqdefault.jpg`;
+        return `
+        <tr class="admin-row">
+          <td class="admin-td-num">${idx + 1}</td>
+          <td class="admin-td-date">${new Date(r.changed_at).toLocaleString(undefined, { month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit' })}</td>
+          <td class="admin-td-thumb"><img class="admin-thumb-sm" src="${escapeHtml(thumb)}" alt="" loading="lazy"></td>
+          <td class="admin-td-title"><a href="#" class="panel-play-link" data-video-id="${escapeHtml(r.video_id)}">${escapeHtml((s?.title || r.video_id).slice(0, 60))}</a></td>
+          <td>${escapeHtml(tagsText(r.old_tags))}</td>
+          <td><b>${escapeHtml(tagsText(r.new_tags))}</b></td>
+          <td>${escapeHtml(nameMap.get(r.changed_by) || t('anonymous'))}</td>
+          <td>${s ? `<button type="button" class="tagchangelog-revert-btn" data-video-id="${escapeHtml(r.video_id)}" data-old-tags="${escapeHtml(JSON.stringify(r.old_tags || []))}">${escapeHtml(t('admin_catlog_revert'))}</button>` : ''}</td>
+        </tr>`;
+      }).join('')}
+      </tbody>
+    </table></div>`;
+  enhanceAdminTable(adminTagChangeLog);
+}
+
+adminTagChangeLog?.addEventListener('click', async (e) => {
+  const play = e.target.closest('.panel-play-link');
+  if (play) {
+    e.preventDefault();
+    openVideoPanel(play.dataset.videoId);
+    return;
+  }
+  const btn = e.target.closest('.tagchangelog-revert-btn');
+  if (!btn) return;
+  btn.disabled = true;
+  // 되돌리기 = 이전 태그 배열로 재설정 (이 변경도 이력에 남음)
+  const { error } = await sb.rpc('set_stream_tags', {
+    p_video_id: btn.dataset.videoId,
+    p_tags: JSON.parse(btn.dataset.oldTags),
+  });
+  if (error) alert(error.message);
+  await loadTagChangeLog();
 });
 
 // ===== 카테고리 제안 승인/거절 =====
