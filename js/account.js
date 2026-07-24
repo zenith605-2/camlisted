@@ -1107,6 +1107,36 @@ const videoPanelFrame = document.getElementById('videoPanelFrame');
 const videoPanelTitle = document.getElementById('videoPanelTitle');
 const videoPanelMeta = document.getElementById('videoPanelMeta');
 
+// 패널 왼쪽 가장자리를 드래그해 폭 조절 (AI 검수 로그 등에서 썸네일이 작아 보기 힘들다는 요청).
+// globe.html/browse.html의 동일 패턴(panelWidth)과 저장 키를 맞춰, 기기당 한 번만 조절하면
+// 다른 프리뷰 패널에서도 같은 폭이 유지된다.
+(function initVideoPanelResize() {
+  const handle = document.getElementById('videoPanelResize');
+  if (!handle) return;
+  const saved = localStorage.getItem('panelWidth');
+  if (saved && window.innerWidth > 900) {
+    document.documentElement.style.setProperty('--video-panel-w', `${saved}px`);
+  }
+  let dragging = false;
+  handle.addEventListener('mousedown', (e) => {
+    dragging = true;
+    e.preventDefault();
+    document.body.style.userSelect = 'none';
+  });
+  window.addEventListener('mousemove', (e) => {
+    if (!dragging) return;
+    const w = Math.max(320, Math.min(window.innerWidth - e.clientX, window.innerWidth - 80));
+    document.documentElement.style.setProperty('--video-panel-w', `${w}px`);
+  });
+  window.addEventListener('mouseup', () => {
+    if (!dragging) return;
+    dragging = false;
+    document.body.style.userSelect = '';
+    const w = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--video-panel-w'), 10);
+    if (w) localStorage.setItem('panelWidth', w);
+  });
+})();
+
 async function getCategoryLabelMap() {
   if (categoryLabelMap) return categoryLabelMap;
   const { data } = await sb.from('categories').select('key, label_en, label_ko, label_ja, label_zh, label_es, icon').order('sort_order');

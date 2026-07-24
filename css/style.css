@@ -1909,12 +1909,12 @@ body {
 .panel-play-link { color: var(--text); text-decoration: none; }
 .panel-play-link:hover { color: var(--accent); }
 
-/* 오른쪽 영상 미리보기 패널 (월드맵 패널과 같은 개념) */
+/* 오른쪽 영상 미리보기 패널 (월드맵 패널과 같은 개념) — 왼쪽 가장자리를 드래그해 폭 조절 가능 */
 .account-video-panel {
   position: fixed;
   top: 0;
   right: 0;
-  width: min(420px, 100vw);
+  width: min(var(--video-panel-w, 420px), 100vw);
   height: 100vh;
   background: var(--bg);
   border-left: 1px solid var(--border);
@@ -1925,6 +1925,11 @@ body {
 }
 /* display:flex가 hidden 속성을 덮어쓰지 않게 — 닫힌 패널은 확실히 숨김 */
 .account-video-panel[hidden] { display: none; }
+.account-video-panel .panel-resize { position: absolute; left: -3px; top: 0; bottom: 0; width: 8px; cursor: ew-resize; z-index: 5; }
+.account-video-panel .panel-resize:hover { background: var(--accent); opacity: 0.5; }
+@media (max-width: 900px) {
+  .account-video-panel .panel-resize { display: none; }
+}
 .account-video-panel-head {
   display: flex;
   align-items: center;
