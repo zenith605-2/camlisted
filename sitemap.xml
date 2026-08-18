@@ -343,6 +343,12 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://camlisted.com/country/romania.html</loc>
+    <lastmod>2026-08-18</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://camlisted.com/country/north-macedonia.html</loc>
     <lastmod>2026-08-18</lastmod>
     <changefreq>daily</changefreq>
@@ -374,12 +380,6 @@
   </url>
   <url>
     <loc>https://camlisted.com/country/denmark.html</loc>
-    <lastmod>2026-08-18</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://camlisted.com/country/romania.html</loc>
     <lastmod>2026-08-18</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
@@ -692,12 +692,6 @@
   </url>
   <url>
     <loc>https://camlisted.com/country/japan/avenue.html</loc>
-    <lastmod>2026-08-18</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://camlisted.com/country/japan/coast.html</loc>
     <lastmod>2026-08-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
@@ -1081,6 +1075,12 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://camlisted.com/country/japan/coast.html</loc>
+    <lastmod>2026-08-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://camlisted.com/country/united-states/plaza.html</loc>
     <lastmod>2026-08-18</lastmod>
     <changefreq>weekly</changefreq>
@@ -1399,13 +1399,13 @@
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://camlisted.com/ch/jazbaz-philippines.html</loc>
+    <loc>https://camlisted.com/ch/ch.html</loc>
     <lastmod>2026-08-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://camlisted.com/ch/ch.html</loc>
+    <loc>https://camlisted.com/ch/jazbaz-philippines.html</loc>
     <lastmod>2026-08-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
@@ -1501,6 +1501,12 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://camlisted.com/ch/channel-hucffq.html</loc>
+    <lastmod>2026-08-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://camlisted.com/ch/dashcam-lessons.html</loc>
     <lastmod>2026-08-18</lastmod>
     <changefreq>weekly</changefreq>
@@ -1508,12 +1514,6 @@
   </url>
   <url>
     <loc>https://camlisted.com/ch/megadrivingschool-dashcam-hub.html</loc>
-    <lastmod>2026-08-18</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://camlisted.com/ch/channel-hucffq.html</loc>
     <lastmod>2026-08-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
@@ -1573,6 +1573,12 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://camlisted.com/ch/channel-bbwi9w.html</loc>
+    <lastmod>2026-08-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://camlisted.com/ch/live-ceuesa.html</loc>
     <lastmod>2026-08-18</lastmod>
     <changefreq>weekly</changefreq>
@@ -1621,12 +1627,6 @@
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://camlisted.com/ch/channel-bbwi9w.html</loc>
-    <lastmod>2026-08-18</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
     <loc>https://camlisted.com/ch/range.html</loc>
     <lastmod>2026-08-18</lastmod>
     <changefreq>weekly</changefreq>
@@ -1639,7 +1639,19 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://camlisted.com/ch/channel-_psgxq.html</loc>
+    <lastmod>2026-08-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://camlisted.com/ch/surveillancemap-foundation.html</loc>
+    <lastmod>2026-08-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://camlisted.com/ch/kodama-life-shinkansen-japan-bullet-train.html</loc>
     <lastmod>2026-08-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
@@ -1663,12 +1675,6 @@
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://camlisted.com/ch/channel-_psgxq.html</loc>
-    <lastmod>2026-08-18</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
     <loc>https://camlisted.com/ch/streamtime-live.html</loc>
     <lastmod>2026-08-18</lastmod>
     <changefreq>weekly</changefreq>
@@ -1687,19 +1693,7 @@
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://camlisted.com/ch/kodama-life-shinkansen-japan-bullet-train.html</loc>
-    <lastmod>2026-08-18</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
     <loc>https://camlisted.com/ch/c-maras-de-tr-fico-de-vigo.html</loc>
-    <lastmod>2026-08-18</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://camlisted.com/ch/channel-sge22a.html</loc>
     <lastmod>2026-08-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
@@ -1712,6 +1706,12 @@
   </url>
   <url>
     <loc>https://camlisted.com/ch/elbo-room-home-of-elbotv.html</loc>
+    <lastmod>2026-08-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://camlisted.com/ch/gorimon-2.html</loc>
     <lastmod>2026-08-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
@@ -1735,6 +1735,12 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://camlisted.com/ch/brasil-trem-ao-vivo-brazil-train-live.html</loc>
+    <lastmod>2026-08-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://camlisted.com/ch/explore-eagle-nest-cams.html</loc>
     <lastmod>2026-08-18</lastmod>
     <changefreq>weekly</changefreq>
@@ -1742,12 +1748,6 @@
   </url>
   <url>
     <loc>https://camlisted.com/ch/kyoto-city-tourism-association.html</loc>
-    <lastmod>2026-08-18</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://camlisted.com/ch/webcams-de-m-xico-tv-canal-6.html</loc>
     <lastmod>2026-08-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
@@ -1837,7 +1837,7 @@
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://camlisted.com/ch/gigaeyes-live-tv.html</loc>
+    <loc>https://camlisted.com/ch/channel-sge22a.html</loc>
     <lastmod>2026-08-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
@@ -1850,6 +1850,12 @@
   </url>
   <url>
     <loc>https://camlisted.com/ch/channel-11bneq.html</loc>
+    <lastmod>2026-08-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://camlisted.com/ch/webcams-de-m-xico-tv-canal-6.html</loc>
     <lastmod>2026-08-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
@@ -1873,7 +1879,7 @@
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://camlisted.com/ch/gorimon-2.html</loc>
+    <loc>https://camlisted.com/ch/see-jamaica.html</loc>
     <lastmod>2026-08-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
@@ -1892,6 +1898,12 @@
   </url>
   <url>
     <loc>https://camlisted.com/ch/railstream.html</loc>
+    <lastmod>2026-08-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://camlisted.com/ch/channel-vyisuq.html</loc>
     <lastmod>2026-08-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
@@ -1939,12 +1951,6 @@
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://camlisted.com/ch/brasil-trem-ao-vivo-brazil-train-live.html</loc>
-    <lastmod>2026-08-18</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
     <loc>https://camlisted.com/ch/channel-qzn33a.html</loc>
     <lastmod>2026-08-18</lastmod>
     <changefreq>weekly</changefreq>
@@ -1958,12 +1964,6 @@
   </url>
   <url>
     <loc>https://camlisted.com/ch/ratinger-webcams-lz2waw.html</loc>
-    <lastmod>2026-08-18</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://camlisted.com/ch/cctv-dishub-kab-demak.html</loc>
     <lastmod>2026-08-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
@@ -2041,12 +2041,6 @@
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://camlisted.com/ch/channel-vyisuq.html</loc>
-    <lastmod>2026-08-18</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
     <loc>https://camlisted.com/ch/beach-life-cams-2.html</loc>
     <lastmod>2026-08-18</lastmod>
     <changefreq>weekly</changefreq>
@@ -2083,7 +2077,7 @@
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://camlisted.com/ch/railcam-live-ng-railways.html</loc>
+    <loc>https://camlisted.com/ch/gigaeyes-live-tv.html</loc>
     <lastmod>2026-08-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
@@ -2138,12 +2132,6 @@
   </url>
   <url>
     <loc>https://camlisted.com/ch/severn-valley-railway.html</loc>
-    <lastmod>2026-08-18</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://camlisted.com/ch/see-jamaica.html</loc>
     <lastmod>2026-08-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
@@ -2233,6 +2221,12 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://camlisted.com/ch/railcam-live-ng-railways.html</loc>
+    <lastmod>2026-08-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://camlisted.com/ch/anuj-khandelwal.html</loc>
     <lastmod>2026-08-18</lastmod>
     <changefreq>weekly</changefreq>
@@ -2300,6 +2294,12 @@
   </url>
   <url>
     <loc>https://camlisted.com/ch/ashland-fiber-network.html</loc>
+    <lastmod>2026-08-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://camlisted.com/ch/cctv-dishub-kab-demak.html</loc>
     <lastmod>2026-08-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
