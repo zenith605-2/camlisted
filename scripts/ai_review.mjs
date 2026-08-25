@@ -29,7 +29,13 @@ const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
 const MODEL_CANDIDATES = (process.env.GEMINI_MODEL ? [process.env.GEMINI_MODEL] : [])
   .concat(['gemini-flash-latest', 'gemini-2.0-flash-lite', 'gemini-2.0-flash', 'gemini-1.5-flash']);
 let MODEL = null; // 첫 성공한 모델로 고정
-const BATCH = 15;            // 한 요청에 15개 (요청 수 절약)
+// 막히는 건 처리량이 아니라 요청 횟수다 — 무료 한도가 "generate_content_free_tier_requests
+// limit: 20"(하루 요청 수)으로 찍혀 나온다. 2026-08-25 새벽 실행 로그: 배치 15개로 요청 2번
+// 만에 소진, 115건 대기 중 30건만 처리. 배치를 30개로 올리면 같은 요청 수로 처리량이 2배가
+// 된다 — 항목 하나가 JSON으로 ~10~15토큰이라 30개(≈450토큰)도 출력 한도에 전혀 안 걸린다.
+// Gemini가 일부만 응답해도 안전하다: byIndex에 없는 항목은 그냥 unsure로 남아 다음 실행에서
+// 재시도되므로(데이터 유실 없음) 배치를 키우는 데 하방 위험이 없다.
+const BATCH = 30;
 // 대기 큐 검수. 하루 수집량이 80~130건이라 450이면 당일 전부 소화하고도 3배 여유가 있다.
 // (유료 시절 600으로 올려뒀지만, 무료 키로 되돌린 뒤엔 한도를 아끼는 쪽이 맞다.)
 const MAX_PER_RUN = 450;
