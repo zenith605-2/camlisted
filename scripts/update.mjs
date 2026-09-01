@@ -60,6 +60,20 @@ async function fetchJson(url) {
   return res.json();
 }
 
+// 라틴 문자 키워드는 단어 경계를 요구한다. 부분문자열로 보면 'train'·'Ukraine'·'terrain'이
+// 전부 rain(비)이 되고 'firefighter'가 fire와 violence(fight)를 동시에 달았다 — 카테고리
+// 쪽에서도 같은 일이 나서 harbor의 'port'가 'airport'에 걸려 공항 캠이 항구로 분류됐다
+// (2026-09-01, Trudeau Airport 캠). 한글·일본어·중국어는 단어 경계가 없으므로 기존대로
+// 포함 검사한다('밤 '처럼 뒤 공백까지 포함해 오탐을 줄인 항목이 있어 원문 그대로 써야 한다).
+// 복수형(s/es)은 허용한다 — 카탈로그를 세어보면 'crash' 23건에 'crashes'가 29건으로 더 많고,
+// 'lagoon'은 1건인데 'lagoons'가 7건, 'resort'는 68건인데 'resorts'가 14건 더 있다. 단어
+// 경계만 걸고 복수형을 안 열어주면 이 대다수를 놓친다.
+function keywordMatcher(k) {
+  if (!/^[\x20-\x7e]+$/.test(k)) return { test: (h) => h.includes(k) };
+  const esc = k.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  return new RegExp(`\\b${esc}(?:e?s)?\\b`, 'i');
+}
+
 // 조건 태그(일반 영상 전용): 제목에서 날씨/시간/사건 태그를 뽑는다.
 // 밤/낮/눈은 CLIP 썸네일 분석(classify_thumbnails.py)이 보완하고, 유저가 카드에서 교정 가능.
 const TAG_KEYWORDS = {
@@ -73,18 +87,8 @@ const TAG_KEYWORDS = {
   violence: ['fight', 'assault', 'brawl', '싸움', '폭행', '몸싸움', '난투'],
 };
 
-// 라틴 문자 키워드는 단어 경계를 요구한다. 부분문자열로 보면 'train'·'Ukraine'·'terrain'이
-// 전부 rain(비)이 되고 'firefighter'가 fire와 violence(fight)를 동시에 달았다.
-// 한글·일본어·중국어는 단어 경계라는 게 없으므로 기존대로 포함 검사한다
-// ('밤 '처럼 뒤 공백까지 포함해 오탐을 줄인 항목이 있어 원문 그대로 써야 한다).
 const TAG_MATCHERS = Object.fromEntries(
-  Object.entries(TAG_KEYWORDS).map(([tag, kws]) => [tag, kws.map(k => {
-    if (!/^[\x20-\x7e]+$/.test(k)) return { test: (h) => h.includes(k) };
-    const esc = k.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-    // 복수형은 허용해야 한다. 카탈로그 제목을 세어보니 'crash'는 23건인데 'crashes'가 29건으로
-    // 더 많았다. 단어 경계만 걸면 그 29건이 통째로 사고 태그를 놓친다.
-    return new RegExp(`\\b${esc}(?:e?s)?\\b`, 'i');
-  })])
+  Object.entries(TAG_KEYWORDS).map(([tag, kws]) => [tag, kws.map(keywordMatcher)])
 );
 
 function tagsFromTitle(title) {
@@ -453,10 +457,16 @@ async function main() {
     return noEmbedKeywords.some(k => haystack.includes(k));
   };
 
+  // 카테고리별 매처를 미리 만들어둔다 — keywordMatcher가 harbor의 'port'를 'airport' 안에서는
+  // 안 걸리게 하는 대신, 실제 'Rotterdam Port' 같은 단어 그대로의 매치는 그대로 살려둔다.
+  const categoryMatchers = categoryRows.map(row => ({
+    key: row.key,
+    matchers: (row.keywords || []).map(k => keywordMatcher(k.toLowerCase())),
+  }));
   const classifyCategory = (title, channelTitle) => {
     const haystack = `${title} ${channelTitle}`.toLowerCase();
-    for (const row of categoryRows) {
-      if ((row.keywords || []).some(k => haystack.includes(k.toLowerCase()))) return row.key;
+    for (const row of categoryMatchers) {
+      if (row.matchers.some(m => m.test(haystack))) return row.key;
     }
     return 'other';
   };
