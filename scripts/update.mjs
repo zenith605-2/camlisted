@@ -457,19 +457,31 @@ async function main() {
     return noEmbedKeywords.some(k => haystack.includes(k));
   };
 
-  // 카테고리별 매처를 미리 만들어둔다 — keywordMatcher가 harbor의 'port'를 'airport' 안에서는
-  // 안 걸리게 하는 대신, 실제 'Rotterdam Port' 같은 단어 그대로의 매치는 그대로 살려둔다.
-  const categoryMatchers = categoryRows.map(row => ({
-    key: row.key,
-    matchers: (row.keywords || []).map(k => keywordMatcher(k.toLowerCase())),
-  }));
+  // 단어 경계만으로는 못 잡는 충돌이 남아 있었다 — "Car park"의 park는 parking의 'car park'와
+  // 별개 단어로 진짜 존재하고, "Main Street"의 street도 avenue의 'main street'와 마찬가지다.
+  // 처음엔 "모든 키워드를 길이순으로 정렬해 긴 쪽이 이긴다"로 풀었는데, 이건 서로 무관한
+  // 키워드끼리도 비교해버려 카탈로그 3908건 중 449건이 흔들렸다 — 'panorama'(8자)가 'beach'(5자)
+  // 보다 길다는 이유만으로 "Beach Cam ... Panorama"가 skyline으로 바뀌는 식으로, 이미 맞던 것도
+  // 틀리게 만들었다.
+  // 그래서 "실제로 포함 관계인 키워드끼리만" 짧은 쪽을 접는다: 매칭된 키워드 중 다른 매칭된
+  // 키워드의 부분문자열인 것은 제외하고, 남은 것들끼리는 기존처럼 카테고리 순서(=sort_order)로
+  // 정한다. 'park'와 'car park'가 둘 다 매칭되면 'park'만 접힌다. 'beach'와 'panorama'는 서로
+  // 포함 관계가 아니므로 건드리지 않는다.
+  const categoryMatchList = categoryRows
+    .flatMap(row => (row.keywords || []).map(k => ({ key: row.key, kw: k.trim().toLowerCase(), matcher: keywordMatcher(k.toLowerCase()) })));
   const classifyCategory = (title, channelTitle) => {
     const haystack = `${title} ${channelTitle}`.toLowerCase();
-    for (const row of categoryMatchers) {
-      if (row.matchers.some(m => m.test(haystack))) return row.key;
-    }
-    return 'other';
+    const matches = categoryMatchList.filter(e => e.matcher.test(haystack));
+    const survivors = matches.filter(m => !matches.some(other => other.kw !== m.kw && other.kw.includes(m.kw)));
+    return survivors.length ? survivors[0].key : 'other';
   };
+  // 알려진 남은 문제: mountain의 한 글자 키워드('山'/'산')는 다른 매칭 키워드의 부분문자열이
+  // 아닌데도 지명 표기에 흔히 섞인다 — 山口(야마구치)·山形(야마가타)·松山(마쓰야마)의 공항 캠이
+  // mountain으로 잘못 분류된다(harbor 버그가 가리고 있었을 뿐, 이번 수정 이전부터 있던 문제다).
+  // "한 글자 매치는 더 긴 매치가 있으면 접는다"로 한 번 고쳐봤는데, 富士山(후지산)·合歡山(허환산)
+  // 같은 진짜 산 캠까지 같이 접혀버려 diff가 13건에서 44건으로 늘었다(순수 회귀) — 되돌렸다.
+  // 한국어 쪽도 같은 성격의 문제가 있다(부산·일산은 지명, 남산·한라산은 진짜 산). 이건 지명별로
+  // 봐야 하는 문제라 키워드 매칭 로직 하나로는 안전하게 못 푼다 — 손대지 않고 남겨둔다.
 
   // ===== 일회성 초기화 (2026-07-15 아침 실행에서만 발동) =====
   // 홍보 시작 전 테스트 투표 청소: 추천/비추천만 리셋 (방문 기록은 보존하기로 함).
