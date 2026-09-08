@@ -361,12 +361,6 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://camlisted.com/country/argentina.html</loc>
-    <lastmod>2026-09-08</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://camlisted.com/country/austria.html</loc>
     <lastmod>2026-09-08</lastmod>
     <changefreq>daily</changefreq>
@@ -1525,12 +1519,6 @@
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://camlisted.com/ch/the-real-samui-webcam.html</loc>
-    <lastmod>2026-09-08</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
     <loc>https://camlisted.com/ch/live-trains.html</loc>
     <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
@@ -1550,6 +1538,12 @@
   </url>
   <url>
     <loc>https://camlisted.com/ch/live.html</loc>
+    <lastmod>2026-09-08</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://camlisted.com/ch/the-real-samui-webcam.html</loc>
     <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
@@ -1789,12 +1783,6 @@
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://camlisted.com/ch/ratinger-webcams.html</loc>
-    <lastmod>2026-09-08</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
     <loc>https://camlisted.com/ch/webcam-nl.html</loc>
     <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
@@ -1910,6 +1898,12 @@
   </url>
   <url>
     <loc>https://camlisted.com/ch/channel-11bneq.html</loc>
+    <lastmod>2026-09-08</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://camlisted.com/ch/ratinger-webcams.html</loc>
     <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
@@ -2041,12 +2035,6 @@
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://camlisted.com/ch/webcams-de-m-xico-tv-canal-7.html</loc>
-    <lastmod>2026-09-08</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
     <loc>https://camlisted.com/ch/severn-valley-railway.html</loc>
     <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
@@ -2084,12 +2072,6 @@
   </url>
   <url>
     <loc>https://camlisted.com/ch/channel.html</loc>
-    <lastmod>2026-09-08</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://camlisted.com/ch/livefromireland-live-streaming-webcams.html</loc>
     <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
@@ -2197,12 +2179,6 @@
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://camlisted.com/ch/channel-qzn33a.html</loc>
-    <lastmod>2026-09-08</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
     <loc>https://camlisted.com/ch/fbc.html</loc>
     <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
@@ -2257,6 +2233,12 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://camlisted.com/ch/webcams-de-m-xico-tv-canal-7.html</loc>
+    <lastmod>2026-09-08</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://camlisted.com/ch/explore-live-nature-cams.html</loc>
     <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
@@ -2276,6 +2258,12 @@
   </url>
   <url>
     <loc>https://camlisted.com/ch/cctv-people.html</loc>
+    <lastmod>2026-09-08</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://camlisted.com/ch/livefromireland-live-streaming-webcams.html</loc>
     <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
@@ -2402,6 +2390,12 @@
   </url>
   <url>
     <loc>https://camlisted.com/ch/livecamera.html</loc>
+    <lastmod>2026-09-08</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://camlisted.com/ch/channel-qzn33a.html</loc>
     <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
