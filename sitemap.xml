@@ -847,12 +847,6 @@
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://camlisted.com/country/united-kingdom/beach.html</loc>
-    <lastmod>2026-09-19</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
     <loc>https://camlisted.com/country/spain/skyline.html</loc>
     <lastmod>2026-09-19</lastmod>
     <changefreq>weekly</changefreq>
@@ -1184,6 +1178,12 @@
   </url>
   <url>
     <loc>https://camlisted.com/country/japan/harbor.html</loc>
+    <lastmod>2026-09-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://camlisted.com/country/united-kingdom/beach.html</loc>
     <lastmod>2026-09-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
@@ -1741,12 +1741,6 @@
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://camlisted.com/ch/cctv-pemerintah-kabupaten-bantul-2.html</loc>
-    <lastmod>2026-09-19</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
     <loc>https://camlisted.com/ch/world-cams.html</loc>
     <lastmod>2026-09-19</lastmod>
     <changefreq>weekly</changefreq>
@@ -1783,13 +1777,13 @@
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://camlisted.com/ch/brasil-trem-ao-vivo-brazil-train-live.html</loc>
+    <loc>https://camlisted.com/ch/channel-sge22a.html</loc>
     <lastmod>2026-09-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://camlisted.com/ch/channel-sge22a.html</loc>
+    <loc>https://camlisted.com/ch/ratinger-webcams.html</loc>
     <lastmod>2026-09-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
@@ -1802,6 +1796,12 @@
   </url>
   <url>
     <loc>https://camlisted.com/ch/webcam-nl.html</loc>
+    <lastmod>2026-09-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://camlisted.com/ch/cctv-pemerintah-kabupaten-bantul-2.html</loc>
     <lastmod>2026-09-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
@@ -1867,6 +1867,12 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://camlisted.com/ch/brasil-trem-ao-vivo-brazil-train-live.html</loc>
+    <lastmod>2026-09-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://camlisted.com/ch/go-martha-s-vineyard.html</loc>
     <lastmod>2026-09-19</lastmod>
     <changefreq>weekly</changefreq>
@@ -1916,12 +1922,6 @@
   </url>
   <url>
     <loc>https://camlisted.com/ch/channel-11bneq.html</loc>
-    <lastmod>2026-09-19</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://camlisted.com/ch/ratinger-webcams.html</loc>
     <lastmod>2026-09-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
@@ -2023,12 +2023,6 @@
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://camlisted.com/ch/itanet.html</loc>
-    <lastmod>2026-09-19</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
     <loc>https://camlisted.com/ch/benicam-benidorm-webcam.html</loc>
     <lastmod>2026-09-19</lastmod>
     <changefreq>weekly</changefreq>
@@ -2036,12 +2030,6 @@
   </url>
   <url>
     <loc>https://camlisted.com/ch/mallorca-webcam-3-the-backup-chanel.html</loc>
-    <lastmod>2026-09-19</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://camlisted.com/ch/beach-life-cams-2.html</loc>
     <lastmod>2026-09-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
@@ -2084,6 +2072,12 @@
   </url>
   <url>
     <loc>https://camlisted.com/ch/joma-construction.html</loc>
+    <lastmod>2026-09-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://camlisted.com/ch/beach-life-cams-2.html</loc>
     <lastmod>2026-09-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
@@ -2186,6 +2180,12 @@
   </url>
   <url>
     <loc>https://camlisted.com/ch/cctv-pemerintah-kabupaten-bantul-3.html</loc>
+    <lastmod>2026-09-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://camlisted.com/ch/itanet.html</loc>
     <lastmod>2026-09-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
@@ -2384,12 +2384,6 @@
   </url>
   <url>
     <loc>https://camlisted.com/ch/livecamera.html</loc>
-    <lastmod>2026-09-19</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://camlisted.com/ch/train-cam.html</loc>
     <lastmod>2026-09-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
