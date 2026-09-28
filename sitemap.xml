@@ -793,12 +793,6 @@
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://camlisted.com/country/japan/beach.html</loc>
-    <lastmod>2026-09-28</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
     <loc>https://camlisted.com/country/south-africa/wildlife.html</loc>
     <lastmod>2026-09-28</lastmod>
     <changefreq>weekly</changefreq>
@@ -895,6 +889,12 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://camlisted.com/country/japan/beach.html</loc>
+    <lastmod>2026-09-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://camlisted.com/country/united-states/parking.html</loc>
     <lastmod>2026-09-28</lastmod>
     <changefreq>weekly</changefreq>
@@ -943,13 +943,13 @@
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://camlisted.com/country/japan/wildlife.html</loc>
+    <loc>https://camlisted.com/country/japan/park.html</loc>
     <lastmod>2026-09-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://camlisted.com/country/japan/park.html</loc>
+    <loc>https://camlisted.com/country/japan/wildlife.html</loc>
     <lastmod>2026-09-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
@@ -1190,6 +1190,12 @@
   </url>
   <url>
     <loc>https://camlisted.com/country/south-korea/resort.html</loc>
+    <lastmod>2026-09-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://camlisted.com/country/mexico/skyline.html</loc>
     <lastmod>2026-09-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
@@ -1465,12 +1471,6 @@
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://camlisted.com/ch/channel-9v5h9w.html</loc>
-    <lastmod>2026-09-28</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
     <loc>https://camlisted.com/ch/youtube.html</loc>
     <lastmod>2026-09-28</lastmod>
     <changefreq>weekly</changefreq>
@@ -1532,6 +1532,12 @@
   </url>
   <url>
     <loc>https://camlisted.com/ch/channel-vyisuq.html</loc>
+    <lastmod>2026-09-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://camlisted.com/ch/channel-9v5h9w.html</loc>
     <lastmod>2026-09-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
@@ -1987,12 +1993,6 @@
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://camlisted.com/ch/hamptons-com.html</loc>
-    <lastmod>2026-09-28</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
     <loc>https://camlisted.com/ch/revlight-security.html</loc>
     <lastmod>2026-09-28</lastmod>
     <changefreq>weekly</changefreq>
@@ -2131,6 +2131,12 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://camlisted.com/ch/hamptons-com.html</loc>
+    <lastmod>2026-09-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://camlisted.com/ch/coast-cams.html</loc>
     <lastmod>2026-09-28</lastmod>
     <changefreq>weekly</changefreq>
@@ -2156,12 +2162,6 @@
   </url>
   <url>
     <loc>https://camlisted.com/ch/european-walking-tours.html</loc>
-    <lastmod>2026-09-28</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://camlisted.com/ch/ashland-fiber-network.html</loc>
     <lastmod>2026-09-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
@@ -2408,6 +2408,12 @@
   </url>
   <url>
     <loc>https://camlisted.com/ch/visit-leavenworth.html</loc>
+    <lastmod>2026-09-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://camlisted.com/ch/ashland-fiber-network.html</loc>
     <lastmod>2026-09-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
