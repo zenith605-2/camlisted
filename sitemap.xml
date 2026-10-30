@@ -1975,12 +1975,6 @@
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://camlisted.com/ch/cctv-pemerintah-kabupaten-bantul-2.html</loc>
-    <lastmod>2026-10-30</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
     <loc>https://camlisted.com/ch/taipei-travel-live-cam.html</loc>
     <lastmod>2026-10-30</lastmod>
     <changefreq>weekly</changefreq>
@@ -2192,6 +2186,12 @@
   </url>
   <url>
     <loc>https://camlisted.com/ch/mallorca-webcam-3-the-backup-chanel.html</loc>
+    <lastmod>2026-10-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://camlisted.com/ch/cctv-pemerintah-kabupaten-bantul-2.html</loc>
     <lastmod>2026-10-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
